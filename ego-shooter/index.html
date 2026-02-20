@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ego Shooter</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            background: #000;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            overflow: hidden;
+            font-family: 'Courier New', monospace;
+        }
+        canvas { display: block; cursor: none; }
+        #overlay {
+            position: absolute;
+            top: 0; left: 0; width: 100%; height: 100%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+            background: rgba(0,0,0,0.85);
+            color: #ff4444;
+            z-index: 10;
+        }
+        #overlay h1 {
+            font-size: 64px;
+            text-shadow: 0 0 20px #ff0000, 0 0 40px #ff0000;
+            margin-bottom: 20px;
+        }
+        #overlay p {
+            color: #ccc;
+            font-size: 20px;
+            margin-bottom: 10px;
+        }
+        #overlay .start-btn {
+            margin-top: 30px;
+            padding: 15px 40px;
+            font-size: 24px;
+            background: #aa0000;
+            color: white;
+            border: 2px solid #ff4444;
+            cursor: pointer;
+            font-family: 'Courier New', monospace;
+            text-transform: uppercase;
+            letter-spacing: 3px;
+        }
+        #overlay .start-btn:hover { background: #cc0000; }
+        #death-screen {
+            position: absolute;
+            top: 0; left: 0; width: 100%; height: 100%;
+            display: none;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+            background: rgba(80,0,0,0.8);
+            color: #ff0000;
+            z-index: 10;
+        }
+        #death-screen h1 { font-size: 72px; text-shadow: 0 0 30px #ff0000; }
+        #death-screen p { color: #ccc; font-size: 24px; margin-top: 20px; }
+        #win-screen {
+            position: absolute;
+            top: 0; left: 0; width: 100%; height: 100%;
+            display: none;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+            background: rgba(0,40,0,0.85);
+            color: #44ff44;
+            z-index: 10;
+        }
+        #win-screen h1 { font-size: 64px; text-shadow: 0 0 30px #00ff00; }
+        #win-screen p { color: #ccc; font-size: 24px; margin-top: 20px; }
+    </style>
+</head>
+<body>
+    <canvas id="game"></canvas>
+
+    <div id="overlay">
+        <h1>BLUTSTEIN 3D</h1>
+        <p>WASD - Bewegen | Maus - Umsehen | Linksklick - Schießen</p>
+        <p>R - Nachladen | E - Tür öffnen</p>
+        <button class="start-btn" id="startBtn">STARTEN</button>
+    </div>
+
+    <div id="death-screen">
+        <h1>DU BIST TOT</h1>
+        <p>Drücke LEERTASTE zum Neustarten</p>
+    </div>
+
+    <div id="win-screen">
+        <h1>LEVEL GESCHAFFT!</h1>
+        <p>Alle Gegner eliminiert!</p>
+        <p>Drücke LEERTASTE zum Neustarten</p>
+    </div>
+
+    <script src="game.js"></script>
+</body>
+</html>
