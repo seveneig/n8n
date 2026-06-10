@@ -1,0 +1,760 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Snowtown Showdown</title>
+<style>
+  html, body {
+    margin: 0; padding: 0; background: #0b1530; height: 100%;
+    font-family: "Comic Sans MS", "Segoe UI", sans-serif; color: #fff;
+    overflow: hidden; user-select: none;
+  }
+  #wrap {
+    position: relative; width: 100vw; height: 100vh;
+    display: flex; align-items: center; justify-content: center;
+  }
+  #screen {
+    background: #000; max-width: 100vw; max-height: 100vh;
+    aspect-ratio: 16/9; width: 100%; height: auto;
+    cursor: crosshair; image-rendering: auto;
+  }
+  #hud {
+    position: absolute; left: 0; right: 0; bottom: 0;
+    display: flex; justify-content: center; gap: 40px;
+    padding: 10px 0; pointer-events: none;
+    font-size: clamp(16px, 2.6vw, 28px); font-weight: bold;
+    text-shadow: 2px 2px 0 #000;
+  }
+  .overlay {
+    position: absolute; inset: 0; display: flex; flex-direction: column;
+    align-items: center; justify-content: center; text-align: center;
+    background: rgba(8, 16, 44, 0.92); padding: 20px; z-index: 10;
+  }
+  .overlay h1 {
+    font-size: clamp(30px, 6vw, 64px); margin: 0 0 8px;
+    color: #ffd84d; text-shadow: 3px 3px 0 #b3541e, 6px 6px 0 rgba(0,0,0,.4);
+    letter-spacing: 2px;
+  }
+  .overlay h2 { color: #9fd8ff; margin: 4px 0 14px; font-size: clamp(15px, 2.4vw, 24px); }
+  .overlay p  { max-width: 720px; line-height: 1.45; margin: 6px 0; font-size: clamp(13px, 1.8vw, 18px); }
+  .cast { display: flex; gap: 26px; margin: 16px 0; flex-wrap: wrap; justify-content: center; }
+  .cast figure { margin: 0; }
+  .cast canvas { background: #16275c; border-radius: 14px; border: 3px solid #3a5bb5; }
+  .cast figcaption { margin-top: 6px; font-size: 14px; color: #cfe6ff; }
+  .btn {
+    margin-top: 14px; font-family: inherit; font-size: clamp(16px, 2.4vw, 24px);
+    font-weight: bold; padding: 12px 34px; border-radius: 999px; border: 0;
+    background: #ffd84d; color: #5b3200; cursor: pointer;
+    box-shadow: 0 5px 0 #b3541e; transition: transform .08s;
+  }
+  .btn:hover { transform: translateY(-2px); }
+  .keys { color: #8fa8e8; font-size: clamp(12px, 1.6vw, 15px); margin-top: 14px; }
+  .hidden { display: none !important; }
+</style>
+</head>
+<body>
+<div id="wrap">
+  <canvas id="screen" width="960" height="540"></canvas>
+
+  <div id="hud">
+    <span id="hudHealth">&#10084;&#65039; 100</span>
+    <span id="hudAmmo">&#10052;&#65039; 40</span>
+    <span id="hudEnemies">&#9731; 0</span>
+  </div>
+
+  <div id="menu" class="overlay">
+    <h1>SNOWTOWN SHOWDOWN</h1>
+    <h2>Ein Cartoon-Ego-Shooter aus dem verschneiten Snowtown</h2>
+    <p>Der fiese <b>Eis-Yeti Knut</b> hat die Schneem&auml;nner von Snowtown verhext &ndash;
+       jetzt watscheln die <b>Frostgrummel</b> durch die Gassen und wollen die Stadt einfrieren!
+       Nur einer kann sie aufhalten: <b>Bruno Bommel</b>, der Junge mit der roten Bommelm&uuml;tze
+       und dem legend&auml;ren Schneeball-Blaster von <b>B&uuml;rgermeisterin Frieda Flocke</b>.</p>
+    <div class="cast">
+      <figure><canvas id="castHero" width="120" height="120"></canvas><figcaption>Bruno Bommel<br>(Du!)</figcaption></figure>
+      <figure><canvas id="castSnowman" width="120" height="120"></canvas><figcaption>Frostgrummel<br>(verhexter Schneemann)</figcaption></figure>
+      <figure><canvas id="castYeti" width="120" height="120"></canvas><figcaption>Eis-Yeti Knut<br>(Boss)</figcaption></figure>
+    </div>
+    <button id="btnStart" class="btn">Spiel starten</button>
+    <div class="keys">WASD / Pfeiltasten = laufen &middot; Maus = umsehen &middot; Klick = Schneeball feuern &middot; Shift = rennen &middot; ESC = Pause</div>
+  </div>
+
+  <div id="pause" class="overlay hidden">
+    <h1>PAUSE</h1>
+    <p>Klicken, um weiterzuspielen.</p>
+    <button id="btnResume" class="btn">Weiter</button>
+  </div>
+
+  <div id="win" class="overlay hidden">
+    <h1>SNOWTOWN IST GERETTET!</h1>
+    <p id="winText"></p>
+    <button id="btnAgainW" class="btn">Nochmal spielen</button>
+  </div>
+
+  <div id="lose" class="overlay hidden">
+    <h1>EINGEFROREN!</h1>
+    <p>Die Frostgrummel haben Bruno erwischt. Snowtown braucht dich &ndash; versuch es nochmal!</p>
+    <button id="btnAgainL" class="btn">Nochmal versuchen</button>
+  </div>
+</div>
+
+<script>
+"use strict";
+
+/* ============================== Welt ============================== */
+
+const MAP = [
+  "111111111111111111111111",
+  "1..........3...........1",
+  "1.222.111..3..44444.33.1",
+  "1.2.....1..3..4...4..3.1",
+  "1.2.222.1.....4.4.4..3.1",
+  "1...2...1..2..4...4..3.1",
+  "111.2.111..2..44.44....1",
+  "1...2......2.........331",
+  "1.4.222222.2.11111.....1",
+  "1.4......2.2.1...1.222.1",
+  "1.44444..2...1.1.1.2...1",
+  "1.....4..2.221.1.1.2.331",
+  "14444.4......1...1.2...1",
+  "1...4.4.333..11111.222.1",
+  "1.4.4.4.3.3............1",
+  "1.4...4.333.44444.1111.1",
+  "1.44444.....4...4....1.1",
+  "1.......222.4.4.4.11.1.1",
+  "1.33333.2...4...4.1..1.1",
+  "1.3...3.2.4.44444.1.11.1",
+  "1.3.3.3.2.4.......1....1",
+  "1.3...3.2.4444444.1111.1",
+  "1.......2..............1",
+  "111111111111111111111111",
+];
+const MW = MAP[0].length, MH = MAP.length;
+
+function wallAt(x, y) {
+  if (x < 0 || y < 0 || x >= MW || y >= MH) return 1;
+  const c = MAP[y | 0][x | 0];
+  return c === "." ? 0 : c.charCodeAt(0) - 48;
+}
+
+const SPAWN = { x: 2.5, y: 1.5, dir: 0 };
+
+const ENEMY_SPAWNS = [
+  // [x, y, typ]  typ: "s" = Frostgrummel (Schneemann), "y" = Eis-Yeti
+  [6.5, 1.5, "s"], [21.5, 1.5, "s"], [5.5, 5.5, "s"], [10.5, 7.5, "s"],
+  [20.5, 7.5, "s"], [3.5, 9.5, "s"], [16.5, 7.5, "s"], [12.5, 10.5, "s"],
+  [20.5, 12.5, "s"], [11.5, 14.5, "s"], [13.5, 14.5, "s"], [2.5, 17.5, "s"],
+  [13.5, 22.5, "s"], [21.5, 20.5, "s"],
+  [22.5, 14.5, "y"], [5.5, 22.5, "y"],
+];
+
+const PICKUP_SPAWNS = [
+  // [x, y, typ] typ: "h" = Kakao (+30 Leben), "a" = Schneeball-Sack (+15 Munition)
+  [1.5, 7.5, "h"], [8.5, 9.5, "h"], [22.5, 16.5, "h"], [9.5, 22.5, "h"],
+  [12.5, 1.5, "a"], [7.5, 12.5, "a"], [17.5, 22.5, "a"], [10.5, 16.5, "a"],
+];
+
+/* ============================== Setup ============================== */
+
+const canvas = document.getElementById("screen");
+const ctx = canvas.getContext("2d");
+const W = canvas.width, H = canvas.height;
+const COL = 2;                      // Pixelbreite pro Strahl
+const RAYS = W / COL;
+const FOV = 0.66;
+
+const hudHealth = document.getElementById("hudHealth");
+const hudAmmo = document.getElementById("hudAmmo");
+const hudEnemies = document.getElementById("hudEnemies");
+
+const overlays = {
+  menu: document.getElementById("menu"),
+  pause: document.getElementById("pause"),
+  win: document.getElementById("win"),
+  lose: document.getElementById("lose"),
+};
+
+let state = "menu";   // menu | play | pause | win | lose
+let player, enemies, pickups, puffs, keys, zbuf;
+let lastTime = 0, bob = 0, fireAnim = 0, hurtFlash = 0, pickFlash = 0;
+let startTime = 0;
+
+function showOverlay(name) {
+  for (const k in overlays) overlays[k].classList.toggle("hidden", k !== name);
+}
+
+/* ============================== Texturen ============================== */
+
+function makeCanvas(w, h, draw) {
+  const c = document.createElement("canvas");
+  c.width = w; c.height = h;
+  draw(c.getContext("2d"), w, h);
+  return c;
+}
+
+function speckle(g, w, h, color, n) {
+  g.fillStyle = color;
+  for (let i = 0; i < n; i++) {
+    g.globalAlpha = 0.15 + Math.random() * 0.25;
+    g.fillRect(Math.random() * w, Math.random() * h, 2, 2);
+  }
+  g.globalAlpha = 1;
+}
+
+const TEX = {};
+
+TEX[1] = makeCanvas(64, 64, (g, w, h) => {       // Schneeziegel
+  g.fillStyle = "#e8f2fb"; g.fillRect(0, 0, w, h);
+  g.strokeStyle = "#b8cfe4"; g.lineWidth = 3;
+  for (let y = 0; y <= h; y += 16) { g.beginPath(); g.moveTo(0, y); g.lineTo(w, y); g.stroke(); }
+  for (let r = 0; r < 4; r++)
+    for (let x = (r % 2) * 16 - 16; x <= w; x += 32)
+      { g.beginPath(); g.moveTo(x + 16, r * 16); g.lineTo(x + 16, r * 16 + 16); g.stroke(); }
+  speckle(g, w, h, "#ffffff", 60);
+});
+
+TEX[2] = makeCanvas(64, 64, (g, w, h) => {       // Holzhütte
+  g.fillStyle = "#9a6233"; g.fillRect(0, 0, w, h);
+  for (let x = 0; x < w; x += 13) {
+    g.fillStyle = x % 26 ? "#8a5527" : "#a76d3b"; g.fillRect(x, 0, 11, h);
+  }
+  g.strokeStyle = "#5e3a17"; g.lineWidth = 2;
+  for (let x = 0; x < w; x += 13) { g.beginPath(); g.moveTo(x, 0); g.lineTo(x, h); g.stroke(); }
+  g.fillStyle = "#5e3a17";
+  for (let i = 0; i < 8; i++) g.fillRect(3 + (i * 19) % 58, (i * 23) % 60, 3, 5);
+});
+
+TEX[3] = makeCanvas(64, 64, (g, w, h) => {       // Eisblock
+  const grad = g.createLinearGradient(0, 0, w, h);
+  grad.addColorStop(0, "#9fe8ff"); grad.addColorStop(1, "#5db9e8");
+  g.fillStyle = grad; g.fillRect(0, 0, w, h);
+  g.strokeStyle = "rgba(255,255,255,.7)"; g.lineWidth = 3;
+  g.beginPath(); g.moveTo(8, 60); g.lineTo(30, 20); g.lineTo(40, 34); g.lineTo(58, 4); g.stroke();
+  g.strokeStyle = "#3f93c4"; g.lineWidth = 2;
+  g.strokeRect(1, 1, w - 2, h - 2);
+});
+
+TEX[4] = makeCanvas(64, 64, (g, w, h) => {       // Stein
+  g.fillStyle = "#8d93a3"; g.fillRect(0, 0, w, h);
+  g.strokeStyle = "#5d6371"; g.lineWidth = 3;
+  for (let y = 0; y <= h; y += 21) { g.beginPath(); g.moveTo(0, y); g.lineTo(w, y); g.stroke(); }
+  for (let r = 0; r < 3; r++)
+    for (let x = (r % 2) * 21 - 10; x <= w; x += 21)
+      { g.beginPath(); g.moveTo(x + 10, r * 21); g.lineTo(x + 10, r * 21 + 21); g.stroke(); }
+  speckle(g, w, h, "#ffffff", 30);
+  speckle(g, w, h, "#3a3f4a", 40);
+});
+
+/* ============================== Sprites ============================== */
+
+function drawSnowman(g, s) {        // s = Skalierung, Basis 120x120
+  g.save(); g.scale(s, s);
+  g.strokeStyle = "#6b4a23"; g.lineWidth = 4; g.lineCap = "round";
+  g.beginPath(); g.moveTo(28, 70); g.lineTo(6, 50); g.moveTo(14, 56); g.lineTo(8, 62); g.stroke();
+  g.beginPath(); g.moveTo(92, 70); g.lineTo(114, 50); g.moveTo(106, 56); g.lineTo(112, 62); g.stroke();
+  g.fillStyle = "#ffffff"; g.strokeStyle = "#c5d8ea"; g.lineWidth = 3;
+  g.beginPath(); g.arc(60, 92, 27, 0, 7); g.fill(); g.stroke();
+  g.beginPath(); g.arc(60, 62, 21, 0, 7); g.fill(); g.stroke();
+  g.beginPath(); g.arc(60, 34, 17, 0, 7); g.fill(); g.stroke();
+  g.fillStyle = "#222";                                  // böse Augen
+  g.beginPath(); g.moveTo(48, 26); g.lineTo(58, 32); g.lineTo(48, 34); g.fill();
+  g.beginPath(); g.moveTo(72, 26); g.lineTo(62, 32); g.lineTo(72, 34); g.fill();
+  g.fillStyle = "#e33"; g.fillRect(51, 30, 3, 3); g.fillRect(66, 30, 3, 3);
+  g.fillStyle = "#f08020";                               // Karottennase
+  g.beginPath(); g.moveTo(60, 36); g.lineTo(74, 41); g.lineTo(60, 43); g.fill();
+  g.strokeStyle = "#222"; g.lineWidth = 3;               // grummeliger Mund
+  g.beginPath(); g.arc(60, 52, 7, Math.PI * 1.15, Math.PI * 1.85, true); g.stroke();
+  g.fillStyle = "#222";                                  // Hut
+  g.fillRect(44, 12, 32, 5); g.fillRect(50, 0, 20, 14);
+  g.fillStyle = "#7a3df0"; g.fillRect(50, 9, 20, 4);
+  g.fillStyle = "#333";                                  // Knöpfe
+  g.beginPath(); g.arc(60, 84, 3, 0, 7); g.fill();
+  g.beginPath(); g.arc(60, 96, 3, 0, 7); g.fill();
+  g.restore();
+}
+
+function drawYeti(g, s) {
+  g.save(); g.scale(s, s);
+  g.fillStyle = "#cfeaff"; g.strokeStyle = "#7fb6dd"; g.lineWidth = 3;
+  g.beginPath();                                          // zotteliger Körper
+  g.moveTo(60, 6);
+  for (let i = 0; i <= 22; i++) {
+    const a = -Math.PI / 2 + (i / 22) * Math.PI * 2;
+    const r = 46 + (i % 2 ? 7 : 0);
+    g.lineTo(60 + Math.cos(a) * r * 0.95, 60 + Math.sin(a) * r);
+  }
+  g.closePath(); g.fill(); g.stroke();
+  g.fillStyle = "#eef8ff";                                // Gesichtsfläche
+  g.beginPath(); g.ellipse(60, 44, 26, 22, 0, 0, 7); g.fill();
+  g.fillStyle = "#1a2a4a";                                // Augen
+  g.beginPath(); g.moveTo(40, 32); g.lineTo(56, 40); g.lineTo(42, 44); g.fill();
+  g.beginPath(); g.moveTo(80, 32); g.lineTo(64, 40); g.lineTo(78, 44); g.fill();
+  g.fillStyle = "#ffd84d"; g.fillRect(47, 38, 4, 4); g.fillRect(70, 38, 4, 4);
+  g.fillStyle = "#1a2a4a";                                // Maul mit Hauern
+  g.beginPath(); g.ellipse(60, 56, 14, 8, 0, 0, Math.PI); g.fill();
+  g.fillStyle = "#fff";
+  g.beginPath(); g.moveTo(50, 56); g.lineTo(54, 66); g.lineTo(58, 56); g.fill();
+  g.beginPath(); g.moveTo(62, 56); g.lineTo(66, 66); g.lineTo(70, 56); g.fill();
+  g.fillStyle = "#cfeaff"; g.strokeStyle = "#7fb6dd";     // Pranken
+  g.beginPath(); g.arc(14, 78, 12, 0, 7); g.fill(); g.stroke();
+  g.beginPath(); g.arc(106, 78, 12, 0, 7); g.fill(); g.stroke();
+  g.strokeStyle = "#1a2a4a"; g.lineWidth = 2;
+  for (const px of [8, 14, 20]) { g.beginPath(); g.moveTo(px, 70); g.lineTo(px, 64); g.stroke(); }
+  for (const px of [100, 106, 112]) { g.beginPath(); g.moveTo(px, 70); g.lineTo(px, 64); g.stroke(); }
+  g.restore();
+}
+
+function drawHero(g, s) {
+  g.save(); g.scale(s, s);
+  g.fillStyle = "#2e6fd8";                                 // Anorak
+  g.beginPath(); g.ellipse(60, 96, 30, 24, 0, Math.PI, 0); g.fill();
+  g.fillStyle = "#ffd9b8";                                 // Gesicht
+  g.beginPath(); g.arc(60, 56, 26, 0, 7); g.fill();
+  g.fillStyle = "#e0312e";                                 // Bommelmütze
+  g.beginPath(); g.arc(60, 44, 27, Math.PI, 0); g.fill();
+  g.fillRect(33, 40, 54, 9);
+  g.fillStyle = "#fff"; g.beginPath(); g.arc(60, 16, 8, 0, 7); g.fill();
+  g.fillStyle = "#222";                                    // Gesicht
+  g.beginPath(); g.arc(51, 58, 3.5, 0, 7); g.fill();
+  g.beginPath(); g.arc(69, 58, 3.5, 0, 7); g.fill();
+  g.strokeStyle = "#222"; g.lineWidth = 3;
+  g.beginPath(); g.arc(60, 66, 9, 0.2, Math.PI - 0.2); g.stroke();
+  g.fillStyle = "#f4a4a4";
+  g.beginPath(); g.arc(42, 66, 4, 0, 7); g.fill();
+  g.beginPath(); g.arc(78, 66, 4, 0, 7); g.fill();
+  g.restore();
+}
+
+const SPRITES = {
+  s: makeCanvas(120, 120, g => drawSnowman(g, 1)),
+  y: makeCanvas(120, 120, g => drawYeti(g, 1)),
+  h: makeCanvas(64, 64, g => {                            // Kakao
+    g.fillStyle = "#8a4b22"; g.fillRect(16, 24, 30, 30);
+    g.fillStyle = "#b56b35"; g.fillRect(16, 24, 30, 7);
+    g.strokeStyle = "#8a4b22"; g.lineWidth = 5;
+    g.beginPath(); g.arc(50, 38, 9, -1.2, 1.2); g.stroke();
+    g.strokeStyle = "rgba(255,255,255,.8)"; g.lineWidth = 3;
+    g.beginPath(); g.moveTo(26, 20); g.quadraticCurveTo(31, 12, 26, 5); g.stroke();
+    g.beginPath(); g.moveTo(36, 20); g.quadraticCurveTo(41, 12, 36, 5); g.stroke();
+  }),
+  a: makeCanvas(64, 64, g => {                            // Schneeball-Sack
+    g.fillStyle = "#3a5bb5";
+    g.beginPath(); g.moveTo(32, 8); g.quadraticCurveTo(6, 30, 12, 50);
+    g.quadraticCurveTo(32, 62, 52, 50); g.quadraticCurveTo(58, 30, 32, 8); g.fill();
+    g.strokeStyle = "#22356b"; g.lineWidth = 3;
+    g.beginPath(); g.moveTo(26, 12); g.lineTo(38, 12); g.stroke();
+    g.fillStyle = "#fff";
+    for (const [px, py] of [[24, 36], [38, 32], [32, 46]])
+      { g.beginPath(); g.arc(px, py, 7, 0, 7); g.fill(); }
+  }),
+  puff: makeCanvas(64, 64, g => {
+    for (const [px, py, r] of [[32, 32, 18], [18, 38, 12], [46, 38, 12], [26, 20, 10], [40, 22, 10]]) {
+      g.fillStyle = "rgba(255,255,255,.9)";
+      g.beginPath(); g.arc(px, py, r, 0, 7); g.fill();
+    }
+  }),
+};
+
+drawHero(document.getElementById("castHero").getContext("2d"), 1);
+drawSnowman(document.getElementById("castSnowman").getContext("2d"), 1);
+drawYeti(document.getElementById("castYeti").getContext("2d"), 1);
+
+/* ============================== Audio ============================== */
+
+let actx = null;
+function audio() {
+  if (!actx) { try { actx = new (window.AudioContext || window.webkitAudioContext)(); } catch (e) {} }
+  if (actx && actx.state === "suspended") actx.resume();
+  return actx;
+}
+
+function tone(freq, dur, type, vol, slide) {
+  const a = audio(); if (!a) return;
+  const o = a.createOscillator(), g = a.createGain();
+  o.type = type || "square"; o.frequency.value = freq;
+  if (slide) o.frequency.exponentialRampToValueAtTime(Math.max(30, freq + slide), a.currentTime + dur);
+  g.gain.setValueAtTime(vol || 0.12, a.currentTime);
+  g.gain.exponentialRampToValueAtTime(0.0001, a.currentTime + dur);
+  o.connect(g).connect(a.destination);
+  o.start(); o.stop(a.currentTime + dur);
+}
+
+function noiseBurst(dur, vol) {
+  const a = audio(); if (!a) return;
+  const len = (a.sampleRate * dur) | 0;
+  const buf = a.createBuffer(1, len, a.sampleRate);
+  const d = buf.getChannelData(0);
+  for (let i = 0; i < len; i++) d[i] = (Math.random() * 2 - 1) * (1 - i / len);
+  const src = a.createBufferSource(); src.buffer = buf;
+  const g = a.createGain(); g.gain.value = vol || 0.18;
+  src.connect(g).connect(a.destination); src.start();
+}
+
+const SFX = {
+  shoot: () => { noiseBurst(0.09, 0.14); tone(520, 0.07, "triangle", 0.07, -300); },
+  hit: () => tone(180, 0.1, "square", 0.1, -80),
+  die: () => { noiseBurst(0.25, 0.2); tone(300, 0.3, "sawtooth", 0.08, -240); },
+  hurt: () => tone(110, 0.25, "sawtooth", 0.14, -60),
+  pickup: () => { tone(660, 0.09, "triangle", 0.1); setTimeout(() => tone(880, 0.12, "triangle", 0.1), 90); },
+  empty: () => tone(140, 0.08, "square", 0.08),
+  win: () => [523, 659, 784, 1047].forEach((f, i) => setTimeout(() => tone(f, 0.25, "triangle", 0.12), i * 160)),
+  lose: () => [330, 262, 196, 131].forEach((f, i) => setTimeout(() => tone(f, 0.3, "sawtooth", 0.1), i * 200)),
+};
+
+/* ============================== Spielzustand ============================== */
+
+function resetGame() {
+  player = {
+    x: SPAWN.x, y: SPAWN.y,
+    dirX: Math.cos(SPAWN.dir), dirY: Math.sin(SPAWN.dir),
+    planeX: -Math.sin(SPAWN.dir) * FOV, planeY: Math.cos(SPAWN.dir) * FOV,
+    health: 100, ammo: 40,
+  };
+  enemies = ENEMY_SPAWNS.map(([x, y, t]) => ({
+    x, y, type: t,
+    hp: t === "y" ? 16 : 3,
+    speed: t === "y" ? 1.1 : 1.6,
+    dmg: t === "y" ? 15 : 7,
+    cooldown: 0, hitTimer: 0, alive: true,
+  }));
+  pickups = PICKUP_SPAWNS.map(([x, y, t]) => ({ x, y, type: t, taken: false }));
+  puffs = [];
+  keys = {};
+  bob = 0; fireAnim = 0; hurtFlash = 0; pickFlash = 0;
+  startTime = performance.now();
+}
+
+/* ============================== Eingabe ============================== */
+
+document.addEventListener("keydown", e => {
+  if (keys) keys[e.code] = true;
+  if (["ArrowUp", "ArrowDown", "ArrowLeft", "ArrowRight", "Space"].includes(e.code)) e.preventDefault();
+});
+document.addEventListener("keyup", e => { if (keys) keys[e.code] = false; });
+
+document.addEventListener("mousemove", e => {
+  if (state !== "play" || document.pointerLockElement !== canvas) return;
+  rotate(e.movementX * 0.0023);
+});
+
+canvas.addEventListener("mousedown", () => {
+  if (state === "play" && document.pointerLockElement === canvas) shoot();
+});
+
+document.addEventListener("pointerlockchange", () => {
+  if (document.pointerLockElement !== canvas && state === "play") {
+    state = "pause"; showOverlay("pause");
+  }
+});
+
+function lockAndPlay() {
+  showOverlay("none");
+  state = "play";
+  lastTime = performance.now();
+  canvas.requestPointerLock && canvas.requestPointerLock();
+}
+
+document.getElementById("btnStart").onclick = () => { audio(); resetGame(); lockAndPlay(); };
+document.getElementById("btnResume").onclick = () => lockAndPlay();
+document.getElementById("btnAgainW").onclick = () => { resetGame(); lockAndPlay(); };
+document.getElementById("btnAgainL").onclick = () => { resetGame(); lockAndPlay(); };
+
+function rotate(a) {
+  const c = Math.cos(a), s = Math.sin(a);
+  const dx = player.dirX, px = player.planeX;
+  player.dirX = dx * c - player.dirY * s;
+  player.dirY = dx * s + player.dirY * c;
+  player.planeX = px * c - player.planeY * s;
+  player.planeY = px * s + player.planeY * c;
+}
+
+/* ============================== Logik ============================== */
+
+function tryMove(nx, ny) {
+  const r = 0.25;
+  if (!wallAt(nx + r, player.y) && !wallAt(nx - r, player.y) &&
+      !wallAt(nx, player.y + r) && !wallAt(nx, player.y - r)) player.x = nx;
+  if (!wallAt(player.x, ny + r) && !wallAt(player.x, ny - r) &&
+      !wallAt(player.x + r, ny) && !wallAt(player.x - r, ny)) player.y = ny;
+}
+
+function hasLOS(x0, y0, x1, y1) {
+  const dx = x1 - x0, dy = y1 - y0;
+  const dist = Math.hypot(dx, dy);
+  const steps = Math.ceil(dist / 0.15);
+  for (let i = 1; i < steps; i++) {
+    if (wallAt(x0 + dx * i / steps, y0 + dy * i / steps)) return false;
+  }
+  return true;
+}
+
+function shoot() {
+  if (player.ammo <= 0) { SFX.empty(); return; }
+  player.ammo--; fireAnim = 1; SFX.shoot();
+  let best = null, bestDist = 1e9;
+  for (const e of enemies) {
+    if (!e.alive) continue;
+    const dx = e.x - player.x, dy = e.y - player.y;
+    const dist = Math.hypot(dx, dy);
+    if (dist > 18) continue;
+    const angTo = Math.atan2(dy, dx);
+    const angDir = Math.atan2(player.dirY, player.dirX);
+    let diff = angTo - angDir;
+    while (diff > Math.PI) diff -= 2 * Math.PI;
+    while (diff < -Math.PI) diff += 2 * Math.PI;
+    const cone = Math.max(0.045, Math.atan2(e.type === "y" ? 0.55 : 0.38, dist));
+    if (Math.abs(diff) < cone && dist < bestDist && hasLOS(player.x, player.y, e.x, e.y)) {
+      best = e; bestDist = dist;
+    }
+  }
+  if (best) {
+    best.hp--; best.hitTimer = 0.15; SFX.hit();
+    if (best.hp <= 0) {
+      best.alive = false; SFX.die();
+      puffs.push({ x: best.x, y: best.y, ttl: 0.5, max: 0.5, big: best.type === "y" });
+    }
+  }
+}
+
+function update(dt) {
+  // Bewegung
+  const run = keys["ShiftLeft"] || keys["ShiftRight"];
+  const sp = (run ? 5.0 : 3.2) * dt;
+  let mx = 0, my = 0;
+  if (keys["KeyW"] || keys["ArrowUp"]) { mx += player.dirX; my += player.dirY; }
+  if (keys["KeyS"] || keys["ArrowDown"]) { mx -= player.dirX; my -= player.dirY; }
+  if (keys["KeyA"]) { mx += player.dirY; my -= player.dirX; }
+  if (keys["KeyD"]) { mx -= player.dirY; my += player.dirX; }
+  if (keys["ArrowLeft"]) rotate(-2.4 * dt);
+  if (keys["ArrowRight"]) rotate(2.4 * dt);
+  const ml = Math.hypot(mx, my);
+  if (ml > 0) {
+    tryMove(player.x + (mx / ml) * sp, player.y + (my / ml) * sp);
+    bob += dt * (run ? 11 : 8);
+  }
+
+  // Gegner
+  let aliveCount = 0;
+  for (const e of enemies) {
+    if (!e.alive) continue;
+    aliveCount++;
+    e.hitTimer = Math.max(0, e.hitTimer - dt);
+    e.cooldown = Math.max(0, e.cooldown - dt);
+    const dx = player.x - e.x, dy = player.y - e.y;
+    const dist = Math.hypot(dx, dy);
+    if (dist < 14 && dist > 0.65 && hasLOS(e.x, e.y, player.x, player.y)) {
+      const vx = (dx / dist) * e.speed * dt, vy = (dy / dist) * e.speed * dt;
+      const r = 0.3;
+      if (!wallAt(e.x + vx + Math.sign(vx) * r, e.y)) e.x += vx;
+      if (!wallAt(e.x, e.y + vy + Math.sign(vy) * r)) e.y += vy;
+    }
+    if (dist <= 0.8 && e.cooldown <= 0) {
+      e.cooldown = e.type === "y" ? 1.2 : 0.9;
+      player.health -= e.dmg;
+      hurtFlash = 1; SFX.hurt();
+      if (player.health <= 0) {
+        player.health = 0;
+        state = "lose"; SFX.lose();
+        document.exitPointerLock && document.exitPointerLock();
+        showOverlay("lose");
+      }
+    }
+  }
+
+  // Pickups
+  for (const p of pickups) {
+    if (p.taken) continue;
+    if (Math.hypot(p.x - player.x, p.y - player.y) < 0.6) {
+      p.taken = true; pickFlash = 1; SFX.pickup();
+      if (p.type === "h") player.health = Math.min(100, player.health + 30);
+      else player.ammo = Math.min(99, player.ammo + 15);
+    }
+  }
+
+  for (const p of puffs) p.ttl -= dt;
+  puffs = puffs.filter(p => p.ttl > 0);
+
+  fireAnim = Math.max(0, fireAnim - dt * 5);
+  hurtFlash = Math.max(0, hurtFlash - dt * 2.5);
+  pickFlash = Math.max(0, pickFlash - dt * 3);
+
+  if (aliveCount === 0 && state === "play") {
+    state = "win"; SFX.win();
+    const secs = ((performance.now() - startTime) / 1000) | 0;
+    document.getElementById("winText").innerHTML =
+      "Bruno Bommel hat alle Frostgrummel aufgetaut und Eis-Yeti Knut in die Berge zur&uuml;ckgejagt!<br>" +
+      "Zeit: <b>" + ((secs / 60) | 0) + ":" + String(secs % 60).padStart(2, "0") + "</b> Minuten. " +
+      "B&uuml;rgermeisterin Frieda Flocke spendiert eine Runde Kakao!";
+    document.exitPointerLock && document.exitPointerLock();
+    showOverlay("win");
+  }
+
+  hudHealth.textContent = "❤️ " + player.health;
+  hudAmmo.textContent = "❄️ " + player.ammo;
+  hudEnemies.textContent = "☃ " + aliveCount;
+}
+
+/* ============================== Render ============================== */
+
+const snowflakes = Array.from({ length: 90 }, () => ({
+  x: Math.random() * W, y: Math.random() * H,
+  s: 0.4 + Math.random() * 1.4, r: 1 + Math.random() * 2.2,
+}));
+
+zbuf = new Float32Array(RAYS);
+
+function render() {
+  // Himmel + Boden
+  const sky = ctx.createLinearGradient(0, 0, 0, H / 2);
+  sky.addColorStop(0, "#274b8f"); sky.addColorStop(1, "#7fb0e8");
+  ctx.fillStyle = sky; ctx.fillRect(0, 0, W, H / 2);
+  const gnd = ctx.createLinearGradient(0, H / 2, 0, H);
+  gnd.addColorStop(0, "#b9d4ea"); gnd.addColorStop(1, "#f2f8ff");
+  ctx.fillStyle = gnd; ctx.fillRect(0, H / 2, W, H / 2);
+
+  // Berge am Horizont
+  ctx.fillStyle = "#5a82c2";
+  ctx.beginPath(); ctx.moveTo(0, H / 2);
+  for (let x = 0; x <= W; x += 40)
+    ctx.lineTo(x, H / 2 - 30 - 40 * Math.abs(Math.sin(x * 0.013 + 1.7)));
+  ctx.lineTo(W, H / 2); ctx.fill();
+
+  // Wände (Raycasting)
+  for (let r = 0; r < RAYS; r++) {
+    const cameraX = 2 * r / RAYS - 1;
+    const rdx = player.dirX + player.planeX * cameraX;
+    const rdy = player.dirY + player.planeY * cameraX;
+    let mapX = player.x | 0, mapY = player.y | 0;
+    const ddx = Math.abs(1 / (rdx || 1e-9)), ddy = Math.abs(1 / (rdy || 1e-9));
+    let stepX, stepY, sdx, sdy;
+    if (rdx < 0) { stepX = -1; sdx = (player.x - mapX) * ddx; }
+    else { stepX = 1; sdx = (mapX + 1 - player.x) * ddx; }
+    if (rdy < 0) { stepY = -1; sdy = (player.y - mapY) * ddy; }
+    else { stepY = 1; sdy = (mapY + 1 - player.y) * ddy; }
+    let side = 0, tile = 0, guard = 0;
+    while (guard++ < 256) {
+      if (sdx < sdy) { sdx += ddx; mapX += stepX; side = 0; }
+      else { sdy += ddy; mapY += stepY; side = 1; }
+      tile = wallAt(mapX, mapY);
+      if (tile) break;
+    }
+    const dist = side === 0 ? sdx - ddx : sdy - ddy;
+    zbuf[r] = dist;
+    const lineH = Math.min(H * 3, H / Math.max(0.0001, dist));
+    const y0 = H / 2 - lineH / 2;
+    let wallX = side === 0 ? player.y + dist * rdy : player.x + dist * rdx;
+    wallX -= wallX | 0;
+    const tex = TEX[tile] || TEX[1];
+    const tx = Math.min(63, (wallX * 64) | 0);
+    ctx.drawImage(tex, tx, 0, 1, 64, r * COL, y0, COL, lineH);
+    const shade = Math.min(0.55, dist * 0.035 + (side ? 0.18 : 0));
+    if (shade > 0.02) {
+      ctx.fillStyle = "rgba(20,30,60," + shade.toFixed(2) + ")";
+      ctx.fillRect(r * COL, y0, COL, lineH);
+    }
+  }
+
+  // Sprites (Gegner, Pickups, Puffs) sortiert nach Entfernung
+  const items = [];
+  for (const e of enemies) if (e.alive) items.push({ x: e.x, y: e.y, kind: e.type, ref: e });
+  for (const p of pickups) if (!p.taken) items.push({ x: p.x, y: p.y, kind: p.type, ref: p });
+  for (const p of puffs) items.push({ x: p.x, y: p.y, kind: "puff", ref: p });
+  for (const it of items)
+    it.d2 = (it.x - player.x) ** 2 + (it.y - player.y) ** 2;
+  items.sort((a, b) => b.d2 - a.d2);
+
+  const invDet = 1 / (player.planeX * player.dirY - player.dirX * player.planeY);
+  for (const it of items) {
+    const sx = it.x - player.x, sy = it.y - player.y;
+    const trX = invDet * (player.dirY * sx - player.dirX * sy);
+    const trY = invDet * (-player.planeY * sx + player.planeX * sy);
+    if (trY <= 0.15) continue;
+    const screenX = (W / 2) * (1 + trX / trY);
+    const wallH = H / trY;
+    let rel = 0.95, img = SPRITES[it.kind];
+    if (it.kind === "y") rel = 1.25;
+    else if (it.kind === "h" || it.kind === "a") rel = 0.42;
+    else if (it.kind === "puff") rel = (it.ref.big ? 1.5 : 0.95) * (1.3 - it.ref.ttl / it.ref.max);
+    const sh = wallH * rel, sw = sh;
+    const floorY = H / 2 + wallH / 2;
+    let yTop = floorY - sh;
+    if (it.kind === "puff") yTop = H / 2 - sh / 2;
+    const xStart = Math.round(screenX - sw / 2);
+    if (it.kind !== "puff" && it.ref.hitTimer > 0) ctx.filter = "brightness(1.9)";
+    if (it.kind === "puff") ctx.globalAlpha = Math.max(0, it.ref.ttl / it.ref.max);
+    const srcW = img.width;
+    for (let px = Math.max(0, xStart); px < Math.min(W, xStart + sw); px += COL) {
+      const r = (px / COL) | 0;
+      if (zbuf[r] <= trY) continue;
+      const srcX = ((px - xStart) / sw) * srcW;
+      ctx.drawImage(img, srcX, 0, Math.max(1, srcW / sw * COL), img.height, px, yTop, COL, sh);
+    }
+    ctx.filter = "none";
+    ctx.globalAlpha = 1;
+  }
+
+  // Schneefall
+  ctx.fillStyle = "rgba(255,255,255,.85)";
+  for (const f of snowflakes) {
+    f.y += f.s; f.x += Math.sin(f.y * 0.02) * 0.4;
+    if (f.y > H) { f.y = -4; f.x = Math.random() * W; }
+    ctx.beginPath(); ctx.arc(f.x, f.y, f.r, 0, 7); ctx.fill();
+  }
+
+  // Waffe: Fäustling mit Schneeball-Blaster
+  const bobX = Math.sin(bob) * 10, bobY = Math.abs(Math.cos(bob)) * 7;
+  const recoil = fireAnim * 26;
+  const wx = W / 2 + 150 + bobX, wy = H - 10 + bobY + recoil;
+  ctx.save();
+  ctx.translate(wx, wy);
+  ctx.fillStyle = "#7a4a22";                       // Holzrohr
+  ctx.beginPath();
+  ctx.moveTo(-36, 0); ctx.lineTo(-16, -120); ctx.lineTo(24, -120); ctx.lineTo(40, 0); ctx.fill();
+  ctx.fillStyle = "#9a6233";
+  ctx.fillRect(-22, -118, 36, 14);
+  ctx.fillStyle = "#e0312e";                       // Fäustling
+  ctx.beginPath(); ctx.ellipse(2, -28, 40, 32, -0.25, 0, 7); ctx.fill();
+  ctx.beginPath(); ctx.ellipse(-32, -44, 14, 18, 0.5, 0, 7); ctx.fill();
+  ctx.fillStyle = "#fff";
+  ctx.fillRect(-40, -10, 84, 14);
+  if (fireAnim > 0.55) {                           // Mündungs-Schneeball
+    ctx.fillStyle = "#fff";
+    ctx.beginPath(); ctx.arc(4, -150 - (1 - fireAnim) * 250, 16, 0, 7); ctx.fill();
+  }
+  ctx.restore();
+
+  // Fadenkreuz
+  ctx.strokeStyle = "rgba(255,255,255,.9)"; ctx.lineWidth = 2;
+  ctx.beginPath();
+  ctx.moveTo(W / 2 - 12, H / 2); ctx.lineTo(W / 2 - 4, H / 2);
+  ctx.moveTo(W / 2 + 4, H / 2); ctx.lineTo(W / 2 + 12, H / 2);
+  ctx.moveTo(W / 2, H / 2 - 12); ctx.lineTo(W / 2, H / 2 - 4);
+  ctx.moveTo(W / 2, H / 2 + 4); ctx.lineTo(W / 2, H / 2 + 12);
+  ctx.stroke();
+
+  // Treffer-/Pickup-Blitz
+  if (hurtFlash > 0) {
+    ctx.fillStyle = "rgba(220,30,30," + (hurtFlash * 0.35).toFixed(2) + ")";
+    ctx.fillRect(0, 0, W, H);
+  }
+  if (pickFlash > 0) {
+    ctx.fillStyle = "rgba(255,255,255," + (pickFlash * 0.2).toFixed(2) + ")";
+    ctx.fillRect(0, 0, W, H);
+  }
+}
+
+/* ============================== Loop ============================== */
+
+resetGame();
+
+function frame(t) {
+  const dt = Math.min(0.05, (t - lastTime) / 1000 || 0);
+  lastTime = t;
+  if (state === "play") update(dt);
+  if (state === "play" || state === "pause") render();
+  requestAnimationFrame(frame);
+}
+requestAnimationFrame(frame);
+</script>
+</body>
+</html>
