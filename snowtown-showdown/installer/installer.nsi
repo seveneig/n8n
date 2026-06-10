@@ -8,7 +8,7 @@ Unicode true
 !include "MUI2.nsh"
 
 !define APPNAME "Snowtown Showdown"
-!define APPVERSION "1.0.0"
+!define APPVERSION "2.0.0"
 !define UNINSTKEY "Software\Microsoft\Windows\CurrentVersion\Uninstall\SnowtownShowdown"
 
 Name "${APPNAME}"

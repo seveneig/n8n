@@ -1,45 +1,66 @@
-# Snowtown Showdown ❄️
+# Snowtown Showdown 2 ❄️🌞
 
-Ein Cartoon-Ego-Shooter im Retro-Raycasting-Stil (à la Wolfenstein 3D), der komplett
-offline im Browser läuft — keine Abhängigkeiten, keine Assets, alles wird zur Laufzeit
-prozedural gezeichnet und vertont.
+Ein Cartoon-Ego-Shooter mit Quests, Fahrzeugen und zwei Universen — komplett offline
+im Browser, keine Abhängigkeiten, keine Assets: Texturen, Figuren und Sounds werden
+zur Laufzeit prozedural erzeugt.
 
 ## Story & Figuren (alle original)
 
-Der fiese **Eis-Yeti Knut** hat die Schneemänner der verschneiten Kleinstadt **Snowtown**
-verhext: Als **Frostgrummel** watscheln sie durch die Gassen und wollen die Stadt einfrieren.
-**Bruno Bommel** — der Junge mit der roten Bommelmütze — schnappt sich den legendären
-Schneeball-Blaster von **Bürgermeisterin Frieda Flocke** und räumt auf.
+**Bruno Bommel** muss Snowtown gleich dreifach retten: Erst verschwindet der Stadt-Kakao,
+dann randaliert **Eis-Yeti Knut** in seiner verschlossenen Höhle — und schließlich öffnet
+sich ein Portal ins sonnige Parallel-Universum **Sommerhausen**, wo **Onkel Helmut** von
+**Blubber, der lebenden Brause-Flasche**, im Käfig gefangen gehalten wird.
 
 | Figur | Rolle |
 |---|---|
-| Bruno Bommel | Spielfigur, Held mit Schneeball-Blaster |
-| Frostgrummel | Verhexte Schneemänner (Standardgegner, 3 Treffer) |
-| Eis-Yeti Knut | Boss-Yeti (2× im Level, 16 Treffer, viel Schaden) |
-| Frieda Flocke | Bürgermeisterin, erwähnt in Story und Abspann |
+| Bruno Bommel | Spielfigur, Held mit Bommelmütze |
+| Frostgrummel | Verhexte Schneemänner (Snowtown) |
+| Eis-Yeti Knut | Boss von Quest 2, haust hinter dem Höhlentor |
+| Zitronen-Glibber | Schleim-Gegner in Sommerhausen |
+| Blubber | Boss von Quest 3 — eine lebende Brause-Flasche |
+| Onkel Helmut | Muss aus Blubbers Käfig befreit werden |
+| Frieda Flocke | Bürgermeisterin, spendiert am Ende ein Schnee-Denkmal |
+
+## Die 3 Quests
+
+1. **Operation Kakao** — Sammle die 5 gestohlenen Kakao-Kisten, die überall in Snowtown versteckt sind.
+2. **Knut muss weg** — Finde den Höhlenschlüssel, öffne das Höhlentor (E) und besiege Eis-Yeti Knut (Boss-Lebensleiste!).
+3. **Das Brause-Portal** — Spring ins Portal am Marktplatz, besiege Blubber im Parallel-Universum Sommerhausen, befreie Onkel Helmut (E) und kehre durchs Portal zurück.
+
+## Die 4 Waffen
+
+| Slot | Waffe | Eigenschaft |
+|---|---|---|
+| 1 | Schneeball-Blaster | Allrounder, von Anfang an dabei |
+| 2 | Eiszapfen-MG | Dauerfeuer (Maustaste halten) — als Pickup in Snowtown |
+| 3 | Karotten-Schrotflinte | 6 Schrot-Karotten, brutal auf kurze Distanz — Pickup in Snowtown |
+| 4 | Bommel-Bomben-Werfer | Explosive Flächenwirkung — Pickup in Sommerhausen |
+
+## Fahrzeuge
+
+In Snowtown steht ein **Schneemobil**, in Sommerhausen ein **Gokart**: mit `E` einsteigen,
+W/S = Gas/Bremse, A/D = lenken, mit Schwung kannst du Gegner **rammen**. `E` zum Aussteigen.
 
 ## Spielen
 
-**Variante A — Installer (Windows):**
-Führe `dist/Snowtown-Showdown-Setup.exe` aus. Der Installer installiert das Spiel
-pro Benutzer (kein Admin nötig) nach `%LOCALAPPDATA%\Snowtown Showdown`, legt
-Verknüpfungen auf Desktop und im Startmenü an und registriert einen Deinstaller
-unter „Apps & Features". Die Verknüpfung öffnet das Spiel im Standardbrowser.
+**Variante A — Installer (Windows):** `dist/Snowtown-Showdown-Setup.exe` ausführen.
+Installiert pro Benutzer (kein Admin nötig), legt Desktop-/Startmenü-Verknüpfungen an
+und registriert einen Deinstaller. Die Verknüpfung öffnet das Spiel im Standardbrowser.
 
-**Variante B — direkt:**
-Einfach `game/index.html` in einem modernen Browser (Chrome, Edge, Firefox) öffnen.
+**Variante B — direkt:** `game/index.html` in Chrome, Edge oder Firefox öffnen.
 
 ## Steuerung
 
 | Taste | Aktion |
 |---|---|
-| `W A S D` / Pfeiltasten | Laufen / drehen |
+| `W A S D` / Pfeiltasten | Laufen / fahren |
 | Maus | Umsehen (Pointer Lock) |
-| Linksklick | Schneeball feuern |
+| Linksklick (halten) | Feuern / Dauerfeuer |
+| `1`–`4` / Mausrad | Waffe wechseln |
+| `E` | Einsteigen, Tor öffnen, Helmut befreien |
 | Shift | Rennen |
+| `M` | Minikarte ein/aus |
 | Esc | Pause |
-
-Ziel: Alle 16 Gegner auftauen. Kakao-Tassen geben +30 Leben, Schneeball-Säcke +15 Munition.
 
 ## Installer selbst bauen
 
@@ -50,12 +71,11 @@ Benötigt [NSIS](https://nsis.sourceforge.io) (`makensis`):
 build-installer.bat         # Windows
 ```
 
-Ergebnis: `dist/Snowtown-Showdown-Setup.exe`
-
 ## Technik
 
-- Raycasting-Engine (DDA) in reinem Vanilla-JavaScript auf einem `<canvas>`
-- Prozedurale Wandtexturen und Figuren-Sprites (zur Laufzeit auf Offscreen-Canvases gezeichnet)
-- Sprite-Rendering mit Z-Buffer, Sichtlinien-Checks für KI und Hitscan
-- Synthetisierte Soundeffekte über die Web Audio API
-- Eine einzige HTML-Datei, läuft von `file://` ohne Server
+- Raycasting-Engine (DDA) mit **per-Pixel-Wand- und Boden-Texturierung** und Distanznebel auf einem 480×270-Framebuffer (`Uint32Array`), hochskaliert auf 960×540
+- Zwei Welten mit eigenen Texturen, Himmel, Wetter und Gegnern; Portal-Mechanik wechselt zur Laufzeit
+- Sprite-Rendering mit Z-Buffer, Sichtlinien-Checks, Hitscan- und Projektil-Waffen mit AoE-Explosionen
+- Türen, Quest-Trigger, NPC-Dialog, Boss-Lebensleisten, Minikarte mit Quest-Markern
+- Fahrzeug-Physik mit Beschleunigung, Lenkung, Ramm-Schaden und synthetisiertem Motorsound
+- Web Audio API für alle Sounds; eine einzige HTML-Datei, läuft von `file://`

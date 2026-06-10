@@ -3,80 +3,107 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Snowtown Showdown</title>
+<title>Snowtown Showdown 2</title>
 <style>
   html, body {
     margin: 0; padding: 0; background: #0b1530; height: 100%;
     font-family: "Comic Sans MS", "Segoe UI", sans-serif; color: #fff;
     overflow: hidden; user-select: none;
   }
-  #wrap {
-    position: relative; width: 100vw; height: 100vh;
-    display: flex; align-items: center; justify-content: center;
-  }
+  #wrap { position: relative; width: 100vw; height: 100vh; display: flex; align-items: center; justify-content: center; }
   #screen {
     background: #000; max-width: 100vw; max-height: 100vh;
-    aspect-ratio: 16/9; width: 100%; height: auto;
-    cursor: crosshair; image-rendering: auto;
+    aspect-ratio: 16/9; width: 100%; height: auto; cursor: crosshair;
   }
+  #quest {
+    position: absolute; top: 8px; left: 50%; transform: translateX(-50%);
+    text-align: center; font-size: clamp(12px, 1.7vw, 18px); font-weight: bold;
+    text-shadow: 2px 2px 0 #000; color: #ffd84d; pointer-events: none;
+    background: rgba(10,18,45,.55); padding: 4px 18px; border-radius: 999px;
+    max-width: 90vw;
+  }
+  #toasts {
+    position: absolute; top: 18%; left: 50%; transform: translateX(-50%);
+    display: flex; flex-direction: column; align-items: center; gap: 6px;
+    pointer-events: none; z-index: 5;
+  }
+  .toast {
+    background: rgba(10,18,45,.8); border: 2px solid #ffd84d; border-radius: 12px;
+    padding: 6px 20px; font-size: clamp(13px, 1.9vw, 20px); font-weight: bold;
+    animation: toastIn .25s ease-out;
+  }
+  @keyframes toastIn { from { transform: scale(.6); opacity: 0; } }
   #hud {
     position: absolute; left: 0; right: 0; bottom: 0;
-    display: flex; justify-content: center; gap: 40px;
-    padding: 10px 0; pointer-events: none;
-    font-size: clamp(16px, 2.6vw, 28px); font-weight: bold;
-    text-shadow: 2px 2px 0 #000;
+    display: flex; justify-content: center; align-items: flex-end; gap: 26px;
+    padding: 8px 0; pointer-events: none;
+    font-size: clamp(14px, 2.2vw, 24px); font-weight: bold; text-shadow: 2px 2px 0 #000;
   }
+  #weapons { display: flex; gap: 8px; }
+  .wslot {
+    background: rgba(10,18,45,.65); border: 2px solid #3a5bb5; border-radius: 10px;
+    padding: 3px 10px; font-size: clamp(10px, 1.4vw, 14px); text-align: center; min-width: 70px;
+  }
+  .wslot.active { border-color: #ffd84d; background: rgba(70,50,10,.75); }
+  .wslot.locked { opacity: .35; }
   .overlay {
     position: absolute; inset: 0; display: flex; flex-direction: column;
     align-items: center; justify-content: center; text-align: center;
-    background: rgba(8, 16, 44, 0.92); padding: 20px; z-index: 10;
+    background: rgba(8, 16, 44, 0.93); padding: 20px; z-index: 10; overflow-y: auto;
   }
   .overlay h1 {
-    font-size: clamp(30px, 6vw, 64px); margin: 0 0 8px;
-    color: #ffd84d; text-shadow: 3px 3px 0 #b3541e, 6px 6px 0 rgba(0,0,0,.4);
-    letter-spacing: 2px;
+    font-size: clamp(28px, 5.5vw, 58px); margin: 0 0 6px;
+    color: #ffd84d; text-shadow: 3px 3px 0 #b3541e, 6px 6px 0 rgba(0,0,0,.4); letter-spacing: 2px;
   }
-  .overlay h2 { color: #9fd8ff; margin: 4px 0 14px; font-size: clamp(15px, 2.4vw, 24px); }
-  .overlay p  { max-width: 720px; line-height: 1.45; margin: 6px 0; font-size: clamp(13px, 1.8vw, 18px); }
-  .cast { display: flex; gap: 26px; margin: 16px 0; flex-wrap: wrap; justify-content: center; }
+  .overlay h2 { color: #9fd8ff; margin: 4px 0 12px; font-size: clamp(14px, 2.2vw, 22px); }
+  .overlay p  { max-width: 760px; line-height: 1.45; margin: 5px 0; font-size: clamp(12px, 1.7vw, 17px); }
+  .cast { display: flex; gap: 18px; margin: 12px 0; flex-wrap: wrap; justify-content: center; }
   .cast figure { margin: 0; }
-  .cast canvas { background: #16275c; border-radius: 14px; border: 3px solid #3a5bb5; }
-  .cast figcaption { margin-top: 6px; font-size: 14px; color: #cfe6ff; }
+  .cast canvas { background: #16275c; border-radius: 12px; border: 3px solid #3a5bb5; }
+  .cast figcaption { margin-top: 4px; font-size: 12px; color: #cfe6ff; }
   .btn {
-    margin-top: 14px; font-family: inherit; font-size: clamp(16px, 2.4vw, 24px);
-    font-weight: bold; padding: 12px 34px; border-radius: 999px; border: 0;
-    background: #ffd84d; color: #5b3200; cursor: pointer;
-    box-shadow: 0 5px 0 #b3541e; transition: transform .08s;
+    margin-top: 12px; font-family: inherit; font-size: clamp(16px, 2.3vw, 23px);
+    font-weight: bold; padding: 11px 32px; border-radius: 999px; border: 0;
+    background: #ffd84d; color: #5b3200; cursor: pointer; box-shadow: 0 5px 0 #b3541e;
+    transition: transform .08s;
   }
   .btn:hover { transform: translateY(-2px); }
-  .keys { color: #8fa8e8; font-size: clamp(12px, 1.6vw, 15px); margin-top: 14px; }
+  .keys { color: #8fa8e8; font-size: clamp(11px, 1.4vw, 14px); margin-top: 12px; line-height: 1.6; }
   .hidden { display: none !important; }
 </style>
 </head>
 <body>
 <div id="wrap">
   <canvas id="screen" width="960" height="540"></canvas>
+  <div id="quest" class="hidden"></div>
+  <div id="toasts"></div>
 
   <div id="hud">
     <span id="hudHealth">&#10084;&#65039; 100</span>
-    <span id="hudAmmo">&#10052;&#65039; 40</span>
-    <span id="hudEnemies">&#9731; 0</span>
+    <div id="weapons"></div>
+    <span id="hudInfo"></span>
   </div>
 
   <div id="menu" class="overlay">
-    <h1>SNOWTOWN SHOWDOWN</h1>
-    <h2>Ein Cartoon-Ego-Shooter aus dem verschneiten Snowtown</h2>
-    <p>Der fiese <b>Eis-Yeti Knut</b> hat die Schneem&auml;nner von Snowtown verhext &ndash;
-       jetzt watscheln die <b>Frostgrummel</b> durch die Gassen und wollen die Stadt einfrieren!
-       Nur einer kann sie aufhalten: <b>Bruno Bommel</b>, der Junge mit der roten Bommelm&uuml;tze
-       und dem legend&auml;ren Schneeball-Blaster von <b>B&uuml;rgermeisterin Frieda Flocke</b>.</p>
+    <h1>SNOWTOWN SHOWDOWN 2</h1>
+    <h2>Drei Quests. Vier Waffen. Zwei Universen. Ein Held mit Bommelm&uuml;tze.</h2>
+    <p><b>Bruno Bommel</b> muss Snowtown erneut retten: Erst klaut jemand den Quest-Kakao,
+       dann randaliert <b>Eis-Yeti Knut</b> in seiner H&ouml;hle &ndash; und am Ende &ouml;ffnet sich
+       ein Portal ins sonnige Parallel-Universum <b>Sommerhausen</b>, wo <b>Onkel Helmut</b>
+       von <b>Blubber, der lebenden Brause-Flasche</b>, gefangen gehalten wird!</p>
     <div class="cast">
-      <figure><canvas id="castHero" width="120" height="120"></canvas><figcaption>Bruno Bommel<br>(Du!)</figcaption></figure>
-      <figure><canvas id="castSnowman" width="120" height="120"></canvas><figcaption>Frostgrummel<br>(verhexter Schneemann)</figcaption></figure>
-      <figure><canvas id="castYeti" width="120" height="120"></canvas><figcaption>Eis-Yeti Knut<br>(Boss)</figcaption></figure>
+      <figure><canvas id="cast0" width="100" height="100"></canvas><figcaption>Bruno Bommel</figcaption></figure>
+      <figure><canvas id="cast1" width="100" height="100"></canvas><figcaption>Frostgrummel</figcaption></figure>
+      <figure><canvas id="cast2" width="100" height="100"></canvas><figcaption>Eis-Yeti Knut</figcaption></figure>
+      <figure><canvas id="cast3" width="100" height="100"></canvas><figcaption>Zitronen-Glibber</figcaption></figure>
+      <figure><canvas id="cast4" width="100" height="100"></canvas><figcaption>Blubber</figcaption></figure>
+      <figure><canvas id="cast5" width="100" height="100"></canvas><figcaption>Onkel Helmut</figcaption></figure>
     </div>
-    <button id="btnStart" class="btn">Spiel starten</button>
-    <div class="keys">WASD / Pfeiltasten = laufen &middot; Maus = umsehen &middot; Klick = Schneeball feuern &middot; Shift = rennen &middot; ESC = Pause</div>
+    <button id="btnStart" class="btn">Abenteuer starten</button>
+    <div class="keys">
+      WASD = laufen &middot; Maus = umsehen &middot; Klick (halten) = feuern &middot; 1&ndash;4 / Mausrad = Waffe<br>
+      E = einsteigen / benutzen &middot; Shift = rennen &middot; M = Minikarte &middot; ESC = Pause
+    </div>
   </div>
 
   <div id="pause" class="overlay hidden">
@@ -86,14 +113,14 @@
   </div>
 
   <div id="win" class="overlay hidden">
-    <h1>SNOWTOWN IST GERETTET!</h1>
+    <h1>HELD VON ZWEI UNIVERSEN!</h1>
     <p id="winText"></p>
     <button id="btnAgainW" class="btn">Nochmal spielen</button>
   </div>
 
   <div id="lose" class="overlay hidden">
     <h1>EINGEFROREN!</h1>
-    <p>Die Frostgrummel haben Bruno erwischt. Snowtown braucht dich &ndash; versuch es nochmal!</p>
+    <p>Bruno wurde &uuml;berw&auml;ltigt. Snowtown braucht dich &ndash; versuch es nochmal!</p>
     <button id="btnAgainL" class="btn">Nochmal versuchen</button>
   </div>
 </div>
@@ -101,9 +128,12 @@
 <script>
 "use strict";
 
-/* ============================== Welt ============================== */
+/* ============================== Karten ============================== */
+/* Wand-Kacheln: 1 Schneeziegel 2 Holz 3 Eis 4 Stein (Snowtown)
+                 5 Backstein 6 Hecke 7 Sandstein 8 Bonbon (Sommerhausen)
+                 D = Tor (verschlossen)  .  = frei                       */
 
-const MAP = [
+const MAP_SNOW = [
   "111111111111111111111111",
   "1..........3...........1",
   "1.222.111..3..44444.33.1",
@@ -121,66 +151,139 @@ const MAP = [
   "1.4.4.4.3.3............1",
   "1.4...4.333.44444.1111.1",
   "1.44444.....4...4....1.1",
-  "1.......222.4.4.4.11.1.1",
+  "1.......222.4...4.11.1.1",
   "1.33333.2...4...4.1..1.1",
-  "1.3...3.2.4.44444.1.11.1",
+  "1.3...3.2.4.44D44.1.11.1",
   "1.3.3.3.2.4.......1....1",
   "1.3...3.2.4444444.1111.1",
   "1.......2..............1",
   "111111111111111111111111",
 ];
-const MW = MAP[0].length, MH = MAP.length;
 
-function wallAt(x, y) {
-  if (x < 0 || y < 0 || x >= MW || y >= MH) return 1;
-  const c = MAP[y | 0][x | 0];
-  return c === "." ? 0 : c.charCodeAt(0) - 48;
-}
-
-const SPAWN = { x: 2.5, y: 1.5, dir: 0 };
-
-const ENEMY_SPAWNS = [
-  // [x, y, typ]  typ: "s" = Frostgrummel (Schneemann), "y" = Eis-Yeti
-  [6.5, 1.5, "s"], [21.5, 1.5, "s"], [5.5, 5.5, "s"], [10.5, 7.5, "s"],
-  [20.5, 7.5, "s"], [3.5, 9.5, "s"], [16.5, 7.5, "s"], [12.5, 10.5, "s"],
-  [20.5, 12.5, "s"], [11.5, 14.5, "s"], [13.5, 14.5, "s"], [2.5, 17.5, "s"],
-  [13.5, 22.5, "s"], [21.5, 20.5, "s"],
-  [22.5, 14.5, "y"], [5.5, 22.5, "y"],
+const MAP_SUMMER = [
+  "555555555555555555555555",
+  "5......6...........7...5",
+  "5.7777.6.88888.666..7..5",
+  "5.7..7.6.8...8...6..7..5",
+  "5.7..7...8.8.8.6.6.....5",
+  "5.7777.6.8...8.6...777.5",
+  "5......6.88.88.66666...5",
+  "5.666..6...............5",
+  "5...6..6.7777777.888.8.5",
+  "5.6.6....7.....7.8.....5",
+  "555.6666.7.555.7.8.888.5",
+  "5........7.5.5.7.8...8.5",
+  "5.888888.7.5.5.7.88888.5",
+  "5.8....8...555.7.......5",
+  "5.8.88.8.7.....7.66666.5",
+  "5.8.88.8.7777777.6...6.5",
+  "5.8....8.........6.6.6.5",
+  "5.888888.55D5.77.6...6.5",
+  "5........5..5....66.66.5",
+  "5.777.66.5..5.88.......5",
+  "5.7...66.5555.88.......5",
+  "5.7.7............55555.5",
+  "5.7777.88.666.77.......5",
+  "555555555555555555555555",
 ];
 
-const PICKUP_SPAWNS = [
-  // [x, y, typ] typ: "h" = Kakao (+30 Leben), "a" = Schneeball-Sack (+15 Munition)
-  [1.5, 7.5, "h"], [8.5, 9.5, "h"], [22.5, 16.5, "h"], [9.5, 22.5, "h"],
-  [12.5, 1.5, "a"], [7.5, 12.5, "a"], [17.5, 22.5, "a"], [10.5, 16.5, "a"],
+/* ============================== Welt-Daten ============================== */
+
+const ETYPES = {
+  s: { hp: 3,  speed: 1.6, dmg: 7,  rel: 0.95, boss: false, name: "Frostgrummel" },
+  y: { hp: 30, speed: 1.4, dmg: 16, rel: 1.35, boss: true,  name: "Eis-Yeti Knut" },
+  g: { hp: 4,  speed: 2.1, dmg: 8,  rel: 0.80, boss: false, name: "Zitronen-Glibber" },
+  L: { hp: 40, speed: 1.1, dmg: 18, rel: 1.55, boss: true,  name: "Blubber, die lebende Brause-Flasche" },
+};
+
+const WORLDS = {
+  snow: {
+    map: MAP_SNOW, name: "Snowtown",
+    fog: [205, 222, 240], floorTex: "snowfloor",
+    skyTop: "#274b8f", skyBot: "#7fb0e8", mountain: "#5a82c2",
+    portal: { x: 10.5, y: 5.5, exitX: 9.5, exitY: 5.5 },
+    enemySpawns: [
+      [6.5, 1.5, "s"], [21.5, 1.5, "s"], [5.5, 5.5, "s"], [10.5, 7.5, "s"],
+      [20.5, 7.5, "s"], [3.5, 9.5, "s"], [16.5, 7.5, "s"], [12.5, 10.5, "s"],
+      [20.5, 12.5, "s"], [11.5, 14.5, "s"], [13.5, 14.5, "s"], [2.5, 17.5, "s"],
+      [13.5, 22.5, "s"], [21.5, 20.5, "s"], [22.5, 14.5, "s"], [5.5, 22.5, "s"],
+      [14.5, 17.5, "y"],                       // Knut, eingesperrt in der Höhle
+    ],
+    pickupSpawns: [
+      [1.5, 7.5, "h"], [8.5, 9.5, "h"], [22.5, 16.5, "h"], [9.5, 22.5, "h"],
+      [12.5, 1.5, "as"], [7.5, 12.5, "as"], [17.5, 22.5, "as"],
+      [10.5, 16.5, "ai"], [2.5, 13.5, "ai"], [18.5, 22.5, "ai"],
+      [6.5, 7.5, "ac"], [21.5, 12.5, "ac"],
+      [3.5, 11.5, "ab"], [16.5, 22.5, "ab"],
+      [16.5, 3.5, "wm"], [20.5, 18.5, "wc"],
+      // Quest 1: Kakao-Kisten
+      [1.5, 10.5, "c"], [12.5, 7.5, "c"], [22.5, 2.5, "c"], [7.5, 18.5, "c"], [12.5, 12.5, "c"],
+      // Quest 2: Schlüssel
+      [22.5, 20.5, "k"],
+    ],
+    vehicleSpawns: [[3.5, 21.5, "snowmobile"]],
+    spawn: { x: 2.5, y: 1.5, dir: 0 },
+  },
+  summer: {
+    map: MAP_SUMMER, name: "Sommerhausen",
+    fog: [255, 235, 200], floorTex: "grass",
+    skyTop: "#2f8fde", skyBot: "#bfe8ff", mountain: "#7fc97f",
+    portal: { x: 2.5, y: 1.5, exitX: 3.5, exitY: 1.5 },
+    enemySpawns: [
+      [6.5, 1.5, "g"], [13.5, 1.5, "g"], [21.5, 4.5, "g"], [2.5, 6.5, "g"],
+      [12.5, 7.5, "g"], [20.5, 8.5, "g"], [4.5, 11.5, "g"], [17.5, 13.5, "g"],
+      [3.5, 18.5, "g"], [14.5, 18.5, "g"], [14.5, 21.5, "g"],
+      [12.5, 16.5, "L"],                       // Blubber bewacht den Käfig
+    ],
+    pickupSpawns: [
+      [9.5, 1.5, "h"], [22.5, 13.5, "h"], [1.5, 18.5, "h"],
+      [10.5, 3.5, "ac"], [17.5, 7.5, "ac"], [22.5, 6.5, "ac"],
+      [8.5, 9.5, "ab"], [14.5, 13.5, "ab"], [21.5, 19.5, "ab"],
+      [8.5, 13.5, "ai"], [17.5, 22.5, "ai"],
+      [8.5, 21.5, "wb"],
+    ],
+    vehicleSpawns: [[6.5, 7.5, "kart"]],
+    npc: { x: 10.5, y: 18.5 },                  // Onkel Helmut im Käfig
+    spawn: { x: 3.5, y: 1.5, dir: 0 },
+  },
+};
+
+/* ============================== Waffen ============================== */
+
+const WEAPONS = [
+  { name: "Schneeball-Blaster", short: "Blaster", rate: 0.34, dmg: 1.0, pellets: 1, spread: 0,    ammo: "snow",   hitscan: true },
+  { name: "Eiszapfen-MG",       short: "Zapfen-MG", rate: 0.10, dmg: 0.6, pellets: 1, spread: 0.03, ammo: "ice",  hitscan: true },
+  { name: "Karotten-Schrotflinte", short: "Schrot", rate: 0.95, dmg: 1.0, pellets: 6, spread: 0.13, ammo: "carrot", hitscan: true },
+  { name: "Bommel-Bomben-Werfer", short: "Bomben", rate: 1.10, dmg: 6.0, pellets: 1, spread: 0,   ammo: "bomb",   hitscan: false },
 ];
+const AMMO_NAMES = { snow: "Schneebälle", ice: "Eiszapfen", carrot: "Karotten", bomb: "Bommel-Bomben" };
 
 /* ============================== Setup ============================== */
 
 const canvas = document.getElementById("screen");
 const ctx = canvas.getContext("2d");
 const W = canvas.width, H = canvas.height;
-const COL = 2;                      // Pixelbreite pro Strahl
-const RAYS = W / COL;
-const FOV = 0.66;
+const RW = 480, RH = 270;                  // interne Render-Auflösung
+const fbCanvas = document.createElement("canvas");
+fbCanvas.width = RW; fbCanvas.height = RH;
+const fbCtx = fbCanvas.getContext("2d");
+const fbImg = fbCtx.createImageData(RW, RH);
+const px32 = new Uint32Array(fbImg.data.buffer);
+const zbuf = new Float32Array(RW);
 
-const hudHealth = document.getElementById("hudHealth");
-const hudAmmo = document.getElementById("hudAmmo");
-const hudEnemies = document.getElementById("hudEnemies");
+const $ = id => document.getElementById(id);
+const overlays = { menu: $("menu"), pause: $("pause"), win: $("win"), lose: $("lose") };
 
-const overlays = {
-  menu: document.getElementById("menu"),
-  pause: document.getElementById("pause"),
-  win: document.getElementById("win"),
-  lose: document.getElementById("lose"),
-};
-
-let state = "menu";   // menu | play | pause | win | lose
-let player, enemies, pickups, puffs, keys, zbuf;
-let lastTime = 0, bob = 0, fireAnim = 0, hurtFlash = 0, pickFlash = 0;
-let startTime = 0;
+let state = "menu";
+let worlds, cur, player, quest, keys, mouseDown = false;
+let lastTime = 0, bob = 0, fireTimer = 0, fireAnim = 0;
+let hurtFlash = 0, pickFlash = 0, shake = 0, portalCooldown = 0;
+let showMap = true, startTime = 0, killCount = 0;
+let engineOsc = null, engineGain = null;
 
 function showOverlay(name) {
   for (const k in overlays) overlays[k].classList.toggle("hidden", k !== name);
+  $("quest").classList.toggle("hidden", name !== "none");
 }
 
 /* ============================== Texturen ============================== */
@@ -191,19 +294,18 @@ function makeCanvas(w, h, draw) {
   draw(c.getContext("2d"), w, h);
   return c;
 }
-
-function speckle(g, w, h, color, n) {
+function speckle(g, w, h, color, n, a) {
   g.fillStyle = color;
   for (let i = 0; i < n; i++) {
-    g.globalAlpha = 0.15 + Math.random() * 0.25;
+    g.globalAlpha = (a || 0.2) + Math.random() * 0.2;
     g.fillRect(Math.random() * w, Math.random() * h, 2, 2);
   }
   g.globalAlpha = 1;
 }
 
-const TEX = {};
+const TEXC = {};
 
-TEX[1] = makeCanvas(64, 64, (g, w, h) => {       // Schneeziegel
+TEXC[1] = makeCanvas(64, 64, (g, w, h) => {       // Schneeziegel
   g.fillStyle = "#e8f2fb"; g.fillRect(0, 0, w, h);
   g.strokeStyle = "#b8cfe4"; g.lineWidth = 3;
   for (let y = 0; y <= h; y += 16) { g.beginPath(); g.moveTo(0, y); g.lineTo(w, y); g.stroke(); }
@@ -212,43 +314,106 @@ TEX[1] = makeCanvas(64, 64, (g, w, h) => {       // Schneeziegel
       { g.beginPath(); g.moveTo(x + 16, r * 16); g.lineTo(x + 16, r * 16 + 16); g.stroke(); }
   speckle(g, w, h, "#ffffff", 60);
 });
-
-TEX[2] = makeCanvas(64, 64, (g, w, h) => {       // Holzhütte
+TEXC[2] = makeCanvas(64, 64, (g, w, h) => {       // Holz
   g.fillStyle = "#9a6233"; g.fillRect(0, 0, w, h);
-  for (let x = 0; x < w; x += 13) {
-    g.fillStyle = x % 26 ? "#8a5527" : "#a76d3b"; g.fillRect(x, 0, 11, h);
-  }
+  for (let x = 0; x < w; x += 13) { g.fillStyle = x % 26 ? "#8a5527" : "#a76d3b"; g.fillRect(x, 0, 11, h); }
   g.strokeStyle = "#5e3a17"; g.lineWidth = 2;
   for (let x = 0; x < w; x += 13) { g.beginPath(); g.moveTo(x, 0); g.lineTo(x, h); g.stroke(); }
   g.fillStyle = "#5e3a17";
   for (let i = 0; i < 8; i++) g.fillRect(3 + (i * 19) % 58, (i * 23) % 60, 3, 5);
 });
-
-TEX[3] = makeCanvas(64, 64, (g, w, h) => {       // Eisblock
+TEXC[3] = makeCanvas(64, 64, (g, w, h) => {       // Eis
   const grad = g.createLinearGradient(0, 0, w, h);
   grad.addColorStop(0, "#9fe8ff"); grad.addColorStop(1, "#5db9e8");
   g.fillStyle = grad; g.fillRect(0, 0, w, h);
   g.strokeStyle = "rgba(255,255,255,.7)"; g.lineWidth = 3;
   g.beginPath(); g.moveTo(8, 60); g.lineTo(30, 20); g.lineTo(40, 34); g.lineTo(58, 4); g.stroke();
-  g.strokeStyle = "#3f93c4"; g.lineWidth = 2;
-  g.strokeRect(1, 1, w - 2, h - 2);
+  g.strokeStyle = "#3f93c4"; g.lineWidth = 2; g.strokeRect(1, 1, w - 2, h - 2);
 });
-
-TEX[4] = makeCanvas(64, 64, (g, w, h) => {       // Stein
+TEXC[4] = makeCanvas(64, 64, (g, w, h) => {       // Stein
   g.fillStyle = "#8d93a3"; g.fillRect(0, 0, w, h);
   g.strokeStyle = "#5d6371"; g.lineWidth = 3;
   for (let y = 0; y <= h; y += 21) { g.beginPath(); g.moveTo(0, y); g.lineTo(w, y); g.stroke(); }
   for (let r = 0; r < 3; r++)
     for (let x = (r % 2) * 21 - 10; x <= w; x += 21)
       { g.beginPath(); g.moveTo(x + 10, r * 21); g.lineTo(x + 10, r * 21 + 21); g.stroke(); }
-  speckle(g, w, h, "#ffffff", 30);
-  speckle(g, w, h, "#3a3f4a", 40);
+  speckle(g, w, h, "#ffffff", 30); speckle(g, w, h, "#3a3f4a", 40);
 });
+TEXC[5] = makeCanvas(64, 64, (g, w, h) => {       // Backstein
+  g.fillStyle = "#b8503a"; g.fillRect(0, 0, w, h);
+  g.strokeStyle = "#7d2f1f"; g.lineWidth = 3;
+  for (let y = 0; y <= h; y += 13) { g.beginPath(); g.moveTo(0, y); g.lineTo(w, y); g.stroke(); }
+  for (let r = 0; r < 5; r++)
+    for (let x = (r % 2) * 16 - 8; x <= w; x += 32)
+      { g.beginPath(); g.moveTo(x + 16, r * 13); g.lineTo(x + 16, r * 13 + 13); g.stroke(); }
+  speckle(g, w, h, "#e08060", 50);
+});
+TEXC[6] = makeCanvas(64, 64, (g, w, h) => {       // Hecke
+  g.fillStyle = "#2e7d32"; g.fillRect(0, 0, w, h);
+  for (let i = 0; i < 70; i++) {
+    g.fillStyle = ["#388e3c", "#1b5e20", "#43a047"][i % 3];
+    g.beginPath(); g.arc(Math.random() * w, Math.random() * h, 4 + Math.random() * 5, 0, 7); g.fill();
+  }
+  g.fillStyle = "#e91e63";
+  for (let i = 0; i < 6; i++) { g.beginPath(); g.arc(8 + (i * 23) % 52, (i * 17) % 56 + 4, 2.5, 0, 7); g.fill(); }
+});
+TEXC[7] = makeCanvas(64, 64, (g, w, h) => {       // Sandstein
+  g.fillStyle = "#e0c187"; g.fillRect(0, 0, w, h);
+  g.strokeStyle = "#b3955c"; g.lineWidth = 3;
+  for (let y = 0; y <= h; y += 21) { g.beginPath(); g.moveTo(0, y); g.lineTo(w, y); g.stroke(); }
+  for (let r = 0; r < 3; r++)
+    for (let x = (r % 2) * 21 - 10; x <= w; x += 21)
+      { g.beginPath(); g.moveTo(x + 10, r * 21); g.lineTo(x + 10, r * 21 + 21); g.stroke(); }
+  speckle(g, w, h, "#f4ddae", 40);
+});
+TEXC[8] = makeCanvas(64, 64, (g, w, h) => {       // Bonbon
+  g.fillStyle = "#fff"; g.fillRect(0, 0, w, h);
+  g.fillStyle = "#ff6fa5";
+  for (let i = -2; i < 6; i++) {
+    g.beginPath();
+    g.moveTo(i * 16, 0); g.lineTo(i * 16 + 10, 0); g.lineTo(i * 16 + 26, h); g.lineTo(i * 16 + 16, h);
+    g.fill();
+  }
+  speckle(g, w, h, "#ffd1e3", 40, 0.3);
+});
+TEXC[9] = makeCanvas(64, 64, (g, w, h) => {       // Tor (verschlossen)
+  g.fillStyle = "#6b4a23"; g.fillRect(0, 0, w, h);
+  g.fillStyle = "#54391a";
+  for (let x = 0; x < w; x += 16) g.fillRect(x, 0, 3, h);
+  g.strokeStyle = "#cfd8e3"; g.lineWidth = 5;
+  g.beginPath(); g.moveTo(0, 12); g.lineTo(w, 12); g.moveTo(0, 52); g.lineTo(w, 52); g.stroke();
+  g.fillStyle = "#ffd84d";
+  g.beginPath(); g.arc(32, 32, 8, 0, 7); g.fill();
+  g.fillStyle = "#6b4a23"; g.fillRect(30, 30, 4, 8);
+});
+const TEXF = {
+  snowfloor: makeCanvas(64, 64, (g, w, h) => {
+    g.fillStyle = "#dde9f5"; g.fillRect(0, 0, w, h);
+    speckle(g, w, h, "#ffffff", 80, 0.35); speckle(g, w, h, "#b8cfe4", 50, 0.3);
+    g.fillStyle = "rgba(160,190,220,.5)";
+    g.beginPath(); g.ellipse(20, 40, 9, 4, 0.4, 0, 7); g.fill();
+    g.beginPath(); g.ellipse(48, 14, 7, 3, -0.3, 0, 7); g.fill();
+  }),
+  grass: makeCanvas(64, 64, (g, w, h) => {
+    g.fillStyle = "#58a843"; g.fillRect(0, 0, w, h);
+    speckle(g, w, h, "#3e8a2e", 70, 0.4); speckle(g, w, h, "#7cc465", 70, 0.4);
+    g.fillStyle = "#ffd84d";
+    for (let i = 0; i < 4; i++) { g.beginPath(); g.arc((i * 31) % 60 + 3, (i * 43) % 60 + 2, 2, 0, 7); g.fill(); }
+    g.fillStyle = "#fff";
+    for (let i = 0; i < 3; i++) { g.beginPath(); g.arc((i * 41) % 58 + 4, (i * 29) % 58 + 4, 2, 0, 7); g.fill(); }
+  }),
+};
+
+function texData(c) {
+  return new Uint32Array(c.getContext("2d").getImageData(0, 0, 64, 64).data.buffer);
+}
+const TEXD = {};
+for (const k in TEXC) TEXD[k] = texData(TEXC[k]);
+const FLOORD = { snowfloor: texData(TEXF.snowfloor), grass: texData(TEXF.grass) };
 
 /* ============================== Sprites ============================== */
 
-function drawSnowman(g, s) {        // s = Skalierung, Basis 120x120
-  g.save(); g.scale(s, s);
+function drawSnowman(g) {
   g.strokeStyle = "#6b4a23"; g.lineWidth = 4; g.lineCap = "round";
   g.beginPath(); g.moveTo(28, 70); g.lineTo(6, 50); g.moveTo(14, 56); g.lineTo(8, 62); g.stroke();
   g.beginPath(); g.moveTo(92, 70); g.lineTo(114, 50); g.moveTo(106, 56); g.lineTo(112, 62); g.stroke();
@@ -256,65 +421,134 @@ function drawSnowman(g, s) {        // s = Skalierung, Basis 120x120
   g.beginPath(); g.arc(60, 92, 27, 0, 7); g.fill(); g.stroke();
   g.beginPath(); g.arc(60, 62, 21, 0, 7); g.fill(); g.stroke();
   g.beginPath(); g.arc(60, 34, 17, 0, 7); g.fill(); g.stroke();
-  g.fillStyle = "#222";                                  // böse Augen
+  g.fillStyle = "#222";
   g.beginPath(); g.moveTo(48, 26); g.lineTo(58, 32); g.lineTo(48, 34); g.fill();
   g.beginPath(); g.moveTo(72, 26); g.lineTo(62, 32); g.lineTo(72, 34); g.fill();
   g.fillStyle = "#e33"; g.fillRect(51, 30, 3, 3); g.fillRect(66, 30, 3, 3);
-  g.fillStyle = "#f08020";                               // Karottennase
+  g.fillStyle = "#f08020";
   g.beginPath(); g.moveTo(60, 36); g.lineTo(74, 41); g.lineTo(60, 43); g.fill();
-  g.strokeStyle = "#222"; g.lineWidth = 3;               // grummeliger Mund
+  g.strokeStyle = "#222"; g.lineWidth = 3;
   g.beginPath(); g.arc(60, 52, 7, Math.PI * 1.15, Math.PI * 1.85, true); g.stroke();
-  g.fillStyle = "#222";                                  // Hut
-  g.fillRect(44, 12, 32, 5); g.fillRect(50, 0, 20, 14);
+  g.fillStyle = "#222"; g.fillRect(44, 12, 32, 5); g.fillRect(50, 0, 20, 14);
   g.fillStyle = "#7a3df0"; g.fillRect(50, 9, 20, 4);
-  g.fillStyle = "#333";                                  // Knöpfe
+  g.fillStyle = "#333";
   g.beginPath(); g.arc(60, 84, 3, 0, 7); g.fill();
   g.beginPath(); g.arc(60, 96, 3, 0, 7); g.fill();
-  g.restore();
 }
 
-function drawYeti(g, s) {
-  g.save(); g.scale(s, s);
+function drawYeti(g) {
   g.fillStyle = "#cfeaff"; g.strokeStyle = "#7fb6dd"; g.lineWidth = 3;
-  g.beginPath();                                          // zotteliger Körper
-  g.moveTo(60, 6);
+  g.beginPath(); g.moveTo(60, 6);
   for (let i = 0; i <= 22; i++) {
     const a = -Math.PI / 2 + (i / 22) * Math.PI * 2;
     const r = 46 + (i % 2 ? 7 : 0);
     g.lineTo(60 + Math.cos(a) * r * 0.95, 60 + Math.sin(a) * r);
   }
   g.closePath(); g.fill(); g.stroke();
-  g.fillStyle = "#eef8ff";                                // Gesichtsfläche
-  g.beginPath(); g.ellipse(60, 44, 26, 22, 0, 0, 7); g.fill();
-  g.fillStyle = "#1a2a4a";                                // Augen
+  g.fillStyle = "#eef8ff"; g.beginPath(); g.ellipse(60, 44, 26, 22, 0, 0, 7); g.fill();
+  g.fillStyle = "#1a2a4a";
   g.beginPath(); g.moveTo(40, 32); g.lineTo(56, 40); g.lineTo(42, 44); g.fill();
   g.beginPath(); g.moveTo(80, 32); g.lineTo(64, 40); g.lineTo(78, 44); g.fill();
   g.fillStyle = "#ffd84d"; g.fillRect(47, 38, 4, 4); g.fillRect(70, 38, 4, 4);
-  g.fillStyle = "#1a2a4a";                                // Maul mit Hauern
-  g.beginPath(); g.ellipse(60, 56, 14, 8, 0, 0, Math.PI); g.fill();
+  g.fillStyle = "#1a2a4a"; g.beginPath(); g.ellipse(60, 56, 14, 8, 0, 0, Math.PI); g.fill();
   g.fillStyle = "#fff";
   g.beginPath(); g.moveTo(50, 56); g.lineTo(54, 66); g.lineTo(58, 56); g.fill();
   g.beginPath(); g.moveTo(62, 56); g.lineTo(66, 66); g.lineTo(70, 56); g.fill();
-  g.fillStyle = "#cfeaff"; g.strokeStyle = "#7fb6dd";     // Pranken
+  g.fillStyle = "#cfeaff"; g.strokeStyle = "#7fb6dd";
   g.beginPath(); g.arc(14, 78, 12, 0, 7); g.fill(); g.stroke();
   g.beginPath(); g.arc(106, 78, 12, 0, 7); g.fill(); g.stroke();
-  g.strokeStyle = "#1a2a4a"; g.lineWidth = 2;
-  for (const px of [8, 14, 20]) { g.beginPath(); g.moveTo(px, 70); g.lineTo(px, 64); g.stroke(); }
-  for (const px of [100, 106, 112]) { g.beginPath(); g.moveTo(px, 70); g.lineTo(px, 64); g.stroke(); }
-  g.restore();
 }
 
-function drawHero(g, s) {
-  g.save(); g.scale(s, s);
-  g.fillStyle = "#2e6fd8";                                 // Anorak
+function drawGlibber(g) {
+  g.fillStyle = "#e8e34a"; g.strokeStyle = "#a89c1d"; g.lineWidth = 3;
+  g.beginPath(); g.moveTo(20, 110);
+  g.bezierCurveTo(10, 60, 30, 30, 60, 28);
+  g.bezierCurveTo(90, 30, 110, 60, 100, 110);
+  g.quadraticCurveTo(85, 102, 75, 110);
+  g.quadraticCurveTo(67, 103, 60, 110);
+  g.quadraticCurveTo(50, 102, 40, 110);
+  g.quadraticCurveTo(30, 104, 20, 110);
+  g.fill(); g.stroke();
+  g.fillStyle = "rgba(255,255,255,.5)";
+  g.beginPath(); g.ellipse(42, 48, 9, 14, 0.5, 0, 7); g.fill();
+  g.fillStyle = "#222";
+  g.beginPath(); g.moveTo(40, 52); g.lineTo(56, 60); g.lineTo(42, 64); g.fill();
+  g.beginPath(); g.moveTo(80, 52); g.lineTo(64, 60); g.lineTo(78, 64); g.fill();
+  g.strokeStyle = "#222"; g.lineWidth = 4;
+  g.beginPath(); g.arc(60, 80, 12, Math.PI * 1.15, Math.PI * 1.85, true); g.stroke();
+  g.fillStyle = "#7da32a";
+  g.beginPath(); g.ellipse(60, 24, 8, 5, 0, 0, 7); g.fill();
+}
+
+function drawBlubber(g) {
+  g.fillStyle = "#7a4df0"; g.strokeStyle = "#4a2a9e"; g.lineWidth = 3;   // Flasche
+  g.beginPath();
+  g.moveTo(44, 30); g.lineTo(44, 14); g.lineTo(76, 14); g.lineTo(76, 30);
+  g.quadraticCurveTo(92, 40, 92, 60); g.lineTo(92, 104);
+  g.quadraticCurveTo(92, 114, 80, 114); g.lineTo(40, 114);
+  g.quadraticCurveTo(28, 114, 28, 104); g.lineTo(28, 60);
+  g.quadraticCurveTo(28, 40, 44, 30);
+  g.fill(); g.stroke();
+  g.fillStyle = "#ffd84d"; g.fillRect(42, 4, 36, 12);                     // Kronkorken
+  g.strokeStyle = "#b3541e"; g.lineWidth = 2;
+  for (let x = 44; x < 78; x += 6) { g.beginPath(); g.moveTo(x, 4); g.lineTo(x, 16); g.stroke(); }
+  g.fillStyle = "#fff";                                                   // Etikett
+  g.fillRect(34, 62, 52, 28);
+  g.fillStyle = "#e0312e"; g.font = "bold 13px sans-serif"; g.textAlign = "center";
+  g.fillText("BRAUSE", 60, 81);
+  g.fillStyle = "#fff";                                                   // böse Augen
+  g.beginPath(); g.ellipse(48, 44, 8, 10, 0, 0, 7); g.fill();
+  g.beginPath(); g.ellipse(72, 44, 8, 10, 0, 0, 7); g.fill();
+  g.fillStyle = "#e0312e";
+  g.beginPath(); g.arc(50, 46, 4, 0, 7); g.fill();
+  g.beginPath(); g.arc(70, 46, 4, 0, 7); g.fill();
+  g.strokeStyle = "#fff"; g.lineWidth = 3;                                // Zornesfalten
+  g.beginPath(); g.moveTo(40, 32); g.lineTo(54, 38); g.moveTo(80, 32); g.lineTo(66, 38); g.stroke();
+  g.strokeStyle = "#4a2a9e"; g.lineWidth = 5; g.lineCap = "round";        // Arme
+  g.beginPath(); g.moveTo(28, 66); g.quadraticCurveTo(8, 60, 6, 44); g.stroke();
+  g.beginPath(); g.moveTo(92, 66); g.quadraticCurveTo(112, 60, 114, 44); g.stroke();
+  g.fillStyle = "#7a4df0";
+  g.beginPath(); g.arc(6, 42, 7, 0, 7); g.fill();
+  g.beginPath(); g.arc(114, 42, 7, 0, 7); g.fill();
+  for (const [bx, by, br] of [[40, 100, 4], [60, 96, 5], [78, 102, 3]]) { // Bläschen
+    g.fillStyle = "rgba(255,255,255,.45)";
+    g.beginPath(); g.arc(bx, by, br, 0, 7); g.fill();
+  }
+}
+
+function drawHelmut(g, caged) {
+  g.fillStyle = "#6a8c4f";                                  // Strickjacke
+  g.beginPath(); g.ellipse(60, 100, 26, 22, 0, Math.PI, 0); g.fill();
+  g.fillStyle = "#ffd9b8";                                  // Kopf
+  g.beginPath(); g.arc(60, 62, 23, 0, 7); g.fill();
+  g.fillStyle = "#dcdcdc";                                  // Haarkranz
+  g.beginPath(); g.arc(40, 56, 7, 0, 7); g.fill();
+  g.beginPath(); g.arc(80, 56, 7, 0, 7); g.fill();
+  g.fillStyle = "#fff";                                     // Schnauzbart
+  g.beginPath(); g.ellipse(60, 74, 13, 6, 0, 0, 7); g.fill();
+  g.fillStyle = "#222";
+  g.beginPath(); g.arc(52, 58, 3, 0, 7); g.fill();
+  g.beginPath(); g.arc(68, 58, 3, 0, 7); g.fill();
+  g.strokeStyle = "#a0762e"; g.lineWidth = 3;               // Brille
+  g.strokeRect(45, 52, 13, 11); g.strokeRect(62, 52, 13, 11);
+  g.fillStyle = "#f4a4a4";
+  g.beginPath(); g.arc(60, 66, 4, 0, 7); g.fill();
+  if (caged) {
+    g.strokeStyle = "#555"; g.lineWidth = 5;
+    for (let x = 14; x <= 106; x += 18) { g.beginPath(); g.moveTo(x, 8); g.lineTo(x, 116); g.stroke(); }
+    g.beginPath(); g.moveTo(8, 12); g.lineTo(112, 12); g.moveTo(8, 112); g.lineTo(112, 112); g.stroke();
+  }
+}
+
+function drawHero(g) {
+  g.fillStyle = "#2e6fd8";
   g.beginPath(); g.ellipse(60, 96, 30, 24, 0, Math.PI, 0); g.fill();
-  g.fillStyle = "#ffd9b8";                                 // Gesicht
-  g.beginPath(); g.arc(60, 56, 26, 0, 7); g.fill();
-  g.fillStyle = "#e0312e";                                 // Bommelmütze
+  g.fillStyle = "#ffd9b8"; g.beginPath(); g.arc(60, 56, 26, 0, 7); g.fill();
+  g.fillStyle = "#e0312e";
   g.beginPath(); g.arc(60, 44, 27, Math.PI, 0); g.fill();
   g.fillRect(33, 40, 54, 9);
   g.fillStyle = "#fff"; g.beginPath(); g.arc(60, 16, 8, 0, 7); g.fill();
-  g.fillStyle = "#222";                                    // Gesicht
+  g.fillStyle = "#222";
   g.beginPath(); g.arc(51, 58, 3.5, 0, 7); g.fill();
   g.beginPath(); g.arc(69, 58, 3.5, 0, 7); g.fill();
   g.strokeStyle = "#222"; g.lineWidth = 3;
@@ -322,13 +556,16 @@ function drawHero(g, s) {
   g.fillStyle = "#f4a4a4";
   g.beginPath(); g.arc(42, 66, 4, 0, 7); g.fill();
   g.beginPath(); g.arc(78, 66, 4, 0, 7); g.fill();
-  g.restore();
 }
 
 const SPRITES = {
-  s: makeCanvas(120, 120, g => drawSnowman(g, 1)),
-  y: makeCanvas(120, 120, g => drawYeti(g, 1)),
-  h: makeCanvas(64, 64, g => {                            // Kakao
+  s: makeCanvas(120, 120, drawSnowman),
+  y: makeCanvas(120, 120, drawYeti),
+  g: makeCanvas(120, 120, drawGlibber),
+  L: makeCanvas(120, 120, drawBlubber),
+  npcCaged: makeCanvas(120, 120, g => drawHelmut(g, true)),
+  npcFree: makeCanvas(120, 120, g => drawHelmut(g, false)),
+  h: makeCanvas(64, 64, g => {
     g.fillStyle = "#8a4b22"; g.fillRect(16, 24, 30, 30);
     g.fillStyle = "#b56b35"; g.fillRect(16, 24, 30, 7);
     g.strokeStyle = "#8a4b22"; g.lineWidth = 5;
@@ -337,15 +574,77 @@ const SPRITES = {
     g.beginPath(); g.moveTo(26, 20); g.quadraticCurveTo(31, 12, 26, 5); g.stroke();
     g.beginPath(); g.moveTo(36, 20); g.quadraticCurveTo(41, 12, 36, 5); g.stroke();
   }),
-  a: makeCanvas(64, 64, g => {                            // Schneeball-Sack
+  as: makeCanvas(64, 64, g => {
     g.fillStyle = "#3a5bb5";
     g.beginPath(); g.moveTo(32, 8); g.quadraticCurveTo(6, 30, 12, 50);
     g.quadraticCurveTo(32, 62, 52, 50); g.quadraticCurveTo(58, 30, 32, 8); g.fill();
-    g.strokeStyle = "#22356b"; g.lineWidth = 3;
-    g.beginPath(); g.moveTo(26, 12); g.lineTo(38, 12); g.stroke();
     g.fillStyle = "#fff";
-    for (const [px, py] of [[24, 36], [38, 32], [32, 46]])
-      { g.beginPath(); g.arc(px, py, 7, 0, 7); g.fill(); }
+    for (const [px, py] of [[24, 36], [38, 32], [32, 46]]) { g.beginPath(); g.arc(px, py, 7, 0, 7); g.fill(); }
+  }),
+  ai: makeCanvas(64, 64, g => {
+    g.fillStyle = "#9fe8ff"; g.strokeStyle = "#3f93c4"; g.lineWidth = 2;
+    for (const dx of [-14, 0, 14]) {
+      g.beginPath(); g.moveTo(32 + dx - 6, 14); g.lineTo(32 + dx + 6, 14); g.lineTo(32 + dx, 54);
+      g.closePath(); g.fill(); g.stroke();
+    }
+  }),
+  ac: makeCanvas(64, 64, g => {
+    for (const [dx, rot] of [[-12, -0.3], [2, 0], [16, 0.3]]) {
+      g.save(); g.translate(32 + dx, 34); g.rotate(rot);
+      g.fillStyle = "#f08020";
+      g.beginPath(); g.moveTo(-6, -16); g.lineTo(6, -16); g.lineTo(0, 22); g.fill();
+      g.fillStyle = "#3e8a2e"; g.fillRect(-4, -24, 3, 9); g.fillRect(1, -24, 3, 9);
+      g.restore();
+    }
+  }),
+  ab: makeCanvas(64, 64, g => {
+    g.fillStyle = "#e0312e"; g.beginPath(); g.arc(32, 38, 18, 0, 7); g.fill();
+    g.fillStyle = "#fff"; g.beginPath(); g.arc(26, 32, 5, 0, 7); g.fill();
+    g.strokeStyle = "#6b4a23"; g.lineWidth = 3;
+    g.beginPath(); g.moveTo(32, 20); g.quadraticCurveTo(40, 10, 48, 14); g.stroke();
+    g.fillStyle = "#ffd84d"; g.beginPath(); g.arc(49, 13, 4, 0, 7); g.fill();
+  }),
+  c: makeCanvas(64, 64, g => {                                  // Kakao-Kiste
+    g.fillStyle = "#b5852f"; g.fillRect(8, 18, 48, 38);
+    g.strokeStyle = "#7a5a1c"; g.lineWidth = 3; g.strokeRect(8, 18, 48, 38);
+    g.beginPath(); g.moveTo(8, 18); g.lineTo(56, 56); g.moveTo(56, 18); g.lineTo(8, 56); g.stroke();
+    g.fillStyle = "#5b3200"; g.font = "bold 11px sans-serif"; g.textAlign = "center";
+    g.fillText("KAKAO", 32, 14);
+    g.fillStyle = "#ffd84d"; g.fillRect(8, 33, 48, 8);
+  }),
+  k: makeCanvas(64, 64, g => {                                  // Schlüssel
+    g.strokeStyle = "#ffd84d"; g.fillStyle = "#ffd84d"; g.lineWidth = 6;
+    g.beginPath(); g.arc(22, 26, 10, 0, 7); g.stroke();
+    g.beginPath(); g.moveTo(28, 34); g.lineTo(48, 54); g.stroke();
+    g.fillRect(40, 50, 10, 4); g.fillRect(44, 42, 4, 10);
+  }),
+  snowmobile: makeCanvas(120, 120, g => {
+    g.fillStyle = "#e0312e";                                   // Karosserie
+    g.beginPath(); g.moveTo(14, 78); g.quadraticCurveTo(20, 56, 50, 54);
+    g.lineTo(96, 54); g.quadraticCurveTo(110, 58, 108, 74); g.lineTo(14, 78); g.fill();
+    g.fillStyle = "#9fd8ff";                                   // Windschutz
+    g.beginPath(); g.moveTo(88, 54); g.lineTo(98, 34); g.lineTo(104, 54); g.fill();
+    g.fillStyle = "#222";                                      // Sitz
+    g.fillRect(34, 44, 40, 12);
+    g.strokeStyle = "#555"; g.lineWidth = 5;                    // Lenker
+    g.beginPath(); g.moveTo(86, 52); g.lineTo(94, 38); g.stroke();
+    g.fillStyle = "#444";                                      // Kufe
+    g.fillRect(8, 84, 104, 8);
+    g.beginPath(); g.moveTo(108, 92); g.quadraticCurveTo(120, 86, 116, 76); g.lineTo(108, 84); g.fill();
+  }),
+  kart: makeCanvas(120, 120, g => {
+    g.fillStyle = "#2e9e4f";
+    g.beginPath(); g.moveTo(12, 76); g.lineTo(28, 54) ; g.lineTo(86, 54);
+    g.quadraticCurveTo(108, 58, 106, 76); g.fill();
+    g.fillStyle = "#222"; g.fillRect(40, 44, 34, 12);
+    g.strokeStyle = "#555"; g.lineWidth = 5;
+    g.beginPath(); g.moveTo(82, 52); g.lineTo(90, 38); g.stroke();
+    g.fillStyle = "#222";
+    g.beginPath(); g.arc(32, 84, 13, 0, 7); g.fill();
+    g.beginPath(); g.arc(88, 84, 13, 0, 7); g.fill();
+    g.fillStyle = "#999";
+    g.beginPath(); g.arc(32, 84, 5, 0, 7); g.fill();
+    g.beginPath(); g.arc(88, 84, 5, 0, 7); g.fill();
   }),
   puff: makeCanvas(64, 64, g => {
     for (const [px, py, r] of [[32, 32, 18], [18, 38, 12], [46, 38, 12], [26, 20, 10], [40, 22, 10]]) {
@@ -353,11 +652,64 @@ const SPRITES = {
       g.beginPath(); g.arc(px, py, r, 0, 7); g.fill();
     }
   }),
+  boom: makeCanvas(64, 64, g => {
+    for (const [px, py, r, c] of [[32, 32, 22, "#ff9b1e"], [22, 36, 13, "#ffd84d"], [42, 34, 13, "#ffd84d"], [32, 30, 9, "#fff5cc"]]) {
+      g.fillStyle = c;
+      g.beginPath(); g.arc(px, py, r, 0, 7); g.fill();
+    }
+  }),
+  bomb: makeCanvas(32, 32, g => {
+    g.fillStyle = "#e0312e"; g.beginPath(); g.arc(16, 18, 11, 0, 7); g.fill();
+    g.fillStyle = "#fff"; g.beginPath(); g.arc(12, 14, 3, 0, 7); g.fill();
+    g.strokeStyle = "#ffd84d"; g.lineWidth = 2;
+    g.beginPath(); g.moveTo(16, 8); g.lineTo(20, 3); g.stroke();
+  }),
+  wm: null, wc: null, wb: null,
 };
+SPRITES.wm = makeCanvas(64, 64, g => {                          // MG-Pickup
+  g.fillStyle = "#5b8db8"; g.fillRect(8, 28, 40, 10);
+  g.fillStyle = "#3a5bb5"; g.fillRect(40, 24, 16, 18);
+  g.fillStyle = "#9fe8ff";
+  g.beginPath(); g.moveTo(4, 30); g.lineTo(10, 33); g.lineTo(4, 36); g.fill();
+  g.fillStyle = "#ffd84d"; g.font = "bold 10px sans-serif"; g.textAlign = "center";
+  g.fillText("NEU!", 32, 56);
+});
+SPRITES.wc = makeCanvas(64, 64, g => {                          // Schrotflinten-Pickup
+  g.fillStyle = "#f08020"; g.fillRect(6, 28, 36, 9);
+  g.fillStyle = "#9a6233";
+  g.beginPath(); g.moveTo(42, 26); g.lineTo(58, 32); g.lineTo(56, 44); g.lineTo(42, 39); g.fill();
+  g.fillStyle = "#3e8a2e"; g.fillRect(4, 24, 5, 6);
+  g.fillStyle = "#ffd84d"; g.font = "bold 10px sans-serif"; g.textAlign = "center";
+  g.fillText("NEU!", 32, 56);
+});
+SPRITES.wb = makeCanvas(64, 64, g => {                          // Bombenwerfer-Pickup
+  g.fillStyle = "#6b4a23"; g.fillRect(10, 26, 34, 14);
+  g.fillStyle = "#e0312e"; g.beginPath(); g.arc(48, 33, 10, 0, 7); g.fill();
+  g.fillStyle = "#ffd84d"; g.font = "bold 10px sans-serif"; g.textAlign = "center";
+  g.fillText("NEU!", 32, 56);
+});
 
-drawHero(document.getElementById("castHero").getContext("2d"), 1);
-drawSnowman(document.getElementById("castSnowman").getContext("2d"), 1);
-drawYeti(document.getElementById("castYeti").getContext("2d"), 1);
+const PORTAL_FRAMES = [0, 1, 2].map(f => makeCanvas(120, 120, g => {
+  for (let i = 6; i > 0; i--) {
+    const t = i / 6;
+    g.fillStyle = i % 2 ? "#7a4df0" : "#b69cff";
+    g.globalAlpha = 0.5 + t * 0.4;
+    g.beginPath();
+    g.ellipse(60, 60, 16 + t * 40, 28 + t * 30, (f / 3 + i * 0.35) * Math.PI, 0, 7);
+    g.fill();
+  }
+  g.globalAlpha = 1;
+  g.fillStyle = "#fff";
+  g.beginPath(); g.ellipse(60, 60, 12, 22, 0, 0, 7); g.fill();
+}));
+
+drawHero($("cast0").getContext("2d"));
+drawSnowman($("cast1").getContext("2d"));
+drawYeti($("cast2").getContext("2d"));
+drawGlibber($("cast3").getContext("2d"));
+drawBlubber($("cast4").getContext("2d"));
+drawHelmut($("cast5").getContext("2d"), false);
+for (let i = 0; i < 6; i++) { const c = $("cast" + i); c.getContext("2d").scale(1, 1); }
 
 /* ============================== Audio ============================== */
 
@@ -367,7 +719,6 @@ function audio() {
   if (actx && actx.state === "suspended") actx.resume();
   return actx;
 }
-
 function tone(freq, dur, type, vol, slide) {
   const a = audio(); if (!a) return;
   const o = a.createOscillator(), g = a.createGain();
@@ -378,7 +729,6 @@ function tone(freq, dur, type, vol, slide) {
   o.connect(g).connect(a.destination);
   o.start(); o.stop(a.currentTime + dur);
 }
-
 function noiseBurst(dur, vol) {
   const a = audio(); if (!a) return;
   const len = (a.sampleRate * dur) | 0;
@@ -389,39 +739,154 @@ function noiseBurst(dur, vol) {
   const g = a.createGain(); g.gain.value = vol || 0.18;
   src.connect(g).connect(a.destination); src.start();
 }
-
 const SFX = {
-  shoot: () => { noiseBurst(0.09, 0.14); tone(520, 0.07, "triangle", 0.07, -300); },
+  shoot: () => { noiseBurst(0.08, 0.13); tone(520, 0.06, "triangle", 0.06, -300); },
+  mg: () => { noiseBurst(0.04, 0.09); tone(700, 0.04, "square", 0.05, -200); },
+  shotgun: () => { noiseBurst(0.18, 0.25); tone(160, 0.15, "sawtooth", 0.1, -100); },
+  thump: () => tone(90, 0.18, "sine", 0.2, -40),
+  boom: () => { noiseBurst(0.4, 0.3); tone(70, 0.5, "sawtooth", 0.18, -40); },
   hit: () => tone(180, 0.1, "square", 0.1, -80),
   die: () => { noiseBurst(0.25, 0.2); tone(300, 0.3, "sawtooth", 0.08, -240); },
   hurt: () => tone(110, 0.25, "sawtooth", 0.14, -60),
   pickup: () => { tone(660, 0.09, "triangle", 0.1); setTimeout(() => tone(880, 0.12, "triangle", 0.1), 90); },
+  weapon: () => [440, 554, 659].forEach((f, i) => setTimeout(() => tone(f, 0.15, "triangle", 0.11), i * 100)),
   empty: () => tone(140, 0.08, "square", 0.08),
-  win: () => [523, 659, 784, 1047].forEach((f, i) => setTimeout(() => tone(f, 0.25, "triangle", 0.12), i * 160)),
+  door: () => { noiseBurst(0.3, 0.12); tone(90, 0.5, "sine", 0.12, 60); },
+  portal: () => { tone(220, 0.5, "sine", 0.12, 660); tone(330, 0.5, "triangle", 0.1, 440); },
+  questDone: () => [523, 659, 784, 1047].forEach((f, i) => setTimeout(() => tone(f, 0.22, "triangle", 0.12), i * 140)),
+  roar: () => { tone(70, 0.7, "sawtooth", 0.2, 30); noiseBurst(0.5, 0.15); },
+  win: () => [523, 659, 784, 1047, 1319].forEach((f, i) => setTimeout(() => tone(f, 0.3, "triangle", 0.12), i * 170)),
   lose: () => [330, 262, 196, 131].forEach((f, i) => setTimeout(() => tone(f, 0.3, "sawtooth", 0.1), i * 200)),
 };
+function engineStart() {
+  const a = audio(); if (!a || engineOsc) return;
+  engineOsc = a.createOscillator(); engineGain = a.createGain();
+  engineOsc.type = "sawtooth"; engineOsc.frequency.value = 50;
+  engineGain.gain.value = 0.04;
+  engineOsc.connect(engineGain).connect(a.destination); engineOsc.start();
+}
+function engineStop() {
+  if (engineOsc) { try { engineOsc.stop(); } catch (e) {} engineOsc = null; engineGain = null; }
+}
 
 /* ============================== Spielzustand ============================== */
 
-function resetGame() {
-  player = {
-    x: SPAWN.x, y: SPAWN.y,
-    dirX: Math.cos(SPAWN.dir), dirY: Math.sin(SPAWN.dir),
-    planeX: -Math.sin(SPAWN.dir) * FOV, planeY: Math.cos(SPAWN.dir) * FOV,
-    health: 100, ammo: 40,
+function buildWorld(def, id) {
+  const doors = [];
+  def.map.forEach((row, y) => {
+    for (let x = 0; x < row.length; x++)
+      if (row[x] === "D") doors.push({ x, y, open: false });
+  });
+  return {
+    id, def, map: def.map, doors,
+    enemies: def.enemySpawns.map(([x, y, t]) => ({
+      x, y, type: t, ...JSON.parse(JSON.stringify(ETYPES[t])),
+      maxHp: ETYPES[t].hp, cooldown: 0, hitTimer: 0, alive: true, kx: 0, ky: 0, roared: false,
+    })),
+    pickups: def.pickupSpawns.map(([x, y, t]) => ({ x, y, type: t, taken: false })),
+    vehicles: def.vehicleSpawns.map(([x, y, t]) => ({ x, y, type: t })),
+    npc: def.npc ? { ...def.npc, caged: true } : null,
   };
-  enemies = ENEMY_SPAWNS.map(([x, y, t]) => ({
-    x, y, type: t,
-    hp: t === "y" ? 16 : 3,
-    speed: t === "y" ? 1.1 : 1.6,
-    dmg: t === "y" ? 15 : 7,
-    cooldown: 0, hitTimer: 0, alive: true,
-  }));
-  pickups = PICKUP_SPAWNS.map(([x, y, t]) => ({ x, y, type: t, taken: false }));
-  puffs = [];
-  keys = {};
-  bob = 0; fireAnim = 0; hurtFlash = 0; pickFlash = 0;
+}
+
+function wallAt(w, x, y) {
+  const map = w.map;
+  if (x < 0 || y < 0 || x >= map[0].length || y >= map.length) return 1;
+  const c = map[y | 0][(x | 0)];
+  if (c === ".") return 0;
+  if (c === "D") {
+    const d = w.doors.find(d => d.x === (x | 0) && d.y === (y | 0));
+    return d && d.open ? 0 : 9;
+  }
+  return c.charCodeAt(0) - 48;
+}
+
+function resetGame() {
+  worlds = { snow: buildWorld(WORLDS.snow, "snow"), summer: buildWorld(WORLDS.summer, "summer") };
+  cur = worlds.snow;
+  const sp = WORLDS.snow.spawn;
+  player = {
+    x: sp.x, y: sp.y,
+    dirX: Math.cos(sp.dir), dirY: Math.sin(sp.dir),
+    planeX: -Math.sin(sp.dir) * 0.66, planeY: Math.cos(sp.dir) * 0.66,
+    health: 100,
+    ammo: { snow: 40, ice: 0, carrot: 0, bomb: 0 },
+    maxAmmo: { snow: 99, ice: 150, carrot: 40, bomb: 12 },
+    unlocked: [true, false, false, false],
+    weapon: 0, driving: null, hasKey: false,
+  };
+  quest = { idx: 0, crates: 0, knutDead: false, blubberDead: false, freed: false, done: false };
+  keys = {}; mouseDown = false;
+  bob = 0; fireTimer = 0; fireAnim = 0; hurtFlash = 0; pickFlash = 0;
+  shake = 0; portalCooldown = 0; killCount = 0;
+  projectiles = []; puffs = [];
   startTime = performance.now();
+  engineStop();
+  buildWeaponHud();
+}
+
+let projectiles = [], puffs = [];
+
+/* ============================== Quests / UI ============================== */
+
+const toastsEl = $("toasts");
+function toast(msg, ms) {
+  const d = document.createElement("div");
+  d.className = "toast"; d.innerHTML = msg;
+  toastsEl.appendChild(d);
+  setTimeout(() => d.remove(), ms || 2600);
+}
+
+function questText() {
+  if (quest.idx === 0) return "Quest 1/3 &ndash; Operation Kakao: Sammle die gestohlenen Kakao-Kisten (" + quest.crates + "/5)";
+  if (quest.idx === 1) {
+    if (!player.hasKey) return "Quest 2/3 &ndash; Knut muss weg: Finde den H&ouml;hlenschl&uuml;ssel!";
+    if (!worlds.snow.doors[0].open) return "Quest 2/3 &ndash; Knut muss weg: &Ouml;ffne das H&ouml;hlentor (E)";
+    return "Quest 2/3 &ndash; Knut muss weg: Besiege Eis-Yeti Knut!";
+  }
+  if (quest.idx === 2) {
+    if (!quest.blubberDead)
+      return cur.id === "snow"
+        ? "Quest 3/3 &ndash; Das Brause-Portal: Spring ins Portal am Marktplatz!"
+        : "Quest 3/3 &ndash; Das Brause-Portal: Besiege Blubber, die lebende Brause-Flasche!";
+    if (!quest.freed) return "Quest 3/3 &ndash; Das Brause-Portal: Befreie Onkel Helmut aus dem K&auml;fig (E)";
+    return cur.id === "summer"
+      ? "Quest 3/3 &ndash; Das Brause-Portal: Kehre durchs Portal nach Snowtown zur&uuml;ck!"
+      : "";
+  }
+  return "";
+}
+
+function completeQuest(n) {
+  SFX.questDone();
+  toast("&#11088; Quest " + (n + 1) + " abgeschlossen! &#11088;", 3200);
+  quest.idx = n + 1;
+  if (n === 1) toast("Ein lilanes Portal flimmert am Marktplatz auf!", 4200);
+}
+
+function buildWeaponHud() {
+  const el = $("weapons");
+  el.innerHTML = "";
+  WEAPONS.forEach((w, i) => {
+    const d = document.createElement("div");
+    d.className = "wslot"; d.id = "wslot" + i;
+    el.appendChild(d);
+  });
+}
+
+function updateHud() {
+  $("hudHealth").textContent = "❤️ " + Math.max(0, player.health | 0);
+  WEAPONS.forEach((w, i) => {
+    const d = $("wslot" + i);
+    if (!d) return;
+    d.className = "wslot" + (i === player.weapon ? " active" : "") + (player.unlocked[i] ? "" : " locked");
+    d.innerHTML = (i + 1) + " " + w.short + "<br>" + (player.unlocked[i] ? player.ammo[w.ammo] : "&#128274;");
+  });
+  const alive = cur.enemies.filter(e => e.alive).length;
+  $("hudInfo").textContent = (player.hasKey && quest.idx === 1 ? "🔑 " : "") + "☃ " + alive;
+  const q = $("quest");
+  q.innerHTML = questText();
+  q.classList.toggle("hidden", state !== "play" && state !== "pause");
 }
 
 /* ============================== Eingabe ============================== */
@@ -429,18 +894,29 @@ function resetGame() {
 document.addEventListener("keydown", e => {
   if (keys) keys[e.code] = true;
   if (["ArrowUp", "ArrowDown", "ArrowLeft", "ArrowRight", "Space"].includes(e.code)) e.preventDefault();
+  if (state !== "play") return;
+  if (e.code === "KeyM") showMap = !showMap;
+  if (e.code === "KeyE") interact();
+  for (let i = 0; i < 4; i++)
+    if (e.code === "Digit" + (i + 1) && player.unlocked[i]) { player.weapon = i; SFX.pickup(); }
 });
 document.addEventListener("keyup", e => { if (keys) keys[e.code] = false; });
-
 document.addEventListener("mousemove", e => {
   if (state !== "play" || document.pointerLockElement !== canvas) return;
   rotate(e.movementX * 0.0023);
 });
-
 canvas.addEventListener("mousedown", () => {
-  if (state === "play" && document.pointerLockElement === canvas) shoot();
+  if (state === "play" && document.pointerLockElement === canvas) mouseDown = true;
 });
-
+document.addEventListener("mouseup", () => { mouseDown = false; });
+document.addEventListener("wheel", e => {
+  if (state !== "play") return;
+  const dir = e.deltaY > 0 ? 1 : -1;
+  for (let i = 1; i <= 4; i++) {
+    const w = (player.weapon + dir * i + 8) % 4;
+    if (player.unlocked[w]) { player.weapon = w; break; }
+  }
+});
 document.addEventListener("pointerlockchange", () => {
   if (document.pointerLockElement !== canvas && state === "play") {
     state = "pause"; showOverlay("pause");
@@ -453,11 +929,10 @@ function lockAndPlay() {
   lastTime = performance.now();
   canvas.requestPointerLock && canvas.requestPointerLock();
 }
-
-document.getElementById("btnStart").onclick = () => { audio(); resetGame(); lockAndPlay(); };
-document.getElementById("btnResume").onclick = () => lockAndPlay();
-document.getElementById("btnAgainW").onclick = () => { resetGame(); lockAndPlay(); };
-document.getElementById("btnAgainL").onclick = () => { resetGame(); lockAndPlay(); };
+$("btnStart").onclick = () => { audio(); resetGame(); lockAndPlay(); };
+$("btnResume").onclick = () => lockAndPlay();
+$("btnAgainW").onclick = () => { resetGame(); lockAndPlay(); };
+$("btnAgainL").onclick = () => { resetGame(); lockAndPlay(); };
 
 function rotate(a) {
   const c = Math.cos(a), s = Math.sin(a);
@@ -468,107 +943,308 @@ function rotate(a) {
   player.planeY = px * s + player.planeY * c;
 }
 
+/* ============================== Interaktion ============================== */
+
+function interact() {
+  // Fahrzeug verlassen
+  if (player.driving) {
+    cur.vehicles.push({ x: player.x, y: player.y, type: player.driving });
+    player.driving = null;
+    engineStop();
+    toast("Ausgestiegen.");
+    return;
+  }
+  // Fahrzeug einsteigen
+  for (let i = 0; i < cur.vehicles.length; i++) {
+    const v = cur.vehicles[i];
+    if (Math.hypot(v.x - player.x, v.y - player.y) < 1.3) {
+      player.driving = v.type;
+      player.x = v.x; player.y = v.y;
+      cur.vehicles.splice(i, 1);
+      engineStart();
+      toast(v.type === "snowmobile" ? "&#127950;&#65039; Schneemobil! Volle Fahrt voraus (E = aussteigen)" : "&#127950;&#65039; Gokart! Brumm brumm (E = aussteigen)");
+      return;
+    }
+  }
+  // Höhlentor
+  if (cur.id === "snow") {
+    const d = cur.doors[0];
+    if (d && !d.open && Math.hypot(d.x + 0.5 - player.x, d.y + 0.5 - player.y) < 1.6) {
+      if (quest.idx >= 1 && player.hasKey) {
+        d.open = true; SFX.door();
+        toast("Das H&ouml;hlentor knarzt auf... Da drin grummelt etwas Gro&szlig;es!");
+      } else {
+        toast(quest.idx < 1 ? "Das Tor ist fest verschlossen." : "Verschlossen! Du brauchst den H&ouml;hlenschl&uuml;ssel.");
+      }
+      return;
+    }
+  }
+  // Onkel Helmut
+  if (cur.npc && Math.hypot(cur.npc.x - player.x, cur.npc.y - player.y) < 1.4) {
+    if (!quest.blubberDead) {
+      toast("Onkel Helmut: \"Hilfe! Erst die Flasche, dann das Vergn&uuml;gen!\"");
+    } else if (!quest.freed) {
+      quest.freed = true; cur.npc.caged = false; SFX.questDone();
+      toast("Onkel Helmut: \"Endlich! Die Brause wollte MICH trinken!\"", 3800);
+      setTimeout(() => toast("Onkel Helmut: \"Lauf zur&uuml;ck durchs Portal, ich nehme die Abk&uuml;rzung!\"", 4200), 2200);
+    }
+  }
+}
+
+/* ============================== Schiessen ============================== */
+
+function hitscan(angleOffset, dmg) {
+  const c = Math.cos(angleOffset), s = Math.sin(angleOffset);
+  const dx = player.dirX * c - player.dirY * s;
+  const dy = player.dirX * s + player.dirY * c;
+  let best = null, bestDist = 1e9;
+  for (const e of cur.enemies) {
+    if (!e.alive) continue;
+    const ex = e.x - player.x, ey = e.y - player.y;
+    const dist = Math.hypot(ex, ey);
+    if (dist > 18) continue;
+    const angTo = Math.atan2(ey, ex);
+    const angDir = Math.atan2(dy, dx);
+    let diff = angTo - angDir;
+    while (diff > Math.PI) diff -= 2 * Math.PI;
+    while (diff < -Math.PI) diff += 2 * Math.PI;
+    const cone = Math.max(0.04, Math.atan2(e.boss ? 0.6 : 0.38, dist));
+    if (Math.abs(diff) < cone && dist < bestDist && hasLOS(player.x, player.y, e.x, e.y)) {
+      best = e; bestDist = dist;
+    }
+  }
+  if (best) damageEnemy(best, dmg, dx, dy);
+  return !!best;
+}
+
+function damageEnemy(e, dmg, kx, ky) {
+  e.hp -= dmg; e.hitTimer = 0.15;
+  e.kx += (kx || 0) * 0.6; e.ky += (ky || 0) * 0.6;
+  SFX.hit();
+  if (e.hp <= 0 && e.alive) {
+    e.alive = false; killCount++; SFX.die();
+    puffs.push({ x: e.x, y: e.y, ttl: 0.5, max: 0.5, big: e.boss, kind: "puff" });
+    if (e.type === "y" && !quest.knutDead) {
+      quest.knutDead = true;
+      if (quest.idx === 1) completeQuest(1);
+    }
+    if (e.type === "L" && !quest.blubberDead) {
+      quest.blubberDead = true; SFX.questDone();
+      toast("Blubber zerplatzt in tausend Brause-Bl&auml;schen!", 3500);
+      toast("Der K&auml;fig springt auf!", 3000);
+      if (cur.npc) cur.npc.cageOpen = true;
+    }
+  }
+}
+
+function tryFire() {
+  const w = WEAPONS[player.weapon];
+  if (fireTimer > 0) return;
+  if (player.driving) { return; }
+  if (player.ammo[w.ammo] <= 0) { SFX.empty(); fireTimer = 0.3; return; }
+  player.ammo[w.ammo]--;
+  fireTimer = w.rate; fireAnim = 1;
+  if (w.hitscan) {
+    (player.weapon === 1 ? SFX.mg : player.weapon === 2 ? SFX.shotgun : SFX.shoot)();
+    for (let p = 0; p < w.pellets; p++) {
+      const off = w.spread ? (Math.random() * 2 - 1) * w.spread : 0;
+      hitscan(off, w.dmg);
+    }
+    if (player.weapon === 2) shake = Math.max(shake, 0.25);
+  } else {
+    SFX.thump();
+    projectiles.push({
+      x: player.x + player.dirX * 0.5, y: player.y + player.dirY * 0.5,
+      vx: player.dirX * 9, vy: player.dirY * 9, ttl: 2.5,
+    });
+  }
+}
+
+function explode(x, y) {
+  SFX.boom(); shake = Math.max(shake, 0.7);
+  puffs.push({ x, y, ttl: 0.45, max: 0.45, big: true, kind: "boom" });
+  for (const e of cur.enemies) {
+    if (!e.alive) continue;
+    const d = Math.hypot(e.x - x, e.y - y);
+    if (d < 2.2 && hasLOS(x, y, e.x, e.y)) damageEnemy(e, WEAPONS[3].dmg * (1 - d / 3), 0, 0);
+  }
+}
+
 /* ============================== Logik ============================== */
 
-function tryMove(nx, ny) {
-  const r = 0.25;
-  if (!wallAt(nx + r, player.y) && !wallAt(nx - r, player.y) &&
-      !wallAt(nx, player.y + r) && !wallAt(nx, player.y - r)) player.x = nx;
-  if (!wallAt(player.x, ny + r) && !wallAt(player.x, ny - r) &&
-      !wallAt(player.x + r, ny) && !wallAt(player.x - r, ny)) player.y = ny;
+function tryMove(nx, ny, r) {
+  if (!wallAt(cur, nx + r, player.y) && !wallAt(cur, nx - r, player.y) &&
+      !wallAt(cur, nx, player.y + r) && !wallAt(cur, nx, player.y - r)) player.x = nx;
+  if (!wallAt(cur, player.x, ny + r) && !wallAt(cur, player.x, ny - r) &&
+      !wallAt(cur, player.x + r, ny) && !wallAt(cur, player.x - r, ny)) player.y = ny;
 }
 
 function hasLOS(x0, y0, x1, y1) {
   const dx = x1 - x0, dy = y1 - y0;
   const dist = Math.hypot(dx, dy);
   const steps = Math.ceil(dist / 0.15);
-  for (let i = 1; i < steps; i++) {
-    if (wallAt(x0 + dx * i / steps, y0 + dy * i / steps)) return false;
-  }
+  for (let i = 1; i < steps; i++)
+    if (wallAt(cur, x0 + dx * i / steps, y0 + dy * i / steps)) return false;
   return true;
 }
 
-function shoot() {
-  if (player.ammo <= 0) { SFX.empty(); return; }
-  player.ammo--; fireAnim = 1; SFX.shoot();
-  let best = null, bestDist = 1e9;
-  for (const e of enemies) {
-    if (!e.alive) continue;
-    const dx = e.x - player.x, dy = e.y - player.y;
-    const dist = Math.hypot(dx, dy);
-    if (dist > 18) continue;
-    const angTo = Math.atan2(dy, dx);
-    const angDir = Math.atan2(player.dirY, player.dirX);
-    let diff = angTo - angDir;
-    while (diff > Math.PI) diff -= 2 * Math.PI;
-    while (diff < -Math.PI) diff += 2 * Math.PI;
-    const cone = Math.max(0.045, Math.atan2(e.type === "y" ? 0.55 : 0.38, dist));
-    if (Math.abs(diff) < cone && dist < bestDist && hasLOS(player.x, player.y, e.x, e.y)) {
-      best = e; bestDist = dist;
-    }
+function switchUniverse() {
+  if (player.driving) {                                  // Fahrzeug bleibt zurück
+    cur.vehicles.push({ x: player.x, y: player.y, type: player.driving });
+    player.driving = null; engineStop();
   }
-  if (best) {
-    best.hp--; best.hitTimer = 0.15; SFX.hit();
-    if (best.hp <= 0) {
-      best.alive = false; SFX.die();
-      puffs.push({ x: best.x, y: best.y, ttl: 0.5, max: 0.5, big: best.type === "y" });
-    }
+  SFX.portal();
+  const target = cur.id === "snow" ? worlds.summer : worlds.snow;
+  cur = target;
+  const p = target.def.portal;
+  player.x = p.exitX; player.y = p.exitY;
+  portalCooldown = 2;
+  pickFlash = 1;
+  toast(cur.id === "summer"
+    ? "&#127774; Willkommen in <b>Sommerhausen</b> &ndash; dem Parallel-Universum!"
+    : "&#10052;&#65039; Zur&uuml;ck in <b>Snowtown</b>!", 3200);
+  if (cur.id === "snow" && quest.freed && !quest.done) {
+    quest.done = true;
+    state = "win"; SFX.win();
+    const secs = ((performance.now() - startTime) / 1000) | 0;
+    $("winText").innerHTML =
+      "Alle drei Quests geschafft! Onkel Helmut ist gerettet, Blubber ist zerplatzt, " +
+      "Knut schmollt in den Bergen und der Kakao ist wieder da.<br>" +
+      "Zeit: <b>" + ((secs / 60) | 0) + ":" + String(secs % 60).padStart(2, "0") + "</b> &middot; " +
+      "Besiegte Gegner: <b>" + killCount + "</b><br>" +
+      "B&uuml;rgermeisterin Frieda Flocke l&auml;sst dir ein Denkmal aus Schnee bauen!";
+    document.exitPointerLock && document.exitPointerLock();
+    showOverlay("win");
   }
 }
 
 function update(dt) {
-  // Bewegung
-  const run = keys["ShiftLeft"] || keys["ShiftRight"];
-  const sp = (run ? 5.0 : 3.2) * dt;
-  let mx = 0, my = 0;
-  if (keys["KeyW"] || keys["ArrowUp"]) { mx += player.dirX; my += player.dirY; }
-  if (keys["KeyS"] || keys["ArrowDown"]) { mx -= player.dirX; my -= player.dirY; }
-  if (keys["KeyA"]) { mx += player.dirY; my -= player.dirX; }
-  if (keys["KeyD"]) { mx -= player.dirY; my += player.dirX; }
-  if (keys["ArrowLeft"]) rotate(-2.4 * dt);
-  if (keys["ArrowRight"]) rotate(2.4 * dt);
-  const ml = Math.hypot(mx, my);
-  if (ml > 0) {
-    tryMove(player.x + (mx / ml) * sp, player.y + (my / ml) * sp);
-    bob += dt * (run ? 11 : 8);
+  fireTimer = Math.max(0, fireTimer - dt);
+  portalCooldown = Math.max(0, portalCooldown - dt);
+  if (mouseDown) tryFire();
+
+  // --- Bewegung ---
+  if (player.driving) {
+    player.vel = player.vel || 0;
+    const accel = 10, maxSp = 8.5;
+    if (keys["KeyW"] || keys["ArrowUp"]) player.vel = Math.min(maxSp, player.vel + accel * dt);
+    else if (keys["KeyS"] || keys["ArrowDown"]) player.vel = Math.max(-3.5, player.vel - accel * dt);
+    else player.vel *= Math.pow(0.25, dt);
+    if (keys["KeyA"] || keys["ArrowLeft"]) rotate(-2.2 * dt * Math.min(1, Math.abs(player.vel) / 3 + 0.4));
+    if (keys["KeyD"] || keys["ArrowRight"]) rotate(2.2 * dt * Math.min(1, Math.abs(player.vel) / 3 + 0.4));
+    tryMove(player.x + player.dirX * player.vel * dt, player.y + player.dirY * player.vel * dt, 0.38);
+    bob += dt * Math.abs(player.vel) * 1.2;
+    if (engineOsc) engineOsc.frequency.value = 45 + Math.abs(player.vel) * 14;
+    // Rammen
+    for (const e of cur.enemies) {
+      if (!e.alive || (e.ramCd || 0) > 0) { if (e.ramCd) e.ramCd -= dt; continue; }
+      if (Math.hypot(e.x - player.x, e.y - player.y) < 0.95 && Math.abs(player.vel) > 3) {
+        e.ramCd = 0.5;
+        damageEnemy(e, 4, player.dirX * Math.sign(player.vel), player.dirY * Math.sign(player.vel));
+        SFX.thump(); shake = Math.max(shake, 0.3);
+        player.vel *= 0.75;
+      }
+    }
+  } else {
+    player.vel = 0;
+    const run = keys["ShiftLeft"] || keys["ShiftRight"];
+    const sp = (run ? 5.0 : 3.2) * dt;
+    let mx = 0, my = 0;
+    if (keys["KeyW"] || keys["ArrowUp"]) { mx += player.dirX; my += player.dirY; }
+    if (keys["KeyS"] || keys["ArrowDown"]) { mx -= player.dirX; my -= player.dirY; }
+    if (keys["KeyA"]) { mx += player.dirY; my -= player.dirX; }
+    if (keys["KeyD"]) { mx -= player.dirY; my += player.dirX; }
+    if (keys["ArrowLeft"]) rotate(-2.4 * dt);
+    if (keys["ArrowRight"]) rotate(2.4 * dt);
+    const ml = Math.hypot(mx, my);
+    if (ml > 0) { tryMove(player.x + (mx / ml) * sp, player.y + (my / ml) * sp, 0.25); bob += dt * (run ? 11 : 8); }
   }
 
-  // Gegner
-  let aliveCount = 0;
-  for (const e of enemies) {
+  // --- Portal ---
+  if (quest.idx >= 2 && portalCooldown <= 0) {
+    const p = cur.def.portal;
+    if (Math.hypot(p.x - player.x, p.y - player.y) < 0.75) switchUniverse();
+  }
+
+  // --- Gegner ---
+  for (const e of cur.enemies) {
     if (!e.alive) continue;
-    aliveCount++;
     e.hitTimer = Math.max(0, e.hitTimer - dt);
     e.cooldown = Math.max(0, e.cooldown - dt);
+    // Rückstoß
+    if (Math.abs(e.kx) > 0.01 || Math.abs(e.ky) > 0.01) {
+      if (!wallAt(cur, e.x + e.kx * dt * 4, e.y)) e.x += e.kx * dt * 4;
+      if (!wallAt(cur, e.x, e.y + e.ky * dt * 4)) e.y += e.ky * dt * 4;
+      e.kx *= Math.pow(0.01, dt); e.ky *= Math.pow(0.01, dt);
+    }
     const dx = player.x - e.x, dy = player.y - e.y;
     const dist = Math.hypot(dx, dy);
     if (dist < 14 && dist > 0.65 && hasLOS(e.x, e.y, player.x, player.y)) {
+      if (e.boss && !e.roared) { e.roared = true; SFX.roar(); toast("<b>" + e.name + "</b> hat dich entdeckt!", 2800); }
       const vx = (dx / dist) * e.speed * dt, vy = (dy / dist) * e.speed * dt;
       const r = 0.3;
-      if (!wallAt(e.x + vx + Math.sign(vx) * r, e.y)) e.x += vx;
-      if (!wallAt(e.x, e.y + vy + Math.sign(vy) * r)) e.y += vy;
+      if (!wallAt(cur, e.x + vx + Math.sign(vx) * r, e.y)) e.x += vx;
+      if (!wallAt(cur, e.x, e.y + vy + Math.sign(vy) * r)) e.y += vy;
     }
-    if (dist <= 0.8 && e.cooldown <= 0) {
-      e.cooldown = e.type === "y" ? 1.2 : 0.9;
+    if (dist <= 0.85 && e.cooldown <= 0) {
+      e.cooldown = e.boss ? 1.2 : 0.9;
       player.health -= e.dmg;
-      hurtFlash = 1; SFX.hurt();
+      hurtFlash = 1; SFX.hurt(); shake = Math.max(shake, 0.25);
       if (player.health <= 0) {
         player.health = 0;
-        state = "lose"; SFX.lose();
+        state = "lose"; SFX.lose(); engineStop();
         document.exitPointerLock && document.exitPointerLock();
         showOverlay("lose");
       }
     }
   }
 
-  // Pickups
-  for (const p of pickups) {
+  // --- Projektile (Bommel-Bomben) ---
+  for (const pr of projectiles) {
+    pr.ttl -= dt;
+    const nx = pr.x + pr.vx * dt, ny = pr.y + pr.vy * dt;
+    let det = pr.ttl <= 0;
+    if (wallAt(cur, nx, ny)) det = true;
+    else { pr.x = nx; pr.y = ny; }
+    for (const e of cur.enemies)
+      if (e.alive && Math.hypot(e.x - pr.x, e.y - pr.y) < 0.6) det = true;
+    if (det) { pr.ttl = -1; explode(pr.x, pr.y); }
+  }
+  projectiles = projectiles.filter(p => p.ttl > 0);
+
+  // --- Pickups ---
+  for (const p of cur.pickups) {
     if (p.taken) continue;
-    if (Math.hypot(p.x - player.x, p.y - player.y) < 0.6) {
-      p.taken = true; pickFlash = 1; SFX.pickup();
-      if (p.type === "h") player.health = Math.min(100, player.health + 30);
-      else player.ammo = Math.min(99, player.ammo + 15);
+    if (Math.hypot(p.x - player.x, p.y - player.y) < 0.65) {
+      p.taken = true; pickFlash = 1;
+      switch (p.type) {
+        case "h": player.health = Math.min(100, player.health + 30); SFX.pickup(); toast("+30 Leben (hei&szlig;er Kakao)"); break;
+        case "as": player.ammo.snow = Math.min(player.maxAmmo.snow, player.ammo.snow + 15); SFX.pickup(); toast("+15 Schneeb&auml;lle"); break;
+        case "ai": player.ammo.ice = Math.min(player.maxAmmo.ice, player.ammo.ice + 40); SFX.pickup(); toast("+40 Eiszapfen"); break;
+        case "ac": player.ammo.carrot = Math.min(player.maxAmmo.carrot, player.ammo.carrot + 10); SFX.pickup(); toast("+10 Karotten"); break;
+        case "ab": player.ammo.bomb = Math.min(player.maxAmmo.bomb, player.ammo.bomb + 4); SFX.pickup(); toast("+4 Bommel-Bomben"); break;
+        case "wm": player.unlocked[1] = true; player.weapon = 1; player.ammo.ice += 60; SFX.weapon();
+          toast("&#127881; Neue Waffe: <b>Eiszapfen-MG</b>! (Taste 2)", 3500); break;
+        case "wc": player.unlocked[2] = true; player.weapon = 2; player.ammo.carrot += 15; SFX.weapon();
+          toast("&#127881; Neue Waffe: <b>Karotten-Schrotflinte</b>! (Taste 3)", 3500); break;
+        case "wb": player.unlocked[3] = true; player.weapon = 3; player.ammo.bomb += 6; SFX.weapon();
+          toast("&#127881; Neue Waffe: <b>Bommel-Bomben-Werfer</b>! (Taste 4)", 3500); break;
+        case "c":
+          quest.crates++; SFX.pickup();
+          toast("Kakao-Kiste gefunden! (" + quest.crates + "/5)");
+          if (quest.crates >= 5 && quest.idx === 0) completeQuest(0);
+          break;
+        case "k":
+          player.hasKey = true; SFX.weapon();
+          toast("&#128273; Der H&ouml;hlenschl&uuml;ssel! Jetzt zum Tor an der Yeti-H&ouml;hle.", 3500);
+          break;
+      }
     }
+  }
+
+  // Käfig öffnen
+  if (cur.npc && cur.npc.cageOpen && cur.npc.caged) {
+    cur.npc.caged = false; cur.npc.cageOpen = false; SFX.door();
   }
 
   for (const p of puffs) p.ttl -= dt;
@@ -577,21 +1253,9 @@ function update(dt) {
   fireAnim = Math.max(0, fireAnim - dt * 5);
   hurtFlash = Math.max(0, hurtFlash - dt * 2.5);
   pickFlash = Math.max(0, pickFlash - dt * 3);
+  shake = Math.max(0, shake - dt * 2.2);
 
-  if (aliveCount === 0 && state === "play") {
-    state = "win"; SFX.win();
-    const secs = ((performance.now() - startTime) / 1000) | 0;
-    document.getElementById("winText").innerHTML =
-      "Bruno Bommel hat alle Frostgrummel aufgetaut und Eis-Yeti Knut in die Berge zur&uuml;ckgejagt!<br>" +
-      "Zeit: <b>" + ((secs / 60) | 0) + ":" + String(secs % 60).padStart(2, "0") + "</b> Minuten. " +
-      "B&uuml;rgermeisterin Frieda Flocke spendiert eine Runde Kakao!";
-    document.exitPointerLock && document.exitPointerLock();
-    showOverlay("win");
-  }
-
-  hudHealth.textContent = "❤️ " + player.health;
-  hudAmmo.textContent = "❄️ " + player.ammo;
-  hudEnemies.textContent = "☃ " + aliveCount;
+  updateHud();
 }
 
 /* ============================== Render ============================== */
@@ -601,66 +1265,124 @@ const snowflakes = Array.from({ length: 90 }, () => ({
   s: 0.4 + Math.random() * 1.4, r: 1 + Math.random() * 2.2,
 }));
 
-zbuf = new Float32Array(RAYS);
+function fogColor(w) { const f = w.def.fog; return (255 << 24) | (f[2] << 16) | (f[1] << 8) | f[0]; }
 
-function render() {
-  // Himmel + Boden
-  const sky = ctx.createLinearGradient(0, 0, 0, H / 2);
-  sky.addColorStop(0, "#274b8f"); sky.addColorStop(1, "#7fb0e8");
-  ctx.fillStyle = sky; ctx.fillRect(0, 0, W, H / 2);
-  const gnd = ctx.createLinearGradient(0, H / 2, 0, H);
-  gnd.addColorStop(0, "#b9d4ea"); gnd.addColorStop(1, "#f2f8ff");
-  ctx.fillStyle = gnd; ctx.fillRect(0, H / 2, W, H / 2);
+function renderWorld() {
+  const def = cur.def;
+  const fogR = def.fog[0], fogG = def.fog[1], fogB = def.fog[2];
 
-  // Berge am Horizont
-  ctx.fillStyle = "#5a82c2";
-  ctx.beginPath(); ctx.moveTo(0, H / 2);
-  for (let x = 0; x <= W; x += 40)
-    ctx.lineTo(x, H / 2 - 30 - 40 * Math.abs(Math.sin(x * 0.013 + 1.7)));
-  ctx.lineTo(W, H / 2); ctx.fill();
+  px32.fill(0);
 
-  // Wände (Raycasting)
-  for (let r = 0; r < RAYS; r++) {
-    const cameraX = 2 * r / RAYS - 1;
+  // --- Boden (Floor-Casting) ---
+  const floorTex = FLOORD[def.floorTex];
+  const rdx0 = player.dirX - player.planeX, rdy0 = player.dirY - player.planeY;
+  const rdx1 = player.dirX + player.planeX, rdy1 = player.dirY + player.planeY;
+  const halfH = RH / 2;
+  for (let y = (halfH | 0) + 1; y < RH; y++) {
+    const rowDist = halfH / (y - halfH);
+    let fx = player.x + rowDist * rdx0;
+    let fy = player.y + rowDist * rdy0;
+    const stepX = rowDist * (rdx1 - rdx0) / RW;
+    const stepY = rowDist * (rdy1 - rdy0) / RW;
+    let f = Math.min(255, (rowDist * 16) | 0);
+    const nf = 256 - f;
+    const rowOff = y * RW;
+    for (let x = 0; x < RW; x++) {
+      const tx = ((fx * 64) | 0) & 63, ty = ((fy * 64) | 0) & 63;
+      const c = floorTex[ty * 64 + tx];
+      const r = ((c & 255) * nf + fogR * f) >> 8;
+      const g = (((c >> 8) & 255) * nf + fogG * f) >> 8;
+      const b = (((c >> 16) & 255) * nf + fogB * f) >> 8;
+      px32[rowOff + x] = (255 << 24) | (b << 16) | (g << 8) | r;
+      fx += stepX; fy += stepY;
+    }
+  }
+
+  // --- Wände ---
+  for (let x = 0; x < RW; x++) {
+    const cameraX = 2 * x / RW - 1;
     const rdx = player.dirX + player.planeX * cameraX;
     const rdy = player.dirY + player.planeY * cameraX;
     let mapX = player.x | 0, mapY = player.y | 0;
     const ddx = Math.abs(1 / (rdx || 1e-9)), ddy = Math.abs(1 / (rdy || 1e-9));
     let stepX, stepY, sdx, sdy;
-    if (rdx < 0) { stepX = -1; sdx = (player.x - mapX) * ddx; }
-    else { stepX = 1; sdx = (mapX + 1 - player.x) * ddx; }
-    if (rdy < 0) { stepY = -1; sdy = (player.y - mapY) * ddy; }
-    else { stepY = 1; sdy = (mapY + 1 - player.y) * ddy; }
+    if (rdx < 0) { stepX = -1; sdx = (player.x - mapX) * ddx; } else { stepX = 1; sdx = (mapX + 1 - player.x) * ddx; }
+    if (rdy < 0) { stepY = -1; sdy = (player.y - mapY) * ddy; } else { stepY = 1; sdy = (mapY + 1 - player.y) * ddy; }
     let side = 0, tile = 0, guard = 0;
     while (guard++ < 256) {
       if (sdx < sdy) { sdx += ddx; mapX += stepX; side = 0; }
       else { sdy += ddy; mapY += stepY; side = 1; }
-      tile = wallAt(mapX, mapY);
+      tile = wallAt(cur, mapX, mapY);
       if (tile) break;
     }
-    const dist = side === 0 ? sdx - ddx : sdy - ddy;
-    zbuf[r] = dist;
-    const lineH = Math.min(H * 3, H / Math.max(0.0001, dist));
-    const y0 = H / 2 - lineH / 2;
+    const dist = Math.max(0.01, side === 0 ? sdx - ddx : sdy - ddy);
+    zbuf[x] = dist;
+    const lineH = RH / dist;
+    let y0 = halfH - lineH / 2;
+    const tex = TEXD[tile] || TEXD[1];
     let wallX = side === 0 ? player.y + dist * rdy : player.x + dist * rdx;
     wallX -= wallX | 0;
-    const tex = TEX[tile] || TEX[1];
-    const tx = Math.min(63, (wallX * 64) | 0);
-    ctx.drawImage(tex, tx, 0, 1, 64, r * COL, y0, COL, lineH);
-    const shade = Math.min(0.55, dist * 0.035 + (side ? 0.18 : 0));
-    if (shade > 0.02) {
-      ctx.fillStyle = "rgba(20,30,60," + shade.toFixed(2) + ")";
-      ctx.fillRect(r * COL, y0, COL, lineH);
+    const texX = Math.min(63, (wallX * 64) | 0);
+    const yStart = Math.max(0, y0 | 0);
+    const yEnd = Math.min(RH - 1, (y0 + lineH) | 0);
+    const tStep = 64 / lineH;
+    let tPos = (yStart - y0) * tStep;
+    let f = Math.min(220, ((dist * 14) | 0) + (side ? 36 : 0));
+    const nf = 256 - f;
+    for (let y = yStart; y <= yEnd; y++) {
+      const texY = Math.min(63, tPos | 0);
+      tPos += tStep;
+      const c = tex[texY * 64 + texX];
+      const r = ((c & 255) * nf + fogR * f) >> 8;
+      const g = (((c >> 8) & 255) * nf + fogG * f) >> 8;
+      const b = (((c >> 16) & 255) * nf + fogB * f) >> 8;
+      px32[y * RW + x] = (255 << 24) | (b << 16) | (g << 8) | r;
     }
   }
+  fbCtx.putImageData(fbImg, 0, 0);
+}
 
-  // Sprites (Gegner, Pickups, Puffs) sortiert nach Entfernung
+function render(now) {
+  const def = cur.def;
+  ctx.save();
+  if (shake > 0)
+    ctx.translate((Math.random() * 2 - 1) * shake * 14, (Math.random() * 2 - 1) * shake * 14);
+
+  // --- Himmel ---
+  const sky = ctx.createLinearGradient(0, 0, 0, H / 2);
+  sky.addColorStop(0, def.skyTop); sky.addColorStop(1, def.skyBot);
+  ctx.fillStyle = sky; ctx.fillRect(0, 0, W, H / 2 + 4);
+  if (cur.id === "summer") {
+    ctx.fillStyle = "#fff3a8";
+    ctx.beginPath(); ctx.arc(W * 0.78, H * 0.14, 44, 0, 7); ctx.fill();
+    ctx.fillStyle = "rgba(255,255,255,.85)";
+    for (const [cx, cy, s] of [[W * 0.2, H * 0.12, 1], [W * 0.45, H * 0.2, 0.7], [W * 0.62, H * 0.08, 0.85]]) {
+      for (const [ox, oy, r] of [[0, 0, 26], [-22, 6, 18], [24, 8, 20]])
+        { ctx.beginPath(); ctx.arc(cx + ox * s, cy + oy * s, r * s, 0, 7); ctx.fill(); }
+    }
+  }
+  ctx.fillStyle = def.mountain;
+  ctx.beginPath(); ctx.moveTo(0, H / 2 + 4);
+  for (let x = 0; x <= W; x += 40)
+    ctx.lineTo(x, H / 2 - 30 - 40 * Math.abs(Math.sin(x * 0.013 + 1.7)));
+  ctx.lineTo(W, H / 2 + 4); ctx.fill();
+
+  // --- Welt (Framebuffer hochskaliert) ---
+  renderWorld();
+  ctx.imageSmoothingEnabled = false;
+  ctx.drawImage(fbCanvas, 0, 0, W, H);
+  ctx.imageSmoothingEnabled = true;
+
+  // --- Sprites ---
   const items = [];
-  for (const e of enemies) if (e.alive) items.push({ x: e.x, y: e.y, kind: e.type, ref: e });
-  for (const p of pickups) if (!p.taken) items.push({ x: p.x, y: p.y, kind: p.type, ref: p });
-  for (const p of puffs) items.push({ x: p.x, y: p.y, kind: "puff", ref: p });
-  for (const it of items)
-    it.d2 = (it.x - player.x) ** 2 + (it.y - player.y) ** 2;
+  for (const e of cur.enemies) if (e.alive) items.push({ x: e.x, y: e.y, kind: e.type, ref: e });
+  for (const p of cur.pickups) if (!p.taken) items.push({ x: p.x, y: p.y, kind: p.type, ref: p });
+  for (const v of cur.vehicles) items.push({ x: v.x, y: v.y, kind: v.type, ref: v });
+  for (const p of puffs) items.push({ x: p.x, y: p.y, kind: p.kind, ref: p });
+  for (const pr of projectiles) items.push({ x: pr.x, y: pr.y, kind: "bombproj", ref: pr });
+  if (cur.npc) items.push({ x: cur.npc.x, y: cur.npc.y, kind: cur.npc.caged ? "npcCaged" : "npcFree", ref: cur.npc });
+  if (quest.idx >= 2) items.push({ x: def.portal.x, y: def.portal.y, kind: "portal", ref: null });
+  for (const it of items) it.d2 = (it.x - player.x) ** 2 + (it.y - player.y) ** 2;
   items.sort((a, b) => b.d2 - a.d2);
 
   const invDet = 1 / (player.planeX * player.dirY - player.dirX * player.planeY);
@@ -671,68 +1393,97 @@ function render() {
     if (trY <= 0.15) continue;
     const screenX = (W / 2) * (1 + trX / trY);
     const wallH = H / trY;
-    let rel = 0.95, img = SPRITES[it.kind];
-    if (it.kind === "y") rel = 1.25;
-    else if (it.kind === "h" || it.kind === "a") rel = 0.42;
-    else if (it.kind === "puff") rel = (it.ref.big ? 1.5 : 0.95) * (1.3 - it.ref.ttl / it.ref.max);
+    let rel, img;
+    if (it.kind === "portal") {
+      rel = 1.3;
+      img = PORTAL_FRAMES[((now / 130) | 0) % 3];
+    } else if (ETYPES[it.kind]) {
+      rel = ETYPES[it.kind].rel * (1 + Math.sin(now / 260 + it.x * 7) * 0.03);
+      img = SPRITES[it.kind];
+    } else if (it.kind === "puff" || it.kind === "boom") {
+      rel = (it.ref.big ? 1.7 : 0.95) * (1.3 - it.ref.ttl / it.ref.max);
+      img = SPRITES[it.kind === "boom" ? "boom" : "puff"];
+    } else if (it.kind === "bombproj") {
+      rel = 0.25; img = SPRITES.bomb;
+    } else if (it.kind === "snowmobile" || it.kind === "kart") {
+      rel = 0.85; img = SPRITES[it.kind];
+    } else if (it.kind === "npcCaged" || it.kind === "npcFree") {
+      rel = 1.0; img = SPRITES[it.kind];
+    } else {
+      rel = it.kind[0] === "w" ? 0.55 : 0.42;
+      rel *= 1 + Math.sin(now / 350 + it.x * 5) * 0.08;       // Items schweben
+      img = SPRITES[it.kind];
+    }
+    if (!img) continue;
     const sh = wallH * rel, sw = sh;
     const floorY = H / 2 + wallH / 2;
     let yTop = floorY - sh;
-    if (it.kind === "puff") yTop = H / 2 - sh / 2;
+    if (it.kind === "puff" || it.kind === "boom" || it.kind === "bombproj") yTop = H / 2 - sh / 2;
+    if (it.kind !== "portal" && it.kind !== "puff" && it.kind !== "boom" && !ETYPES[it.kind] &&
+        it.kind !== "snowmobile" && it.kind !== "kart" && it.kind[0] !== "n")
+      yTop -= wallH * 0.04 * (1 + Math.sin(now / 350 + it.x * 5));
     const xStart = Math.round(screenX - sw / 2);
-    if (it.kind !== "puff" && it.ref.hitTimer > 0) ctx.filter = "brightness(1.9)";
-    if (it.kind === "puff") ctx.globalAlpha = Math.max(0, it.ref.ttl / it.ref.max);
+    if (it.ref && it.ref.hitTimer > 0) ctx.filter = "brightness(1.9)";
+    if (it.kind === "puff" || it.kind === "boom") ctx.globalAlpha = Math.max(0, it.ref.ttl / it.ref.max);
     const srcW = img.width;
-    for (let px = Math.max(0, xStart); px < Math.min(W, xStart + sw); px += COL) {
-      const r = (px / COL) | 0;
-      if (zbuf[r] <= trY) continue;
+    for (let px = Math.max(0, xStart); px < Math.min(W, xStart + sw); px += 2) {
+      const fbCol = Math.min(RW - 1, (px * RW / W) | 0);
+      if (zbuf[fbCol] <= trY) continue;
       const srcX = ((px - xStart) / sw) * srcW;
-      ctx.drawImage(img, srcX, 0, Math.max(1, srcW / sw * COL), img.height, px, yTop, COL, sh);
+      ctx.drawImage(img, srcX, 0, Math.max(1, srcW / sw * 2), img.height, px, yTop, 2, sh);
     }
-    ctx.filter = "none";
-    ctx.globalAlpha = 1;
+    ctx.filter = "none"; ctx.globalAlpha = 1;
   }
 
-  // Schneefall
-  ctx.fillStyle = "rgba(255,255,255,.85)";
-  for (const f of snowflakes) {
-    f.y += f.s; f.x += Math.sin(f.y * 0.02) * 0.4;
-    if (f.y > H) { f.y = -4; f.x = Math.random() * W; }
-    ctx.beginPath(); ctx.arc(f.x, f.y, f.r, 0, 7); ctx.fill();
+  // --- Boss-Leiste ---
+  for (const e of cur.enemies) {
+    if (!e.alive || !e.boss || !e.roared) continue;
+    if (Math.hypot(e.x - player.x, e.y - player.y) > 16) continue;
+    const bw = W * 0.42;
+    ctx.fillStyle = "rgba(0,0,0,.55)"; ctx.fillRect(W / 2 - bw / 2 - 3, 48, bw + 6, 20);
+    ctx.fillStyle = "#e0312e"; ctx.fillRect(W / 2 - bw / 2, 51, bw * Math.max(0, e.hp / e.maxHp), 14);
+    ctx.fillStyle = "#fff"; ctx.font = "bold 13px sans-serif"; ctx.textAlign = "center";
+    ctx.fillText(e.name, W / 2, 44);
+    break;
   }
 
-  // Waffe: Fäustling mit Schneeball-Blaster
-  const bobX = Math.sin(bob) * 10, bobY = Math.abs(Math.cos(bob)) * 7;
-  const recoil = fireAnim * 26;
-  const wx = W / 2 + 150 + bobX, wy = H - 10 + bobY + recoil;
-  ctx.save();
-  ctx.translate(wx, wy);
-  ctx.fillStyle = "#7a4a22";                       // Holzrohr
-  ctx.beginPath();
-  ctx.moveTo(-36, 0); ctx.lineTo(-16, -120); ctx.lineTo(24, -120); ctx.lineTo(40, 0); ctx.fill();
-  ctx.fillStyle = "#9a6233";
-  ctx.fillRect(-22, -118, 36, 14);
-  ctx.fillStyle = "#e0312e";                       // Fäustling
-  ctx.beginPath(); ctx.ellipse(2, -28, 40, 32, -0.25, 0, 7); ctx.fill();
-  ctx.beginPath(); ctx.ellipse(-32, -44, 14, 18, 0.5, 0, 7); ctx.fill();
-  ctx.fillStyle = "#fff";
-  ctx.fillRect(-40, -10, 84, 14);
-  if (fireAnim > 0.55) {                           // Mündungs-Schneeball
-    ctx.fillStyle = "#fff";
-    ctx.beginPath(); ctx.arc(4, -150 - (1 - fireAnim) * 250, 16, 0, 7); ctx.fill();
+  // --- Wetter ---
+  if (cur.id === "snow") {
+    ctx.fillStyle = "rgba(255,255,255,.85)";
+    for (const f of snowflakes) {
+      f.y += f.s; f.x += Math.sin(f.y * 0.02) * 0.4;
+      if (f.y > H) { f.y = -4; f.x = Math.random() * W; }
+      ctx.beginPath(); ctx.arc(f.x, f.y, f.r, 0, 7); ctx.fill();
+    }
+  } else {
+    ctx.fillStyle = "rgba(255,240,150,.8)";
+    for (const f of snowflakes) {
+      f.y += f.s * 0.3; f.x += Math.sin(f.y * 0.05 + f.r) * 1.2;
+      if (f.y > H) { f.y = -4; f.x = Math.random() * W; }
+      ctx.fillRect(f.x, f.y, 3, 2);
+    }
   }
+
+  // --- Waffe / Fahrzeug-Cockpit ---
+  drawViewmodel(now);
+
+  // --- Fadenkreuz ---
+  if (!player.driving) {
+    ctx.strokeStyle = "rgba(255,255,255,.9)"; ctx.lineWidth = 2;
+    ctx.beginPath();
+    ctx.moveTo(W / 2 - 12, H / 2); ctx.lineTo(W / 2 - 4, H / 2);
+    ctx.moveTo(W / 2 + 4, H / 2); ctx.lineTo(W / 2 + 12, H / 2);
+    ctx.moveTo(W / 2, H / 2 - 12); ctx.lineTo(W / 2, H / 2 - 4);
+    ctx.moveTo(W / 2, H / 2 + 4); ctx.lineTo(W / 2, H / 2 + 12);
+    ctx.stroke();
+  }
+
+  // --- Minikarte ---
+  if (showMap) drawMinimap();
+
   ctx.restore();
 
-  // Fadenkreuz
-  ctx.strokeStyle = "rgba(255,255,255,.9)"; ctx.lineWidth = 2;
-  ctx.beginPath();
-  ctx.moveTo(W / 2 - 12, H / 2); ctx.lineTo(W / 2 - 4, H / 2);
-  ctx.moveTo(W / 2 + 4, H / 2); ctx.lineTo(W / 2 + 12, H / 2);
-  ctx.moveTo(W / 2, H / 2 - 12); ctx.lineTo(W / 2, H / 2 - 4);
-  ctx.moveTo(W / 2, H / 2 + 4); ctx.lineTo(W / 2, H / 2 + 12);
-  ctx.stroke();
-
-  // Treffer-/Pickup-Blitz
+  // --- Blitze ---
   if (hurtFlash > 0) {
     ctx.fillStyle = "rgba(220,30,30," + (hurtFlash * 0.35).toFixed(2) + ")";
     ctx.fillRect(0, 0, W, H);
@@ -743,6 +1494,111 @@ function render() {
   }
 }
 
+function drawViewmodel(now) {
+  const bobX = Math.sin(bob) * 10, bobY = Math.abs(Math.cos(bob)) * 7;
+  const recoil = fireAnim * 26;
+  if (player.driving) {
+    // Lenker
+    ctx.save();
+    ctx.translate(W / 2 + bobX * 0.4, H - 40 + bobY * 0.4);
+    ctx.strokeStyle = player.driving === "snowmobile" ? "#444" : "#333";
+    ctx.lineWidth = 16; ctx.lineCap = "round";
+    ctx.beginPath(); ctx.moveTo(-170, 40); ctx.quadraticCurveTo(0, -40, 170, 40); ctx.stroke();
+    ctx.fillStyle = player.driving === "snowmobile" ? "#e0312e" : "#2e9e4f";
+    ctx.beginPath(); ctx.ellipse(0, 60, 200, 50, 0, Math.PI, 0); ctx.fill();
+    ctx.fillStyle = "#e0312e";                          // Fäustlinge
+    ctx.beginPath(); ctx.ellipse(-150, 36, 24, 18, 0.4, 0, 7); ctx.fill();
+    ctx.beginPath(); ctx.ellipse(150, 36, 24, 18, -0.4, 0, 7); ctx.fill();
+    // Tacho
+    ctx.fillStyle = "#222"; ctx.beginPath(); ctx.arc(0, 36, 26, 0, 7); ctx.fill();
+    ctx.strokeStyle = "#ffd84d"; ctx.lineWidth = 3;
+    const v = Math.abs(player.vel || 0) / 8.5;
+    ctx.beginPath(); ctx.moveTo(0, 36);
+    ctx.lineTo(Math.cos(Math.PI * (1 + v)) * 18, 36 + Math.sin(Math.PI * (1 + v)) * 18); ctx.stroke();
+    ctx.restore();
+    return;
+  }
+  const wx = W / 2 + 150 + bobX, wy = H - 10 + bobY + recoil;
+  ctx.save();
+  ctx.translate(wx, wy);
+  const wi = player.weapon;
+  if (wi === 0) {                                       // Blaster
+    ctx.fillStyle = "#7a4a22";
+    ctx.beginPath(); ctx.moveTo(-36, 0); ctx.lineTo(-16, -120); ctx.lineTo(24, -120); ctx.lineTo(40, 0); ctx.fill();
+    ctx.fillStyle = "#9a6233"; ctx.fillRect(-22, -118, 36, 14);
+    if (fireAnim > 0.55) { ctx.fillStyle = "#fff"; ctx.beginPath(); ctx.arc(4, -150 - (1 - fireAnim) * 250, 16, 0, 7); ctx.fill(); }
+  } else if (wi === 1) {                                // Eiszapfen-MG
+    ctx.fillStyle = "#5b8db8";
+    ctx.beginPath(); ctx.moveTo(-40, 0); ctx.lineTo(-24, -110); ctx.lineTo(28, -110); ctx.lineTo(44, 0); ctx.fill();
+    ctx.fillStyle = "#3a5bb5"; ctx.fillRect(-30, -106, 24, 90); ctx.fillRect(8, -106, 24, 90);
+    ctx.fillStyle = "#9fe8ff";
+    ctx.beginPath(); ctx.moveTo(-18, -110); ctx.lineTo(-12, -130); ctx.lineTo(-6, -110); ctx.fill();
+    ctx.beginPath(); ctx.moveTo(14, -110); ctx.lineTo(20, -130); ctx.lineTo(26, -110); ctx.fill();
+    if (fireAnim > 0.4) {
+      ctx.fillStyle = "rgba(180,240,255,.9)";
+      ctx.beginPath(); ctx.arc(2 + (Math.random() * 10 - 5), -135, 10 + Math.random() * 6, 0, 7); ctx.fill();
+    }
+  } else if (wi === 2) {                                // Karotten-Schrotflinte
+    ctx.fillStyle = "#f08020";
+    ctx.beginPath(); ctx.moveTo(-30, 0); ctx.lineTo(-14, -125); ctx.lineTo(18, -125); ctx.lineTo(34, 0); ctx.fill();
+    ctx.strokeStyle = "#c05c0a"; ctx.lineWidth = 4;
+    for (let y = -100; y < -20; y += 26) { ctx.beginPath(); ctx.moveTo(-18, y); ctx.lineTo(24, y); ctx.stroke(); }
+    ctx.fillStyle = "#3e8a2e";
+    ctx.beginPath(); ctx.moveTo(-8, -125); ctx.lineTo(-14, -145); ctx.lineTo(-2, -130);
+    ctx.lineTo(2, -148); ctx.lineTo(8, -130); ctx.lineTo(16, -143); ctx.lineTo(12, -125); ctx.fill();
+    if (fireAnim > 0.5) { ctx.fillStyle = "#ffd84d"; ctx.beginPath(); ctx.arc(2, -150, 22 * fireAnim, 0, 7); ctx.fill(); }
+  } else {                                              // Bommel-Bomben-Werfer
+    ctx.fillStyle = "#6b4a23";
+    ctx.beginPath(); ctx.moveTo(-42, 0); ctx.lineTo(-30, -90); ctx.lineTo(34, -90); ctx.lineTo(46, 0); ctx.fill();
+    ctx.fillStyle = "#54391a"; ctx.beginPath(); ctx.ellipse(2, -90, 32, 12, 0, 0, 7); ctx.fill();
+    ctx.fillStyle = "#1a0f06"; ctx.beginPath(); ctx.ellipse(2, -90, 22, 7, 0, 0, 7); ctx.fill();
+    if (fireAnim < 0.3 && player.ammo.bomb > 0) {       // nächste Bombe lugt raus
+      ctx.fillStyle = "#e0312e"; ctx.beginPath(); ctx.arc(2, -94, 14, Math.PI, 0); ctx.fill();
+    }
+  }
+  ctx.fillStyle = "#e0312e";                            // Fäustling
+  ctx.beginPath(); ctx.ellipse(2, -28, 40, 32, -0.25, 0, 7); ctx.fill();
+  ctx.beginPath(); ctx.ellipse(-32, -44, 14, 18, 0.5, 0, 7); ctx.fill();
+  ctx.fillStyle = "#fff"; ctx.fillRect(-40, -10, 84, 14);
+  ctx.restore();
+}
+
+function drawMinimap() {
+  const S = 5, M = 10;
+  const map = cur.map;
+  ctx.save();
+  ctx.globalAlpha = 0.82;
+  ctx.fillStyle = "#0a1230";
+  ctx.fillRect(M - 2, M - 2, map[0].length * S + 4, map.length * S + 4);
+  for (let y = 0; y < map.length; y++)
+    for (let x = 0; x < map[0].length; x++) {
+      const t = wallAt(cur, x, y);
+      if (!t) continue;
+      ctx.fillStyle = t === 9 ? "#ffd84d" : "#3a5bb5";
+      ctx.fillRect(M + x * S, M + y * S, S, S);
+    }
+  // Quest-Marker
+  const dot = (x, y, c, r) => {
+    ctx.fillStyle = c;
+    ctx.beginPath(); ctx.arc(M + x * S, M + y * S, r || 2.4, 0, 7); ctx.fill();
+  };
+  for (const p of cur.pickups)
+    if (!p.taken && (p.type === "c" || p.type === "k")) dot(p.x, p.y, "#ffd84d", 3);
+  for (const e of cur.enemies)
+    if (e.alive) dot(e.x, e.y, e.boss ? "#ff2222" : "#ff8888", e.boss ? 3.4 : 2);
+  for (const v of cur.vehicles) dot(v.x, v.y, "#2ee86b", 3);
+  if (cur.npc) dot(cur.npc.x, cur.npc.y, "#ffffff", 3);
+  if (quest.idx >= 2) dot(cur.def.portal.x, cur.def.portal.y, "#b69cff", 3.4);
+  // Spieler
+  ctx.fillStyle = "#fff";
+  ctx.save();
+  ctx.translate(M + player.x * S, M + player.y * S);
+  ctx.rotate(Math.atan2(player.dirY, player.dirX));
+  ctx.beginPath(); ctx.moveTo(5, 0); ctx.lineTo(-3, -3.4); ctx.lineTo(-3, 3.4); ctx.fill();
+  ctx.restore();
+  ctx.restore();
+}
+
 /* ============================== Loop ============================== */
 
 resetGame();
@@ -751,7 +1607,7 @@ function frame(t) {
   const dt = Math.min(0.05, (t - lastTime) / 1000 || 0);
   lastTime = t;
   if (state === "play") update(dt);
-  if (state === "play" || state === "pause") render();
+  if (state === "play" || state === "pause") render(t);
   requestAnimationFrame(frame);
 }
 requestAnimationFrame(frame);
