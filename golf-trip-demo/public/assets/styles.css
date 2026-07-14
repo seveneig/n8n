@@ -1,0 +1,173 @@
+/* ==========================================================================
+   Golfreise Anmeldung – Design System
+   Ein ruhiges, hochwertiges "Clubhaus"-Farbschema: tiefes Fairway-Grün,
+   Sand/Creme und ein zurückhaltendes Gold als Akzent.
+   ========================================================================== */
+
+:root {
+  --green-900: #082b1c;
+  --green-800: #0b3927;
+  --green-700: #114832;
+  --green-600: #175c40;
+  --green-500: #1f7350;
+  --fairway:   #2f9d63;
+  --fairway-soft: #6cbf8f;
+
+  --gold:      #c9a227;
+  --gold-soft: #e6c869;
+  --gold-deep: #a9871a;
+
+  --cream:     #f6f2e9;
+  --sand:      #ece2cd;
+  --paper:     #fffdf8;
+
+  --ink:       #12271c;
+  --muted:     #5f7367;
+  --line:      #e3dccb;
+
+  --danger:    #b23a3a;
+  --ok:        #2f9d63;
+
+  --shadow-sm: 0 1px 2px rgba(8, 43, 28, .06), 0 1px 3px rgba(8, 43, 28, .08);
+  --shadow-md: 0 8px 24px rgba(8, 43, 28, .10), 0 2px 6px rgba(8, 43, 28, .06);
+  --shadow-lg: 0 24px 60px rgba(8, 43, 28, .18);
+
+  --radius:    16px;
+  --radius-sm: 10px;
+
+  --font-display: "Georgia", "Times New Roman", serif;
+  --font-body: system-ui, -apple-system, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+
+  --ease: cubic-bezier(.22, .61, .36, 1);
+}
+
+* { box-sizing: border-box; }
+
+html { scroll-behavior: smooth; }
+
+body {
+  margin: 0;
+  font-family: var(--font-body);
+  color: var(--ink);
+  background: var(--cream);
+  line-height: 1.55;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* Sanfter, texturierter Hintergrund im Fairway-Verlauf */
+.bg-fairway {
+  background:
+    radial-gradient(1200px 500px at 80% -10%, rgba(47,157,99,.25), transparent 60%),
+    radial-gradient(900px 500px at -10% 110%, rgba(201,162,39,.10), transparent 55%),
+    linear-gradient(180deg, var(--green-800), var(--green-900));
+}
+
+h1, h2, h3 { font-family: var(--font-display); font-weight: 600; letter-spacing: .2px; }
+
+a { color: var(--green-600); text-decoration: none; }
+a:hover { color: var(--green-500); }
+
+.container { width: min(1120px, 92vw); margin: 0 auto; }
+
+/* ---- Buttons -------------------------------------------------------------- */
+.btn {
+  display: inline-flex; align-items: center; justify-content: center; gap: .55rem;
+  border: 1px solid transparent; border-radius: 999px;
+  padding: .85rem 1.6rem; font-size: 1rem; font-weight: 600; font-family: var(--font-body);
+  cursor: pointer; transition: transform .18s var(--ease), box-shadow .18s var(--ease), background .18s var(--ease);
+  will-change: transform;
+}
+.btn:active { transform: translateY(1px) scale(.99); }
+.btn-primary { background: var(--gold); color: #241c00; box-shadow: var(--shadow-sm); }
+.btn-primary:hover { background: var(--gold-soft); transform: translateY(-2px); box-shadow: var(--shadow-md); }
+.btn-green { background: var(--green-600); color: #fff; }
+.btn-green:hover { background: var(--green-500); transform: translateY(-2px); box-shadow: var(--shadow-md); }
+.btn-ghost { background: transparent; color: var(--green-700); border-color: var(--line); }
+.btn-ghost:hover { background: #fff; border-color: var(--fairway-soft); }
+.btn-lg { padding: 1.05rem 2.1rem; font-size: 1.08rem; }
+.btn[disabled] { opacity: .55; cursor: not-allowed; transform: none; }
+
+/* ---- Karten / Chips ------------------------------------------------------- */
+.card {
+  background: var(--paper); border: 1px solid var(--line); border-radius: var(--radius);
+  box-shadow: var(--shadow-sm);
+}
+.chip {
+  display: inline-flex; align-items: center; gap: .4rem;
+  padding: .3rem .75rem; border-radius: 999px; font-size: .82rem; font-weight: 600;
+  background: rgba(47,157,99,.12); color: var(--green-600); border: 1px solid rgba(47,157,99,.22);
+}
+.chip-gold { background: rgba(201,162,39,.14); color: var(--gold-deep); border-color: rgba(201,162,39,.3); }
+
+/* ---- Animationen ---------------------------------------------------------- */
+@keyframes fadeUp { from { opacity: 0; transform: translateY(18px); } to { opacity: 1; transform: none; } }
+@keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+@keyframes floaty { 0%,100% { transform: translateY(0); } 50% { transform: translateY(-8px); } }
+@keyframes pop { 0% { transform: scale(.8); opacity: 0; } 70% { transform: scale(1.05); } 100% { transform: scale(1); opacity: 1; } }
+@keyframes shimmer { 0% { background-position: -300px 0; } 100% { background-position: 300px 0; } }
+@keyframes drawCheck { to { stroke-dashoffset: 0; } }
+@keyframes ringPop { 0% { transform: scale(.6); opacity: 0; } 60% { transform: scale(1.08); opacity: 1; } 100% { transform: scale(1); } }
+
+.reveal { opacity: 0; animation: fadeUp .7s var(--ease) forwards; }
+.reveal.d1 { animation-delay: .08s; }
+.reveal.d2 { animation-delay: .16s; }
+.reveal.d3 { animation-delay: .24s; }
+.reveal.d4 { animation-delay: .32s; }
+.reveal.d5 { animation-delay: .40s; }
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { animation-duration: .001ms !important; animation-iteration-count: 1 !important; transition-duration: .001ms !important; scroll-behavior: auto !important; }
+}
+
+/* ---- Formularelemente ----------------------------------------------------- */
+.field { margin-bottom: 1.1rem; }
+.field > label { display: block; font-weight: 600; margin-bottom: .4rem; font-size: .95rem; color: var(--green-800); }
+.field .hint { font-weight: 400; color: var(--muted); font-size: .82rem; }
+.req { color: var(--gold-deep); }
+
+input[type=text], input[type=email], input[type=tel], input[type=date],
+input[type=number], select, textarea {
+  width: 100%; padding: .8rem .9rem; font-size: 1rem; font-family: var(--font-body);
+  color: var(--ink); background: #fff; border: 1.5px solid var(--line); border-radius: var(--radius-sm);
+  transition: border-color .18s var(--ease), box-shadow .18s var(--ease), background .18s var(--ease);
+}
+textarea { min-height: 96px; resize: vertical; }
+input:focus, select:focus, textarea:focus {
+  outline: none; border-color: var(--fairway);
+  box-shadow: 0 0 0 4px rgba(47,157,99,.15);
+}
+input.invalid, select.invalid, textarea.invalid { border-color: var(--danger); box-shadow: 0 0 0 4px rgba(178,58,58,.12); }
+.err-msg { color: var(--danger); font-size: .82rem; margin-top: .35rem; display: none; }
+.err-msg.show { display: block; animation: fadeIn .2s var(--ease); }
+
+.grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 0 1.1rem; }
+@media (max-width: 560px) { .grid-2 { grid-template-columns: 1fr; } }
+
+/* Auswahlkacheln (Pakete / Optionen) */
+.option-grid { display: grid; gap: .8rem; }
+.option {
+  position: relative; display: flex; gap: .9rem; align-items: flex-start;
+  padding: 1rem 1.1rem; border: 1.5px solid var(--line); border-radius: var(--radius-sm);
+  background: #fff; cursor: pointer; transition: border-color .18s var(--ease), box-shadow .18s var(--ease), transform .18s var(--ease);
+}
+.option:hover { border-color: var(--fairway-soft); transform: translateY(-2px); box-shadow: var(--shadow-sm); }
+.option input { position: absolute; opacity: 0; inset: 0; cursor: pointer; }
+.option .dot {
+  flex: 0 0 auto; width: 22px; height: 22px; border-radius: 50%; border: 2px solid var(--line);
+  margin-top: 2px; transition: border-color .18s var(--ease), background .18s var(--ease);
+  display: grid; place-items: center;
+}
+.option .dot::after { content: ""; width: 10px; height: 10px; border-radius: 50%; background: transparent; transition: background .18s var(--ease); }
+.option:has(input:checked) { border-color: var(--fairway); box-shadow: 0 0 0 3px rgba(47,157,99,.14); background: #fbfcf8; }
+.option:has(input:checked) .dot { border-color: var(--fairway); }
+.option:has(input:checked) .dot::after { background: var(--fairway); }
+.option .o-title { font-weight: 600; }
+.option .o-desc { color: var(--muted); font-size: .88rem; }
+.option .o-price { margin-left: auto; font-weight: 700; color: var(--green-700); white-space: nowrap; }
+
+/* Checkbox-Zeile */
+.check-row { display: flex; gap: .7rem; align-items: flex-start; }
+.check-row input { margin-top: .25rem; width: 18px; height: 18px; accent-color: var(--fairway); }
+
+.utility { display: flex; gap: .6rem; flex-wrap: wrap; }
+.hidden { display: none !important; }

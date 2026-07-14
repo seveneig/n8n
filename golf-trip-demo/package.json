@@ -1,0 +1,14 @@
+{
+  "name": "golf-trip-demo",
+  "version": "1.0.0",
+  "description": "Demo: QR-Code-basierte Anmeldung für eine Golfreise inkl. Organisator-Dashboard",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js"
+  },
+  "keywords": ["golf", "anmeldung", "qr-code", "demo", "dashboard"],
+  "license": "MIT",
+  "dependencies": {
+    "qrcode": "^1.5.4"
+  }
+}

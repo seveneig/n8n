@@ -1,0 +1,285 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Anmeldung · Golfreise Algarve 2026</title>
+<link rel="stylesheet" href="/assets/styles.css">
+<style>
+  .page { min-height: 100vh; padding: 2rem 0 4rem; }
+  .top { text-align:center; margin-bottom: 1.6rem; }
+  .top .kicker { color: var(--gold-soft); letter-spacing:.16em; text-transform:uppercase; font-size:.74rem; font-weight:700; }
+  .top h1 { color:#fff; font-size: clamp(1.6rem, 4vw, 2.3rem); margin:.4rem 0 .2rem; }
+  .top p { color:#c9dccd; margin:0; }
+
+  .shell { width:min(640px, 94vw); margin:0 auto; }
+  .form-card { padding: clamp(1.4rem, 4vw, 2.4rem); }
+
+  /* Fortschrittsbalken */
+  .progress { margin-bottom: 1.8rem; }
+  .progress-track { height:8px; background: var(--sand); border-radius:999px; overflow:hidden; }
+  .progress-bar { height:100%; width:25%; background: linear-gradient(90deg, var(--fairway), var(--gold)); border-radius:999px;
+    transition: width .5s var(--ease); }
+  .progress-labels { display:flex; justify-content:space-between; margin-top:.7rem; }
+  .progress-labels span { font-size:.78rem; color: var(--muted); font-weight:600; transition:color .3s var(--ease); flex:1; text-align:center; }
+  .progress-labels span.active { color: var(--green-700); }
+  .progress-labels span.done { color: var(--fairway); }
+
+  /* Schritt-Übergänge */
+  .step-pane { animation: fadeUp .45s var(--ease); }
+  .step-pane h2 { font-size:1.35rem; margin:0 0 .3rem; color: var(--green-800); }
+  .step-pane .step-sub { color: var(--muted); margin:0 0 1.4rem; font-size:.94rem; }
+
+  .nav-row { display:flex; justify-content:space-between; gap:.8rem; margin-top: 1.6rem; }
+  .nav-row .btn { flex: 0 0 auto; }
+  .nav-row .spacer { flex:1; }
+
+  /* Erfolgsscreen */
+  .success { text-align:center; padding: 2.5rem 1rem; animation: fadeUp .5s var(--ease); }
+  .success .ring { width:104px; height:104px; margin:0 auto 1.3rem; border-radius:50%;
+    background: rgba(47,157,99,.12); display:grid; place-items:center; animation: ringPop .6s var(--ease); }
+  .success svg { width:56px; height:56px; }
+  .success svg path { stroke: var(--fairway); stroke-width:4; fill:none; stroke-linecap:round; stroke-linejoin:round;
+    stroke-dasharray: 48; stroke-dashoffset: 48; animation: drawCheck .6s .25s var(--ease) forwards; }
+  .success h2 { color: var(--green-800); margin:.2rem 0 .5rem; }
+  .success p { color: var(--muted); max-width: 42ch; margin: 0 auto 1.6rem; }
+  .success .ref { display:inline-block; background: var(--cream); border:1px dashed var(--sand); border-radius:10px;
+    padding:.5rem 1rem; font-weight:700; color: var(--green-700); letter-spacing:.05em; margin-bottom:1.6rem; }
+
+  .backlink { display:inline-flex; align-items:center; gap:.4rem; color:#cfe0d3; margin-bottom:1rem; font-size:.9rem; }
+  .backlink:hover { color:#fff; }
+  .foot-note { text-align:center; color:#9fbfa9; font-size:.8rem; margin-top:1.2rem; }
+</style>
+</head>
+<body class="bg-fairway">
+<div class="page">
+  <div class="shell">
+    <a class="backlink" href="/">← Zur Übersicht</a>
+    <div class="top">
+      <div class="kicker">⛳ Golfreise Algarve · 12.–19. Sept. 2026</div>
+      <h1>Verbindliche Anmeldung</h1>
+      <p>Bitte fülle die folgenden Angaben aus – dauert keine zwei Minuten.</p>
+    </div>
+
+    <div class="form-card card">
+      <!-- Fortschritt -->
+      <div class="progress" id="progressWrap">
+        <div class="progress-track"><div class="progress-bar" id="bar"></div></div>
+        <div class="progress-labels">
+          <span data-step="1" class="active">Person</span>
+          <span data-step="2">Golf</span>
+          <span data-step="3">Reise</span>
+          <span data-step="4">Abschluss</span>
+        </div>
+      </div>
+
+      <form id="form" novalidate>
+        <!-- Schritt 1: Person -->
+        <section class="step-pane" data-pane="1">
+          <h2>Persönliche Angaben</h2>
+          <p class="step-sub">Damit wir dich erreichen und die Reiseunterlagen zuordnen können.</p>
+          <div class="grid-2">
+            <div class="field">
+              <label>Vorname <span class="req">*</span></label>
+              <input type="text" name="firstName" required autocomplete="given-name">
+              <div class="err-msg">Bitte Vorname angeben.</div>
+            </div>
+            <div class="field">
+              <label>Nachname <span class="req">*</span></label>
+              <input type="text" name="lastName" required autocomplete="family-name">
+              <div class="err-msg">Bitte Nachname angeben.</div>
+            </div>
+          </div>
+          <div class="field">
+            <label>E-Mail <span class="req">*</span></label>
+            <input type="email" name="email" required autocomplete="email" placeholder="name@beispiel.de">
+            <div class="err-msg">Bitte eine gültige E-Mail-Adresse angeben.</div>
+          </div>
+          <div class="grid-2">
+            <div class="field">
+              <label>Telefon <span class="req">*</span></label>
+              <input type="tel" name="phone" required autocomplete="tel" placeholder="+49 …">
+              <div class="err-msg">Bitte Telefonnummer angeben.</div>
+            </div>
+            <div class="field">
+              <label>Geburtsdatum <span class="hint">(für Reiseversicherung)</span></label>
+              <input type="date" name="birthdate" max="2020-01-01">
+              <div class="err-msg"></div>
+            </div>
+          </div>
+        </section>
+
+        <!-- Schritt 2: Golf -->
+        <section class="step-pane hidden" data-pane="2">
+          <h2>Golf-Details</h2>
+          <p class="step-sub">Für Startzeiten, Flight-Einteilung und Leihequipment.</p>
+          <div class="grid-2">
+            <div class="field">
+              <label>Heimatclub / Verein <span class="req">*</span></label>
+              <input type="text" name="homeClub" required placeholder="z. B. GC Musterstadt">
+              <div class="err-msg">Bitte Heimatclub angeben.</div>
+            </div>
+            <div class="field">
+              <label>Handicap (HCP) <span class="req">*</span></label>
+              <input type="number" name="handicap" required step="0.1" min="-5" max="54" placeholder="z. B. 18.4">
+              <div class="err-msg">Bitte gültiges Handicap (-5 bis 54) angeben.</div>
+            </div>
+          </div>
+          <div class="field">
+            <label>DGV-Ausweisnummer <span class="hint">(optional)</span></label>
+            <input type="text" name="dgvId" placeholder="optional">
+            <div class="err-msg"></div>
+          </div>
+
+          <div class="field">
+            <label>Schlaghand <span class="req">*</span></label>
+            <div class="option-grid" style="grid-template-columns:1fr 1fr">
+              <label class="option"><input type="radio" name="handedness" value="Rechtshänder" required><span class="dot"></span><span class="o-title">Rechtshänder</span></label>
+              <label class="option"><input type="radio" name="handedness" value="Linkshänder"><span class="dot"></span><span class="o-title">Linkshänder</span></label>
+            </div>
+            <div class="err-msg">Bitte auswählen.</div>
+          </div>
+
+          <div class="field">
+            <label>Leihschläger benötigt? <span class="req">*</span></label>
+            <div class="option-grid" style="grid-template-columns:1fr 1fr">
+              <label class="option"><input type="radio" name="rentalClubs" value="Nein" required><span class="dot"></span><span class="o-title">Nein, eigene</span></label>
+              <label class="option"><input type="radio" name="rentalClubs" value="Ja"><span class="dot"></span><span class="o-title">Ja, bitte reservieren</span></label>
+            </div>
+            <div class="err-msg">Bitte auswählen.</div>
+          </div>
+
+          <div class="field">
+            <label>Fortbewegung auf dem Platz</label>
+            <div class="option-grid" style="grid-template-columns:repeat(3,1fr)">
+              <label class="option" style="padding:.7rem"><input type="radio" name="cart" value="E-Cart" checked><span class="dot"></span><span class="o-title" style="font-size:.9rem">E-Cart</span></label>
+              <label class="option" style="padding:.7rem"><input type="radio" name="cart" value="Handtrolley"><span class="dot"></span><span class="o-title" style="font-size:.9rem">Trolley</span></label>
+              <label class="option" style="padding:.7rem"><input type="radio" name="cart" value="Tragen"><span class="dot"></span><span class="o-title" style="font-size:.9rem">Tragen</span></label>
+            </div>
+            <div class="err-msg"></div>
+          </div>
+        </section>
+
+        <!-- Schritt 3: Reise -->
+        <section class="step-pane hidden" data-pane="3">
+          <h2>Reise & Unterbringung</h2>
+          <p class="step-sub">Paketwahl, Zimmer und Anreise.</p>
+
+          <div class="field">
+            <label>Reisepaket <span class="req">*</span></label>
+            <div class="option-grid">
+              <label class="option">
+                <input type="radio" name="package" value="Standard" required>
+                <span class="dot"></span>
+                <span><span class="o-title">Standard</span><br><span class="o-desc">7 Nächte, 3 Greenfees, Frühstück</span></span>
+                <span class="o-price">1.290 €</span>
+              </label>
+              <label class="option">
+                <input type="radio" name="package" value="Premium">
+                <span class="dot"></span>
+                <span><span class="o-title">Premium</span><br><span class="o-desc">7 Nächte, 5 Greenfees, Halbpension, Turnier</span></span>
+                <span class="o-price">1.790 €</span>
+              </label>
+              <label class="option">
+                <input type="radio" name="package" value="Nur Turnier">
+                <span class="dot"></span>
+                <span><span class="o-title">Nur Turnier</span><br><span class="o-desc">Wochenende, 1 Greenfee, Abschlussturnier</span></span>
+                <span class="o-price">490 €</span>
+              </label>
+            </div>
+            <div class="err-msg">Bitte ein Paket wählen.</div>
+          </div>
+
+          <div class="field">
+            <label>Zimmerkategorie <span class="req">*</span></label>
+            <div class="option-grid" style="grid-template-columns:1fr 1fr">
+              <label class="option"><input type="radio" name="room" value="Einzelzimmer" required><span class="dot"></span><span class="o-title">Einzelzimmer</span></label>
+              <label class="option"><input type="radio" name="room" value="Doppelzimmer"><span class="dot"></span><span class="o-title">Doppelzimmer</span></label>
+            </div>
+            <div class="err-msg">Bitte auswählen.</div>
+          </div>
+
+          <div class="field" id="roommateField" style="display:none">
+            <label>Zimmerpartner <span class="hint">(falls gewünscht)</span></label>
+            <input type="text" name="roommate" placeholder="Name des Zimmerpartners">
+            <div class="err-msg"></div>
+          </div>
+
+          <div class="field">
+            <label>Anreise <span class="req">*</span></label>
+            <select name="travel" required>
+              <option value="">Bitte wählen …</option>
+              <option>Flug (individuell)</option>
+              <option>Gruppenflug ab Frankfurt</option>
+              <option>Eigener PKW</option>
+              <option>Fahrgemeinschaft</option>
+            </select>
+            <div class="err-msg">Bitte Anreiseart wählen.</div>
+          </div>
+        </section>
+
+        <!-- Schritt 4: Abschluss -->
+        <section class="step-pane hidden" data-pane="4">
+          <h2>Letzte Angaben</h2>
+          <p class="step-sub">Verpflegung, Notfallkontakt und Anmerkungen.</p>
+          <div class="field">
+            <label>Ernährung / Allergien <span class="hint">(optional)</span></label>
+            <input type="text" name="diet" placeholder="z. B. vegetarisch, Nussallergie">
+            <div class="err-msg"></div>
+          </div>
+          <div class="grid-2">
+            <div class="field">
+              <label>Notfallkontakt – Name</label>
+              <input type="text" name="emergencyName" placeholder="optional">
+              <div class="err-msg"></div>
+            </div>
+            <div class="field">
+              <label>Notfallkontakt – Telefon</label>
+              <input type="tel" name="emergencyPhone" placeholder="optional">
+              <div class="err-msg"></div>
+            </div>
+          </div>
+          <div class="field">
+            <label>Anmerkungen <span class="hint">(optional)</span></label>
+            <textarea name="notes" placeholder="Wünsche, Flight-Partner, Fragen …"></textarea>
+            <div class="err-msg"></div>
+          </div>
+          <div class="field">
+            <label class="check-row">
+              <input type="checkbox" name="consent" required>
+              <span>Ich melde mich verbindlich an und akzeptiere die Reisebedingungen sowie die Verarbeitung meiner Daten zur Organisation der Reise. <span class="req">*</span></span>
+            </label>
+            <div class="err-msg">Bitte bestätigen, um fortzufahren.</div>
+          </div>
+        </section>
+
+        <!-- Navigation -->
+        <div class="nav-row">
+          <button type="button" class="btn btn-ghost hidden" id="btnBack">← Zurück</button>
+          <div class="spacer"></div>
+          <button type="button" class="btn btn-green" id="btnNext">Weiter →</button>
+          <button type="submit" class="btn btn-primary hidden" id="btnSubmit">Anmeldung absenden</button>
+        </div>
+      </form>
+
+      <!-- Erfolgsscreen (ersetzt Formular) -->
+      <div class="success hidden" id="success">
+        <div class="ring">
+          <svg viewBox="0 0 52 52"><path d="M14 27l8 8 16-18"/></svg>
+        </div>
+        <h2>Anmeldung eingegangen!</h2>
+        <p>Vielen Dank <span id="okName"></span>. Deine Anmeldung wurde erfasst und ist im Organisator-Dashboard sichtbar. Du erhältst in Kürze eine Bestätigung per E-Mail.</p>
+        <div class="ref">Referenz: <span id="okRef"></span></div>
+        <div class="utility" style="justify-content:center">
+          <a class="btn btn-ghost" href="/">Zur Startseite</a>
+          <a class="btn btn-green" href="/dashboard">Zum Dashboard</a>
+        </div>
+      </div>
+    </div>
+    <p class="foot-note">Demo · Deine Angaben werden nur lokal für diese Demonstration gespeichert.</p>
+  </div>
+</div>
+
+<script src="/assets/register.js"></script>
+</body>
+</html>
