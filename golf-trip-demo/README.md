@@ -8,7 +8,22 @@ Eine kleine, in sich geschlossene Demo für **Anmeldungen zu einer Golfreise per
 
 Design im Clubhaus-Stil (Fairway-Grün, Sand, dezentes Gold) mit kleinen Animationen und Übergängen.
 
-## Schnellstart
+## Ansehen ohne Installation (einfachste Variante)
+
+Die Datei **`standalone.html`** ist die komplette Demo in einer einzigen Datei –
+Startseite, Anmeldeformular und Dashboard zusammen. Einfach **doppelklicken**,
+sie öffnet sich im Browser. Kein Node.js, kein Terminal nötig.
+
+Die Anmeldungen werden dabei direkt **im Browser** gespeichert (localStorage).
+Praktisch zum Vorführen und Durchklicken – die Daten bleiben aber auf dem
+jeweiligen Gerät und werden **nicht** zwischen mehreren Geräten synchronisiert.
+Im Dashboard gibt es einen Button **„✨ Demo-Daten"**, der Beispiel-Anmeldungen anlegt.
+
+> Für einen echten Ablauf, bei dem viele Teilnehmer per Handy den QR-Code scannen
+> und der Organisator **alle** Anmeldungen zentral sieht, ist die Server-Variante
+> unten gedacht (die speichert die Daten gemeinsam auf einem Server).
+
+## Server-Variante (echte, geräteübergreifende Anmeldungen)
 
 ```bash
 cd golf-trip-demo
