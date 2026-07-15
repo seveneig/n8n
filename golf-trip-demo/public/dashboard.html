@@ -89,6 +89,17 @@
   .drawer-foot { padding:1rem 1.5rem 1.8rem; }
   .drawer-foot .btn { width:100%; background:transparent; border:1.5px solid var(--danger); color:var(--danger); }
   .drawer-foot .btn:hover { background:rgba(178,58,58,.12); }
+  .btn-danger { background:var(--danger); color:#fff; border-color:var(--danger); }
+  .btn-danger:hover { background:#c56b6b; transform:translateY(-2px); box-shadow:var(--shadow-md); }
+  .modal-wrap { position:fixed; inset:0; z-index:60; display:grid; place-items:center; background:rgba(8,43,28,.6); padding:1rem; animation:fadeIn .2s var(--ease); }
+  .modal-wrap[hidden] { display:none; }
+  .modal-card { max-width:390px; width:100%; padding:1.7rem 1.6rem 1.4rem; text-align:center; animation:ringPop .3s var(--ease); }
+  .modal-card h3 { color:var(--heading); margin:0 0 .5rem; }
+  .modal-card p { color:var(--muted); margin:0 0 1.4rem; }
+  .modal-actions { display:flex; gap:.6rem; justify-content:center; }
+  .modal-actions .btn { min-width:130px; }
+  .toast { position:fixed; left:50%; bottom:26px; transform:translateX(-50%) translateY(20px); background:var(--green-700); color:#fff; padding:.7rem 1.2rem; border-radius:999px; box-shadow:var(--shadow-lg); z-index:70; opacity:0; transition:opacity .25s var(--ease), transform .25s var(--ease); font-size:.92rem; font-weight:600; pointer-events:none; max-width:90vw; }
+  .toast.show { opacity:1; transform:translateX(-50%) translateY(0); }
 </style>
 </head>
 <body>
@@ -157,6 +168,18 @@
   <div class="body"><dl class="dl" id="dList"></dl></div>
   <div class="drawer-foot hidden" id="drawerFoot"><button class="btn" id="drawerDel">Diesen Eintrag löschen</button></div>
 </aside>
+
+<div class="modal-wrap" id="confirmModal" hidden>
+  <div class="modal-card card">
+    <h3>Anmeldung löschen?</h3>
+    <p id="confirmMsg"></p>
+    <div class="modal-actions">
+      <button class="btn btn-ghost" id="confirmNo">Abbrechen</button>
+      <button class="btn btn-danger" id="confirmYes">Löschen</button>
+    </div>
+  </div>
+</div>
+<div class="toast" id="toast" role="status" aria-live="polite"></div>
 
 <script src="/assets/theme.js"></script>
 <script src="/assets/dashboard.js"></script>

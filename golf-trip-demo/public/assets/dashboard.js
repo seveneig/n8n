@@ -130,16 +130,35 @@
     }).join('');
   }
 
+  // Eigenes Bestätigungsfenster + Toast (statt window.confirm/alert)
+  function askConfirm(msg, onYes) {
+    var m = document.getElementById('confirmModal');
+    document.getElementById('confirmMsg').textContent = msg;
+    m.hidden = false;
+    var yes = document.getElementById('confirmYes'), no = document.getElementById('confirmNo');
+    function close() { m.hidden = true; yes.onclick = null; no.onclick = null; m.onclick = null; }
+    yes.onclick = function () { close(); onYes(); };
+    no.onclick = function () { close(); };
+    m.onclick = function (e) { if (e.target === m) close(); };
+  }
+  var toastTimer = null;
+  function toast(msg) {
+    var t = document.getElementById('toast'); if (!t) return;
+    t.textContent = msg; t.classList.add('show');
+    if (toastTimer) clearTimeout(toastTimer);
+    toastTimer = setTimeout(function () { t.classList.remove('show'); }, 2600);
+  }
   function deleteEntry(id) {
     var rec = all.filter(function (x) { return x.id === id; })[0];
     if (!rec) return;
-    if (!window.confirm('Anmeldung von ' + rec.firstName + ' ' + rec.lastName + ' wirklich löschen?')) return;
-    fetch('/api/registrations/' + encodeURIComponent(id) + '?pw=' + encodeURIComponent(storedPw()), { method: 'DELETE' })
-      .then(function (r) {
-        if (r.status === 401) { alert('Nicht autorisiert – bitte erneut als Organisator anmelden.'); showLock(); return; }
-        delete seenIds[id]; closeDrawer(); load();
-      })
-      .catch(function () { alert('Löschen fehlgeschlagen. Bitte erneut versuchen.'); });
+    askConfirm('„' + rec.firstName + ' ' + rec.lastName + '“ wird dauerhaft aus der Liste entfernt.', function () {
+      fetch('/api/registrations/' + encodeURIComponent(id) + '?pw=' + encodeURIComponent(storedPw()), { method: 'DELETE' })
+        .then(function (r) {
+          if (r.status === 401) { toast('Nicht autorisiert – bitte erneut als Organisator anmelden.'); showLock(); return; }
+          delete seenIds[id]; closeDrawer(); load(); toast('Anmeldung gelöscht.');
+        })
+        .catch(function () { toast('Löschen fehlgeschlagen. Bitte erneut versuchen.'); });
+    });
   }
 
   // ---------- Drawer ----------

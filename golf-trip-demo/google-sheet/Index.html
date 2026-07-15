@@ -2522,6 +2522,17 @@ tbody tr.row-enter { animation:fadeUp .4s var(--ease) both; }
 .drawer-foot { padding:1rem 1.5rem 1.8rem; }
 .drawer-foot .btn { width:100%; background:transparent; border:1.5px solid var(--danger); color:var(--danger); }
 .drawer-foot .btn:hover { background:rgba(208,90,90,.12); }
+.btn-danger { background:var(--danger); color:#fff; border-color:var(--danger); }
+.btn-danger:hover { background:#c56b6b; transform:translateY(-2px); box-shadow:var(--shadow-md); }
+.modal-wrap { position:fixed; inset:0; z-index:60; display:grid; place-items:center; background:rgba(8,43,28,.6); padding:1rem; animation:fadeIn .2s var(--ease); }
+.modal-wrap[hidden] { display:none; }
+.modal-card { max-width:390px; width:100%; padding:1.7rem 1.6rem 1.4rem; text-align:center; animation:ringPop .3s var(--ease); }
+.modal-card h3 { color:var(--heading); margin:0 0 .5rem; }
+.modal-card p { color:var(--muted); margin:0 0 1.4rem; }
+.modal-actions { display:flex; gap:.6rem; justify-content:center; }
+.modal-actions .btn { min-width:130px; }
+.toast { position:fixed; left:50%; bottom:26px; transform:translateX(-50%) translateY(20px); background:var(--green-700); color:#fff; padding:.7rem 1.2rem; border-radius:999px; box-shadow:var(--shadow-lg); z-index:70; opacity:0; transition:opacity .25s var(--ease), transform .25s var(--ease); font-size:.92rem; font-weight:600; pointer-events:none; max-width:90vw; }
+.toast.show { opacity:1; transform:translateX(-50%) translateY(0); }
 </style>
 
 <!-- ===================== START ===================== -->
@@ -2678,6 +2689,18 @@ tbody tr.row-enter { animation:fadeUp .4s var(--ease) both; }
   <div class="drawer-foot hidden" id="drawerFoot"><button class="btn" id="drawerDel">Diesen Eintrag löschen</button></div>
 </aside>
 
+<div class="modal-wrap" id="confirmModal" hidden>
+  <div class="modal-card card">
+    <h3>Anmeldung löschen?</h3>
+    <p id="confirmMsg"></p>
+    <div class="modal-actions">
+      <button class="btn btn-ghost" id="confirmNo">Abbrechen</button>
+      <button class="btn btn-danger" id="confirmYes">Löschen</button>
+    </div>
+  </div>
+</div>
+<div class="toast" id="toast" role="status" aria-live="polite"></div>
+
 <script>
 (function(){
   "use strict";
@@ -2820,7 +2843,7 @@ tbody tr.row-enter { animation:fadeUp .4s var(--ease) both; }
       data.consent=!!form.querySelector("[name=consent]").checked;
       btnSubmit.disabled=true; btnSubmit.textContent="Wird gesendet …";
       API.add(data, function(res){
-        if(!res || !res.ok){ btnSubmit.disabled=false; btnSubmit.textContent="Verbindlich anmelden"; alert("Es ist ein Fehler aufgetreten. Bitte erneut versuchen."); return; }
+        if(!res || !res.ok){ btnSubmit.disabled=false; btnSubmit.textContent="Verbindlich anmelden"; toast("Es ist ein Fehler aufgetreten. Bitte erneut versuchen."); return; }
         form.classList.add("hidden");
         document.getElementById("success").classList.remove("hidden");
         document.getElementById("okName").textContent=data.firstName||"";
@@ -2855,12 +2878,31 @@ tbody tr.row-enter { animation:fadeUp .4s var(--ease) both; }
         +'<td class="col-admin"><button class="del" data-del="'+esc(r.id)+'" title="Eintrag löschen" aria-label="Eintrag löschen">'+TRASH+'</button></td></tr>';
     }).join("");
   }
+  // Eigenes Bestätigungsfenster (native confirm() ist im Apps-Script-iFrame blockiert)
+  function askConfirm(msg, onYes){
+    var m=document.getElementById("confirmModal");
+    document.getElementById("confirmMsg").textContent=msg;
+    m.hidden=false;
+    var yes=document.getElementById("confirmYes"), no=document.getElementById("confirmNo");
+    function close(){ m.hidden=true; yes.onclick=null; no.onclick=null; m.onclick=null; }
+    yes.onclick=function(){ close(); onYes(); };
+    no.onclick=function(){ close(); };
+    m.onclick=function(e){ if(e.target===m) close(); };
+  }
+  var toastTimer=null;
+  function toast(msg){
+    var t=document.getElementById("toast"); if(!t) return;
+    t.textContent=msg; t.classList.add("show");
+    if(toastTimer) clearTimeout(toastTimer);
+    toastTimer=setTimeout(function(){ t.classList.remove("show"); }, 2600);
+  }
   function deleteEntry(id){
     var rec=all.filter(function(x){return x.id===id;})[0]; if(!rec) return;
-    if(!window.confirm("Anmeldung von "+rec.firstName+" "+rec.lastName+" wirklich löschen?")) return;
-    API.del(id, storedPw(), function(res){
-      if(!res || !res.ok){ if(res && res.error==="unauthorized"){ alert("Nicht autorisiert – bitte erneut als Organisator anmelden."); go("admin"); } else { alert("Löschen fehlgeschlagen. Bitte erneut versuchen."); } return; }
-      delete seen[id]; closeDrawer(); loadDash();
+    askConfirm("„"+rec.firstName+" "+rec.lastName+"“ wird dauerhaft aus der Liste entfernt.", function(){
+      API.del(id, storedPw(), function(res){
+        if(!res || !res.ok){ if(res && res.error==="unauthorized"){ toast("Nicht autorisiert – bitte erneut anmelden."); go("admin"); } else { toast("Löschen fehlgeschlagen. Bitte erneut versuchen."); } return; }
+        delete seen[id]; closeDrawer(); loadDash(); toast("Anmeldung gelöscht.");
+      });
     });
   }
 
