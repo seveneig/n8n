@@ -5,7 +5,7 @@ Anmeldeseite für die **Seniorenreise 2027** ins Severin\*Resort & Spa Öschberg
 
 - **Startseite** mit Reise-Infos, inbegriffenen Leistungen und einem **QR-Code** zum Aushängen/Weitergeben
 - **Anmeldeformular** – bewusst kurz gehalten: nur **Vorname, Name und Adresse**
-- **Organisator-Dashboard** mit Live-Statistiken (Plätze, freie Plätze, Umsatz, Countdown), Suche, Detailansicht und CSV-Export
+- **Organisator-Dashboard** mit Live-Statistiken (Plätze, freie Plätze), Suche, Detailansicht und CSV-Export
 
 Design im Clubhaus-Stil (Fairway-Grün, Sand, dezentes Gold) mit echtem Resort-Foto und kleinen Animationen.
 

@@ -1,8 +1,6 @@
 /* Dashboard: laden, rendern, filtern, Detailansicht, CSV, Auto-Refresh */
 (function () {
   var CAPACITY = 20;
-  var PRICE = 1690;
-  var DEADLINE = new Date('2026-08-10T23:59:59');
 
   var all = [];
   var seenIds = {};
@@ -20,7 +18,6 @@
     if (isNaN(d)) return '–';
     return d.toLocaleString('de-CH', { day: '2-digit', month: 'short', hour: '2-digit', minute: '2-digit' });
   }
-  function chf(n) { return n.toLocaleString('de-CH'); }
 
   function animateNumber(el, target, fmt) {
     var start = 0, dur = 600, t0 = null;
@@ -40,9 +37,6 @@
     animateNumber(document.getElementById('stTotal'), all.length);
     document.getElementById('stFree').textContent = Math.max(0, CAPACITY - all.length);
     document.getElementById('stBar').style.width = Math.min(100, (all.length / CAPACITY) * 100) + '%';
-    animateNumber(document.getElementById('stRevenue'), all.length * PRICE, chf);
-    var days = Math.ceil((DEADLINE - new Date()) / (24 * 3600 * 1000));
-    document.getElementById('stDeadline').textContent = days > 0 ? ('noch ' + days + ' Tage') : 'abgelaufen';
   }
 
   function matches(r) {

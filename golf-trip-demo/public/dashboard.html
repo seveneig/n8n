@@ -20,7 +20,7 @@
   .dash-title p { color:#cddccf; margin:0; }
 
   .content { margin-top: -3.2rem; padding-bottom: 4rem; }
-  .stats { display:grid; grid-template-columns: repeat(4,1fr); gap:1rem; margin-bottom:1.4rem; }
+  .stats { display:grid; grid-template-columns: repeat(2,1fr); gap:1rem; margin-bottom:1.4rem; }
   @media (max-width: 820px){ .stats { grid-template-columns: repeat(2,1fr); } }
   .stat { padding:1.3rem 1.4rem; }
   .stat .label { font-size:.8rem; text-transform:uppercase; letter-spacing:.08em; color: var(--muted); font-weight:600; }
@@ -87,8 +87,6 @@
     <div class="stats">
       <div class="stat card reveal"><div class="label">Anmeldungen</div><div class="value" id="stTotal">0</div><div class="sub">von 20 Plätzen</div><div class="bar"><i id="stBar" style="width:0%"></i></div></div>
       <div class="stat card reveal d1"><div class="label">Freie Plätze</div><div class="value" id="stFree">20</div><div class="sub">noch verfügbar</div></div>
-      <div class="stat card reveal d2"><div class="label">Umsatz (kalk.)</div><div class="value small" id="stRevenue">0</div><div class="sub">CHF · Basis 1&#8217;690 p.&nbsp;P.</div></div>
-      <div class="stat card reveal d3"><div class="label">Anmeldeschluss</div><div class="value small">10. Aug 26</div><div class="sub" id="stDeadline">–</div></div>
     </div>
 
     <div class="toolbar reveal d1">
@@ -110,7 +108,7 @@
       </div>
       <div class="empty hidden" id="empty">
         <div class="big">⛳</div>
-        <p>Noch keine Anmeldungen.<br>Teilen Sie den <a href="/">QR-Code</a> – sobald sich jemand anmeldet, erscheint die Anmeldung hier.</p>
+        <p>Noch keine Anmeldungen.<br>Teile den <a href="/">QR-Code</a> – sobald sich jemand anmeldet, erscheint die Anmeldung hier.</p>
       </div>
     </div>
     <p class="refresh-note">Neue Anmeldungen erscheinen automatisch. Zeile anklicken für Details.</p>
