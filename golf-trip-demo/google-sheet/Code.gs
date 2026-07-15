@@ -60,7 +60,8 @@ function addRegistration(data) {
       id
     ]);
   } finally { try { lock.releaseLock(); } catch (e) {} }
-  return { ok: true, reference: ref, id: id };
+  var position = Math.max(0, sh.getLastRow() - 1); // Rang nach Zeit (neueste Zeile zuletzt)
+  return { ok: true, reference: ref, id: id, position: position };
 }
 
 function getRegistrations() {

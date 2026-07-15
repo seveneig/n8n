@@ -100,9 +100,10 @@
     requestAnimationFrame(tick);
   }
   function renderStats() {
-    animateNumber(document.getElementById('stTotal'), all.length);
-    document.getElementById('stFree').textContent = Math.max(0, CAPACITY - all.length);
-    document.getElementById('stBar').style.width = Math.min(100, (all.length / CAPACITY) * 100) + '%';
+    var confirmed = Math.min(all.length, CAPACITY);
+    animateNumber(document.getElementById('stTotal'), confirmed);
+    document.getElementById('stWait').textContent = Math.max(0, all.length - CAPACITY);
+    document.getElementById('stBar').style.width = Math.min(100, (confirmed / CAPACITY) * 100) + '%';
   }
   function matches(r) {
     var q = searchEl.value.trim().toLowerCase();
@@ -115,19 +116,25 @@
     emptyEl.classList.add('hidden');
     var pos = {};
     all.forEach(function (r, i) { pos[r.id] = i + 1; });
+    var q = searchEl.value.trim().toLowerCase();
     var list = all.filter(matches);
-    rowsEl.innerHTML = list.map(function (r) {
+    var html = '', dividerDone = false;
+    list.forEach(function (r) {
+      var p = pos[r.id], wait = p > CAPACITY;
+      if (!q && wait && !dividerDone) { html += '<tr class="divider"><td colspan="8">Warteliste — rückt bei Absagen automatisch nach</td></tr>'; dividerDone = true; }
       var isNew = !seenIds[r.id]; seenIds[r.id] = true;
-      return '<tr data-id="' + esc(r.id) + '" class="' + (isNew ? 'row-enter' : '') + '">' +
-        '<td class="idx">' + pos[r.id] + '</td>' +
+      html += '<tr data-id="' + esc(r.id) + '" class="' + (isNew ? 'row-enter ' : '') + (wait ? 'wl' : '') + '">' +
+        '<td class="idx">' + p + '</td>' +
         '<td><span class="person">' + esc(r.firstName) + ' ' + esc(r.lastName) + '<small>' + esc(r.email || '') + '</small></span></td>' +
         '<td>' + esc(r.street || '–') + '</td>' +
         '<td>' + esc(r.zip || '–') + '</td>' +
         '<td>' + esc(r.city || '–') + '</td>' +
         '<td>' + fmtDate(r.createdAt) + '</td>' +
+        '<td>' + (wait ? '<span class="pill pill-wait">Warteliste</span>' : '<span class="pill pill-ok">Angemeldet</span>') + '</td>' +
         '<td class="col-admin"><button class="del" data-del="' + esc(r.id) + '" title="Eintrag löschen" aria-label="Eintrag löschen">' + TRASH + '</button></td>' +
         '</tr>';
-    }).join('');
+    });
+    rowsEl.innerHTML = html;
   }
 
   // Eigenes Bestätigungsfenster + Toast (statt window.confirm/alert)

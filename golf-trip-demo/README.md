@@ -5,9 +5,10 @@ Anmeldeseite für die **Seniorenreise 2027** ins Severin\*Resort & Spa Öschberg
 
 - **Startseite** mit Reise-Infos, inbegriffenen Leistungen und einem **QR-Code** zum Aushängen/Weitergeben
 - **Anmeldeformular** – kurz gehalten: **Vorname, Name, E-Mail, Telefon und Adresse**
-- **Anmeldungen ansehen** (öffentlich) – Liste aller Anmeldungen, nur lesen
+- **Warteliste:** die ersten **20** (nach Anmeldezeit) sind fest angemeldet, ab Nr. 21 geht es auf die Warteliste
+- **Anmeldungen ansehen** (öffentlich) – Liste aller Anmeldungen mit Status, nur lesen
 - **Organisator-Dashboard** (per **Passwort `2512`**) – zusätzlich mit **Löschfunktion**
-- Live-Statistiken (Plätze, freie Plätze), Suche, Detailansicht und CSV-Export
+- Live-Statistiken (angemeldet / Warteliste), Status je Zeile, Suche, Detailansicht und CSV-Export
 
 Design im Clubhaus-Stil (Fairway-Grün, Sand, dezentes Gold) mit echtem Resort-Foto,
 kleinen Animationen und **dunklem Design als Standard** (hell als Alternative, umschaltbar über ◐).
@@ -81,6 +82,20 @@ Das Formular ist bewusst kurz (seniorenfreundlich):
 - **Telefon**
 - **Adresse:** Strasse und Nr., PLZ, Ort
 - **Verbindliche Anmeldung** (Bestätigung)
+
+## Warteliste
+
+Maßgeblich ist die **Anmeldezeit**:
+
+- Die **ersten 20** Anmeldungen sind **fest angemeldet**.
+- Ab **Nr. 21** landet man automatisch auf der **Warteliste** (im Dashboard mit
+  Trennlinie und gelber „Warteliste"-Markierung gekennzeichnet).
+- Wird eine der ersten 20 Anmeldungen **gelöscht/storniert**, rückt automatisch
+  die nächste Person von der Warteliste nach – die Positionen berechnen sich neu.
+- Nach dem Absenden sieht die Person direkt, ob sie fest dabei ist oder auf der
+  Warteliste steht (mit Platznummer).
+
+Die Kapazität (20) lässt sich im Code anpassen (`CAPACITY`).
 
 ## Ansehen vs. Organisator-Bereich
 

@@ -2483,6 +2483,13 @@ tbody td { padding:.9rem 1rem; border-bottom:1px solid var(--border); vertical-a
 tbody tr { cursor:pointer; transition:background .15s var(--ease); }
 tbody tr:hover { background:var(--card-2); }
 tbody tr.row-enter { animation:fadeUp .4s var(--ease) both; }
+tbody tr.wl { background:rgba(201,162,39,.06); }
+tbody tr.wl:hover { background:rgba(201,162,39,.12); }
+tr.divider td { background:var(--card-2); color:var(--muted); font-size:.74rem; font-weight:700; text-transform:uppercase; letter-spacing:.08em; text-align:center; padding:.5rem; }
+.pill { display:inline-block; padding:.2rem .6rem; border-radius:999px; font-size:.76rem; font-weight:700; white-space:nowrap; }
+.pill-ok { background:rgba(47,157,99,.16); color:var(--fairway); }
+.pill-wait { background:rgba(201,162,39,.18); color:var(--gold-deep); }
+:root[data-theme="dark"] .pill-wait { color:var(--gold-soft); }
 .person { font-weight:600; color:var(--text); }
 .person small { display:block; font-weight:400; color:var(--muted); }
 .idx { color:var(--muted); font-variant-numeric:tabular-nums; }
@@ -2626,6 +2633,7 @@ tbody tr.row-enter { animation:fadeUp .4s var(--ease) both; }
         <h2>Anmeldung eingegangen!</h2>
         <p>Vielen Dank <span id="okName"></span>. Deine Anmeldung zur Seniorenreise 2027 ist gespeichert. Du erhältst in Kürze eine persönliche Bestätigung.</p>
         <div class="ref">Referenz: <span id="okRef"></span></div>
+        <div id="okStatus" style="margin:-.4rem auto 1.4rem; max-width:42ch; font-size:.96rem; color:var(--muted)"></div>
         <div class="utility"><a class="btn btn-ghost" data-go="home">Zur Startseite</a><a class="btn btn-green" data-go="dashboard">Zu den Anmeldungen</a></div>
       </div>
     </div>
@@ -2662,8 +2670,8 @@ tbody tr.row-enter { animation:fadeUp .4s var(--ease) both; }
     </div>
     <div id="dashBody">
       <div class="stats">
-        <div class="stat card"><div class="label">Anmeldungen</div><div class="value" id="stTotal">0</div><div class="sub">von 20 Plätzen</div><div class="bar"><i id="stBar" style="width:0%"></i></div></div>
-        <div class="stat card"><div class="label">Freie Plätze</div><div class="value" id="stFree">20</div><div class="sub">noch verfügbar</div></div>
+        <div class="stat card"><div class="label">Angemeldet</div><div class="value" id="stTotal">0</div><div class="sub">von 20 Plätzen</div><div class="bar"><i id="stBar" style="width:0%"></i></div></div>
+        <div class="stat card"><div class="label">Warteliste</div><div class="value" id="stWait">0</div><div class="sub">rückt bei Absagen nach</div></div>
       </div>
       <div class="toolbar">
         <div class="search"><svg viewBox="0 0 24 24" fill="none"><circle cx="11" cy="11" r="7" stroke="currentColor" stroke-width="2"/><path d="M20 20l-3.5-3.5" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg><input type="text" id="search" placeholder="Suche nach Name oder Ort …"></div>
@@ -2672,7 +2680,7 @@ tbody tr.row-enter { animation:fadeUp .4s var(--ease) both; }
       </div>
       <div class="table-card card">
         <div class="table-scroll"><table>
-          <thead><tr><th>#</th><th>Teilnehmer</th><th>Strasse</th><th>PLZ</th><th>Ort</th><th>Eingegangen</th><th class="col-admin">Aktion</th></tr></thead>
+          <thead><tr><th>#</th><th>Teilnehmer</th><th>Strasse</th><th>PLZ</th><th>Ort</th><th>Eingegangen</th><th>Status</th><th class="col-admin">Aktion</th></tr></thead>
           <tbody id="rows"></tbody>
         </table></div>
         <div class="empty hidden" id="empty"><div class="big">⛳</div><p>Noch keine Anmeldungen.<br>Sobald sich jemand über das <a data-go="register">Anmeldeformular</a> anmeldet, erscheint die Anmeldung hier.</p></div>
@@ -2722,7 +2730,7 @@ tbody tr.row-enter { animation:fadeUp .4s var(--ease) both; }
     function ld(){ try{ return JSON.parse(localStorage.getItem(K))||[]; }catch(e){ return []; } }
     function sv(l){ localStorage.setItem(K, JSON.stringify(l)); }
     return {
-      add: function(data, cb){ var l=ld(); var r={}; for(var k in data) r[k]=data[k]; r.id="id-"+Date.now().toString(36)+"-"+Math.random().toString(36).slice(2,8); r.reference="OB27-"+Math.random().toString(16).slice(2,6).toUpperCase(); r.createdAt=new Date().toISOString(); l.push(r); sv(l); cb({ok:true,reference:r.reference,id:r.id}); },
+      add: function(data, cb){ var l=ld(); var r={}; for(var k in data) r[k]=data[k]; r.id="id-"+Date.now().toString(36)+"-"+Math.random().toString(36).slice(2,8); r.reference="OB27-"+Math.random().toString(16).slice(2,6).toUpperCase(); r.createdAt=new Date().toISOString(); l.push(r); sv(l); cb({ok:true,reference:r.reference,id:r.id,position:l.length}); },
       list: function(cb){ cb(ld()); },
       checkPw: function(pw, cb){ cb({ok:String(pw)==="2512"}); },
       del: function(id, pw, cb){ if(String(pw)!=="2512"){ cb({ok:false,error:"unauthorized"}); return; } sv(ld().filter(function(x){return x.id!==id;})); cb({ok:true}); }
@@ -2848,6 +2856,11 @@ tbody tr.row-enter { animation:fadeUp .4s var(--ease) both; }
         document.getElementById("success").classList.remove("hidden");
         document.getElementById("okName").textContent=data.firstName||"";
         document.getElementById("okRef").textContent=res.reference;
+        var position=res.position||0;
+        var st=document.getElementById("okStatus");
+        if(position && position<=CAPACITY){ st.innerHTML='<span class="pill pill-ok">Fest angemeldet</span> &nbsp;Platz '+position+' von 20.'; }
+        else if(position>CAPACITY){ st.innerHTML='<span class="pill pill-wait">Warteliste</span> &nbsp;Die 20 Plätze sind aktuell belegt – du bist Nr. '+(position-CAPACITY)+' auf der Warteliste und rückst automatisch nach, sobald ein Platz frei wird.'; }
+        else { st.innerHTML=""; }
       });
     });
   }
@@ -2858,9 +2871,10 @@ tbody tr.row-enter { animation:fadeUp .4s var(--ease) both; }
   function sortAll(d){ d.sort(function(a,b){ return new Date(a.createdAt)-new Date(b.createdAt); }); return d; }
   function loadDash(){ API.list(function(data){ all=sortAll((data||[]).slice()); renderStats(); renderRows(); }); }
   function renderStats(){
-    animateNumber(document.getElementById("stTotal"), all.length);
-    document.getElementById("stFree").textContent=Math.max(0, CAPACITY-all.length);
-    document.getElementById("stBar").style.width=Math.min(100,(all.length/CAPACITY)*100)+"%";
+    var confirmed=Math.min(all.length, CAPACITY);
+    animateNumber(document.getElementById("stTotal"), confirmed);
+    document.getElementById("stWait").textContent=Math.max(0, all.length-CAPACITY);
+    document.getElementById("stBar").style.width=Math.min(100,(confirmed/CAPACITY)*100)+"%";
   }
   function filtered(){ var q=document.getElementById("search").value.trim().toLowerCase(); if(!q) return all; return all.filter(function(r){ return [r.firstName,r.lastName,r.city,r.zip,r.street,r.email].join(" ").toLowerCase().indexOf(q)!==-1; }); }
   var TRASH='<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M4 7h16"/><path d="M9 7V5.5A1.5 1.5 0 0 1 10.5 4h3A1.5 1.5 0 0 1 15 5.5V7"/><path d="M6 7l1 12.5A1.5 1.5 0 0 0 8.5 21h7a1.5 1.5 0 0 0 1.5-1.5L18 7"/><path d="M10 11v6"/><path d="M14 11v6"/></svg>';
@@ -2869,14 +2883,20 @@ tbody tr.row-enter { animation:fadeUp .4s var(--ease) both; }
     if(!all.length){ emptyEl.classList.remove("hidden"); rowsEl.innerHTML=""; return; }
     emptyEl.classList.add("hidden");
     var pos={}; all.forEach(function(r,i){ pos[r.id]=i+1; });
-    rowsEl.innerHTML=filtered().map(function(r){
+    var q=document.getElementById("search").value.trim().toLowerCase();
+    var html="", dividerDone=false;
+    filtered().forEach(function(r){
+      var p=pos[r.id], wait=p>CAPACITY;
+      if(!q && wait && !dividerDone){ html+='<tr class="divider"><td colspan="8">Warteliste — rückt bei Absagen automatisch nach</td></tr>'; dividerDone=true; }
       var isNew=!seen[r.id]; seen[r.id]=true;
-      return '<tr data-id="'+esc(r.id)+'" class="'+(isNew?"row-enter":"")+'">'
-        +'<td class="idx">'+pos[r.id]+"</td>"
+      html+='<tr data-id="'+esc(r.id)+'" class="'+(isNew?"row-enter ":"")+(wait?"wl":"")+'">'
+        +'<td class="idx">'+p+"</td>"
         +'<td><span class="person">'+esc(r.firstName)+" "+esc(r.lastName)+"<small>"+esc(r.email||"")+"</small></span></td>"
         +"<td>"+esc(r.street||"–")+"</td><td>"+esc(r.zip||"–")+"</td><td>"+esc(r.city||"–")+"</td><td>"+fmtDate(r.createdAt)+"</td>"
+        +'<td>'+(wait?'<span class="pill pill-wait">Warteliste</span>':'<span class="pill pill-ok">Angemeldet</span>')+'</td>'
         +'<td class="col-admin"><button class="del" data-del="'+esc(r.id)+'" title="Eintrag löschen" aria-label="Eintrag löschen">'+TRASH+'</button></td></tr>';
-    }).join("");
+    });
+    rowsEl.innerHTML=html;
   }
   // Eigenes Bestätigungsfenster (native confirm() ist im Apps-Script-iFrame blockiert)
   function askConfirm(msg, onYes){

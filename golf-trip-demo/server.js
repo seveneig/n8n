@@ -120,7 +120,7 @@ const server = http.createServer(async (req, res) => {
       const list = readAll();
       list.push(rec);
       writeAll(list);
-      return sendJson(res, 201, { ok: true, reference: rec.reference, id: rec.id });
+      return sendJson(res, 201, { ok: true, reference: rec.reference, id: rec.id, position: list.length });
     }
 
     if (p === '/api/registrations' && req.method === 'GET') {

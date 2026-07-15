@@ -61,6 +61,13 @@
         s.classList.remove('hidden');
         document.getElementById('okName').textContent = data.firstName || '';
         document.getElementById('okRef').textContent = res.body.reference;
+        var CAPACITY = 20, position = res.body.position || 0;
+        var st = document.getElementById('okStatus');
+        if (st) {
+          if (position && position <= CAPACITY) { st.innerHTML = '<span class="pill pill-ok">Fest angemeldet</span> &nbsp;Platz ' + position + ' von 20.'; }
+          else if (position > CAPACITY) { st.innerHTML = '<span class="pill pill-wait">Warteliste</span> &nbsp;Die 20 Plätze sind aktuell belegt – du bist Nr. ' + (position - CAPACITY) + ' auf der Warteliste und rückst automatisch nach, sobald ein Platz frei wird.'; }
+          else { st.innerHTML = ''; }
+        }
       })
       .catch(function (err) {
         btnSubmit.disabled = false;
