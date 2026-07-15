@@ -123,7 +123,7 @@
       var p = pos[r.id], wait = p > CAPACITY;
       if (!q && wait && !dividerDone) { html += '<tr class="divider"><td colspan="8">Warteliste — rückt bei Absagen automatisch nach</td></tr>'; dividerDone = true; }
       var isNew = !seenIds[r.id]; seenIds[r.id] = true;
-      html += '<tr data-id="' + esc(r.id) + '" class="' + (isNew ? 'row-enter ' : '') + (wait ? 'wl' : '') + '">' +
+      html += '<tr data-id="' + esc(r.id) + '" class="' + (isNew ? 'row-enter ' : '') + (wait ? 'wl' : 'ok') + '">' +
         '<td class="idx">' + p + '</td>' +
         '<td><span class="person">' + esc(r.firstName) + ' ' + esc(r.lastName) + '<small>' + esc(r.email || '') + '</small></span></td>' +
         '<td>' + esc(r.street || '–') + '</td>' +
