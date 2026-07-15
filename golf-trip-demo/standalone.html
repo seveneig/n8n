@@ -158,13 +158,13 @@ a { color:var(--green-600); text-decoration:none; }
 @media (max-width:720px){ .perks{ grid-template-columns:1fr; } }
 .perk { display:flex; gap:1rem; padding:1.5rem; align-items:flex-start; }
 .perk .ic { width:52px; height:52px; flex:0 0 auto; border-radius:14px; display:grid; place-items:center;
-  background:rgba(47,157,99,.14); font-size:1.5rem; }
+  background:rgba(47,157,99,.14); color:var(--fairway); } .perk .ic svg { width:27px; height:27px; }
 .perk h3 { margin:.1rem 0 .35rem; color:var(--heading); font-size:1.15rem; }
 .perk p { margin:0; color:var(--muted); font-size:.95rem; }
 .infobar { margin-top:1.6rem; display:grid; grid-template-columns:repeat(3,1fr); gap:1rem; }
 @media (max-width:720px){ .infobar{ grid-template-columns:1fr; } }
 .infobar .item { padding:1.1rem 1.3rem; display:flex; gap:.8rem; align-items:center; }
-.infobar .item .ic { font-size:1.3rem; }
+.infobar .item .ic { color:var(--fairway); display:inline-flex; align-items:center; } .infobar .item .ic svg { width:22px; height:22px; }
 .infobar .k { font-weight:700; color:var(--heading); font-size:.98rem; }
 .infobar .l { color:var(--muted); font-size:.85rem; }
 footer { padding:2rem 0 3rem; text-align:center; color:var(--muted); font-size:.85rem; }
@@ -312,15 +312,15 @@ tbody tr.row-enter { animation:fadeUp .4s var(--ease) both; }
       <h2>Inbegriffene Leistungen</h2>
       <p class="sub">Alles im Package-Preis von CHF 1&#8217;690 pro Person enthalten (Basis Einzelzimmer, Kurs CHF&nbsp;0.93).</p>
       <div class="perks">
-        <div class="perk card reveal"><div class="ic">🏨</div><div><h3>4× Übernachtung mit Frühstück</h3><p>Unterbringung im Einzelzimmer oder Doppelzimmer zur Einzelnutzung, inklusive Minibar.</p></div></div>
-        <div class="perk card reveal d1"><div class="ic">🧖</div><div><h3>Spa &amp; Wellness</h3><p>Freie Benutzung des 5&#8202;000&nbsp;m² Spa-Bereichs mit Innen- und Infinity-Aussenpool.</p></div></div>
-        <div class="perk card reveal d2"><div class="ic">🍽️</div><div><h3>4× Nachtessen</h3><p>Abendessen in drei verschiedenen Restaurants im Resort.</p></div></div>
-        <div class="perk card reveal d3"><div class="ic">⛳</div><div><h3>5× 18-Loch Golfrunden</h3><p>2× Old Course &amp; 2× East Course vor Ort (Caddyhalle für Gäste) sowie 1× Golf Königsfeld (30&nbsp;Min. Fahrzeit).</p></div></div>
+        <div class="perk card reveal"><div class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M3 18v-6a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2v6"/><path d="M3 14h18"/><path d="M7 10V8.5A1.5 1.5 0 0 1 8.5 7h7A1.5 1.5 0 0 1 17 8.5V10"/><path d="M3 18v2.4"/><path d="M21 18v2.4"/></svg></div><div><h3>4× Übernachtung mit Frühstück</h3><p>Unterbringung im Einzelzimmer oder Doppelzimmer zur Einzelnutzung, inklusive Minibar.</p></div></div>
+        <div class="perk card reveal d1"><div class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M11 20A7 7 0 0 1 9.8 6.1C15.5 5 17 4.48 19 2c1 2 2 4.18 2 8 0 5.5-4.78 10-10 10Z"/><path d="M2 21c0-3 1.85-5.36 5.08-6"/></svg></div><div><h3>Spa &amp; Wellness</h3><p>Freie Benutzung des 5&#8202;000&nbsp;m² Spa-Bereichs mit Innen- und Infinity-Aussenpool.</p></div></div>
+        <div class="perk card reveal d2"><div class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M4.5 3v3.5a2.5 2.5 0 0 0 5 0V3"/><path d="M7 3v4"/><path d="M7 9v12"/><path d="M17 3v18"/><path d="M17 3c-2 .5-3.5 2.5-3.5 5S15 12.5 17 13"/></svg></div><div><h3>4× Nachtessen</h3><p>Abendessen in drei verschiedenen Restaurants im Resort.</p></div></div>
+        <div class="perk card reveal d3"><div class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M6.5 21V4"/><path d="M6.5 4l9.5 2.4-9.5 2.4" fill="currentColor" stroke="none"/><path d="M3.5 21c2.2-1.4 14.8-1.4 17 0"/><circle cx="12.5" cy="20" r="1" fill="currentColor" stroke="none"/></svg></div><div><h3>5× 18-Loch Golfrunden</h3><p>2× Old Course &amp; 2× East Course vor Ort (Caddyhalle für Gäste) sowie 1× Golf Königsfeld (30&nbsp;Min. Fahrzeit).</p></div></div>
       </div>
       <div class="infobar">
-        <div class="item card"><span class="ic">🚗</span><div><div class="k">Private Anfahrt mit PW</div><div class="l">ca. 1 Stunde ab Augwil</div></div></div>
-        <div class="item card"><span class="ic">📅</span><div><div class="k">Anmeldeschluss</div><div class="l">10. August 2026</div></div></div>
-        <div class="item card"><span class="ic">👥</span><div><div class="k">Teilnehmerzahl</div><div class="l">maximal 20 Personen</div></div></div>
+        <div class="item card"><span class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12.5l1.4-4.2A2 2 0 0 1 8.3 7h7.4a2 2 0 0 1 1.9 1.3l1.4 4.2"/><path d="M4 12.5h16a1 1 0 0 1 1 1V17a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1v-3.5a1 1 0 0 1 1-1Z"/><circle cx="7.5" cy="17.6" r="1.1"/><circle cx="16.5" cy="17.6" r="1.1"/></svg></span><div><div class="k">Private Anfahrt mit PW</div><div class="l">ca. 1 Stunde ab Augwil</div></div></div>
+        <div class="item card"><span class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><rect x="3.5" y="5" width="17" height="16" rx="2"/><path d="M3.5 9.5h17"/><path d="M8 3v4"/><path d="M16 3v4"/></svg></span><div><div class="k">Anmeldeschluss</div><div class="l">10. August 2026</div></div></div>
+        <div class="item card"><span class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="8" r="3.2"/><path d="M3.5 20a5.5 5.5 0 0 1 11 0"/><path d="M15.5 5.1a3.2 3.2 0 0 1 0 5.8"/><path d="M17 14.3a5.5 5.5 0 0 1 3.5 5.2"/></svg></span><div><div class="k">Teilnehmerzahl</div><div class="l">maximal 20 Personen</div></div></div>
       </div>
     </section>
   </main>
