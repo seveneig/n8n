@@ -21,7 +21,6 @@ sie öffnet sich im Browser. Kein Node.js, kein Terminal nötig.
 Die Anmeldungen werden dabei direkt **im Browser** gespeichert (localStorage).
 Praktisch zum Vorführen und Durchklicken – die Daten bleiben aber auf dem
 jeweiligen Gerät und werden **nicht** zwischen mehreren Geräten synchronisiert.
-Im Dashboard gibt es einen Button **„✨ Demo-Daten"**, der Beispiel-Anmeldungen anlegt.
 
 > Für einen echten Ablauf, bei dem viele Teilnehmer per Handy den QR-Code scannen
 > und der Organisator **alle** Anmeldungen zentral sieht, ist die Server-Variante
@@ -42,8 +41,6 @@ Dann im Browser öffnen:
 | Start / QR-Aushang | http://localhost:3000/ | QR-Code zeigen & ausdrucken |
 | Anmeldung | http://localhost:3000/register | Formular für Teilnehmer |
 | Dashboard | http://localhost:3000/dashboard | Anmeldungen ansehen |
-
-Im Dashboard auf **„✨ Demo-Daten"** klicken, um Beispiel-Anmeldungen zu erzeugen.
 
 ## So funktioniert der QR-Ablauf
 
@@ -90,7 +87,6 @@ Das Formular ist bewusst minimal (seniorenfreundlich):
 | `GET` | `/api/registrations` | Alle Anmeldungen (JSON) |
 | `GET` | `/api/registrations.csv` | Export als CSV (Excel-kompatibel) |
 | `GET` | `/api/qr.svg` | QR-Code als SVG |
-| `POST` | `/api/seed` | Demo-Anmeldungen erzeugen |
 
 ---
 

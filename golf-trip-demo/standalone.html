@@ -418,14 +418,13 @@ tbody tr.row-enter { animation:fadeUp .4s var(--ease) both; }
     <div class="toolbar">
       <div class="search"><svg viewBox="0 0 24 24" fill="none"><circle cx="11" cy="11" r="7" stroke="currentColor" stroke-width="2"/><path d="M20 20l-3.5-3.5" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg><input type="text" id="search" placeholder="Suche nach Name oder Ort …"></div>
       <button class="btn btn-ghost" id="btnExport">⬇ CSV export</button>
-      <button class="btn btn-ghost" id="btnSeed" title="Demo-Anmeldungen erzeugen">✨ Demo-Daten</button>
     </div>
     <div class="table-card card">
       <div class="table-scroll"><table>
         <thead><tr><th>#</th><th>Teilnehmer</th><th>Strasse</th><th>PLZ</th><th>Ort</th><th>Eingegangen</th></tr></thead>
         <tbody id="rows"></tbody>
       </table></div>
-      <div class="empty hidden" id="empty"><div class="big">⛳</div><p>Noch keine Anmeldungen.<br>Füllen Sie das <a href="#/register">Anmeldeformular</a> aus oder erzeugen Sie <a href="#" id="seedLink">Demo-Daten</a>.</p></div>
+      <div class="empty hidden" id="empty"><div class="big">⛳</div><p>Noch keine Anmeldungen.<br>Sobald sich jemand über das <a href="#/register">Anmeldeformular</a> anmeldet, erscheint die Anmeldung hier.</p></div>
     </div>
     <p class="refresh-note">Neue Anmeldungen erscheinen automatisch. Zeile anklicken für Details.</p>
   </div></main>
@@ -585,21 +584,6 @@ tbody tr.row-enter { animation:fadeUp .4s var(--ease) both; }
   }
   function closeDrawer(){ document.getElementById("drawer").classList.remove("show"); document.getElementById("overlay").classList.remove("show"); }
 
-  var SEED=[
-    {firstName:"Hans",lastName:"Meier",street:"Dorfstrasse 12",zip:"8155",city:"Nassenwil"},
-    {firstName:"Ruth",lastName:"Baumann",street:"Seeweg 4",zip:"8620",city:"Wetzikon"},
-    {firstName:"Peter",lastName:"Steiner",street:"Bahnhofstrasse 8",zip:"5000",city:"Aarau"},
-    {firstName:"Verena",lastName:"Widmer",street:"Rebbergstrasse 21",zip:"8134",city:"Adliswil"},
-    {firstName:"Walter",lastName:"Frei",street:"Lindenweg 6",zip:"8964",city:"Rudolfstetten"},
-    {firstName:"Margrit",lastName:"Huber",street:"Kirchgasse 3",zip:"8907",city:"Wettswil"},
-    {firstName:"Kurt",lastName:"Brunner",street:"Sonnhaldenstrasse 17",zip:"8600",city:"Dübendorf"}
-  ];
-  function seed(){
-    var list=load(), now=Date.now();
-    SEED.forEach(function(s,i){ list.push(Object.assign({id:uid(),reference:makeRef(),consent:true,createdAt:new Date(now-(SEED.length-i)*30*3600*1000).toISOString()}, s)); });
-    save(list); seen={}; renderDashboard();
-  }
-
   function exportCsv(){
     var all=load();
     var cols=["reference","createdAt","firstName","lastName","street","zip","city"];
@@ -619,8 +603,6 @@ tbody tr.row-enter { animation:fadeUp .4s var(--ease) both; }
     document.addEventListener("keydown", function(e){ if(e.key==="Escape") closeDrawer(); });
     document.getElementById("search").addEventListener("input", function(){ renderRows(); });
     document.getElementById("btnExport").addEventListener("click", exportCsv);
-    document.getElementById("btnSeed").addEventListener("click", seed);
-    document.getElementById("seedLink").addEventListener("click", function(e){ e.preventDefault(); seed(); });
   }
 
   // ---------- Init ----------

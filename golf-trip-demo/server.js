@@ -95,31 +95,6 @@ function csvEscape(v) {
   return /[",\n;]/.test(s) ? '"' + s.replace(/"/g, '""') + '"' : s;
 }
 
-// ---------- Demo-Daten ----------
-const SEED = [
-  { firstName: 'Hans', lastName: 'Meier', street: 'Dorfstrasse 12', zip: '8155', city: 'Nassenwil' },
-  { firstName: 'Ruth', lastName: 'Baumann', street: 'Seeweg 4', zip: '8620', city: 'Wetzikon' },
-  { firstName: 'Peter', lastName: 'Steiner', street: 'Bahnhofstrasse 8', zip: '5000', city: 'Aarau' },
-  { firstName: 'Verena', lastName: 'Widmer', street: 'Rebbergstrasse 21', zip: '8134', city: 'Adliswil' },
-  { firstName: 'Walter', lastName: 'Frei', street: 'Lindenweg 6', zip: '8964', city: 'Rudolfstetten' },
-  { firstName: 'Margrit', lastName: 'Huber', street: 'Kirchgasse 3', zip: '8907', city: 'Wettswil' },
-  { firstName: 'Kurt', lastName: 'Brunner', street: 'Sonnhaldenstrasse 17', zip: '8600', city: 'Dübendorf' }
-];
-
-function seedData() {
-  const list = readAll();
-  const now = Date.now();
-  SEED.forEach((s, i) => {
-    list.push(Object.assign({
-      id: crypto.randomUUID(),
-      reference: makeReference(),
-      consent: true,
-      createdAt: new Date(now - (SEED.length - i) * 3600 * 1000 * 30).toISOString()
-    }, s));
-  });
-  writeAll(list);
-}
-
 // ---------- Server ----------
 const server = http.createServer(async (req, res) => {
   const url = new URL(req.url, 'http://localhost');
@@ -159,11 +134,6 @@ const server = http.createServer(async (req, res) => {
         'Content-Disposition': 'attachment; filename="seniorenreise-2027-anmeldungen.csv"'
       });
       return res.end(csv);
-    }
-
-    if (p === '/api/seed' && req.method === 'POST') {
-      seedData();
-      return sendJson(res, 200, { ok: true });
     }
 
     if (p === '/api/qr.svg') {

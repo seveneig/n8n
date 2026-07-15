@@ -119,16 +119,6 @@
     window.location.href = '/api/registrations.csv';
   });
 
-  function seed() {
-    var btn = document.getElementById('btnSeed');
-    btn.disabled = true; btn.textContent = 'Erzeuge …';
-    fetch('/api/seed', { method: 'POST' })
-      .then(function () { seenIds = {}; return load(); })
-      .finally(function () { btn.disabled = false; btn.textContent = '✨ Demo-Daten'; });
-  }
-  document.getElementById('btnSeed').addEventListener('click', seed);
-  document.getElementById('seedLink').addEventListener('click', function (e) { e.preventDefault(); seed(); });
-
   load();
   setInterval(load, 5000);
 })();
