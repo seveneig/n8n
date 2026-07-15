@@ -2483,10 +2483,13 @@ tbody td { padding:.9rem 1rem; border-bottom:1px solid var(--border); vertical-a
 tbody tr { cursor:pointer; transition:background .15s var(--ease); }
 tbody tr:hover { background:var(--card-2); }
 tbody tr.row-enter { animation:fadeUp .4s var(--ease) both; }
-tbody tr.ok { background:rgba(47,157,99,.07); }
-tbody tr.ok:hover { background:rgba(47,157,99,.13); }
-tbody tr.wl { background:rgba(201,162,39,.07); }
-tbody tr.wl:hover { background:rgba(201,162,39,.13); }
+tbody tr.ok { background:rgba(47,157,99,.06); }
+:root[data-theme="light"] tbody tr.ok { background:rgba(47,157,99,.16); }
+:root[data-theme="light"] tbody tr.ok:hover { background:rgba(47,157,99,.24); }
+:root[data-theme="dark"] tbody tr.ok { background:rgba(47,157,99,.05); }
+:root[data-theme="dark"] tbody tr.ok:hover { background:rgba(47,157,99,.11); }
+tbody tr.wl { background:transparent; }
+tbody tr.wl:hover { background:var(--card-2); }
 tr.divider td { background:var(--card-2); color:var(--muted); font-size:.74rem; font-weight:700; text-transform:uppercase; letter-spacing:.08em; text-align:center; padding:.5rem; }
 .pill { display:inline-block; padding:.2rem .6rem; border-radius:999px; font-size:.76rem; font-weight:700; white-space:nowrap; }
 .pill-ok { background:rgba(47,157,99,.16); color:var(--fairway); }
