@@ -1,12 +1,16 @@
-# ⛳ Golfreise-Anmeldung – Demo
+# ⛳ Seniorenreise 2027 – Anmeldung (Öschberghof)
 
-Eine kleine, in sich geschlossene Demo für **Anmeldungen zu einer Golfreise per QR-Code**:
+Anmeldeseite für die **Seniorenreise 2027** ins Severin\*Resort & Spa Öschberghof
+(Donaueschingen, 5.–9. Juni 2027) – Anmeldung **per QR-Code**:
 
-- **Startseite** mit Event-Infos und einem **QR-Code** zum Aushängen/Weitergeben
-- **Anmeldeformular** (mehrstufiger Assistent) mit allen relevanten Golf- & Reisefragen
-- **Organisator-Dashboard** mit Live-Statistiken, Suche/Filter, Detailansicht und CSV-Export
+- **Startseite** mit Reise-Infos, inbegriffenen Leistungen und einem **QR-Code** zum Aushängen/Weitergeben
+- **Anmeldeformular** – bewusst kurz gehalten: nur **Vorname, Name und Adresse**
+- **Organisator-Dashboard** mit Live-Statistiken (Plätze, freie Plätze, Umsatz, Countdown), Suche, Detailansicht und CSV-Export
 
-Design im Clubhaus-Stil (Fairway-Grün, Sand, dezentes Gold) mit kleinen Animationen und Übergängen.
+Design im Clubhaus-Stil (Fairway-Grün, Sand, dezentes Gold) mit echtem Resort-Foto und kleinen Animationen.
+
+**Eckdaten:** 4 Nächte mit Frühstück · Spa · 4× Nachtessen · 5× 18-Loch Golf ·
+CHF 1'690 p. P. · max. 20 Personen · Anmeldeschluss 10. August 2026.
 
 ## Ansehen ohne Installation (einfachste Variante)
 
@@ -58,10 +62,12 @@ Im Dashboard auf **„✨ Demo-Daten"** klicken, um Beispiel-Anmeldungen zu erze
 
 ## Erfasste Angaben
 
-- **Person:** Vor-/Nachname, E-Mail, Telefon, Geburtsdatum
-- **Golf:** Heimatclub, Handicap, DGV-Ausweis, Schlaghand, Leihschläger, Fortbewegung (E-Cart/Trolley/Tragen)
-- **Reise:** Paket (Standard/Premium/Nur Turnier), Zimmerkategorie, Zimmerpartner, Anreise
-- **Sonstiges:** Ernährung/Allergien, Notfallkontakt, Anmerkungen, Einwilligung
+Das Formular ist bewusst minimal (seniorenfreundlich):
+
+- **Vorname**
+- **Name**
+- **Adresse:** Strasse und Nr., PLZ, Ort
+- **Verbindliche Anmeldung** (Bestätigung)
 
 ## Technik
 

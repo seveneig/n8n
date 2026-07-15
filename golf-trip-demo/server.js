@@ -33,13 +33,8 @@ function writeAll(list) {
 }
 
 // ---------- Feld-Whitelist (nur Erwartetes speichern) ----------
-const FIELDS = [
-  'firstName', 'lastName', 'email', 'phone', 'birthdate',
-  'homeClub', 'handicap', 'dgvId', 'handedness', 'rentalClubs', 'cart',
-  'package', 'room', 'roommate', 'travel',
-  'diet', 'emergencyName', 'emergencyPhone', 'notes', 'consent'
-];
-const REQUIRED = ['firstName', 'lastName', 'email', 'phone', 'homeClub', 'handicap', 'handedness', 'rentalClubs', 'package', 'room', 'travel'];
+const FIELDS = ['firstName', 'lastName', 'street', 'zip', 'city', 'consent'];
+const REQUIRED = ['firstName', 'lastName', 'street', 'zip', 'city'];
 
 function sanitize(body) {
   const out = {};
@@ -53,14 +48,13 @@ function sanitize(body) {
 function validate(rec) {
   const errors = [];
   REQUIRED.forEach((f) => { if (!rec[f]) errors.push(f); });
-  if (rec.email && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(rec.email)) errors.push('email');
   if (!rec.consent) errors.push('consent');
   return errors;
 }
 
 function makeReference() {
-  // z. B. ALG-7F3A
-  return 'ALG-' + crypto.randomBytes(2).toString('hex').toUpperCase();
+  // z. B. OB27-7F3A
+  return 'OB27-' + crypto.randomBytes(2).toString('hex').toUpperCase();
 }
 
 // ---------- HTTP-Helfer ----------
@@ -72,7 +66,8 @@ function sendJson(res, status, obj) {
 function sendFile(res, filePath) {
   const ext = path.extname(filePath).toLowerCase();
   const types = { '.html': 'text/html', '.css': 'text/css', '.js': 'text/javascript',
-    '.svg': 'image/svg+xml', '.json': 'application/json', '.png': 'image/png', '.ico': 'image/x-icon' };
+    '.svg': 'image/svg+xml', '.json': 'application/json', '.png': 'image/png',
+    '.jpg': 'image/jpeg', '.jpeg': 'image/jpeg', '.ico': 'image/x-icon' };
   fs.readFile(filePath, (err, data) => {
     if (err) { res.writeHead(404); res.end('Not found'); return; }
     res.writeHead(200, { 'Content-Type': (types[ext] || 'application/octet-stream') + '; charset=utf-8' });
@@ -102,12 +97,13 @@ function csvEscape(v) {
 
 // ---------- Demo-Daten ----------
 const SEED = [
-  { firstName: 'Anna', lastName: 'Berger', email: 'anna.berger@example.com', phone: '+49 170 1234567', homeClub: 'GC Rheintal', handicap: '12.4', handedness: 'Rechtshänder', rentalClubs: 'Nein', cart: 'E-Cart', package: 'Premium', room: 'Doppelzimmer', roommate: 'Clara Weiss', travel: 'Gruppenflug ab Frankfurt', diet: 'vegetarisch' },
-  { firstName: 'Markus', lastName: 'Hofer', email: 'm.hofer@example.com', phone: '+49 151 9988776', homeClub: 'GC Seeblick', handicap: '5.1', handedness: 'Rechtshänder', rentalClubs: 'Nein', cart: 'Handtrolley', package: 'Premium', room: 'Einzelzimmer', travel: 'Eigener PKW' },
-  { firstName: 'Clara', lastName: 'Weiss', email: 'clara.weiss@example.com', phone: '+49 160 5544332', homeClub: 'GC Rheintal', handicap: '22.8', handedness: 'Linkshänder', rentalClubs: 'Ja', cart: 'E-Cart', package: 'Standard', room: 'Doppelzimmer', roommate: 'Anna Berger', travel: 'Gruppenflug ab Frankfurt', diet: 'glutenfrei' },
-  { firstName: 'Tobias', lastName: 'Krüger', email: 't.krueger@example.com', phone: '+49 172 3322110', homeClub: 'GC Waldeck', handicap: '18.0', handedness: 'Rechtshänder', rentalClubs: 'Ja', cart: 'E-Cart', package: 'Standard', room: 'Einzelzimmer', travel: 'Fahrgemeinschaft' },
-  { firstName: 'Sabine', lastName: 'Lorenz', email: 's.lorenz@example.com', phone: '+49 152 7766554', homeClub: 'GC Seeblick', handicap: '28.5', handedness: 'Rechtshänder', rentalClubs: 'Nein', cart: 'Tragen', package: 'Nur Turnier', room: 'Einzelzimmer', travel: 'Eigener PKW', notes: 'Freue mich aufs Wiedersehen!' },
-  { firstName: 'Jonas', lastName: 'Fischer', email: 'jonas.f@example.com', phone: '+49 176 1029384', homeClub: 'GC Alpenblick', handicap: '9.7', handedness: 'Rechtshänder', rentalClubs: 'Nein', cart: 'Handtrolley', package: 'Premium', room: 'Doppelzimmer', roommate: 'Tobias Krüger', travel: 'Individuell', diet: '' }
+  { firstName: 'Hans', lastName: 'Meier', street: 'Dorfstrasse 12', zip: '8155', city: 'Nassenwil' },
+  { firstName: 'Ruth', lastName: 'Baumann', street: 'Seeweg 4', zip: '8620', city: 'Wetzikon' },
+  { firstName: 'Peter', lastName: 'Steiner', street: 'Bahnhofstrasse 8', zip: '5000', city: 'Aarau' },
+  { firstName: 'Verena', lastName: 'Widmer', street: 'Rebbergstrasse 21', zip: '8134', city: 'Adliswil' },
+  { firstName: 'Walter', lastName: 'Frei', street: 'Lindenweg 6', zip: '8964', city: 'Rudolfstetten' },
+  { firstName: 'Margrit', lastName: 'Huber', street: 'Kirchgasse 3', zip: '8907', city: 'Wettswil' },
+  { firstName: 'Kurt', lastName: 'Brunner', street: 'Sonnhaldenstrasse 17', zip: '8600', city: 'Dübendorf' }
 ];
 
 function seedData() {
@@ -118,7 +114,7 @@ function seedData() {
       id: crypto.randomUUID(),
       reference: makeReference(),
       consent: true,
-      createdAt: new Date(now - (SEED.length - i) * 3600 * 1000 * 6).toISOString()
+      createdAt: new Date(now - (SEED.length - i) * 3600 * 1000 * 30).toISOString()
     }, s));
   });
   writeAll(list);
@@ -160,7 +156,7 @@ const server = http.createServer(async (req, res) => {
       const csv = '﻿' + [header].concat(lines).join('\n'); // BOM für Excel
       res.writeHead(200, {
         'Content-Type': 'text/csv; charset=utf-8',
-        'Content-Disposition': 'attachment; filename="golfreise-anmeldungen.csv"'
+        'Content-Disposition': 'attachment; filename="seniorenreise-2027-anmeldungen.csv"'
       });
       return res.end(csv);
     }
