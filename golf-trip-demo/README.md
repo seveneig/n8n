@@ -4,10 +4,13 @@ Anmeldeseite für die **Seniorenreise 2027** ins Severin\*Resort & Spa Öschberg
 (Donaueschingen, 5.–9. Juni 2027) – Anmeldung **per QR-Code**:
 
 - **Startseite** mit Reise-Infos, inbegriffenen Leistungen und einem **QR-Code** zum Aushängen/Weitergeben
-- **Anmeldeformular** – bewusst kurz gehalten: nur **Vorname, Name und Adresse**
-- **Organisator-Dashboard** mit Live-Statistiken (Plätze, freie Plätze), Suche, Detailansicht und CSV-Export
+- **Anmeldeformular** – kurz gehalten: **Vorname, Name, E-Mail, Telefon und Adresse**
+- **Anmeldungen ansehen** (öffentlich) – Liste aller Anmeldungen, nur lesen
+- **Organisator-Dashboard** (per **Passwort `2512`**) – zusätzlich mit **Löschfunktion**
+- Live-Statistiken (Plätze, freie Plätze), Suche, Detailansicht und CSV-Export
 
-Design im Clubhaus-Stil (Fairway-Grün, Sand, dezentes Gold) mit echtem Resort-Foto und kleinen Animationen.
+Design im Clubhaus-Stil (Fairway-Grün, Sand, dezentes Gold) mit echtem Resort-Foto,
+kleinen Animationen und **dunklem Design als Standard** (hell als Alternative, umschaltbar über ◐).
 
 **Eckdaten:** 4 Nächte mit Frühstück · Spa · 4× Nachtessen · 5× 18-Loch Golf ·
 CHF 1'690 p. P. · max. 20 Personen · Anmeldeschluss 10. August 2026.
@@ -40,7 +43,8 @@ Dann im Browser öffnen:
 |-------|-----|-------|
 | Start / QR-Aushang | http://localhost:3000/ | QR-Code zeigen & ausdrucken |
 | Anmeldung | http://localhost:3000/register | Formular für Teilnehmer |
-| Dashboard | http://localhost:3000/dashboard | Anmeldungen ansehen |
+| Anmeldungen ansehen | http://localhost:3000/dashboard | öffentliche Liste (nur ansehen) |
+| Organisator-Dashboard | http://localhost:3000/admin | Passwort `2512`, mit Löschfunktion |
 
 ## So funktioniert der QR-Ablauf
 
@@ -59,12 +63,24 @@ Dann im Browser öffnen:
 
 ## Erfasste Angaben
 
-Das Formular ist bewusst minimal (seniorenfreundlich):
+Das Formular ist bewusst kurz (seniorenfreundlich):
 
 - **Vorname**
 - **Name**
+- **E-Mail**
+- **Telefon**
 - **Adresse:** Strasse und Nr., PLZ, Ort
 - **Verbindliche Anmeldung** (Bestätigung)
+
+## Ansehen vs. Organisator-Bereich
+
+- **`/dashboard`** – für alle: Anmeldungen ansehen, **ohne** Löschen.
+- **`/admin`** – für Organisatoren: mit **Passwort** (`2512`, änderbar über `ADMIN_PW`)
+  freigeschaltet; zusätzlich mit **Löschfunktion** (Zeile öffnen → „löschen", oder das
+  Papierkorb-Symbol in der Aktion-Spalte).
+
+> Hinweis: Der Passwortschutz ist für eine kleine Vereinsreise gedacht und einfach
+> gehalten. Für höhere Sicherheitsanforderungen wäre eine echte Server-Anmeldung nötig.
 
 ## Technik
 
@@ -78,6 +94,7 @@ Das Formular ist bewusst minimal (seniorenfreundlich):
 |----------|----------|--------------|
 | `PORT` | `3000` | Port des Servers |
 | `PUBLIC_URL` | – | Öffentliche Basis-URL, auf die der QR-Code zeigt |
+| `ADMIN_PW` | `2512` | Passwort für das Organisator-Dashboard |
 
 ## API (für Neugierige)
 
@@ -86,6 +103,8 @@ Das Formular ist bewusst minimal (seniorenfreundlich):
 | `POST` | `/api/register` | Anmeldung speichern |
 | `GET` | `/api/registrations` | Alle Anmeldungen (JSON) |
 | `GET` | `/api/registrations.csv` | Export als CSV (Excel-kompatibel) |
+| `DELETE` | `/api/registrations/<id>?pw=…` | Eintrag löschen (Passwort nötig) |
+| `POST` | `/api/admin/check` | Passwort prüfen (Organisator-Login) |
 | `GET` | `/api/qr.svg` | QR-Code als SVG |
 
 ---

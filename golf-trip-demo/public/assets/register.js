@@ -2,7 +2,7 @@
 (function () {
   var form = document.getElementById('form');
   var btnSubmit = document.getElementById('btnSubmit');
-  var REQUIRED = ['firstName', 'lastName', 'street', 'zip', 'city'];
+  var REQUIRED = ['firstName', 'lastName', 'email', 'phone', 'street', 'zip', 'city'];
 
   function markError(el, show) {
     var field = el.closest('.field');
@@ -16,7 +16,9 @@
     var ok = true;
     REQUIRED.forEach(function (name) {
       var el = form.querySelector('[name="' + name + '"]');
-      var good = (el.value || '').trim().length > 0;
+      var v = (el.value || '').trim();
+      var good = v.length > 0;
+      if (good && el.type === 'email') good = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v);
       markError(el, !good);
       if (!good) ok = false;
     });

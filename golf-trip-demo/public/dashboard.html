@@ -4,6 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Dashboard · Seniorenreise 2027</title>
+<script>(function(){try{var t=localStorage.getItem("golfTheme");document.documentElement.setAttribute("data-theme",t||"dark");}catch(e){document.documentElement.setAttribute("data-theme","dark");}})();</script>
 <link rel="stylesheet" href="/assets/styles.css">
 <style>
   body { background: var(--cream); }
@@ -18,14 +19,15 @@
   .dash-title { margin-top:1.6rem; }
   .dash-title h1 { color:#fff; margin:0 0 .2rem; font-size: clamp(1.6rem,4vw,2.3rem); }
   .dash-title p { color:#cddccf; margin:0; }
+  .role-badge { display:inline-flex; align-items:center; gap:.4rem; margin-left:.6rem; font-size:.7rem; font-weight:700; text-transform:uppercase; letter-spacing:.08em; padding:.15rem .55rem; border-radius:999px; vertical-align:middle; }
+  .role-admin { background:rgba(201,162,39,.2); color:var(--gold-soft); border:1px solid rgba(201,162,39,.4); }
+  .role-public { background:rgba(255,255,255,.14); color:#dbe7dd; border:1px solid rgba(255,255,255,.22); }
 
   .content { margin-top: -3.2rem; padding-bottom: 4rem; }
   .stats { display:grid; grid-template-columns: repeat(2,1fr); gap:1rem; margin-bottom:1.4rem; }
-  @media (max-width: 820px){ .stats { grid-template-columns: repeat(2,1fr); } }
   .stat { padding:1.3rem 1.4rem; }
   .stat .label { font-size:.8rem; text-transform:uppercase; letter-spacing:.08em; color: var(--muted); font-weight:600; }
-  .stat .value { font-family:var(--font-display); font-size:2rem; color: var(--green-700); line-height:1.1; margin-top:.3rem; font-variant-numeric:tabular-nums; }
-  .stat .value.small { font-size:1.5rem; }
+  .stat .value { font-family:var(--font-display); font-size:2rem; color: var(--fairway); line-height:1.1; margin-top:.3rem; font-variant-numeric:tabular-nums; }
   .stat .sub { font-size:.82rem; color: var(--muted); margin-top:.2rem; }
   .stat .bar { height:7px; background: var(--sand); border-radius:999px; margin-top:.8rem; overflow:hidden; }
   .stat .bar i { display:block; height:100%; background: linear-gradient(90deg, var(--fairway), var(--gold)); border-radius:999px; transition: width .6s var(--ease); }
@@ -38,31 +40,55 @@
   .table-card { padding:0; overflow:hidden; }
   .table-scroll { overflow-x:auto; }
   table { width:100%; border-collapse: collapse; font-size:.95rem; }
-  thead th { text-align:left; padding:.9rem 1rem; background: #fbfaf5; color: var(--green-800); font-weight:700; border-bottom:1.5px solid var(--line); white-space:nowrap; }
+  thead th { text-align:left; padding:.9rem 1rem; background: var(--card-2); color: var(--heading); font-weight:700; border-bottom:1.5px solid var(--line); white-space:nowrap; }
   tbody td { padding:.9rem 1rem; border-bottom:1px solid var(--line); vertical-align:middle; }
   tbody tr { cursor:pointer; transition: background .15s var(--ease); }
-  tbody tr:hover { background: #fbfcf8; }
+  tbody tr:hover { background: var(--card-2); }
   tbody tr.row-enter { animation: fadeUp .4s var(--ease) both; }
   .person { font-weight:600; color: var(--ink); }
+  .person small { display:block; font-weight:400; color: var(--muted); }
   .idx { color: var(--muted); font-variant-numeric:tabular-nums; }
   .empty { text-align:center; padding:3.5rem 1rem; color: var(--muted); }
   .empty .big { font-size:2.4rem; margin-bottom:.6rem; }
+  .refresh-note { text-align:center; color:var(--muted); font-size:.8rem; margin-top:1rem; }
 
-  .overlay { position:fixed; inset:0; background: rgba(8,43,28,.45); opacity:0; pointer-events:none; transition: opacity .3s var(--ease); z-index:40; }
+  /* Admin-Spalte / Löschen */
+  .col-admin { display:none; }
+  .admin-mode .col-admin { display:table-cell; }
+  .admin-only { display:none; }
+  .admin-mode .admin-only { display:inline-flex; }
+  .del { background:transparent; border:1.5px solid var(--line); color:var(--danger); width:36px; height:36px; border-radius:9px; cursor:pointer; display:inline-grid; place-items:center; transition:background .15s var(--ease), border-color .15s var(--ease); }
+  .del:hover { background:rgba(178,58,58,.12); border-color:var(--danger); }
+  .del svg { width:18px; height:18px; pointer-events:none; }
+
+  /* Passwort-Sperre */
+  .lock { display:grid; place-items:center; padding:2rem 0; }
+  .lock-card { max-width:400px; width:100%; padding:2.2rem; text-align:center; }
+  .lock-card .lock-ic { width:60px; height:60px; margin:0 auto 1rem; border-radius:50%; background:rgba(201,162,39,.16); color:var(--gold); display:grid; place-items:center; }
+  .lock-card .lock-ic svg { width:28px; height:28px; }
+  .lock-card h2 { color:var(--heading); margin:0 0 .4rem; }
+  .lock-card p { color:var(--muted); font-size:.94rem; margin:0 0 1.3rem; }
+  .lock-card input { text-align:center; letter-spacing:.3em; font-size:1.2rem; margin-bottom:.4rem; }
+  .lock-card .btn { width:100%; margin-top:.4rem; }
+  .lock-card .lock-alt { display:inline-block; margin-top:1.1rem; font-size:.9rem; color:var(--muted); }
+  .lock-card .lock-alt:hover { color:var(--fairway); }
+
+  .overlay { position:fixed; inset:0; background: rgba(8,43,28,.55); opacity:0; pointer-events:none; transition: opacity .3s var(--ease); z-index:40; }
   .overlay.show { opacity:1; pointer-events:auto; }
-  .drawer { position:fixed; top:0; right:0; height:100%; width:min(420px, 92vw); background: var(--paper); box-shadow: var(--shadow-lg); transform: translateX(100%); transition: transform .35s var(--ease); z-index:50; overflow-y:auto; }
+  .drawer { position:fixed; top:0; right:0; height:100%; width:min(420px, 92vw); background: var(--paper); box-shadow: var(--shadow-lg); transform: translateX(100%); transition: transform .35s var(--ease); z-index:50; overflow-y:auto; display:flex; flex-direction:column; }
   .drawer.show { transform: none; }
   .drawer header { padding:1.4rem 1.5rem; background: var(--green-700); color:#fff; position:relative; }
   .drawer header h3 { margin:0; color:#fff; }
   .drawer header .sub { color:#bcd4c3; font-size:.88rem; }
   .drawer .close { position:absolute; top:1.1rem; right:1.1rem; background:rgba(255,255,255,.15); border:none; color:#fff; width:34px; height:34px; border-radius:50%; cursor:pointer; font-size:1.1rem; transition: background .15s; }
   .drawer .close:hover { background:rgba(255,255,255,.28); }
-  .drawer .body { padding:1.2rem 1.5rem 2rem; }
+  .drawer .body { padding:1.2rem 1.5rem 1.5rem; flex:1; }
   .dl { display:grid; grid-template-columns: 38% 62%; gap:.1rem .5rem; }
   .dl dt { color: var(--muted); font-size:.85rem; padding:.55rem 0; border-bottom:1px solid var(--line); }
-  .dl dd { margin:0; padding:.55rem 0; border-bottom:1px solid var(--line); font-weight:500; }
-
-  .refresh-note { text-align:center; color:var(--muted); font-size:.8rem; margin-top:1rem; }
+  .dl dd { margin:0; padding:.55rem 0; border-bottom:1px solid var(--line); font-weight:500; word-break:break-word; }
+  .drawer-foot { padding:1rem 1.5rem 1.8rem; }
+  .drawer-foot .btn { width:100%; background:transparent; border:1.5px solid var(--danger); color:var(--danger); }
+  .drawer-foot .btn:hover { background:rgba(178,58,58,.12); }
 </style>
 </head>
 <body>
@@ -73,58 +99,66 @@
         <svg class="mark" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="11" fill="#c9a227"/><path d="M12 4v11" stroke="#082b1c" stroke-width="1.6" stroke-linecap="round"/><path d="M12 4l6 2.2-6 2.2" fill="#082b1c"/><ellipse cx="12" cy="18.5" rx="5" ry="1.6" fill="#0b3927"/></svg>
         Senioren-Golfreise
       </a>
-      <div class="live"><span class="dot-live"></span> Live · aktualisiert automatisch</div>
+      <div style="display:flex;align-items:center;gap:1rem">
+        <div class="live"><span class="dot-live"></span> Live · aktualisiert automatisch</div>
+        <button class="theme-toggle" data-theme-toggle aria-label="Hell-/Dunkelmodus umschalten">◐</button>
+      </div>
     </div>
-    <div class="dash-title">
-      <h1>Organisator-Dashboard</h1>
-      <p>Seniorenreise 2027 · Öschberghof · 5.–9. Juni 2027 · alle Anmeldungen</p>
-    </div>
+    <div class="dash-title"><h1 id="dashH1">Anmeldungen<span class="role-badge role-public" id="roleBadge">Ansicht</span></h1><p id="dashSub">Seniorenreise 2027 · Öschberghof · 5.–9. Juni 2027</p></div>
   </div>
 </header>
 
 <main class="content">
   <div class="container">
-    <div class="stats">
-      <div class="stat card reveal"><div class="label">Anmeldungen</div><div class="value" id="stTotal">0</div><div class="sub">von 20 Plätzen</div><div class="bar"><i id="stBar" style="width:0%"></i></div></div>
-      <div class="stat card reveal d1"><div class="label">Freie Plätze</div><div class="value" id="stFree">20</div><div class="sub">noch verfügbar</div></div>
+
+    <!-- Passwort-Sperre (nur /admin) -->
+    <div class="lock hidden" id="adminLock">
+      <div class="lock-card card">
+        <div class="lock-ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><rect x="4.5" y="10.5" width="15" height="10" rx="2"/><path d="M8 10.5V7a4 4 0 0 1 8 0v3.5"/><circle cx="12" cy="15.5" r="1.3" fill="currentColor" stroke="none"/></svg></div>
+        <h2>Organisator-Bereich</h2>
+        <p>Bitte gib das Passwort ein, um das Dashboard mit Löschfunktion zu öffnen.</p>
+        <input type="password" id="pwInput" inputmode="numeric" placeholder="••••" autocomplete="off">
+        <div class="err-msg" id="pwErr">Falsches Passwort.</div>
+        <button class="btn btn-primary" id="pwBtn">Entsperren</button>
+        <a class="lock-alt" href="/dashboard">Nur Anmeldungen ansehen →</a>
+      </div>
     </div>
 
-    <div class="toolbar reveal d1">
-      <div class="search">
-        <svg viewBox="0 0 24 24" fill="none"><circle cx="11" cy="11" r="7" stroke="currentColor" stroke-width="2"/><path d="M20 20l-3.5-3.5" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
-        <input type="text" id="search" placeholder="Suche nach Name oder Ort …">
+    <div id="dashBody">
+      <div class="stats">
+        <div class="stat card"><div class="label">Anmeldungen</div><div class="value" id="stTotal">0</div><div class="sub">von 20 Plätzen</div><div class="bar"><i id="stBar" style="width:0%"></i></div></div>
+        <div class="stat card"><div class="label">Freie Plätze</div><div class="value" id="stFree">20</div><div class="sub">noch verfügbar</div></div>
       </div>
-      <button class="btn btn-ghost" id="btnExport">⬇ CSV export</button>
+      <div class="toolbar">
+        <div class="search">
+          <svg viewBox="0 0 24 24" fill="none"><circle cx="11" cy="11" r="7" stroke="currentColor" stroke-width="2"/><path d="M20 20l-3.5-3.5" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+          <input type="text" id="search" placeholder="Suche nach Name oder Ort …">
+        </div>
+        <button class="btn btn-ghost" id="btnExport">⬇ CSV export</button>
+        <button class="btn btn-ghost admin-only" id="btnLock">🔒 Sperren</button>
+      </div>
+      <div class="table-card card">
+        <div class="table-scroll">
+          <table>
+            <thead><tr><th>#</th><th>Teilnehmer</th><th>Strasse</th><th>PLZ</th><th>Ort</th><th>Eingegangen</th><th class="col-admin">Aktion</th></tr></thead>
+            <tbody id="rows"></tbody>
+          </table>
+        </div>
+        <div class="empty hidden" id="empty"><div class="big">⛳</div><p>Noch keine Anmeldungen.<br>Teile den <a href="/">QR-Code</a> – sobald sich jemand anmeldet, erscheint die Anmeldung hier.</p></div>
+      </div>
+      <p class="refresh-note">Neue Anmeldungen erscheinen automatisch. Zeile anklicken für Details.</p>
     </div>
-
-    <div class="table-card card reveal d2">
-      <div class="table-scroll">
-        <table>
-          <thead>
-            <tr><th>#</th><th>Teilnehmer</th><th>Strasse</th><th>PLZ</th><th>Ort</th><th>Eingegangen</th></tr>
-          </thead>
-          <tbody id="rows"></tbody>
-        </table>
-      </div>
-      <div class="empty hidden" id="empty">
-        <div class="big">⛳</div>
-        <p>Noch keine Anmeldungen.<br>Teile den <a href="/">QR-Code</a> – sobald sich jemand anmeldet, erscheint die Anmeldung hier.</p>
-      </div>
-    </div>
-    <p class="refresh-note">Neue Anmeldungen erscheinen automatisch. Zeile anklicken für Details.</p>
   </div>
 </main>
 
 <div class="overlay" id="overlay"></div>
 <aside class="drawer" id="drawer">
-  <header>
-    <button class="close" id="drawerClose">✕</button>
-    <div class="sub" id="dRef"></div>
-    <h3 id="dName"></h3>
-  </header>
+  <header><button class="close" id="drawerClose">✕</button><div class="sub" id="dRef"></div><h3 id="dName"></h3></header>
   <div class="body"><dl class="dl" id="dList"></dl></div>
+  <div class="drawer-foot hidden" id="drawerFoot"><button class="btn" id="drawerDel">Diesen Eintrag löschen</button></div>
 </aside>
 
+<script src="/assets/theme.js"></script>
 <script src="/assets/dashboard.js"></script>
 </body>
 </html>

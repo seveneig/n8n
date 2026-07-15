@@ -32,9 +32,12 @@ function writeAll(list) {
   fs.writeFileSync(DATA_FILE, JSON.stringify(list, null, 2));
 }
 
+// ---------- Konfiguration ----------
+const ADMIN_PW = process.env.ADMIN_PW || '2512';
+
 // ---------- Feld-Whitelist (nur Erwartetes speichern) ----------
-const FIELDS = ['firstName', 'lastName', 'street', 'zip', 'city', 'consent'];
-const REQUIRED = ['firstName', 'lastName', 'street', 'zip', 'city'];
+const FIELDS = ['firstName', 'lastName', 'email', 'phone', 'street', 'zip', 'city', 'consent'];
+const REQUIRED = ['firstName', 'lastName', 'email', 'phone', 'street', 'zip', 'city'];
 
 function sanitize(body) {
   const out = {};
@@ -48,6 +51,7 @@ function sanitize(body) {
 function validate(rec) {
   const errors = [];
   REQUIRED.forEach((f) => { if (!rec[f]) errors.push(f); });
+  if (rec.email && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(rec.email)) errors.push('email');
   if (!rec.consent) errors.push('consent');
   return errors;
 }
@@ -123,6 +127,26 @@ const server = http.createServer(async (req, res) => {
       return sendJson(res, 200, readAll());
     }
 
+    // Eintrag löschen (nur mit korrektem Passwort) – /api/registrations/<id>
+    if (p.startsWith('/api/registrations/') && req.method === 'DELETE') {
+      const pw = url.searchParams.get('pw') || req.headers['x-admin-pw'] || '';
+      if (pw !== ADMIN_PW) return sendJson(res, 401, { error: 'Nicht autorisiert' });
+      const id = decodeURIComponent(p.slice('/api/registrations/'.length));
+      const list = readAll();
+      const next = list.filter((r) => r.id !== id);
+      if (next.length === list.length) return sendJson(res, 404, { error: 'Nicht gefunden' });
+      writeAll(next);
+      return sendJson(res, 200, { ok: true });
+    }
+
+    // Passwort prüfen (für Admin-Login)
+    if (p === '/api/admin/check' && req.method === 'POST') {
+      const raw = await readBody(req);
+      let body = {};
+      try { body = JSON.parse(raw || '{}'); } catch (e) { /* ignore */ }
+      return sendJson(res, 200, { ok: (body.pw || '') === ADMIN_PW });
+    }
+
     if (p === '/api/registrations.csv' && req.method === 'GET') {
       const list = readAll();
       const cols = ['reference', 'createdAt'].concat(FIELDS);
@@ -149,6 +173,7 @@ const server = http.createServer(async (req, res) => {
     if (p === '/' || p === '/index.html') return sendFile(res, path.join(PUBLIC_DIR, 'index.html'));
     if (p === '/register' || p === '/register.html') return sendFile(res, path.join(PUBLIC_DIR, 'register.html'));
     if (p === '/dashboard' || p === '/dashboard.html') return sendFile(res, path.join(PUBLIC_DIR, 'dashboard.html'));
+    if (p === '/admin' || p === '/admin.html') return sendFile(res, path.join(PUBLIC_DIR, 'dashboard.html'));
 
     // --- Statische Assets (sicher innerhalb PUBLIC_DIR) ---
     const safe = path.normalize(path.join(PUBLIC_DIR, p));
@@ -169,7 +194,8 @@ server.listen(PORT, () => {
   console.log('\n⛳  Golfreise-Demo läuft:');
   console.log('   Start/QR-Aushang :  http://localhost:' + PORT + '/');
   console.log('   Anmeldung        :  http://localhost:' + PORT + '/register');
-  console.log('   Dashboard        :  http://localhost:' + PORT + '/dashboard');
+  console.log('   Anmeldungen      :  http://localhost:' + PORT + '/dashboard   (öffentlich)');
+  console.log('   Organisator      :  http://localhost:' + PORT + '/admin       (Passwort ' + ADMIN_PW + ')');
   if (PUBLIC_URL) console.log('   QR zeigt auf     :  ' + PUBLIC_URL + '/register');
   console.log('');
 });

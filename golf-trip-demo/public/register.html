@@ -4,6 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Anmeldung · Seniorenreise 2027</title>
+<script>(function(){try{var t=localStorage.getItem("golfTheme");document.documentElement.setAttribute("data-theme",t||"dark");}catch(e){document.documentElement.setAttribute("data-theme","dark");}})();</script>
 <link rel="stylesheet" href="/assets/styles.css">
 <style>
   .page { min-height: 100vh; padding: 2rem 0 4rem; }
@@ -15,9 +16,9 @@
   .top h1 { color:#fff; font-size: clamp(1.6rem, 4vw, 2.2rem); margin:.4rem 0 .2rem; }
   .top p { color:#cddccf; margin:0; }
   .form-card { padding: clamp(1.5rem, 4vw, 2.4rem); }
-  .form-card > h2 { color: var(--green-800); font-size:1.3rem; margin:0 0 .3rem; }
+  .form-card > h2 { color: var(--heading); font-size:1.3rem; margin:0 0 .3rem; }
   .form-card > .fsub { color: var(--muted); margin:0 0 1.6rem; font-size:.94rem; }
-  input[type=text] { font-size:1.05rem; padding:.85rem .95rem; }
+  input[type=text], input[type=email], input[type=tel] { font-size:1.05rem; padding:.85rem .95rem; }
   .grid-2b { display:grid; grid-template-columns:1fr 2.4fr; gap:0 1rem; }
   @media (max-width:460px){ .grid-2b { grid-template-columns:1fr; } }
   .check-row { display:flex; gap:.7rem; align-items:flex-start; }
@@ -29,9 +30,9 @@
   .success .ring { width:104px; height:104px; margin:0 auto 1.3rem; border-radius:50%; background: rgba(47,157,99,.14); display:grid; place-items:center; animation: ringPop .6s var(--ease); }
   .success svg { width:56px; height:56px; }
   .success svg path { stroke: var(--fairway); stroke-width:4; fill:none; stroke-linecap:round; stroke-linejoin:round; stroke-dasharray: 48; stroke-dashoffset: 48; animation: drawCheck .6s .25s var(--ease) forwards; }
-  .success h2 { color: var(--green-800); margin:.2rem 0 .5rem; }
+  .success h2 { color: var(--heading); margin:.2rem 0 .5rem; }
   .success p { color: var(--muted); max-width: 44ch; margin: 0 auto 1.6rem; }
-  .success .ref { display:inline-block; background: var(--cream); border:1px dashed var(--sand); border-radius:10px; padding:.5rem 1rem; font-weight:700; color: var(--green-700); letter-spacing:.05em; margin-bottom:1.6rem; }
+  .success .ref { display:inline-block; background: var(--card-2); border:1px dashed var(--sand); border-radius:10px; padding:.5rem 1rem; font-weight:700; color: var(--fairway); letter-spacing:.05em; margin-bottom:1.6rem; }
   .foot-note { text-align:center; color:#a9c6b1; font-size:.8rem; margin-top:1.2rem; }
 </style>
 </head>
@@ -47,7 +48,7 @@
 
     <div class="form-card card">
       <h2>Deine Angaben</h2>
-      <p class="fsub">Bitte trag deinen Namen und deine Adresse ein. Wir bestätigen deine Anmeldung anschliessend persönlich.</p>
+      <p class="fsub">Bitte trag deine Kontaktdaten und deine Adresse ein. Wir bestätigen deine Anmeldung anschliessend persönlich.</p>
       <form id="form" novalidate>
         <div class="field">
           <label>Vorname <span class="req">*</span></label>
@@ -58,6 +59,16 @@
           <label>Name <span class="req">*</span></label>
           <input type="text" name="lastName" required autocomplete="family-name">
           <div class="err-msg">Bitte gib deinen Namen an.</div>
+        </div>
+        <div class="field">
+          <label>E-Mail <span class="req">*</span></label>
+          <input type="email" name="email" required autocomplete="email" placeholder="name@beispiel.ch">
+          <div class="err-msg">Bitte gib eine gültige E-Mail-Adresse an.</div>
+        </div>
+        <div class="field">
+          <label>Telefon <span class="req">*</span></label>
+          <input type="tel" name="phone" required autocomplete="tel" placeholder="+41 …">
+          <div class="err-msg">Bitte gib deine Telefonnummer an.</div>
         </div>
         <div class="field">
           <label>Strasse und Nr. <span class="req">*</span></label>
