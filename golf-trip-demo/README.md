@@ -26,8 +26,18 @@ Praktisch zum Vorführen und Durchklicken – die Daten bleiben aber auf dem
 jeweiligen Gerät und werden **nicht** zwischen mehreren Geräten synchronisiert.
 
 > Für einen echten Ablauf, bei dem viele Teilnehmer per Handy den QR-Code scannen
-> und der Organisator **alle** Anmeldungen zentral sieht, ist die Server-Variante
-> unten gedacht (die speichert die Daten gemeinsam auf einem Server).
+> und der Organisator **alle** Anmeldungen zentral sieht, gibt es zwei Varianten:
+> die **Google-Tabellen-Variante** (unten, ohne eigenen Server) oder die Server-Variante.
+
+## 🌍 Zentrale Anmeldungen ohne eigenen Server (Google-Tabelle)
+
+Die einfachste Art, dass **alle Anmeldungen von überall sichtbar** sind: Der Ordner
+**[`google-sheet/`](./google-sheet/)** enthält dieselbe Seite als
+**Google-Apps-Script-Web-App**. Jede Anmeldung landet als Zeile in einer
+**Google-Tabelle** in deinem Google-Konto – kein Server, kein Hosting nötig,
+eine öffentliche Adresse für den QR-Code.
+
+👉 Schritt-für-Schritt-Anleitung (ca. 10 Min.): **[`google-sheet/ANLEITUNG.md`](./google-sheet/ANLEITUNG.md)**
 
 ## Server-Variante (echte, geräteübergreifende Anmeldungen)
 
