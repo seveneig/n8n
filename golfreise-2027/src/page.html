@@ -27,7 +27,8 @@ html[data-theme="dark"]{
   --ink:#EFEAE0; --ink-2:#A5AEA5; --ink-3:#75806F;
   --ok:#4FA97A; --ok-bg:rgba(79,169,122,.13); --warn:#D6A24A; --warn-bg:rgba(214,162,74,.13);
   --danger:#D9705F; --danger-bg:rgba(217,112,95,.14);
-  --hero-veil:linear-gradient(180deg,rgba(4,8,6,.46) 0%,rgba(4,8,6,.62) 42%,rgba(7,12,9,.96) 100%);
+  --hero-veil:linear-gradient(180deg,rgba(4,8,6,.24) 0%,rgba(4,8,6,.32) 40%,rgba(4,8,6,.56) 72%,rgba(7,12,9,.96) 100%);
+  --hero-side:linear-gradient(95deg,rgba(3,7,5,.82) 0%,rgba(3,7,5,.58) 30%,rgba(3,7,5,.16) 58%,rgba(3,7,5,0) 76%);
   --glass:rgba(16,24,19,.72);
   color-scheme:dark;
 }
@@ -38,7 +39,8 @@ html[data-theme="light"]{
   --ink:#141F19; --ink-2:#56615A; --ink-3:#8A948B;
   --ok:#2C7A54; --ok-bg:rgba(44,122,84,.10); --warn:#8A6416; --warn-bg:rgba(138,100,22,.12);
   --danger:#A63B2A; --danger-bg:rgba(166,59,42,.10);
-  --hero-veil:linear-gradient(180deg,rgba(6,12,9,.46) 0%,rgba(6,12,9,.58) 55%,rgba(6,12,9,.70) 84%,rgba(246,243,234,.96) 100%);
+  --hero-veil:linear-gradient(180deg,rgba(6,12,9,.24) 0%,rgba(6,12,9,.34) 48%,rgba(6,12,9,.62) 82%,rgba(246,243,234,.96) 100%);
+  --hero-side:linear-gradient(95deg,rgba(4,9,6,.80) 0%,rgba(4,9,6,.56) 30%,rgba(4,9,6,.16) 58%,rgba(4,9,6,0) 76%);
   --glass:rgba(255,255,255,.80);
   color-scheme:light;
 }
@@ -129,15 +131,21 @@ p{margin:0}
 .topbar.is-stuck{background:var(--glass); border-bottom-color:var(--line)}
 .topbar__in{display:flex; align-items:center; gap:18px; height:66px}
 .brand{display:flex; align-items:center; gap:12px; cursor:pointer; background:none; border:0; padding:0; min-width:0}
-.brand__mark{width:38px; height:38px; flex:none; border-radius:50%; overflow:hidden; box-shadow:0 0 0 1px var(--line-2), var(--shadow-sm)}
+.brand__mark{width:38px; height:38px; flex:none; filter:drop-shadow(var(--shadow-sm))}
 
-/* Logo — zwei Fassungen, je nach Design.
-   Liegt nur eine Datei vor, zeigen beide dieselbe. */
-.logo{display:block; flex:none; line-height:0; position:relative}
-.logo img{width:100%; height:100%; display:block; object-fit:contain}
-.logo img + img{display:none}
-html[data-theme="light"] .logo img:first-child{display:none}
-html[data-theme="light"] .logo img + img{display:block}
+/* Logo — einmal als CSS-Variable eingebettet, an drei Stellen verwendet.
+   Zwei Fassungen: dunkles und helles Design. Liegt nur eine Datei vor,
+   zeigt der Build beide auf dieselbe. */
+:root{
+  --logo-dark-url:__LOGO_DARK__;
+  --logo-light-url:__LOGO_LIGHT__;
+}
+.logo{
+  display:block; flex:none;
+  background:center/contain no-repeat;
+  background-image:var(--logo-dark-url);
+}
+html[data-theme="light"] .logo{background-image:var(--logo-light-url)}
 .brand__txt{display:flex; flex-direction:column; line-height:1.1; text-align:left; min-width:0}
 .brand__txt b{font-family:var(--serif); font-size:15.5px; font-weight:400; letter-spacing:.02em; white-space:nowrap}
 .brand__txt span{font-size:10px; letter-spacing:.2em; text-transform:uppercase; color:var(--ink-3); white-space:nowrap}
@@ -192,8 +200,18 @@ html[data-theme="light"] .logo img + img{display:block}
    ============================================================ */
 .hero{position:relative; isolation:isolate; padding:70px 0 84px; overflow:hidden}
 .hero__bg{position:absolute; inset:0; z-index:-2}
-.hero__bg img{width:100%; height:100%; object-fit:cover; object-position:50% 46%; transform:scale(1.06); filter:saturate(.96) contrast(1.04) brightness(1.08)}
+.hero__bg img{width:100%; height:100%; object-fit:cover; object-position:50% 46%; transform:scale(1.06); filter:saturate(1.02) contrast(1.03)}
+/* Auf schmalen Geräten würde das 16:9-Bild fast nur Himmel zeigen —
+   dort greift ein eigener Hochformat-Ausschnitt. */
+.hero__img--tall{display:none}
+@media (max-width:940px){
+  .hero__img--wide{display:none}
+  .hero__img--tall{display:block; object-position:50% 50%}
+}
 .hero__veil{position:absolute; inset:0; z-index:-1; background:var(--hero-veil)}
+/* Seitlicher Verlauf: hält die Textseite lesbar und lässt das Bild rechts offen */
+.hero__veil::before{content:""; position:absolute; inset:0; background:var(--hero-side)}
+@media (max-width:940px){ .hero__veil::before{background:linear-gradient(180deg,rgba(3,7,5,.42),rgba(3,7,5,.30))} }
 .hero__veil::after{
   content:""; position:absolute; inset:0;
   background:radial-gradient(120% 70% at 50% 0%,rgba(201,162,39,.13),transparent 60%);
@@ -442,7 +460,7 @@ html[data-theme="light"] .hero .btn--ghost:hover{--btn-bg:rgba(255,255,255,.15)}
 .footer{border-top:1px solid var(--line); padding:44px 0 56px; background:var(--bg-2)}
 .footer__in{display:flex; flex-wrap:wrap; align-items:center; gap:18px; justify-content:space-between}
 .footer__brand{display:flex; align-items:center; gap:13px}
-.footer__mark{width:44px; height:44px; border-radius:50%; overflow:hidden}
+.footer__mark{width:44px; height:44px}
 .footer__brand div{line-height:1.35}
 .footer__brand b{font-family:var(--serif); font-weight:400; font-size:15px; display:block}
 .footer__brand span{font-size:11.5px; color:var(--ink-3)}
@@ -668,7 +686,7 @@ tbody tr.is-in:hover{background:linear-gradient(90deg,var(--ok-bg),var(--surface
 <header class="topbar" id="topbar">
   <div class="wrap topbar__in">
     <button class="brand" data-go="start" aria-label="Zur Startseite">
-      <span class="logo brand__mark"><img src="__LOGO_DARK__" alt="Ziischtigsclub Golf Augwil"><img src="__LOGO_LIGHT__" alt=""></span>
+      <span class="logo brand__mark" role="img" aria-label="Ziischtigsclub Golf Augwil"></span>
       <span class="brand__txt">
         <b>Ziischtigsclub</b>
         <span>Andalusien 2027</span>
@@ -709,11 +727,11 @@ tbody tr.is-in:hover{background:linear-gradient(90deg,var(--ok-bg),var(--surface
 
   <!-- Hero -->
   <div class="hero">
-    <div class="hero__bg"><img src="__IMG_HERO__" alt="Fairway an der Costa del Sol" fetchpriority="high"></div>
+    <div class="hero__bg"><img class="hero__img--wide" src="__IMG_HERO__" alt="Fairway auf Santana Golf an der Costa del Sol" fetchpriority="high"><img class="hero__img--tall" src="__IMG_HERO_TALL__" alt="" aria-hidden="true"></div>
     <div class="hero__veil"></div>
     <div class="wrap hero__grid">
       <div>
-        <span class="logo hero__emblem"><img src="__LOGO_DARK__" alt="Ziischtigsclub Golf Augwil — since 2017"><img src="__LOGO_LIGHT__" alt=""></span>
+        <span class="logo hero__emblem" role="img" aria-label="Ziischtigsclub Golf Augwil — since 2017"></span>
         <div class="eyebrow both">10 Jahre Jubiläumsreise</div>
         <h1>Andalusien</h1>
         <p class="hero__sub">La Zambra Resort &middot; Costa del Sol</p>
@@ -853,10 +871,7 @@ tbody tr.is-in:hover{background:linear-gradient(90deg,var(--ok-bg),var(--surface
       <!-- Golf -->
       <div class="feature feature--flip">
         <div class="feature__media reveal">
-          <div class="media-duo">
-            <div class="frame frame--tall"><img src="__IMG_GOLF1__" alt="Fairway auf Los Olivos" loading="lazy"><span class="caption">Los Olivos</span></div>
-            <div class="frame frame--tall"><img src="__IMG_GOLF2__" alt="Grün mit Bunkern auf Santana Golf" loading="lazy"><span class="caption">Santana Golf</span></div>
-          </div>
+          <div class="frame frame--wide"><img src="__IMG_GOLF1__" alt="Fairway und Wasserhindernis auf Santana Golf" loading="lazy"><span class="caption">Santana Golf</span></div>
         </div>
         <div class="feature__body reveal">
           <div class="eyebrow">Golf</div>
@@ -1178,7 +1193,7 @@ tbody tr.is-in:hover{background:linear-gradient(90deg,var(--ok-bg),var(--surface
 <footer class="footer">
   <div class="wrap footer__in">
     <div class="footer__brand">
-      <span class="logo footer__mark"><img src="__LOGO_DARK__" alt=""><img src="__LOGO_LIGHT__" alt=""></span>
+      <span class="logo footer__mark" aria-hidden="true"></span>
       <div>
         <b>Ziischtigsclub Golf Augwil</b>
         <span>10 Jahre Jubiläumsreise &middot; Andalusien 2027</span>

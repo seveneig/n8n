@@ -35,10 +35,10 @@ EXTENSIONS = (".png", ".jpg", ".jpeg", ".webp", ".avif", ".svg")
 
 IMAGES = {
     "__IMG_HERO__": ["hero"],
+    "__IMG_HERO_TALL__": ["hero-portrait"],
     "__IMG_RESORT__": ["resort"],
     "__IMG_ROOM__": ["room"],
     "__IMG_GOLF1__": ["golf1"],
-    "__IMG_GOLF2__": ["golf2"],
     # Logo: dunkle Fassung (schwarz/gold) fürs dunkle Design,
     # helle Fassung (weiss) fürs helle. Fehlt eine, springt die andere ein;
     # fehlen beide, greift der SVG-Nachbau.
@@ -88,7 +88,17 @@ def build(variant: str, report: bool = False) -> str:
         if report:
             kb = path.stat().st_size / 1024
             print("  %-16s -> %-16s %7.1f KB" % (token.strip("_"), path.name, kb))
-        html = html.replace(token, data_uri(path))
+        if token.startswith("__LOGO_"):
+            # Das Logo steckt in einer CSS-Variablen, deshalb als url(...).
+            # Sind beide Fassungen dieselbe Datei, wird sie nur einmal
+            # eingebettet und die helle verweist auf die dunkle.
+            if token == "__LOGO_LIGHT__" and path == find_asset(IMAGES["__LOGO_DARK__"]):
+                value = "var(--logo-dark-url)"
+            else:
+                value = 'url("%s")' % data_uri(path)
+        else:
+            value = data_uri(path)
+        html = html.replace(token, value)
 
     html = html.replace("__QR_LIB__", (ASSETS / "qrcode.min.js").read_text(encoding="utf-8"))
     html = html.replace("__SPHINX_URL__", SPHINX_URL)

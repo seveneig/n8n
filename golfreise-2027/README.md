@@ -126,19 +126,22 @@ automatisch die alte `hero.jpg`; die alte Datei kann gelöscht werden.
 
 | Basisname | Wo es erscheint | Empfohlene Grösse |
 |---|---|---|
-| `hero` | Vollbild hinter dem Hero | ab 2400 × 1200 px, querformat |
-| `resort` | Hotel-Block, linke Karte | ab 1200 × 1500 px, hochformat |
-| `room` | Hotel-Block, rechte Karte | ab 1200 × 1500 px, hochformat |
-| `golf1` | Golf-Block, linke Karte (Los Olivos) | ab 1200 × 1500 px, hochformat |
-| `golf2` | Golf-Block, rechte Karte (Santana) | ab 1200 × 1500 px, hochformat |
-| `logo-dark` | Kopfzeile, Hero, Fusszeile — dunkles Design | ab 1000 px, quadratisch |
-| `logo-light` | dieselben Stellen — helles Design | ab 1000 px, quadratisch |
+| `hero` | Vollbild hinter dem Hero (Desktop) | ab 1800 × 1000 px, querformat |
+| `hero-portrait` | dasselbe auf Handys | ab 700 × 950 px, hochformat |
+| `resort` | Hotel-Block, linke Karte | ab 1000 × 1250 px, hochformat |
+| `room` | Hotel-Block, rechte Karte | ab 1000 × 1250 px, hochformat |
+| `golf1` | Golf-Block, breite Karte | ab 1200 × 750 px, querformat |
+| `logo-dark` | Kopfzeile, Hero, Fusszeile — dunkles Design | ab 500 px, quadratisch |
+| `logo-light` | dieselben Stellen — helles Design | ab 500 px, quadratisch |
 
 Fehlt `logo-light`, wird `logo-dark` verwendet; fehlen beide, greifen die
 SVG-Nachbauten `emblem.svg` (dunkel) und `emblem-light.svg` (hell).
-Die Kartenbilder werden auf 4:5 zugeschnitten
-(`object-fit: cover`), das Hero-Bild auf die volle Breite — Motive also nicht
-zu knapp anschneiden.
+Die Karten im Hotel-Block werden auf 4:5 zugeschnitten, die Golf-Karte auf
+16:10 — Motive also nicht zu knapp anschneiden.
+
+Ein eigenes Hochformat fürs Handy ist nötig, weil `object-fit: cover` in einem
+schmalen, hohen Hero ein 16:9-Bild vertikal vollständig zeigt: man sähe fast
+nur Himmel.
 
 Nach dem Austausch:
 
@@ -148,10 +151,19 @@ python3 build.py
 
 Der Build listet auf, welche Datei er für welchen Platz genommen hat.
 
-**Aktueller Stand:** die fünf Fotos stammen aus dem Sphinx-Travel-PDF und
-liegen dort nur klein vor (Hero 1195 px breit, die vier Karten je ~190 px,
-hochskaliert). Das Wappen ist ein SVG-Nachbau, weil die Original-Dateien
-nicht vorlagen. Beides ist zum Austauschen vorgesehen.
+Die unbearbeiteten Originale liegen in `src/originale/` — von dort lassen sich
+jederzeit neue Zuschnitte rechnen.
+
+**Aktueller Stand:** Wappen und Fotos sind Originaldateien vom Verein bzw.
+vom Hotel — kein Nachbau, keine hochskalierten PDF-Auszüge mehr. Alle Bilder
+sind als WebP eingebettet; das Logo steckt einmal in einer CSS-Variablen und
+wird an drei Stellen verwendet.
+
+Noch offen: die **weisse Logo-Fassung** (`logo-light`). Solange sie fehlt,
+zeigt auch das helle Design das schwarz-goldene Wappen — das funktioniert,
+weil dessen Hintergrund transparent ist. Ein Foto von **Los Olivos** oder
+**Los Lagos** wäre ebenfalls willkommen; der Golf-Block zeigt derzeit
+Santana Golf.
 
 ---
 
