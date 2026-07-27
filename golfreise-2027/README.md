@@ -130,14 +130,21 @@ automatisch die alte `hero.jpg`; die alte Datei kann gelöscht werden.
 | `hero-portrait` | dasselbe auf Handys | ab 700 × 950 px, hochformat |
 | `resort` | Hotel-Block, linke Karte | ab 1000 × 1250 px, hochformat |
 | `room` | Hotel-Block, rechte Karte | ab 1000 × 1250 px, hochformat |
-| `golf1` | Golf-Block, breite Karte | ab 1200 × 750 px, querformat |
-| `logo-dark` | Kopfzeile, Hero, Fusszeile — dunkles Design | ab 500 px, quadratisch |
-| `logo-light` | dieselben Stellen — helles Design | ab 500 px, quadratisch |
+| `golf1` | Golf-Block, linke Karte im Stapel | ab 700 × 930 px, hochformat |
+| `golf2` | Golf-Block, mittlere Karte (vorne, am grössten) | ab 850 × 1130 px, hochformat |
+| `golf3` | Golf-Block, rechte Karte im Stapel | ab 700 × 930 px, hochformat |
+| `logo-dark` | schwarze Wappenfassung | ab 500 px, quadratisch |
+| `logo-light` | weisse Wappenfassung | ab 500 px, quadratisch |
 
-Fehlt `logo-light`, wird `logo-dark` verwendet; fehlen beide, greifen die
-SVG-Nachbauten `emblem.svg` (dunkel) und `emblem-light.svg` (hell).
-Die Karten im Hotel-Block werden auf 4:5 zugeschnitten, die Golf-Karte auf
-16:10 — Motive also nicht zu knapp anschneiden.
+**Wappen:** die schwarze Fassung steht auf hellen Flächen und auf dem
+Hero-Foto, die weisse in Kopf- und Fusszeile des dunklen Designs. Fehlt eine
+Datei, springt die andere ein; fehlen beide, greifen die SVG-Nachbauten
+`emblem.svg` und `emblem-light.svg`. Liegt das Wappen mit weissem Hintergrund
+vor (JPEG), muss es freigestellt werden — `build.py` tut das nicht, siehe die
+Kreismaske im Verarbeitungsschritt unten.
+
+Die Karten im Hotel-Block werden auf 4:5 zugeschnitten, die drei Golf-Karten
+auf 3:4 — Motive also nicht zu knapp anschneiden.
 
 Ein eigenes Hochformat fürs Handy ist nötig, weil `object-fit: cover` in einem
 schmalen, hohen Hero ein 16:9-Bild vertikal vollständig zeigt: man sähe fast
@@ -159,11 +166,11 @@ vom Hotel — kein Nachbau, keine hochskalierten PDF-Auszüge mehr. Alle Bilder
 sind als WebP eingebettet; das Logo steckt einmal in einer CSS-Variablen und
 wird an drei Stellen verwendet.
 
-Noch offen: die **weisse Logo-Fassung** (`logo-light`). Solange sie fehlt,
-zeigt auch das helle Design das schwarz-goldene Wappen — das funktioniert,
-weil dessen Hintergrund transparent ist. Ein Foto von **Los Olivos** oder
-**Los Lagos** wäre ebenfalls willkommen; der Golf-Block zeigt derzeit
-Santana Golf.
+Noch offen: ein Foto von **Los Olivos**. Der Golf-Stapel zeigt derzeit
+Santana Golf, Los Lagos und — als dritte Karte — eine zweite Aufnahme, die
+neutral mit «Costa del Sol» beschriftet ist. Sobald ein Los-Olivos-Bild
+vorliegt, ersetzt es `golf3`; dann bekommt die Karte auch die richtige
+Beschriftung (in `src/page.html` bei `golfstack__card--c`).
 
 ---
 

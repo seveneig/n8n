@@ -133,19 +133,22 @@ p{margin:0}
 .brand{display:flex; align-items:center; gap:12px; cursor:pointer; background:none; border:0; padding:0; min-width:0}
 .brand__mark{width:38px; height:38px; flex:none; filter:drop-shadow(var(--shadow-sm))}
 
-/* Logo — einmal als CSS-Variable eingebettet, an drei Stellen verwendet.
-   Zwei Fassungen: dunkles und helles Design. Liegt nur eine Datei vor,
-   zeigt der Build beide auf dieselbe. */
+/* Wappen — jede Fassung steckt genau einmal im Dokument und wird an
+   drei Stellen verwendet. Grundsatz: schwarze Fassung auf hellem Grund
+   und auf dem Hero-Foto, weisse Fassung auf dunklem Grund. */
 :root{
-  --logo-dark-url:__LOGO_DARK__;
-  --logo-light-url:__LOGO_LIGHT__;
+  --logo-black:__LOGO_BLACK__;
+  --logo-white:__LOGO_WHITE__;
 }
 .logo{
   display:block; flex:none;
   background:center/contain no-repeat;
-  background-image:var(--logo-dark-url);
+  background-image:var(--logo-black);
 }
-html[data-theme="light"] .logo{background-image:var(--logo-light-url)}
+/* Kopf- und Fusszeile sind im dunklen Design fast schwarz —
+   dort steht die weisse Fassung. */
+html[data-theme="dark"] .brand__mark,
+html[data-theme="dark"] .footer__mark{background-image:var(--logo-white)}
 .brand__txt{display:flex; flex-direction:column; line-height:1.1; text-align:left; min-width:0}
 .brand__txt b{font-family:var(--serif); font-size:15.5px; font-weight:400; letter-spacing:.02em; white-space:nowrap}
 .brand__txt span{font-size:10px; letter-spacing:.2em; text-transform:uppercase; color:var(--ink-3); white-space:nowrap}
@@ -198,7 +201,7 @@ html[data-theme="light"] .logo{background-image:var(--logo-light-url)}
 /* ============================================================
    Hero
    ============================================================ */
-.hero{position:relative; isolation:isolate; padding:70px 0 84px; overflow:hidden}
+.hero{position:relative; isolation:isolate; padding:44px 0 60px; overflow:hidden}
 .hero__bg{position:absolute; inset:0; z-index:-2}
 .hero__bg img{width:100%; height:100%; object-fit:cover; object-position:50% 46%; transform:scale(1.06); filter:saturate(1.02) contrast(1.03)}
 /* Auf schmalen Geräten würde das 16:9-Bild fast nur Himmel zeigen —
@@ -216,10 +219,11 @@ html[data-theme="light"] .logo{background-image:var(--logo-light-url)}
   content:""; position:absolute; inset:0;
   background:radial-gradient(120% 70% at 50% 0%,rgba(201,162,39,.13),transparent 60%);
 }
-.hero__grid{display:grid; grid-template-columns:minmax(0,1.55fr) minmax(0,.95fr); gap:48px; align-items:center}
+.hero__grid{display:grid; grid-template-columns:minmax(0,1.55fr) minmax(0,.95fr); gap:44px; align-items:center}
 @media (max-width:940px){ .hero__grid{grid-template-columns:1fr; gap:38px} }
 
-.hero__emblem{width:112px; height:112px; margin-bottom:22px; filter:drop-shadow(0 18px 34px rgba(0,0,0,.6))}
+.hero__emblem{width:76px; height:76px; margin-bottom:14px; filter:drop-shadow(0 12px 26px rgba(0,0,0,.55))}
+@media (max-width:640px){ .hero__emblem{width:64px; height:64px; margin-bottom:12px} }
 .hero h1{
   font-size:clamp(46px,9vw,92px); line-height:.95; letter-spacing:-.028em;
   color:#F5F0E4; margin:6px 0 0;
@@ -227,13 +231,13 @@ html[data-theme="light"] .logo{background-image:var(--logo-light-url)}
 }
 html[data-theme="light"] .hero h1{color:#FFF9EC}
 .hero__sub{
-  font-family:var(--serif); font-size:clamp(19px,2.6vw,27px); font-style:italic;
-  color:var(--gold-lt); margin-top:12px;
+  font-family:var(--serif); font-size:clamp(19px,2.6vw,26px); font-style:italic;
+  color:var(--gold-lt); margin-top:9px;
 }
 html[data-theme="light"] .hero__sub{color:#F0D89A}
-.hero__meta{margin-top:6px; color:rgba(235,230,218,.78); font-size:15.5px; letter-spacing:.02em}
+.hero__meta{margin-top:5px; color:rgba(235,230,218,.78); font-size:15.5px; letter-spacing:.02em}
 .hero__facts{
-  display:flex; flex-wrap:wrap; gap:10px; margin-top:26px;
+  display:flex; flex-wrap:wrap; gap:10px; margin-top:20px;
 }
 .fact{
   display:inline-flex; align-items:center; gap:9px;
@@ -243,8 +247,8 @@ html[data-theme="light"] .hero__sub{color:#F0D89A}
   font-size:13px; letter-spacing:.03em; color:#EDE7D9;
 }
 .fact svg{width:15px; height:15px; color:var(--gold-lt); flex:none}
-.hero__cta{display:flex; flex-wrap:wrap; gap:12px; margin-top:32px}
-.hero__note{margin-top:18px; font-size:12.5px; color:rgba(230,225,213,.62); letter-spacing:.02em}
+.hero__cta{display:flex; flex-wrap:wrap; gap:12px; margin-top:26px}
+.hero__note{margin-top:14px; font-size:12.5px; color:rgba(230,225,213,.62); letter-spacing:.02em}
 /* Der Hero liegt immer auf einem abgedunkelten Foto — Text und Umriss-Buttons
    bleiben deshalb auch im hellen Design hell. */
 html[data-theme="light"] .hero__meta{color:rgba(246,241,229,.88)}
@@ -359,6 +363,42 @@ html[data-theme="light"] .hero .btn--ghost:hover{--btn-bg:rgba(255,255,255,.15)}
   position:absolute; left:16px; bottom:14px; z-index:2;
   font-size:11px; letter-spacing:.16em; text-transform:uppercase; font-weight:600;
   color:#F2ECDD; text-shadow:0 1px 8px rgba(0,0,0,.85);
+}
+
+/* ============================================================
+   Golfplätze — drei versetzte Karten, leicht überlappend
+   ============================================================ */
+.golfstack{display:flex; align-items:flex-start; justify-content:center; padding:16px 0 28px}
+.golfstack__card{
+  position:relative; margin:0; flex:none; aspect-ratio:3/4; overflow:hidden;
+  border-radius:18px; background:var(--surface-2);
+  /* Der Ring in Hintergrundfarbe trennt die Karten dort, wo sie sich überlappen */
+  box-shadow:0 0 0 6px var(--bg-2), 0 0 0 7px var(--line-2), 0 26px 50px -22px rgba(0,0,0,.75);
+  transition:transform .45s var(--ease), box-shadow .45s var(--ease);
+}
+.golfstack__card img{width:100%; height:100%; object-fit:cover; transition:transform 1s var(--ease)}
+.golfstack__card figcaption{
+  position:absolute; left:0; right:0; bottom:0; padding:26px 12px 11px; text-align:center;
+  font-size:10px; letter-spacing:.16em; text-transform:uppercase; font-weight:600;
+  color:#F4EFE2; text-shadow:0 1px 6px rgba(0,0,0,.9);
+  background:linear-gradient(180deg,transparent,rgba(0,0,0,.62));
+}
+.golfstack__card--a{width:36%; margin-top:52px; z-index:1}
+.golfstack__card--b{width:42%; margin-top:0; margin-left:-7%; z-index:3}
+.golfstack__card--c{width:36%; margin-top:76px; margin-left:-7%; z-index:2}
+/* Beschriftungen weg von der überlappten Seite, sonst verdeckt sie die Nachbarkarte */
+.golfstack__card--a figcaption{text-align:left; padding-left:14px; padding-right:24%}
+.golfstack__card--c figcaption{text-align:right; padding-right:14px; padding-left:24%}
+.golfstack__card:hover{transform:translateY(-10px); z-index:4}
+.golfstack__card:hover img{transform:scale(1.06)}
+@media (max-width:900px){
+  .golfstack{max-width:520px; margin:0 auto; padding-bottom:18px}
+}
+@media (max-width:480px){
+  .golfstack__card{border-radius:14px; box-shadow:0 0 0 4px var(--bg-2), 0 0 0 5px var(--line-2), 0 18px 34px -18px rgba(0,0,0,.75)}
+  .golfstack__card--a{margin-top:34px}
+  .golfstack__card--c{margin-top:50px}
+  .golfstack__card figcaption{font-size:8.5px; letter-spacing:.1em; padding:20px 5px 8px}
 }
 .feature__body h2{font-size:clamp(28px,4vw,42px); margin:14px 0 18px}
 .feature__body > p{color:var(--ink-2); font-size:16.5px}
@@ -871,7 +911,20 @@ tbody tr.is-in:hover{background:linear-gradient(90deg,var(--ok-bg),var(--surface
       <!-- Golf -->
       <div class="feature feature--flip">
         <div class="feature__media reveal">
-          <div class="frame frame--wide"><img src="__IMG_GOLF1__" alt="Fairway und Wasserhindernis auf Santana Golf" loading="lazy"><span class="caption">Santana Golf</span></div>
+          <div class="golfstack">
+            <figure class="golfstack__card golfstack__card--a">
+              <img src="__IMG_GOLF1__" alt="Grün mit Wasserhindernis auf Santana Golf" loading="lazy">
+              <figcaption>Santana Golf</figcaption>
+            </figure>
+            <figure class="golfstack__card golfstack__card--b">
+              <img src="__IMG_GOLF2__" alt="Teich und Palmen auf Los Lagos" loading="lazy">
+              <figcaption>Los Lagos</figcaption>
+            </figure>
+            <figure class="golfstack__card golfstack__card--c">
+              <img src="__IMG_GOLF3__" alt="Fairway an der Costa del Sol" loading="lazy">
+              <figcaption>Costa del Sol</figcaption>
+            </figure>
+          </div>
         </div>
         <div class="feature__body reveal">
           <div class="eyebrow">Golf</div>

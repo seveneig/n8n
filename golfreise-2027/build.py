@@ -39,11 +39,13 @@ IMAGES = {
     "__IMG_RESORT__": ["resort"],
     "__IMG_ROOM__": ["room"],
     "__IMG_GOLF1__": ["golf1"],
-    # Logo: dunkle Fassung (schwarz/gold) fürs dunkle Design,
-    # helle Fassung (weiss) fürs helle. Fehlt eine, springt die andere ein;
-    # fehlen beide, greift der SVG-Nachbau.
-    "__LOGO_DARK__": ["logo-dark", "logo", "emblem"],
-    "__LOGO_LIGHT__": ["logo-light", "logo-dark", "logo", "emblem-light", "emblem"],
+    "__IMG_GOLF2__": ["golf2"],
+    "__IMG_GOLF3__": ["golf3"],
+    # Wappen: schwarze Fassung fuer helle Flaechen und das Hero-Foto,
+    # weisse Fassung fuer die dunkle Kopf- und Fusszeile.
+    # Fehlt eine, springt die andere ein; fehlen beide, greift der SVG-Nachbau.
+    "__LOGO_BLACK__": ["logo-dark", "logo", "emblem"],
+    "__LOGO_WHITE__": ["logo-light", "logo-dark", "logo", "emblem-light", "emblem"],
 }
 
 STANDALONE_BOOT = """
@@ -92,8 +94,8 @@ def build(variant: str, report: bool = False) -> str:
             # Das Logo steckt in einer CSS-Variablen, deshalb als url(...).
             # Sind beide Fassungen dieselbe Datei, wird sie nur einmal
             # eingebettet und die helle verweist auf die dunkle.
-            if token == "__LOGO_LIGHT__" and path == find_asset(IMAGES["__LOGO_DARK__"]):
-                value = "var(--logo-dark-url)"
+            if token == "__LOGO_WHITE__" and path == find_asset(IMAGES["__LOGO_BLACK__"]):
+                value = "var(--logo-black)"
             else:
                 value = 'url("%s")' % data_uri(path)
         else:
