@@ -1,0 +1,70 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 640" width="640" height="640" role="img" aria-label="Ziischtigsclub Golf Augwil since 2017">
+  <defs>
+    <linearGradient id="zgold" x1="0" y1="0" x2="0.3" y2="1">
+      <stop offset="0" stop-color="#F8ECBC"/>
+      <stop offset="0.3" stop-color="#D7B45A"/>
+      <stop offset="0.55" stop-color="#B98F35"/>
+      <stop offset="0.78" stop-color="#E7CE86"/>
+      <stop offset="1" stop-color="#A87C2A"/>
+    </linearGradient>
+    <linearGradient id="zgreen" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#41A44D"/>
+      <stop offset="1" stop-color="#0E682C"/>
+    </linearGradient>
+    <linearGradient id="zblue" x1="0" y1="0" x2="0.4" y2="1">
+      <stop offset="0" stop-color="#59BAEC"/>
+      <stop offset="1" stop-color="#0D4A95"/>
+    </linearGradient>
+    <path id="zarc-top" d="M 68 320 A 252 252 0 0 1 572 320"/>
+    <path id="zarc-bot" d="M 24 320 A 296 296 0 0 0 616 320"/>
+    <path id="zstar" d="M0-25 L6.9-8.8 24.4-7.9 10.8 3.3 15.2 20.4 0 10.8 -15.2 20.4 -10.8 3.3 -24.4 -7.9 -6.9 -8.8 Z"/>
+  </defs>
+
+  <circle cx="320" cy="320" r="316" fill="#0A0A0A"/>
+  <circle cx="320" cy="320" r="316" fill="none" stroke="url(#zgold)" stroke-width="7"/>
+  <circle cx="320" cy="320" r="303" fill="none" stroke="url(#zgold)" stroke-width="3"/>
+  <circle cx="320" cy="320" r="238" fill="none" stroke="url(#zgold)" stroke-width="5"/>
+  <circle cx="320" cy="320" r="228" fill="none" stroke="url(#zgold)" stroke-width="2"/>
+
+  <g fill="url(#zgold)" font-family="Georgia, 'Times New Roman', serif" font-weight="700">
+    <text font-size="50" letter-spacing="3" text-anchor="middle">
+      <textPath href="#zarc-top" startOffset="50%">ZIISCHTIGSCLUB</textPath>
+    </text>
+    <text font-size="46" letter-spacing="7" text-anchor="middle">
+      <textPath href="#zarc-bot" startOffset="50%">SINCE 2017</textPath>
+    </text>
+  </g>
+
+  <g fill="url(#zgold)">
+    <use href="#zstar" x="0" y="0" transform="translate(75.3,205.9)"/>
+    <use href="#zstar" x="0" y="0" transform="translate(51.5,273.5)"/>
+    <use href="#zstar" x="0" y="0" transform="translate(51.5,366.5)"/>
+    <use href="#zstar" x="0" y="0" transform="translate(75.3,434.1)"/>
+    <use href="#zstar" x="0" y="0" transform="translate(564.7,205.9)"/>
+    <use href="#zstar" x="0" y="0" transform="translate(588.5,273.5)"/>
+    <use href="#zstar" x="0" y="0" transform="translate(588.5,366.5)"/>
+    <use href="#zstar" x="0" y="0" transform="translate(564.7,434.1)"/>
+  </g>
+
+  <g stroke="url(#zgold)" fill="none" stroke-linecap="round" stroke-linejoin="round">
+    <circle cx="340" cy="126" r="21" stroke-width="12"/>
+    <path d="M332 152 C 326 186 320 218 314 248" stroke-width="34"/>
+    <path d="M330 178 C 308 168 286 156 266 144" stroke-width="23"/>
+    <circle cx="256" cy="139" r="7" stroke-width="13"/>
+    <path d="M296 250 L 336 248" stroke-width="27"/>
+    <path d="M298 252 C 292 292 286 322 282 344" stroke-width="25"/>
+    <path d="M334 248 C 348 286 356 316 356 342" stroke-width="25"/>
+    <path d="M280 350 L 258 354" stroke-width="18"/>
+    <path d="M356 348 L 378 362" stroke-width="18"/>
+    <path d="M250 134 L 448 186" stroke-width="7"/>
+    <path d="M441 174 C 456 178 464 190 461 202 L 437 194 Z" stroke-width="6" fill="url(#zgold)"/>
+  </g>
+
+  <g>
+    <path d="M186 452 C 188 402 224 376 274 376 C 300 376 320 383 334 395 L 334 452 Z" fill="url(#zgreen)"/>
+    <path d="M344 452 C 344 402 378 379 418 383 C 450 386 464 414 464 452 Z" fill="url(#zblue)"/>
+    <path d="M262 412 L 262 444" stroke="#F5F2E8" stroke-width="7" stroke-linecap="round"/>
+    <circle cx="262" cy="406" r="14" fill="#F5F2E8"/>
+    <text x="325" y="506" text-anchor="middle" fill="url(#zgold)" font-family="'Helvetica Neue', Helvetica, Arial, sans-serif" font-weight="800" font-size="44" letter-spacing="0.5">GOLF AUGWIL</text>
+  </g>
+</svg>
