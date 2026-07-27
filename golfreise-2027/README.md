@@ -117,25 +117,40 @@ die fertigen Dateien in `dist/` sind eingecheckt.
 
 ---
 
-## 6) Bildmaterial
+## 6) Bilder austauschen
 
-| Bild | Herkunft |
-|---|---|
-| Hero (Fairway), Los Olivos, Santana Golf | Sphinx-Travel-PDF zur Reise |
-| Resort mit Pool, Deluxe-Zimmer | Sphinx-Travel-PDF zur Reise |
-| Vereinslogo (`src/assets/emblem.svg`) | **SVG-Nachbau** des Clubwappens |
+Alle Bilder liegen in `src/assets/`. Der Build sucht sie **nur über den
+Basisnamen** — die Endung ist egal (`.png`, `.jpg`, `.jpeg`, `.webp`,
+`.avif`, `.svg`, in dieser Reihenfolge). Eine neue `hero.png` ersetzt also
+automatisch die alte `hero.jpg`; die alte Datei kann gelöscht werden.
 
-Das Wappen ist als Vektorgrafik nachgebaut, weil die Original-Dateien beim
-Bau nicht als Datei vorlagen. **Ersetzen:** die Original-PNG-Datei nach
-`src/assets/emblem.svg` legen (bzw. in `build.py` unter `IMAGES` den
-Dateinamen auf z. B. `logo.png` ändern) und `python3 build.py` ausführen.
-Alle sechs Einsatzorte (Kopfzeile, Hero, Fusszeile) übernehmen die Datei
-automatisch.
+| Basisname | Wo es erscheint | Empfohlene Grösse |
+|---|---|---|
+| `hero` | Vollbild hinter dem Hero | ab 2400 × 1200 px, querformat |
+| `resort` | Hotel-Block, linke Karte | ab 1200 × 1500 px, hochformat |
+| `room` | Hotel-Block, rechte Karte | ab 1200 × 1500 px, hochformat |
+| `golf1` | Golf-Block, linke Karte (Los Olivos) | ab 1200 × 1500 px, hochformat |
+| `golf2` | Golf-Block, rechte Karte (Santana) | ab 1200 × 1500 px, hochformat |
+| `logo-dark` | Kopfzeile, Hero, Fusszeile — dunkles Design | ab 1000 px, quadratisch |
+| `logo-light` | dieselben Stellen — helles Design | ab 1000 px, quadratisch |
 
-Die Fotos aus dem PDF liegen nur in kleiner Auflösung vor. Sie werden
-deshalb in massvollen Kartengrössen eingesetzt. Wer höher aufgelöste Bilder
-vom Hotel hat, legt sie unter `src/assets/` ab (gleiche Dateinamen) und baut
-neu.
+Fehlt `logo-light`, wird überall `logo-dark` verwendet; fehlen beide, greift
+der SVG-Nachbau `emblem.svg`. Die Kartenbilder werden auf 4:5 zugeschnitten
+(`object-fit: cover`), das Hero-Bild auf die volle Breite — Motive also nicht
+zu knapp anschneiden.
+
+Nach dem Austausch:
+
+```bash
+python3 build.py
+```
+
+Der Build listet auf, welche Datei er für welchen Platz genommen hat.
+
+**Aktueller Stand:** die fünf Fotos stammen aus dem Sphinx-Travel-PDF und
+liegen dort nur klein vor (Hero 1195 px breit, die vier Karten je ~190 px,
+hochskaliert). Das Wappen ist ein SVG-Nachbau, weil die Original-Dateien
+nicht vorlagen. Beides ist zum Austauschen vorgesehen.
 
 ---
 

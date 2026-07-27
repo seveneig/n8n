@@ -28,13 +28,22 @@ DIST = ROOT / "dist"
 SPHINX_URL = "https://www.sphinxtravel.ch/anmeldung-ziischtigsclub-golfreise-2027"
 ADMIN_PW = "Augwil2027"  # muss mit ADMIN_PASSWORD in src/Code.gs übereinstimmen
 
+# Basisnamen ohne Endung. Gefunden wird die erste passende Datei in dieser
+# Reihenfolge der Endungen — eine neue hero.png ersetzt also automatisch die
+# alte hero.jpg, ohne dass hier etwas geändert werden muss.
+EXTENSIONS = (".png", ".jpg", ".jpeg", ".webp", ".avif", ".svg")
+
 IMAGES = {
-    "__EMBLEM__": "emblem.svg",
-    "__IMG_HERO__": "hero.jpg",
-    "__IMG_RESORT__": "resort.jpg",
-    "__IMG_ROOM__": "room.jpg",
-    "__IMG_GOLF1__": "golf1.jpg",
-    "__IMG_GOLF2__": "golf2.jpg",
+    "__IMG_HERO__": ["hero"],
+    "__IMG_RESORT__": ["resort"],
+    "__IMG_ROOM__": ["room"],
+    "__IMG_GOLF1__": ["golf1"],
+    "__IMG_GOLF2__": ["golf2"],
+    # Logo: dunkle Fassung (schwarz/gold) fürs dunkle Design,
+    # helle Fassung (weiss) fürs helle. Fehlt eine, springt die andere ein;
+    # fehlen beide, greift der SVG-Nachbau.
+    "__LOGO_DARK__": ["logo-dark", "logo", "emblem"],
+    "__LOGO_LIGHT__": ["logo-light", "logo-dark", "logo", "emblem"],
 }
 
 STANDALONE_BOOT = """
@@ -60,11 +69,26 @@ def data_uri(path: pathlib.Path) -> str:
                                   base64.b64encode(raw).decode("ascii"))
 
 
-def build(variant: str) -> str:
+def find_asset(candidates: list) -> pathlib.Path:
+    """Erste vorhandene Datei zu einem der Basisnamen, egal welche Endung."""
+    for base in candidates:
+        for ext in EXTENSIONS:
+            p = ASSETS / (base + ext)
+            if p.exists():
+                return p
+    sys.exit("Keine Datei gefunden für: %s (gesucht mit %s in %s)"
+             % (", ".join(candidates), "/".join(EXTENSIONS), ASSETS))
+
+
+def build(variant: str, report: bool = False) -> str:
     html = (SRC / "page.html").read_text(encoding="utf-8")
 
-    for token, name in IMAGES.items():
-        html = html.replace(token, data_uri(ASSETS / name))
+    for token, candidates in IMAGES.items():
+        path = find_asset(candidates)
+        if report:
+            kb = path.stat().st_size / 1024
+            print("  %-16s -> %-16s %7.1f KB" % (token.strip("_"), path.name, kb))
+        html = html.replace(token, data_uri(path))
 
     html = html.replace("__QR_LIB__", (ASSETS / "qrcode.min.js").read_text(encoding="utf-8"))
     html = html.replace("__SPHINX_URL__", SPHINX_URL)
@@ -81,7 +105,7 @@ def build(variant: str) -> str:
 
     html = html.replace("__DATA_LAYER__", layer)
 
-    leftovers = [t for t in ("__EMBLEM__", "__IMG_", "__QR_LIB__", "__SPHINX_URL__",
+    leftovers = [t for t in ("__LOGO_", "__IMG_", "__QR_LIB__", "__SPHINX_URL__",
                              "__ADMIN_PW__", "__DATA_LAYER__", "__BOOT_EXTRA__")
                  if t in html]
     if leftovers:
@@ -92,7 +116,9 @@ def build(variant: str) -> str:
 def main() -> None:
     (DIST / "apps-script").mkdir(parents=True, exist_ok=True)
 
-    standalone = build("local")
+    print("Verwendete Bilder:")
+    standalone = build("local", report=True)
+    print()
     (DIST / "standalone.html").write_text(standalone, encoding="utf-8")
 
     gas = build("gas")

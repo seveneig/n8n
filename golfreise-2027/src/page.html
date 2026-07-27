@@ -129,7 +129,15 @@ p{margin:0}
 .topbar.is-stuck{background:var(--glass); border-bottom-color:var(--line)}
 .topbar__in{display:flex; align-items:center; gap:18px; height:66px}
 .brand{display:flex; align-items:center; gap:12px; cursor:pointer; background:none; border:0; padding:0; min-width:0}
-.brand__mark{width:38px; height:38px; flex:none; border-radius:50%; box-shadow:0 0 0 1px var(--line-2), var(--shadow-sm)}
+.brand__mark{width:38px; height:38px; flex:none; border-radius:50%; overflow:hidden; box-shadow:0 0 0 1px var(--line-2), var(--shadow-sm)}
+
+/* Logo — zwei Fassungen, je nach Design.
+   Liegt nur eine Datei vor, zeigen beide dieselbe. */
+.logo{display:block; flex:none; line-height:0; position:relative}
+.logo img{width:100%; height:100%; display:block; object-fit:contain}
+.logo img + img{display:none}
+html[data-theme="light"] .logo img:first-child{display:none}
+html[data-theme="light"] .logo img + img{display:block}
 .brand__txt{display:flex; flex-direction:column; line-height:1.1; text-align:left; min-width:0}
 .brand__txt b{font-family:var(--serif); font-size:15.5px; font-weight:400; letter-spacing:.02em; white-space:nowrap}
 .brand__txt span{font-size:10px; letter-spacing:.2em; text-transform:uppercase; color:var(--ink-3); white-space:nowrap}
@@ -439,7 +447,7 @@ html[data-theme="light"] .hero .btn--ghost:hover{--btn-bg:rgba(255,255,255,.15)}
 .footer{border-top:1px solid var(--line); padding:44px 0 56px; background:var(--bg-2)}
 .footer__in{display:flex; flex-wrap:wrap; align-items:center; gap:18px; justify-content:space-between}
 .footer__brand{display:flex; align-items:center; gap:13px}
-.footer__brand img{width:44px; height:44px; border-radius:50%}
+.footer__mark{width:44px; height:44px; border-radius:50%; overflow:hidden}
 .footer__brand div{line-height:1.35}
 .footer__brand b{font-family:var(--serif); font-weight:400; font-size:15px; display:block}
 .footer__brand span{font-size:11.5px; color:var(--ink-3)}
@@ -665,7 +673,7 @@ tbody tr.is-in:hover{background:linear-gradient(90deg,var(--ok-bg),var(--surface
 <header class="topbar" id="topbar">
   <div class="wrap topbar__in">
     <button class="brand" data-go="start" aria-label="Zur Startseite">
-      <img class="brand__mark" src="__EMBLEM__" alt="Ziischtigsclub Golf Augwil" width="38" height="38">
+      <span class="logo brand__mark"><img src="__LOGO_DARK__" alt="Ziischtigsclub Golf Augwil"><img src="__LOGO_LIGHT__" alt=""></span>
       <span class="brand__txt">
         <b>Ziischtigsclub</b>
         <span>Andalusien 2027</span>
@@ -710,7 +718,7 @@ tbody tr.is-in:hover{background:linear-gradient(90deg,var(--ok-bg),var(--surface
     <div class="hero__veil"></div>
     <div class="wrap hero__grid">
       <div>
-        <img class="hero__emblem" src="__EMBLEM__" alt="Ziischtigsclub Golf Augwil — since 2017" width="112" height="112">
+        <span class="logo hero__emblem"><img src="__LOGO_DARK__" alt="Ziischtigsclub Golf Augwil — since 2017"><img src="__LOGO_LIGHT__" alt=""></span>
         <div class="eyebrow both">10 Jahre Jubiläumsreise</div>
         <h1>Andalusien</h1>
         <p class="hero__sub">La Zambra Resort &middot; Costa del Sol</p>
@@ -1176,7 +1184,7 @@ tbody tr.is-in:hover{background:linear-gradient(90deg,var(--ok-bg),var(--surface
 <footer class="footer">
   <div class="wrap footer__in">
     <div class="footer__brand">
-      <img src="__EMBLEM__" alt="" width="44" height="44">
+      <span class="logo footer__mark"><img src="__LOGO_DARK__" alt=""><img src="__LOGO_LIGHT__" alt=""></span>
       <div>
         <b>Ziischtigsclub Golf Augwil</b>
         <span>10 Jahre Jubiläumsreise &middot; Andalusien 2027</span>
