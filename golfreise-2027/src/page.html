@@ -29,7 +29,7 @@ html[data-theme="dark"]{
   --danger:#D9705F; --danger-bg:rgba(217,112,95,.14);
   --hero-veil:linear-gradient(180deg,rgba(4,8,6,.24) 0%,rgba(4,8,6,.32) 40%,rgba(4,8,6,.56) 72%,rgba(7,12,9,.96) 100%);
   --hero-side:linear-gradient(95deg,rgba(3,7,5,.82) 0%,rgba(3,7,5,.58) 30%,rgba(3,7,5,.16) 58%,rgba(3,7,5,0) 76%);
-  --glass:rgba(16,24,19,.72);
+  --glass:rgba(16,24,19,.72); --stack-edge:rgba(0,0,0,.86);
   color-scheme:dark;
 }
 html[data-theme="light"]{
@@ -41,7 +41,7 @@ html[data-theme="light"]{
   --danger:#A63B2A; --danger-bg:rgba(166,59,42,.10);
   --hero-veil:linear-gradient(180deg,rgba(6,12,9,.24) 0%,rgba(6,12,9,.34) 48%,rgba(6,12,9,.62) 82%,rgba(246,243,234,.96) 100%);
   --hero-side:linear-gradient(95deg,rgba(4,9,6,.80) 0%,rgba(4,9,6,.56) 30%,rgba(4,9,6,.16) 58%,rgba(4,9,6,0) 76%);
-  --glass:rgba(255,255,255,.80);
+  --glass:rgba(255,255,255,.80); --stack-edge:rgba(24,36,29,.46);
   color-scheme:light;
 }
 
@@ -369,36 +369,30 @@ html[data-theme="light"] .hero .btn--ghost:hover{--btn-bg:rgba(255,255,255,.15)}
    Golfplätze — drei versetzte Karten, leicht überlappend
    ============================================================ */
 .golfstack{display:flex; align-items:flex-start; justify-content:center; padding:16px 0 28px}
+/* Die Karten tragen zusätzlich .frame — gleicher Rahmen, Radius und
+   Bildzoom wie die Hotelbilder weiter oben. */
 .golfstack__card{
-  position:relative; margin:0; flex:none; aspect-ratio:3/4; overflow:hidden;
-  border-radius:18px; background:var(--surface-2);
-  /* Der Ring in Hintergrundfarbe trennt die Karten dort, wo sie sich überlappen */
-  box-shadow:0 0 0 6px var(--bg-2), 0 0 0 7px var(--line-2), 0 26px 50px -22px rgba(0,0,0,.75);
+  flex:none; aspect-ratio:3/4;
   transition:transform .45s var(--ease), box-shadow .45s var(--ease);
-}
-.golfstack__card img{width:100%; height:100%; object-fit:cover; transition:transform 1s var(--ease)}
-.golfstack__card figcaption{
-  position:absolute; left:0; right:0; bottom:0; padding:26px 12px 11px; text-align:center;
-  font-size:10px; letter-spacing:.16em; text-transform:uppercase; font-weight:600;
-  color:#F4EFE2; text-shadow:0 1px 6px rgba(0,0,0,.9);
-  background:linear-gradient(180deg,transparent,rgba(0,0,0,.62));
 }
 .golfstack__card--a{width:36%; margin-top:52px; z-index:1}
 .golfstack__card--b{width:42%; margin-top:0; margin-left:-7%; z-index:3}
 .golfstack__card--c{width:36%; margin-top:76px; margin-left:-7%; z-index:2}
-/* Beschriftungen weg von der überlappten Seite, sonst verdeckt sie die Nachbarkarte */
-.golfstack__card--a figcaption{text-align:left; padding-left:14px; padding-right:24%}
-.golfstack__card--c figcaption{text-align:right; padding-right:14px; padding-left:24%}
+/* Weicher Schatten an der überlappenden Kante — trennt die Karten,
+   ohne einen zusätzlichen Rahmen einzuführen. */
+.golfstack__card--b,
+.golfstack__card--c{box-shadow:-22px 0 26px -10px var(--stack-edge), var(--shadow-lg)}
+/* Die rechte Karte wird von links überlappt: Beschriftung nach rechts. */
+.golfstack__card--c .caption{left:auto; right:16px}
 .golfstack__card:hover{transform:translateY(-10px); z-index:4}
-.golfstack__card:hover img{transform:scale(1.06)}
 @media (max-width:900px){
   .golfstack{max-width:520px; margin:0 auto; padding-bottom:18px}
 }
 @media (max-width:480px){
-  .golfstack__card{border-radius:14px; box-shadow:0 0 0 4px var(--bg-2), 0 0 0 5px var(--line-2), 0 18px 34px -18px rgba(0,0,0,.75)}
   .golfstack__card--a{margin-top:34px}
   .golfstack__card--c{margin-top:50px}
-  .golfstack__card figcaption{font-size:8.5px; letter-spacing:.1em; padding:20px 5px 8px}
+  .golfstack .caption{left:10px; bottom:10px; font-size:9px; letter-spacing:.1em}
+  .golfstack__card--c .caption{left:auto; right:10px}
 }
 .feature__body h2{font-size:clamp(28px,4vw,42px); margin:14px 0 18px}
 .feature__body > p{color:var(--ink-2); font-size:16.5px}
@@ -912,18 +906,18 @@ tbody tr.is-in:hover{background:linear-gradient(90deg,var(--ok-bg),var(--surface
       <div class="feature feature--flip">
         <div class="feature__media reveal">
           <div class="golfstack">
-            <figure class="golfstack__card golfstack__card--a">
+            <div class="frame golfstack__card golfstack__card--a">
               <img src="__IMG_GOLF1__" alt="Grün mit Wasserhindernis auf Santana Golf" loading="lazy">
-              <figcaption>Santana Golf</figcaption>
-            </figure>
-            <figure class="golfstack__card golfstack__card--b">
-              <img src="__IMG_GOLF2__" alt="Teich und Palmen auf Los Lagos" loading="lazy">
-              <figcaption>Los Lagos</figcaption>
-            </figure>
-            <figure class="golfstack__card golfstack__card--c">
-              <img src="__IMG_GOLF3__" alt="Fairway an der Costa del Sol" loading="lazy">
-              <figcaption>Costa del Sol</figcaption>
-            </figure>
+              <span class="caption">Santana Golf</span>
+            </div>
+            <div class="frame golfstack__card golfstack__card--b">
+              <img src="__IMG_GOLF2__" alt="Seen und Bunker auf Los Olivos" loading="lazy">
+              <span class="caption">Los Olivos</span>
+            </div>
+            <div class="frame golfstack__card golfstack__card--c">
+              <img src="__IMG_GOLF3__" alt="Teich und Palmen auf Los Lagos" loading="lazy">
+              <span class="caption">Los Lagos</span>
+            </div>
           </div>
         </div>
         <div class="feature__body reveal">
@@ -1170,7 +1164,6 @@ tbody tr.is-in:hover{background:linear-gradient(90deg,var(--ok-bg),var(--surface
         </div>
         <div id="listState"></div>
       </div>
-      <p class="privacy-note">Aus Datenschutzgründen zeigt diese Liste nur Vorname und Name.</p>
     </div>
   </div>
 </section>

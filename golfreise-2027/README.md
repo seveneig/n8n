@@ -130,9 +130,9 @@ automatisch die alte `hero.jpg`; die alte Datei kann gelöscht werden.
 | `hero-portrait` | dasselbe auf Handys | ab 700 × 950 px, hochformat |
 | `resort` | Hotel-Block, linke Karte | ab 1000 × 1250 px, hochformat |
 | `room` | Hotel-Block, rechte Karte | ab 1000 × 1250 px, hochformat |
-| `golf1` | Golf-Block, linke Karte im Stapel | ab 700 × 930 px, hochformat |
-| `golf2` | Golf-Block, mittlere Karte (vorne, am grössten) | ab 850 × 1130 px, hochformat |
-| `golf3` | Golf-Block, rechte Karte im Stapel | ab 700 × 930 px, hochformat |
+| `golf1` | Golf-Stapel, linke Karte — Santana Golf | ab 700 × 930 px, hochformat |
+| `golf2` | Golf-Stapel, mittlere Karte (vorne, am grössten) — Los Olivos | ab 850 × 1130 px, hochformat |
+| `golf3` | Golf-Stapel, rechte Karte — Los Lagos | ab 700 × 930 px, hochformat |
 | `logo-dark` | schwarze Wappenfassung | ab 500 px, quadratisch |
 | `logo-light` | weisse Wappenfassung | ab 500 px, quadratisch |
 
@@ -166,11 +166,11 @@ vom Hotel — kein Nachbau, keine hochskalierten PDF-Auszüge mehr. Alle Bilder
 sind als WebP eingebettet; das Logo steckt einmal in einer CSS-Variablen und
 wird an drei Stellen verwendet.
 
-Noch offen: ein Foto von **Los Olivos**. Der Golf-Stapel zeigt derzeit
-Santana Golf, Los Lagos und — als dritte Karte — eine zweite Aufnahme, die
-neutral mit «Costa del Sol» beschriftet ist. Sobald ein Los-Olivos-Bild
-vorliegt, ersetzt es `golf3`; dann bekommt die Karte auch die richtige
-Beschriftung (in `src/page.html` bei `golfstack__card--c`).
+Der Golf-Stapel zeigt alle drei gespielten Plätze: Santana Golf, Los Olivos
+(mittlere Karte, weil er zweimal gespielt wird) und Los Lagos. Die Karten
+tragen dieselbe `.frame`-Klasse wie die Hotelbilder — Rahmen, Radius und
+Bildzoom kommen von dort, der Stapel steuert nur Breite, Versatz und
+Stapelreihenfolge bei.
 
 ---
 
