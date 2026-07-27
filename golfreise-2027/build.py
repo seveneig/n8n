@@ -43,7 +43,7 @@ IMAGES = {
     # helle Fassung (weiss) fürs helle. Fehlt eine, springt die andere ein;
     # fehlen beide, greift der SVG-Nachbau.
     "__LOGO_DARK__": ["logo-dark", "logo", "emblem"],
-    "__LOGO_LIGHT__": ["logo-light", "logo-dark", "logo", "emblem"],
+    "__LOGO_LIGHT__": ["logo-light", "logo-dark", "logo", "emblem-light", "emblem"],
 }
 
 STANDALONE_BOOT = """

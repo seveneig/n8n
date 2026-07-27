@@ -134,8 +134,9 @@ automatisch die alte `hero.jpg`; die alte Datei kann gelöscht werden.
 | `logo-dark` | Kopfzeile, Hero, Fusszeile — dunkles Design | ab 1000 px, quadratisch |
 | `logo-light` | dieselben Stellen — helles Design | ab 1000 px, quadratisch |
 
-Fehlt `logo-light`, wird überall `logo-dark` verwendet; fehlen beide, greift
-der SVG-Nachbau `emblem.svg`. Die Kartenbilder werden auf 4:5 zugeschnitten
+Fehlt `logo-light`, wird `logo-dark` verwendet; fehlen beide, greifen die
+SVG-Nachbauten `emblem.svg` (dunkel) und `emblem-light.svg` (hell).
+Die Kartenbilder werden auf 4:5 zugeschnitten
 (`object-fit: cover`), das Hero-Bild auf die volle Breite — Motive also nicht
 zu knapp anschneiden.
 
