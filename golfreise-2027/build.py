@@ -26,7 +26,7 @@ DIST = ROOT / "dist"
 
 # ---------------------------------------------------------------- Einstellungen
 SPHINX_URL = "https://www.sphinxtravel.ch/anmeldung-ziischtigsclub-golfreise-2027"
-ADMIN_PW = "Augwil2027"  # muss mit ADMIN_PASSWORD in src/Code.gs übereinstimmen
+ADMIN_PW = "2512"  # muss mit ADMIN_PASSWORD in src/Code.gs übereinstimmen
 
 # Basisnamen ohne Endung. Gefunden wird die erste passende Datei in dieser
 # Reihenfolge der Endungen — eine neue hero.png ersetzt also automatisch die

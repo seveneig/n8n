@@ -79,7 +79,7 @@ Version: „Neue Version" → Bereitstellen.** Die Adresse bleibt dabei gleich.
 
 ## 4) Passwort und Einstellungen
 
-Der Organisator-Bereich ist mit **`Augwil2027`** geschützt.
+Der Organisator-Bereich ist mit **`2512`** geschützt.
 
 **Ändern:**
 

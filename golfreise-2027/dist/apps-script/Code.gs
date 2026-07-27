@@ -13,7 +13,7 @@
    Einstellungen
    ============================================================ */
 var SHEET_NAME       = 'Anmeldungen';
-var ADMIN_PASSWORD   = 'Augwil2027';   // <-- Passwort für den Organisator-Bereich
+var ADMIN_PASSWORD   = '2512';   // <-- Passwort für den Organisator-Bereich
 var MAX_PARTICIPANTS = 20;             // nur informativ; die Anzeige rechnet im Browser
 var HEADERS = ['Referenz', 'Eingegangen', 'Vorname', 'Name', 'Telefon', 'E-Mail', 'ID'];
 
