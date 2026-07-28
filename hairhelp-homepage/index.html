@@ -1,0 +1,1296 @@
+<!doctype html>
+<html lang="de-CH">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>HairHelp · Streuhaar aus pflanzlichem Keratin | Volleres Haar in unter 30 Sekunden</title>
+<meta name="description" content="HairHelp Hair Fibers sind Mikrohaarfasern aus pflanzlichem Keratin. Sie kaschieren lichtes Haar in unter 30 Sekunden. In der Schweiz entwickelt, 6 Farbtöne, 30 Tage Geld-zurück-Garantie.">
+<meta name="theme-color" content="#faf6f0">
+<link rel="canonical" href="https://hairhelp-haarverdichter.ch/">
+
+<meta property="og:type" content="website">
+<meta property="og:locale" content="de_CH">
+<meta property="og:title" content="HairHelp · Volleres Haar in unter 30 Sekunden">
+<meta property="og:description" content="Streuhaar aus pflanzlichem Keratin. In der Schweiz entwickelt. 30 Tage Geld-zurück-Garantie.">
+<meta property="og:url" content="https://hairhelp-haarverdichter.ch/">
+
+<style>
+/* =========================================================================
+   HairHelp – Startseite
+   Ein einziges, eigenständiges Dokument: kein CDN, keine externen Fonts,
+   keine Bilddateien. Die Hero-Grafik wird per Canvas gezeichnet.
+   ---------------------------------------------------------------------
+   Alle inhaltlichen Werte, die du anpassen willst (Preise, Links, Farbnamen,
+   Kundenstimmen), stehen gebündelt unten im <script> unter INHALT.
+   ========================================================================= */
+
+/* ---------- Tokens ---------------------------------------------------- */
+:root{
+  --bg:        #faf6f0;   /* Sand, warm – nicht Papierweiss                */
+  --bg-2:      #f1e8dc;   /* abgesetzte Fläche                             */
+  --bg-3:      #e7dbc9;   /* tiefste Fläche                                */
+  --ink:       #221a14;   /* Espresso statt Schwarz                        */
+  --ink-2:     #6a5a4c;   /* Taupe, zum Akzent hin gebogen                 */
+  --ink-3:     #978675;
+  --line:      #ddd0bf;
+  --line-soft: #e9dfd1;
+  --accent:    #96501f;   /* gebranntes Kupfer                             */
+  --accent-2:  #c4763c;
+  --accent-ink:#fffaf4;   /* Text auf Akzentfläche                         */
+  --accent-wash:#f4e6d7;
+  --pine:      #2e463f;   /* Tannengrün: Garantie, Schweiz, Sicherheit     */
+  --pine-wash: #e2eae5;
+  --scalp-a:   #e9cfb8;   /* Kopfhaut hell (Canvas)                        */
+  --scalp-b:   #d6b198;
+  --shadow: 0 1px 2px rgba(34,26,20,.05), 0 12px 32px -18px rgba(34,26,20,.28);
+
+  --sans: -apple-system, BlinkMacSystemFont, "Helvetica Neue", Helvetica, "Segoe UI", Arial, sans-serif;
+  --serif: "Iowan Old Style", "Palatino Linotype", Palatino, Georgia, "Times New Roman", serif;
+  --mono: ui-monospace, SFMono-Regular, "SF Mono", Menlo, Consolas, "Liberation Mono", monospace;
+
+  --page: 1200px;
+  --gut: clamp(20px, 5vw, 56px);
+  --rule: 1px solid var(--line);
+}
+
+@media (prefers-color-scheme: dark){
+  :root{
+    --bg:#15100c; --bg-2:#1e1712; --bg-3:#2a211a;
+    --ink:#f3eae0; --ink-2:#b3a294; --ink-3:#8c7c6e;
+    --line:#382d24; --line-soft:#2a211a;
+    --accent:#e09a5f; --accent-2:#c4763c; --accent-ink:#1a1209; --accent-wash:#2b2018;
+    --pine:#9bc0b2; --pine-wash:#1e2a26;
+    --scalp-a:#c8a88f; --scalp-b:#a9856c;
+    --shadow: 0 1px 2px rgba(0,0,0,.4), 0 16px 40px -22px rgba(0,0,0,.9);
+  }
+}
+:root[data-theme="dark"]{
+  --bg:#15100c; --bg-2:#1e1712; --bg-3:#2a211a;
+  --ink:#f3eae0; --ink-2:#b3a294; --ink-3:#8c7c6e;
+  --line:#382d24; --line-soft:#2a211a;
+  --accent:#e09a5f; --accent-2:#c4763c; --accent-ink:#1a1209; --accent-wash:#2b2018;
+  --pine:#9bc0b2; --pine-wash:#1e2a26;
+  --scalp-a:#c8a88f; --scalp-b:#a9856c;
+  --shadow: 0 1px 2px rgba(0,0,0,.4), 0 16px 40px -22px rgba(0,0,0,.9);
+}
+:root[data-theme="light"]{
+  --bg:#faf6f0; --bg-2:#f1e8dc; --bg-3:#e7dbc9;
+  --ink:#221a14; --ink-2:#6a5a4c; --ink-3:#978675;
+  --line:#ddd0bf; --line-soft:#e9dfd1;
+  --accent:#96501f; --accent-2:#c4763c; --accent-ink:#fffaf4; --accent-wash:#f4e6d7;
+  --pine:#2e463f; --pine-wash:#e2eae5;
+  --scalp-a:#e9cfb8; --scalp-b:#d6b198;
+  --shadow: 0 1px 2px rgba(34,26,20,.05), 0 12px 32px -18px rgba(34,26,20,.28);
+}
+
+/* ---------- Grundlagen ------------------------------------------------ */
+*,*::before,*::after{ box-sizing:border-box; }
+html{ -webkit-text-size-adjust:100%; scroll-behavior:smooth; }
+@media (prefers-reduced-motion: reduce){ html{ scroll-behavior:auto; } }
+
+body{
+  margin:0;
+  background:var(--bg);
+  color:var(--ink);
+  font-family:var(--sans);
+  font-size:clamp(16px,.42vw + 15px,18px);
+  line-height:1.62;
+  -webkit-font-smoothing:antialiased;
+  overflow-x:hidden;
+}
+
+h1,h2,h3,h4{ margin:0; font-weight:700; letter-spacing:-.028em; line-height:1.03; text-wrap:balance; }
+h1{ font-size:clamp(2.5rem,6.4vw,4.9rem); letter-spacing:-.038em; }
+h2{ font-size:clamp(1.9rem,3.6vw,3rem); }
+h3{ font-size:clamp(1.12rem,1.35vw,1.32rem); letter-spacing:-.015em; line-height:1.2; }
+p{ margin:0; }
+a{ color:inherit; }
+img,canvas,svg{ display:block; max-width:100%; }
+button{ font:inherit; color:inherit; }
+
+:where(a,button,summary,input,[tabindex]):focus-visible{
+  outline:2px solid var(--accent);
+  outline-offset:3px;
+  border-radius:2px;
+}
+
+.wrap{ width:100%; max-width:var(--page); margin-inline:auto; padding-inline:var(--gut); }
+.skip{
+  position:absolute; width:1px; height:1px; overflow:hidden; clip-path:inset(50%);
+  white-space:nowrap; z-index:100; background:var(--ink); color:var(--bg); padding:12px 18px;
+}
+.skip:focus{ position:fixed; left:12px; top:12px; width:auto; height:auto; clip-path:none; }
+
+/* Eyebrow: Mono-Label mit laufender Sektionsnummer                        */
+.eyebrow{
+  font-family:var(--mono); font-size:.72rem; letter-spacing:.14em;
+  text-transform:uppercase; color:var(--ink-3);
+  display:flex; align-items:center; gap:12px; margin-bottom:22px;
+}
+.eyebrow::after{ content:""; flex:1; min-width:20px; height:1px; background:var(--line); }
+.eyebrow b{ color:var(--accent); font-weight:500; }
+@media (max-width:620px){
+  /* Auf schmalen Displays trägt die Grundlinie statt der Endlinie */
+  .eyebrow{ display:block; padding-bottom:10px; border-bottom:1px solid var(--line); }
+  .eyebrow::after{ content:none; }
+}
+
+.lead{ font-size:clamp(1.05rem,1.25vw,1.22rem); color:var(--ink-2); max-width:62ch; }
+
+/* ---------- Buttons --------------------------------------------------- */
+.btn{
+  --btn-bg:var(--accent); --btn-fg:var(--accent-ink); --btn-bd:var(--accent);
+  display:inline-flex; align-items:center; justify-content:center; gap:.6em;
+  padding:.92em 1.5em; border:1px solid var(--btn-bd); background:var(--btn-bg);
+  color:var(--btn-fg); font-weight:600; font-size:.97rem; letter-spacing:-.01em;
+  text-decoration:none; cursor:pointer; border-radius:2px; position:relative;
+  transition:transform .22s cubic-bezier(.2,.7,.3,1), box-shadow .22s ease, background-color .22s ease, color .22s ease;
+}
+.btn:hover{ transform:translateY(-2px); box-shadow:0 10px 22px -12px color-mix(in oklab, var(--accent) 70%, transparent); }
+.btn:active{ transform:translateY(0); }
+.btn .arrow{ transition:transform .22s cubic-bezier(.2,.7,.3,1); }
+.btn:hover .arrow{ transform:translateX(4px); }
+.btn--ghost{ --btn-bg:transparent; --btn-fg:var(--ink); --btn-bd:var(--line); }
+.btn--ghost:hover{ --btn-bd:var(--ink); box-shadow:none; }
+.btn--price{ font-family:var(--serif); font-weight:400; opacity:.85; }
+
+/* Textlink mit wachsender Unterlinie                                      */
+.tlink{
+  color:var(--accent); text-decoration:none; font-weight:600;
+  display:inline-flex; align-items:center; gap:.45em;
+  background-image:linear-gradient(currentColor,currentColor);
+  background-size:0% 1px; background-repeat:no-repeat; background-position:0 100%;
+  transition:background-size .3s cubic-bezier(.2,.7,.3,1);
+}
+.tlink:hover{ background-size:100% 1px; }
+.tlink .arrow{ transition:transform .25s cubic-bezier(.2,.7,.3,1); }
+.tlink:hover .arrow{ transform:translateX(3px); }
+
+/* ---------- Header ---------------------------------------------------- */
+.hdr{
+  position:sticky; top:0; z-index:50;
+  border-bottom:1px solid transparent;
+  transition:background-color .3s ease, border-color .3s ease, backdrop-filter .3s ease;
+}
+.hdr.is-stuck{
+  background:color-mix(in oklab, var(--bg) 82%, transparent);
+  backdrop-filter:saturate(1.4) blur(12px);
+  border-bottom-color:var(--line);
+}
+.hdr__in{ display:flex; align-items:center; gap:clamp(16px,3vw,40px); height:70px; }
+.brand{
+  display:flex; align-items:baseline; gap:.5ch; text-decoration:none;
+  font-weight:700; font-size:1.16rem; letter-spacing:-.04em; margin-right:auto;
+}
+.brand i{ font-style:normal; color:var(--accent); }
+.brand small{
+  font-family:var(--mono); font-size:.58rem; letter-spacing:.12em;
+  text-transform:uppercase; color:var(--ink-3); margin-left:.7ch;
+}
+.nav{ display:flex; gap:clamp(14px,2vw,28px); }
+.nav a{
+  text-decoration:none; font-size:.92rem; font-weight:500; color:var(--ink-2);
+  padding:6px 0; position:relative; transition:color .2s ease;
+}
+.nav a::after{
+  content:""; position:absolute; left:0; right:0; bottom:0; height:1px;
+  background:var(--accent); transform:scaleX(0); transform-origin:left;
+  transition:transform .28s cubic-bezier(.2,.7,.3,1);
+}
+.nav a:hover{ color:var(--ink); }
+.nav a:hover::after{ transform:scaleX(1); }
+.hdr .btn{ padding:.62em 1.1em; font-size:.88rem; }
+.burger{
+  display:none; width:42px; height:42px; border:1px solid var(--line);
+  background:transparent; border-radius:2px; cursor:pointer; padding:0;
+  align-items:center; justify-content:center;
+}
+.burger span{ display:block; width:17px; height:1.5px; background:var(--ink); position:relative; transition:background-color .2s; }
+.burger span::before,.burger span::after{
+  content:""; position:absolute; left:0; width:17px; height:1.5px; background:var(--ink);
+  transition:transform .28s cubic-bezier(.2,.7,.3,1);
+}
+.burger span::before{ top:-5px; } .burger span::after{ top:5px; }
+.burger[aria-expanded="true"] span{ background:transparent; }
+.burger[aria-expanded="true"] span::before{ transform:translateY(5px) rotate(45deg); }
+.burger[aria-expanded="true"] span::after{ transform:translateY(-5px) rotate(-45deg); }
+
+.mnav{
+  display:none; border-bottom:1px solid var(--line); background:var(--bg-2);
+  overflow:hidden; max-height:0; transition:max-height .35s cubic-bezier(.2,.7,.3,1);
+}
+.mnav.is-open{ max-height:340px; }
+.mnav ul{ list-style:none; margin:0; padding:8px 0 20px; display:grid; }
+.mnav a{ display:block; padding:12px 0; text-decoration:none; border-bottom:1px solid var(--line-soft); font-weight:500; }
+
+@media (max-width:900px){
+  .nav{ display:none; }
+  .burger{ display:flex; }
+  .mnav{ display:block; }
+  .hdr .btn--hdr{ display:none; }
+}
+
+/* ---------- Sektionen ------------------------------------------------- */
+.sec{ padding-block:clamp(64px,8.5vw,124px); scroll-margin-top:82px; }
+.sec--rule{ border-top:var(--rule); }
+.sec--tint{ background:var(--bg-2); border-block:var(--rule); }
+
+/* ---------- Hero ------------------------------------------------------ */
+.hero{ padding-block:clamp(44px,6vw,86px) clamp(56px,7vw,104px); position:relative; }
+.hero__grid{ display:grid; grid-template-columns:1.02fr .98fr; gap:clamp(32px,5vw,72px); align-items:center; }
+@media (max-width:940px){ .hero__grid{ grid-template-columns:1fr; } }
+
+.hero h1 .ln{ display:block; overflow:hidden; }
+.hero h1 .ln > span{ display:block; }
+.hero h1 em{ font-style:normal; color:var(--accent); }
+.hero__lead{ margin-top:26px; }
+.hero__cta{ display:flex; flex-wrap:wrap; gap:12px; margin-top:34px; }
+@media (max-width:540px){ .hero__cta .btn{ width:100%; } }
+
+.trust{
+  display:flex; flex-wrap:wrap; gap:10px 26px;
+  margin:34px 0 0; padding:24px 0 0; list-style:none;
+  border-top:1px solid var(--line-soft);
+  font-size:.87rem; color:var(--ink-2);
+}
+.trust li{ display:flex; align-items:center; gap:.55em; }
+.trust .tick{ color:var(--pine); flex:none; }
+
+/* Demo-Panel                                                             */
+.demo{
+  border:1px solid var(--line); background:var(--bg-2); border-radius:3px;
+  padding:clamp(14px,2vw,20px); box-shadow:var(--shadow);
+}
+.demo__head{
+  display:flex; align-items:baseline; justify-content:space-between; gap:12px;
+  font-family:var(--mono); font-size:.66rem; letter-spacing:.12em; text-transform:uppercase;
+  color:var(--ink-3); margin-bottom:12px;
+}
+.demo__head b{ color:var(--accent); font-weight:500; font-variant-numeric:tabular-nums; }
+.demo__stage{ position:relative; border-radius:2px; overflow:hidden; background:var(--bg-3); }
+.demo__stage canvas{ width:100%; height:clamp(240px,32vw,340px); }
+.demo__tag{
+  position:absolute; left:10px; bottom:10px;
+  font-family:var(--mono); font-size:.6rem; letter-spacing:.1em; text-transform:uppercase;
+  background:color-mix(in oklab, var(--ink) 74%, transparent); color:var(--bg);
+  padding:5px 8px; border-radius:2px; backdrop-filter:blur(4px);
+}
+.demo__ctrl{ margin-top:16px; }
+.demo__labels{
+  display:flex; justify-content:space-between; font-size:.78rem; color:var(--ink-2); margin-bottom:6px;
+}
+.demo__labels b{ color:var(--ink); font-weight:600; }
+
+input[type="range"]{
+  -webkit-appearance:none; appearance:none; width:100%; height:22px;
+  background:transparent; cursor:pointer; margin:0;
+}
+input[type="range"]::-webkit-slider-runnable-track{
+  height:3px; border-radius:2px;
+  background:linear-gradient(90deg,var(--accent) var(--fill,100%), var(--line) var(--fill,100%));
+}
+input[type="range"]::-moz-range-track{ height:3px; border-radius:2px; background:var(--line); }
+input[type="range"]::-moz-range-progress{ height:3px; border-radius:2px; background:var(--accent); }
+input[type="range"]::-webkit-slider-thumb{
+  -webkit-appearance:none; width:20px; height:20px; margin-top:-8.5px;
+  border-radius:50%; background:var(--bg); border:1.5px solid var(--accent);
+  box-shadow:0 2px 8px -2px rgba(0,0,0,.35);
+  transition:transform .18s ease;
+}
+input[type="range"]:hover::-webkit-slider-thumb{ transform:scale(1.12); }
+input[type="range"]::-moz-range-thumb{
+  width:18px; height:18px; border-radius:50%; background:var(--bg); border:1.5px solid var(--accent);
+}
+
+.swatches{ display:flex; align-items:center; gap:8px; margin-top:16px; flex-wrap:wrap; }
+.swatches .lbl{
+  font-family:var(--mono); font-size:.64rem; letter-spacing:.1em; text-transform:uppercase;
+  color:var(--ink-3); margin-right:2px;
+}
+.sw{
+  width:26px; height:26px; border-radius:50%; border:1px solid var(--line);
+  padding:0; cursor:pointer; position:relative;
+  transition:transform .2s cubic-bezier(.2,.7,.3,1), box-shadow .2s ease;
+}
+.sw:hover{ transform:scale(1.12); }
+.sw[aria-pressed="true"]{ box-shadow:0 0 0 2px var(--bg), 0 0 0 3.5px var(--accent); }
+.sw__name{ font-size:.8rem; color:var(--ink-2); margin-left:4px; }
+
+/* ---------- Faktenband ------------------------------------------------ */
+.facts{ border-block:var(--rule); background:var(--bg-2); }
+.facts ul{
+  list-style:none; margin:0; padding:0; display:grid;
+  grid-template-columns:repeat(4,1fr);
+}
+.facts li{ padding:26px 0 28px; border-left:1px solid var(--line); padding-left:clamp(14px,2.2vw,26px); }
+.facts li:first-child{ border-left:0; padding-left:0; }
+.facts dt{
+  font-family:var(--mono); font-size:.66rem; letter-spacing:.12em; text-transform:uppercase;
+  color:var(--ink-3); margin-bottom:8px;
+}
+.facts dd{
+  margin:0; font-family:var(--serif); font-size:clamp(1.25rem,2vw,1.72rem);
+  line-height:1.15; letter-spacing:-.015em; font-variant-numeric:tabular-nums;
+}
+.facts dd small{ font-size:.62em; color:var(--ink-2); font-family:var(--sans); letter-spacing:0; }
+@media (max-width:760px){
+  .facts ul{ grid-template-columns:1fr 1fr; }
+  .facts li:nth-child(3){ border-left:0; padding-left:0; }
+  .facts li:nth-child(n+3){ border-top:1px solid var(--line); }
+}
+
+/* ---------- Zweispaltiger Sektionskopf --------------------------------- */
+.shead{ display:grid; grid-template-columns:minmax(0,1fr) minmax(0,1.05fr); gap:clamp(20px,4vw,64px); align-items:end; }
+@media (max-width:860px){ .shead{ grid-template-columns:1fr; align-items:start; } }
+.shead__note{ color:var(--ink-2); max-width:52ch; }
+
+/* ---------- Karten ---------------------------------------------------- */
+.cards{ display:grid; gap:1px; background:var(--line); margin-top:clamp(38px,5vw,64px); border:1px solid var(--line); }
+.cards--3{ grid-template-columns:repeat(3,1fr); }
+.cards--2{ grid-template-columns:repeat(2,1fr); }
+@media (max-width:860px){ .cards--3,.cards--2{ grid-template-columns:1fr; } }
+.card{
+  background:var(--bg); padding:clamp(24px,3vw,38px);
+  display:flex; flex-direction:column; gap:12px;
+  transition:background-color .3s ease;
+}
+.sec--tint .card{ background:var(--bg-2); }
+.card:hover{ background:var(--accent-wash); }
+.card__ico{ color:var(--accent); margin-bottom:6px; }
+.card p{ color:var(--ink-2); font-size:.95rem; }
+.card .tlink{ margin-top:auto; padding-top:8px; font-size:.9rem; }
+
+/* ---------- Schritte -------------------------------------------------- */
+.steps{ counter-reset:step; display:grid; gap:0; margin-top:clamp(38px,5vw,60px); }
+.step{
+  display:grid; grid-template-columns:auto minmax(0,1fr) minmax(0,1.15fr);
+  gap:clamp(16px,3vw,44px); align-items:start;
+  padding-block:clamp(26px,3.4vw,40px); border-top:1px solid var(--line);
+}
+.step:last-child{ border-bottom:1px solid var(--line); }
+.step__no{
+  counter-increment:step; font-family:var(--mono); font-size:.75rem; letter-spacing:.1em;
+  color:var(--accent); padding-top:.35em; font-variant-numeric:tabular-nums;
+}
+.step__no::before{ content:"0" counter(step); }
+.step p{ color:var(--ink-2); }
+.step__meta{
+  font-family:var(--mono); font-size:.68rem; letter-spacing:.1em; text-transform:uppercase;
+  color:var(--ink-3); margin-top:10px;
+}
+@media (max-width:760px){
+  .step{ grid-template-columns:auto minmax(0,1fr); row-gap:10px; }
+  .step > div{ grid-column:2; }   /* Fliesstext rückt unter die Überschrift */
+}
+
+/* ---------- Farbtöne -------------------------------------------------- */
+.tones{ display:grid; grid-template-columns:repeat(6,1fr); gap:clamp(10px,1.4vw,18px); margin-top:clamp(34px,4vw,52px); }
+@media (max-width:860px){ .tones{ grid-template-columns:repeat(3,1fr); } }
+@media (max-width:440px){ .tones{ grid-template-columns:repeat(2,1fr); } }
+.tone{ display:grid; gap:10px; }
+.tone__chip{
+  aspect-ratio:1/1.15; border-radius:2px; border:1px solid var(--line);
+  position:relative; overflow:hidden;
+  transition:transform .3s cubic-bezier(.2,.7,.3,1), box-shadow .3s ease;
+}
+.tone:hover .tone__chip{ transform:translateY(-4px); box-shadow:var(--shadow); }
+.tone__chip::after{
+  content:""; position:absolute; inset:0;
+  background:repeating-linear-gradient(103deg, rgba(255,255,255,.16) 0 1px, transparent 1px 4px);
+  opacity:.9;
+}
+.tone__name{ font-size:.86rem; font-weight:600; letter-spacing:-.01em; }
+.tone__hint{ font-family:var(--mono); font-size:.64rem; letter-spacing:.08em; text-transform:uppercase; color:var(--ink-3); }
+
+/* ---------- Produkt --------------------------------------------------- */
+.buy{ display:grid; grid-template-columns:1.05fr .95fr; gap:clamp(28px,4vw,64px); align-items:start; }
+@media (max-width:900px){ .buy{ grid-template-columns:1fr; } }
+.buy__card{
+  border:1px solid var(--line); background:var(--bg); border-radius:3px;
+  padding:clamp(24px,3vw,38px); box-shadow:var(--shadow);
+}
+.sec--tint .buy__card{ background:var(--bg); }
+.price{ display:flex; align-items:baseline; gap:.5ch; font-family:var(--serif); }
+.price b{ font-size:clamp(2.4rem,4.6vw,3.4rem); font-weight:400; letter-spacing:-.03em; font-variant-numeric:tabular-nums; }
+.price span{ font-size:1rem; color:var(--ink-2); font-family:var(--sans); }
+.incl{ list-style:none; margin:24px 0 0; padding:0; display:grid; gap:0; }
+.incl li{ display:flex; gap:12px; padding:13px 0; border-top:1px solid var(--line-soft); font-size:.94rem; }
+.incl li:last-child{ border-bottom:1px solid var(--line-soft); }
+.incl .tick{ color:var(--pine); flex:none; margin-top:.28em; }
+.buy .btn{ width:100%; margin-top:26px; }
+.guarantee{
+  display:flex; gap:14px; align-items:flex-start; margin-top:22px; padding:16px 18px;
+  background:var(--pine-wash); border-radius:2px; font-size:.88rem; color:var(--ink-2);
+}
+.guarantee b{ color:var(--ink); display:block; font-size:.92rem; }
+.guarantee .ico{ color:var(--pine); flex:none; margin-top:2px; }
+
+/* ---------- Stimmen --------------------------------------------------- */
+.quotes{ display:grid; grid-template-columns:repeat(3,1fr); gap:1px; background:var(--line); border:1px solid var(--line); margin-top:clamp(34px,4vw,54px); }
+@media (max-width:860px){ .quotes{ grid-template-columns:1fr; } }
+.quote{ background:var(--bg); padding:clamp(22px,2.6vw,32px); display:grid; gap:16px; align-content:start; }
+.quote blockquote{ margin:0; font-family:var(--serif); font-size:1.08rem; line-height:1.5; letter-spacing:-.01em; }
+.quote figcaption{ font-family:var(--mono); font-size:.68rem; letter-spacing:.1em; text-transform:uppercase; color:var(--ink-3); }
+.ph{
+  border:1px dashed var(--accent-2); background:var(--accent-wash);
+  color:var(--ink-2); font-family:var(--mono); font-size:.68rem; letter-spacing:.08em;
+  padding:3px 7px; border-radius:2px; display:inline-block; text-transform:uppercase;
+}
+
+/* ---------- FAQ ------------------------------------------------------- */
+.faq{ margin-top:clamp(30px,4vw,48px); border-top:1px solid var(--line); }
+.faq details{ border-bottom:1px solid var(--line); }
+.faq summary{
+  list-style:none; cursor:pointer; padding:22px 0; display:flex; gap:18px;
+  align-items:baseline; font-weight:600; font-size:1.02rem; letter-spacing:-.015em;
+  transition:color .2s ease;
+}
+.faq summary::-webkit-details-marker{ display:none; }
+.faq summary:hover{ color:var(--accent); }
+.faq summary .pm{
+  margin-left:auto; flex:none; width:14px; height:14px; position:relative; align-self:center;
+}
+.faq summary .pm::before,.faq summary .pm::after{
+  content:""; position:absolute; inset:0; margin:auto; background:var(--accent);
+  transition:transform .3s cubic-bezier(.2,.7,.3,1), opacity .3s ease;
+}
+.faq summary .pm::before{ width:14px; height:1.5px; }
+.faq summary .pm::after{ width:1.5px; height:14px; }
+.faq details[open] summary .pm::after{ transform:rotate(90deg); opacity:0; }
+.faq__a{ display:grid; grid-template-rows:0fr; transition:grid-template-rows .34s cubic-bezier(.2,.7,.3,1); }
+.faq details[open] .faq__a{ grid-template-rows:1fr; }
+.faq__a > div{ overflow:hidden; }
+.faq__a p{ color:var(--ink-2); max-width:68ch; padding-bottom:24px; padding-left:34px; font-size:.96rem; }
+@media (max-width:600px){ .faq__a p{ padding-left:0; } }
+.faq__q-no{ font-family:var(--mono); font-size:.72rem; color:var(--ink-3); flex:none; font-variant-numeric:tabular-nums; }
+
+/* ---------- Ratgeber -------------------------------------------------- */
+.guides{ display:grid; grid-template-columns:repeat(2,1fr); gap:0 clamp(20px,4vw,64px); margin-top:clamp(30px,4vw,48px); }
+@media (max-width:800px){ .guides{ grid-template-columns:1fr; } }
+.guide{
+  display:grid; grid-template-columns:auto 1fr auto; gap:16px; align-items:center;
+  padding:20px 0; border-top:1px solid var(--line); text-decoration:none;
+  transition:padding-left .28s cubic-bezier(.2,.7,.3,1), color .2s ease;
+}
+.guide:hover{ padding-left:8px; color:var(--accent); }
+.guide__no{ font-family:var(--mono); font-size:.7rem; color:var(--ink-3); }
+.guide__t{ font-weight:600; letter-spacing:-.015em; }
+.guide__d{ display:block; font-weight:400; font-size:.87rem; color:var(--ink-2); margin-top:3px; }
+.guide .arrow{ color:var(--accent); transition:transform .28s cubic-bezier(.2,.7,.3,1); }
+.guide:hover .arrow{ transform:translateX(5px); }
+
+/* ---------- Schluss-CTA ----------------------------------------------- */
+.close{ background:var(--ink); color:var(--bg); }
+.close h2{ max-width:16ch; }
+.close__grid{ display:grid; grid-template-columns:1.2fr .8fr; gap:clamp(24px,4vw,64px); align-items:end; }
+@media (max-width:820px){ .close__grid{ grid-template-columns:1fr; align-items:start; } }
+.close p{ color:color-mix(in oklab, var(--bg) 72%, var(--ink)); }
+.close .eyebrow{ color:color-mix(in oklab, var(--bg) 55%, var(--ink)); }
+.close .eyebrow::after{ background:color-mix(in oklab, var(--bg) 28%, var(--ink)); }
+.close .btn{ --btn-bg:var(--bg); --btn-fg:var(--ink); --btn-bd:var(--bg); }
+.close .btn:hover{ box-shadow:0 10px 22px -12px rgba(0,0,0,.6); }
+.close__note{ font-family:var(--mono); font-size:.68rem; letter-spacing:.1em; text-transform:uppercase; margin-top:16px; color:color-mix(in oklab, var(--bg) 55%, var(--ink)); }
+
+/* ---------- Footer ---------------------------------------------------- */
+.ftr{ background:var(--bg-2); border-top:var(--rule); padding-block:clamp(44px,5vw,68px) 32px; font-size:.9rem; }
+.ftr__grid{ display:grid; grid-template-columns:1.4fr repeat(3,1fr); gap:clamp(24px,3vw,44px); }
+@media (max-width:820px){ .ftr__grid{ grid-template-columns:1fr 1fr; } }
+@media (max-width:520px){ .ftr__grid{ grid-template-columns:1fr; } }
+.ftr h4{ font-family:var(--mono); font-size:.68rem; letter-spacing:.12em; text-transform:uppercase; color:var(--ink-3); font-weight:500; margin-bottom:14px; }
+.ftr ul{ list-style:none; margin:0; padding:0; display:grid; gap:9px; }
+.ftr a{ text-decoration:none; color:var(--ink-2); transition:color .2s ease; }
+.ftr a:hover{ color:var(--accent); }
+.ftr__about{ color:var(--ink-2); max-width:34ch; margin-top:12px; }
+.ftr__base{
+  margin-top:clamp(32px,4vw,54px); padding-top:20px; border-top:1px solid var(--line);
+  display:flex; flex-wrap:wrap; gap:10px 24px; justify-content:space-between;
+  font-family:var(--mono); font-size:.66rem; letter-spacing:.08em; text-transform:uppercase; color:var(--ink-3);
+}
+
+/* ---------- Scroll-Reveal --------------------------------------------- */
+.rv{ opacity:0; transform:translateY(18px); }
+.rv.is-in{ opacity:1; transform:none; transition:opacity .7s cubic-bezier(.2,.7,.3,1), transform .7s cubic-bezier(.2,.7,.3,1); transition-delay:calc(var(--i,0) * 80ms); }
+@media (prefers-reduced-motion: reduce){
+  .rv{ opacity:1; transform:none; }
+  *,*::before,*::after{ animation-duration:.001ms !important; transition-duration:.001ms !important; }
+}
+
+/* Hero-Einlauf: Zeilen steigen aus der Maske                             */
+@keyframes riseIn{ from{ transform:translateY(105%); } to{ transform:translateY(0); } }
+@keyframes fadeUp{ from{ opacity:0; transform:translateY(14px); } to{ opacity:1; transform:none; } }
+.anim h1 .ln > span{ animation:riseIn .85s cubic-bezier(.2,.75,.25,1) both; }
+.anim h1 .ln:nth-child(2) > span{ animation-delay:.09s; }
+.anim h1 .ln:nth-child(3) > span{ animation-delay:.18s; }
+.anim .hero__lead{ animation:fadeUp .8s cubic-bezier(.2,.7,.3,1) .3s both; }
+.anim .hero__cta{ animation:fadeUp .8s cubic-bezier(.2,.7,.3,1) .4s both; }
+.anim .trust{ animation:fadeUp .8s cubic-bezier(.2,.7,.3,1) .5s both; }
+.anim .demo{ animation:fadeUp .9s cubic-bezier(.2,.7,.3,1) .25s both; }
+@media (prefers-reduced-motion: reduce){
+  .anim h1 .ln > span,.anim .hero__lead,.anim .hero__cta,.anim .trust,.anim .demo{ animation:none; }
+}
+</style>
+</head>
+
+<body>
+<a class="skip" href="#main">Zum Inhalt springen</a>
+
+<header class="hdr" id="hdr">
+  <div class="wrap hdr__in">
+    <a class="brand" href="/">Hair<i>Help</i><small>Schweiz</small></a>
+    <nav class="nav" aria-label="Hauptnavigation">
+      <a href="#produkt">Produkt</a>
+      <a href="#anwendung">Anwendung</a>
+      <a href="#farben">Farbtöne</a>
+      <a href="#ratgeber">Ratgeber</a>
+      <a href="#faq">Fragen</a>
+    </nav>
+    <a class="btn btn--hdr" href="https://hairhelp-haarverdichter.ch/hair-fibers/">Jetzt bestellen</a>
+    <button class="burger" id="burger" aria-expanded="false" aria-controls="mnav" aria-label="Menü öffnen"><span></span></button>
+  </div>
+  <div class="mnav" id="mnav">
+    <div class="wrap">
+      <ul>
+        <li><a href="#produkt">Produkt</a></li>
+        <li><a href="#anwendung">Anwendung</a></li>
+        <li><a href="#farben">Farbtöne</a></li>
+        <li><a href="#ratgeber">Ratgeber</a></li>
+        <li><a href="#faq">Fragen</a></li>
+        <li><a href="https://hairhelp-haarverdichter.ch/hair-fibers/"><b>Jetzt bestellen · CHF 49.90</b></a></li>
+      </ul>
+    </div>
+  </div>
+</header>
+
+<main id="main">
+
+  <!-- ===================== HERO ===================== -->
+  <section class="hero anim" id="hero">
+    <div class="wrap hero__grid">
+      <div>
+        <p class="eyebrow"><b>Pflanzliches Keratin</b> · Entwickelt in der Schweiz</p>
+        <h1>
+          <span class="ln"><span>Volleres Haar.</span></span>
+          <span class="ln"><span>In unter</span></span>
+          <span class="ln"><span><em>30 Sekunden.</em></span></span>
+        </h1>
+        <p class="lead hero__lead">
+          HairHelp Hair&nbsp;Fibers sind feinste Mikrohaarfasern aus pflanzlichem Keratin.
+          Sie laden sich elektrostatisch auf, legen sich um jedes einzelne Haar und lassen
+          dünner werdende Stellen sichtbar dichter wirken. Kein Eingriff, keine Wartezeit,
+          abends wieder ausgewaschen.
+        </p>
+        <div class="hero__cta">
+          <a class="btn" href="https://hairhelp-haarverdichter.ch/hair-fibers/">
+            Hair Fibers bestellen <span class="btn--price">CHF 49.90</span> <span class="arrow" aria-hidden="true">→</span>
+          </a>
+          <a class="btn btn--ghost" href="#anwendung">So funktioniert&rsquo;s</a>
+        </div>
+        <ul class="trust">
+          <li><span class="tick" aria-hidden="true">✓</span> 30 Tage Geld-zurück-Garantie</li>
+          <li><span class="tick" aria-hidden="true">✓</span> Gratisversand ab CHF 35</li>
+          <li><span class="tick" aria-hidden="true">✓</span> 6 Farbtöne</li>
+        </ul>
+      </div>
+
+      <!-- Live gezeichnete Faserdichte statt Stockfoto -->
+      <figure class="demo" style="margin:0">
+        <div class="demo__head">
+          <span>Faserdichte-Simulation</span>
+          <b id="demoVal">100 %</b>
+        </div>
+        <div class="demo__stage">
+          <canvas id="fiberCanvas" role="img"
+            aria-label="Schematische Darstellung: Kopfhautausschnitt, dessen Haardichte sich mit dem Regler von ohne auf mit HairHelp erhöht."></canvas>
+          <span class="demo__tag">Schematische Darstellung · keine Produktfotografie</span>
+        </div>
+        <div class="demo__ctrl">
+          <div class="demo__labels"><span>Ohne</span><span><b>Mit HairHelp</b></span></div>
+          <input type="range" id="demoRange" min="0" max="100" value="0" aria-label="Faserdichte einstellen">
+        </div>
+        <div class="swatches" id="swatches">
+          <span class="lbl">Ton</span>
+          <!-- Swatches werden aus INHALT.farben erzeugt -->
+        </div>
+      </figure>
+    </div>
+  </section>
+
+  <!-- ===================== FAKTEN ===================== -->
+  <section class="facts" aria-label="Auf einen Blick">
+    <div class="wrap">
+      <ul>
+        <li><dl><dt>Preis</dt><dd>CHF 49.<small>90</small></dd></dl></li>
+        <li><dl><dt>Anwendung</dt><dd>&lt; 30 <small>Sek.</small></dd></dl></li>
+        <li><dl><dt>Farbtöne</dt><dd>6 <small>Nuancen</small></dd></dl></li>
+        <li><dl><dt>Rückgabe</dt><dd>30 <small>Tage</small></dd></dl></li>
+      </ul>
+    </div>
+  </section>
+
+  <!-- ===================== WARUM ===================== -->
+  <section class="sec" id="material">
+    <div class="wrap">
+      <div class="shead rv">
+        <div>
+          <p class="eyebrow"><b>01</b> Material</p>
+          <h2>Nicht jede Faser<br>ist gleich.</h2>
+        </div>
+        <p class="shead__note">
+          Viele Streuhaar-Produkte bestehen aus Baumwolle oder Viskose. Diese Fasern unterscheiden
+          sich in Struktur, Lichtbrechung und Tragegefühl deutlich von echtem Haar. HairHelp setzt
+          auf pflanzliches Keratin — dem menschlichen Haar in Aufbau und Oberfläche am nächsten.
+        </p>
+      </div>
+
+      <div class="cards cards--3">
+        <article class="card rv" style="--i:0">
+          <span class="card__ico" aria-hidden="true">
+            <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round">
+              <path d="M4 20c3-9 6-12 8-16"/><path d="M9 20c2.5-7 5-10 7-13"/><path d="M14 20c2-5 3.5-7 5-9"/>
+            </svg>
+          </span>
+          <h3>Elektrostatische Haftung</h3>
+          <p>Beim Schütteln laden sich die Mikrofasern auf. Sie umschliessen jedes einzelne Haar und
+             vergrössern optisch seinen Durchmesser — die Kopfhaut tritt in den Hintergrund.</p>
+        </article>
+
+        <article class="card rv" style="--i:1">
+          <span class="card__ico" aria-hidden="true">
+            <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round">
+              <circle cx="12" cy="12" r="4"/><path d="M12 2v3M12 19v3M2 12h3M19 12h3M5 5l2 2M17 17l2 2M19 5l-2 2M7 17l-2 2"/>
+            </svg>
+          </span>
+          <h3>Natürliche Lichtbrechung</h3>
+          <p>Keratin reflektiert Licht ähnlich wie das eigene Haar. Kein matter Puderfilm,
+             kein Grauschleier, wenn Sie aus dem Schatten ins Tageslicht treten.</p>
+        </article>
+
+        <article class="card rv" style="--i:2">
+          <span class="card__ico" aria-hidden="true">
+            <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M12 3l7 3v6c0 4-3 7-7 9-4-2-7-5-7-9V6z"/><path d="M9.2 12l2 2 3.6-4"/>
+            </svg>
+          </span>
+          <h3>Alltagsfest mit Fixierspray</h3>
+          <p>Mit Fixierspray versiegelt halten die Fasern Wind, Schweiss und einen Regenschauer aus —
+             ohne das Haar zu beschweren. Abends mit normalem Shampoo wieder raus.</p>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===================== ANWENDUNG ===================== -->
+  <section class="sec sec--tint" id="anwendung">
+    <div class="wrap">
+      <div class="shead rv">
+        <div>
+          <p class="eyebrow"><b>02</b> Anwendung</p>
+          <h2>Drei Schritte,<br>eine halbe Minute.</h2>
+        </div>
+        <p class="shead__note">
+          Die Reihenfolge ist entscheidend: erst aufladen, dann auftragen, dann versiegeln.
+          Wer sie einhält, braucht nach ein paar Tagen Übung keine 30 Sekunden mehr.
+        </p>
+      </div>
+
+      <div class="steps">
+        <article class="step rv" style="--i:0">
+          <span class="step__no" aria-hidden="true"></span>
+          <h3>Aufladen</h3>
+          <div>
+            <p>Die geschlossene Dose 3 bis 5 Sekunden kräftig schütteln. Die Reibung lädt die
+               Mikrofasern elektrostatisch auf — das ist der Grund, warum sie später am Haar haften
+               und nicht auf die Kopfhaut rieseln.</p>
+            <p class="step__meta">3–5 Sekunden · geschlossen schütteln</p>
+          </div>
+        </article>
+
+        <article class="step rv" style="--i:1">
+          <span class="step__no" aria-hidden="true"></span>
+          <h3>Auftragen</h3>
+          <div>
+            <p>Deckel öffnen, die Dose 10 bis 15 cm über die dünne Stelle halten und in kurzen,
+               leichten Stössen verteilen. Für Geheimratsecken, Scheitel und die Haarlinie den
+               Präzisionsaufsatz verwenden — er dosiert deutlich feiner.</p>
+            <p class="step__meta">10–15 cm Abstand · kurze Stösse</p>
+          </div>
+        </article>
+
+        <article class="step rv" style="--i:2">
+          <span class="step__no" aria-hidden="true"></span>
+          <h3>Versiegeln</h3>
+          <div>
+            <p>Die Fasern mit den Fingerspitzen sanft einarbeiten, damit die Übergänge weich werden,
+               und anschliessend mit Fixierspray versiegeln. Fixierspray beschwert das Haar weniger
+               als klassisches Haarspray — das Ergebnis bleibt beweglich.</p>
+            <p class="step__meta">Fixierspray · nicht beschwerend</p>
+          </div>
+        </article>
+      </div>
+
+      <p style="margin-top:28px">
+        <a class="tlink" href="https://hairhelp-haarverdichter.ch/streuhaar-anwendung/">
+          Ausführliche Schritt-für-Schritt-Anleitung <span class="arrow" aria-hidden="true">→</span>
+        </a>
+      </p>
+    </div>
+  </section>
+
+  <!-- ===================== FÜR WEN ===================== -->
+  <section class="sec" id="fuer-wen">
+    <div class="wrap">
+      <div class="shead rv">
+        <div>
+          <p class="eyebrow"><b>03</b> Anwendungsfälle</p>
+          <h2>Wo Streuhaar<br>am besten wirkt.</h2>
+        </div>
+        <p class="shead__note">
+          Streuhaar braucht vorhandenes Resthaar zum Andocken. Am stärksten ist der Effekt dort,
+          wo das Haar diffus dünner wird und die Kopfhaut langsam durchschimmert — nicht auf
+          vollständig kahlen Flächen.
+        </p>
+      </div>
+
+      <div class="cards cards--3">
+        <article class="card rv" style="--i:0">
+          <h3>Diffus dünner werdendes Haar</h3>
+          <p>Der häufigste Grund für Hair Fibers: Das Haar wird über die ganze Fläche feiner,
+             die Kopfhaut schimmert bei Gegenlicht durch.</p>
+          <a class="tlink" href="https://hairhelp-haarverdichter.ch/streuhaar/">Was Streuhaar kann <span class="arrow" aria-hidden="true">→</span></a>
+        </article>
+
+        <article class="card rv" style="--i:1">
+          <h3>Geheimratsecken &amp; Haarlinie</h3>
+          <p>Mit Präzisionsaufsatz lässt sich die Kontur gezielt nachziehen, ohne dass eine
+             harte Kante entsteht.</p>
+          <a class="tlink" href="https://hairhelp-haarverdichter.ch/geheimratsecken-kaschieren/">Geheimratsecken kaschieren <span class="arrow" aria-hidden="true">→</span></a>
+        </article>
+
+        <article class="card rv" style="--i:2">
+          <h3>Scheitel &amp; Wirbel</h3>
+          <p>Ein breiter werdender Scheitel ist die typische Stelle bei Frauen — und die,
+             an der wenige Fasern am meisten bewirken.</p>
+          <a class="tlink" href="https://hairhelp-haarverdichter.ch/streuhaar-maenner/">Streuhaar für Männer <span class="arrow" aria-hidden="true">→</span></a>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===================== FARBTÖNE ===================== -->
+  <section class="sec sec--tint" id="farben">
+    <div class="wrap">
+      <div class="shead rv">
+        <div>
+          <p class="eyebrow"><b>04</b> Farbwahl</p>
+          <h2>Im Zweifel eine<br>Nuance dunkler.</h2>
+        </div>
+        <p class="shead__note">
+          Wenige Fasern wirken heller, viele Fasern wirken dunkler. Viele Kundinnen und Kunden
+          greifen zuerst zu Braun oder Hellbraun — und stellen fest, dass Dunkelbraun am besten
+          trifft. Wählen Sie deshalb lieber den dunkleren der beiden Töne, die in Frage kommen.
+        </p>
+      </div>
+      <div class="tones rv" id="tones"><!-- aus INHALT.farben --></div>
+    </div>
+  </section>
+
+  <!-- ===================== PRODUKT ===================== -->
+  <section class="sec" id="produkt">
+    <div class="wrap">
+      <div class="buy">
+        <div class="rv">
+          <p class="eyebrow"><b>05</b> Produkt</p>
+          <h2>HairHelp<br>Hair Fibers.</h2>
+          <p class="lead" style="margin-top:24px">
+            Eine Dose, sechs Farbtöne, in der Schweiz entwickelt. Bestellt bis zum Nachmittag,
+            in der Regel innert weniger Tage bei Ihnen. Und falls das Ergebnis nicht überzeugt:
+            30 Tage zurück — inklusive Rückversandkosten.
+          </p>
+          <div class="guarantee" style="margin-top:28px">
+            <span class="ico" aria-hidden="true">
+              <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M12 3l7 3v6c0 4-3 7-7 9-4-2-7-5-7-9V6z"/><path d="M9.2 12l2 2 3.6-4"/>
+              </svg>
+            </span>
+            <span><b>Risikofrei testen</b>
+              Nicht zufrieden? Sie erhalten Ihr Geld zurück — die Rückversandkosten übernehmen wir.</span>
+          </div>
+        </div>
+
+        <div class="buy__card rv" style="--i:1">
+          <div class="price"><b>CHF 49.90</b> <span>pro Dose</span></div>
+          <ul class="incl">
+            <li><span class="tick" aria-hidden="true">✓</span> Mikrohaarfasern aus pflanzlichem Keratin</li>
+            <li><span class="tick" aria-hidden="true">✓</span> 6 Farbtöne zur Auswahl</li>
+            <li><span class="tick" aria-hidden="true">✓</span> Gratisversand ab CHF 35 innerhalb der Schweiz</li>
+            <li><span class="tick" aria-hidden="true">✓</span> 30 Tage Geld-zurück-Garantie</li>
+            <li><span class="tick" aria-hidden="true">✓</span> In der Schweiz entwickelt</li>
+          </ul>
+          <a class="btn" href="https://hairhelp-haarverdichter.ch/hair-fibers/">
+            In den Warenkorb <span class="arrow" aria-hidden="true">→</span>
+          </a>
+          <p style="margin-top:14px; font-size:.8rem; color:var(--ink-3); text-align:center">
+            Sichere Bezahlung · Versand aus der Schweiz
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===================== STIMMEN ===================== -->
+  <section class="sec sec--rule" id="stimmen">
+    <div class="wrap">
+      <div class="shead rv">
+        <div>
+          <p class="eyebrow"><b>06</b> Kundenstimmen</p>
+          <h2>Was Kundinnen<br>und Kunden sagen.</h2>
+        </div>
+        <p class="shead__note">
+          <span class="ph">Platzhalter</span>
+          Diese drei Karten sind bewusst leer gelassen. Setzen Sie hier echte, überprüfbare
+          Bewertungen ein — erfundene Kundenstimmen sind in der Schweiz lauterkeitsrechtlich heikel.
+          Die Texte stehen im Skript unter <code>INHALT.stimmen</code>.
+        </p>
+      </div>
+      <div class="quotes" id="quotes"><!-- aus INHALT.stimmen --></div>
+    </div>
+  </section>
+
+  <!-- ===================== FAQ ===================== -->
+  <section class="sec sec--tint" id="faq">
+    <div class="wrap">
+      <div class="shead rv">
+        <div>
+          <p class="eyebrow"><b>07</b> Fragen</p>
+          <h2>Bevor Sie<br>bestellen.</h2>
+        </div>
+        <p class="shead__note">
+          Die Fragen, die uns am häufigsten erreichen. Ist Ihre nicht dabei, schreiben Sie uns —
+          wir antworten in der Regel am selben Werktag.
+        </p>
+      </div>
+      <div class="faq rv" id="faqList"><!-- aus INHALT.faq --></div>
+    </div>
+  </section>
+
+  <!-- ===================== RATGEBER ===================== -->
+  <section class="sec" id="ratgeber">
+    <div class="wrap">
+      <div class="shead rv">
+        <div>
+          <p class="eyebrow"><b>08</b> Ratgeber</p>
+          <h2>Erst lesen,<br>dann entscheiden.</h2>
+        </div>
+        <p class="shead__note">
+          Streuhaar ist nicht für jede Situation die richtige Lösung. In unseren Ratgebern steht,
+          wann es funktioniert — und wann nicht.
+        </p>
+      </div>
+      <div class="guides rv" id="guides"><!-- aus INHALT.ratgeber --></div>
+    </div>
+  </section>
+
+  <!-- ===================== SCHLUSS-CTA ===================== -->
+  <section class="sec close">
+    <div class="wrap close__grid">
+      <div>
+        <p class="eyebrow">Bereit?</p>
+        <h2>Heute bestellt.<br>Diese Woche dichter.</h2>
+      </div>
+      <div>
+        <p>Eine Dose HairHelp Hair Fibers, sechs Farbtöne, 30 Tage Zeit für Ihr Urteil.</p>
+        <p style="margin-top:22px">
+          <a class="btn" href="https://hairhelp-haarverdichter.ch/hair-fibers/">
+            Hair Fibers bestellen · CHF 49.90 <span class="arrow" aria-hidden="true">→</span>
+          </a>
+        </p>
+        <p class="close__note">Gratisversand ab CHF 35 · Versand aus der Schweiz</p>
+      </div>
+    </div>
+  </section>
+</main>
+
+<!-- ===================== FOOTER ===================== -->
+<footer class="ftr">
+  <div class="wrap">
+    <div class="ftr__grid">
+      <div>
+        <a class="brand" href="/">Hair<i>Help</i></a>
+        <p class="ftr__about">Streuhaar aus pflanzlichem Keratin. In der Schweiz entwickelt,
+           für Menschen mit dünner werdendem Haar.</p>
+      </div>
+      <div>
+        <h4>Shop</h4>
+        <ul>
+          <li><a href="https://hairhelp-haarverdichter.ch/hair-fibers/">Hair Fibers</a></li>
+          <li><a href="#farben">Farbtöne</a></li>
+          <li><a href="#produkt">Preis &amp; Versand</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4>Ratgeber</h4>
+        <ul>
+          <li><a href="https://hairhelp-haarverdichter.ch/streuhaar/">Streuhaar</a></li>
+          <li><a href="https://hairhelp-haarverdichter.ch/streuhaar-anwendung/">Anwendung</a></li>
+          <li><a href="https://hairhelp-haarverdichter.ch/streuhaar-maenner/">Für Männer</a></li>
+          <li><a href="https://hairhelp-haarverdichter.ch/geheimratsecken-kaschieren/">Geheimratsecken</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4>Rechtliches</h4>
+        <ul>
+          <!-- PLATZHALTER: bestehende URLs eintragen -->
+          <li><a href="/kontakt/">Kontakt</a></li>
+          <li><a href="/impressum/">Impressum</a></li>
+          <li><a href="/agb/">AGB</a></li>
+          <li><a href="/datenschutz/">Datenschutz</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="ftr__base">
+      <span>© <span id="year">2026</span> HairHelp · Schweiz</span>
+      <span>Preise in CHF inkl. MwSt.</span>
+    </div>
+  </div>
+</footer>
+
+<script>
+/* =========================================================================
+   INHALT — alles, was du ohne HTML-Kenntnisse ändern kannst.
+   ========================================================================= */
+const INHALT = {
+
+  /* Farbtöne. `hex` steuert Swatch, Farbkarte und die Hero-Simulation.
+     PLATZHALTER: Namen und Hex-Werte an das echte Sortiment angleichen.     */
+  farben: [
+    { name:'Schwarz',      hint:'Black',       hex:'#1a1614' },
+    { name:'Dunkelbraun',  hint:'Dark Brown',  hex:'#3a2a1e' },
+    { name:'Mittelbraun',  hint:'Medium Brown',hex:'#59402c' },
+    { name:'Hellbraun',    hint:'Light Brown', hex:'#7d5c3c' },
+    { name:'Blond',        hint:'Blond',       hex:'#a9834f' },
+    { name:'Grau',         hint:'Grey',        hex:'#8e8781' }
+  ],
+  startFarbe: 1,   /* Index des vorausgewählten Tons                        */
+
+  /* PLATZHALTER: durch echte, belegbare Bewertungen ersetzen.              */
+  stimmen: [
+    { text:'[Echte Kundenstimme einsetzen]', quelle:'Platzhalter · Ort, Jahr' },
+    { text:'[Echte Kundenstimme einsetzen]', quelle:'Platzhalter · Ort, Jahr' },
+    { text:'[Echte Kundenstimme einsetzen]', quelle:'Platzhalter · Ort, Jahr' }
+  ],
+
+  faq: [
+    { q:'Hält Streuhaar bei Wind und Regen?',
+      a:'Richtig aufgetragen und mit Fixierspray versiegelt hält es Wind, Schweiss und einen kurzen Regenschauer aus. Bei starkem Dauerregen empfehlen wir trotzdem eine Kopfbedeckung — das gilt für jedes Streuhaar.' },
+    { q:'Funktioniert es auch auf einer kahlen Stelle?',
+      a:'Nein. Die Fasern brauchen vorhandenes Resthaar, an dem sie andocken können. Am besten wirkt Streuhaar bei diffus dünner werdendem Haar, an dem die Kopfhaut langsam durchschimmert.' },
+    { q:'Sieht man die Fasern aus der Nähe?',
+      a:'Die Fasern legen sich um das eigene Haar und vergrössern optisch dessen Durchmesser. Wer sie gleichmässig aufträgt, mit den Fingerspitzen einarbeitet und den passenden Ton wählt, erhält einen Übergang, der auch aus der Nähe ruhig wirkt.' },
+    { q:'Welche Farbe soll ich wählen?',
+      a:'Im Zweifel die dunklere. Wenige Fasern wirken heller, viele Fasern wirken dunkler — deshalb trifft Dunkelbraun oft besser als Braun oder Hellbraun. Bei mehrfarbigem Haar richten Sie sich nach dem Ton am Ansatz.' },
+    { q:'Ist Streuhaar auch für Frauen geeignet?',
+      a:'Ja. Die häufigste Stelle bei Frauen ist der breiter werdende Scheitel. Dort genügen wenige Fasern, weil ringsum genug Resthaar vorhanden ist, an dem sie haften.' },
+    { q:'Wie bekomme ich die Fasern wieder heraus?',
+      a:'Mit normalem Shampoo. Die Fasern lösen sich beim Waschen rückstandslos, eine Spezialpflege ist nicht nötig.' },
+    { q:'Und wenn es mir nicht gefällt?',
+      a:'Sie haben 30 Tage Zeit. Wenn Sie nicht zufrieden sind, erhalten Sie Ihr Geld zurück — die Rückversandkosten übernehmen wir.' }
+  ],
+
+  ratgeber: [
+    { t:'Streuhaar, Hair Fibers & Schütthaar',
+      d:'Was die Fasern können — und wo ihre Grenzen liegen.',
+      url:'https://hairhelp-haarverdichter.ch/streuhaar/' },
+    { t:'Streuhaar richtig auftragen',
+      d:'Schritt-für-Schritt-Anleitung inklusive Präzisionsaufsatz.',
+      url:'https://hairhelp-haarverdichter.ch/streuhaar-anwendung/' },
+    { t:'Streuhaar für Männer',
+      d:'Geheimratsecken, Haarlinie und Wirbel gezielt kaschieren.',
+      url:'https://hairhelp-haarverdichter.ch/streuhaar-maenner/' },
+    { t:'Geheimratsecken kaschieren',
+      d:'Fünf Methoden im Vergleich — mit Kosten und Aufwand.',
+      url:'https://hairhelp-haarverdichter.ch/geheimratsecken-kaschieren/' },
+    { t:'Hair Fibers aus pflanzlichem Keratin',
+      d:'Produktdetails, Farbtöne und Bestellung.',
+      url:'https://hairhelp-haarverdichter.ch/hair-fibers/' }
+  ]
+};
+
+/* =========================================================================
+   Aufbau der datengetriebenen Abschnitte
+   ========================================================================= */
+const $  = (s, r = document) => r.querySelector(s);
+const $$ = (s, r = document) => [...r.querySelectorAll(s)];
+const esc = (s) => String(s).replace(/[&<>"]/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+
+let aktiveFarbe = INHALT.farben[INHALT.startFarbe] || INHALT.farben[0];
+
+/* Farb-Swatches im Hero */
+const swWrap = $('#swatches');
+INHALT.farben.forEach((f, i) => {
+  const b = document.createElement('button');
+  b.type = 'button';
+  b.className = 'sw';
+  b.style.background = f.hex;
+  b.title = f.name;
+  b.setAttribute('aria-label', 'Farbton ' + f.name);
+  b.setAttribute('aria-pressed', String(f === aktiveFarbe));
+  b.addEventListener('click', () => {
+    aktiveFarbe = f;
+    $$('.sw', swWrap).forEach(o => o.setAttribute('aria-pressed', String(o === b)));
+    $('#swName').textContent = f.name;
+    zeichne();
+  });
+  swWrap.appendChild(b);
+});
+const swName = document.createElement('span');
+swName.className = 'sw__name';
+swName.id = 'swName';
+swName.textContent = aktiveFarbe.name;
+swWrap.appendChild(swName);
+
+/* Farbkarten */
+$('#tones').innerHTML = INHALT.farben.map(f => `
+  <div class="tone">
+    <div class="tone__chip" style="background:${esc(f.hex)}"></div>
+    <div>
+      <div class="tone__name">${esc(f.name)}</div>
+      <div class="tone__hint">${esc(f.hint)}</div>
+    </div>
+  </div>`).join('');
+
+/* Kundenstimmen */
+$('#quotes').innerHTML = INHALT.stimmen.map(s => `
+  <figure class="quote">
+    <blockquote>„${esc(s.text)}“</blockquote>
+    <figcaption>${esc(s.quelle)}</figcaption>
+  </figure>`).join('');
+
+/* FAQ */
+$('#faqList').innerHTML = INHALT.faq.map((f, i) => `
+  <details>
+    <summary>
+      <span class="faq__q-no">${String(i + 1).padStart(2, '0')}</span>
+      <span>${esc(f.q)}</span>
+      <span class="pm" aria-hidden="true"></span>
+    </summary>
+    <div class="faq__a"><div><p>${esc(f.a)}</p></div></div>
+  </details>`).join('');
+
+/* Ratgeber */
+$('#guides').innerHTML = INHALT.ratgeber.map((g, i) => `
+  <a class="guide" href="${esc(g.url)}">
+    <span class="guide__no">${String(i + 1).padStart(2, '0')}</span>
+    <span class="guide__t">${esc(g.t)}<span class="guide__d">${esc(g.d)}</span></span>
+    <span class="arrow" aria-hidden="true">→</span>
+  </a>`).join('');
+
+$('#year').textContent = new Date().getFullYear();
+
+/* =========================================================================
+   Header, Menü, Scroll-Reveal
+   ========================================================================= */
+const hdr = $('#hdr');
+const onScroll = () => hdr.classList.toggle('is-stuck', window.scrollY > 8);
+onScroll();
+addEventListener('scroll', onScroll, { passive: true });
+
+const burger = $('#burger'), mnav = $('#mnav');
+burger.addEventListener('click', () => {
+  const open = burger.getAttribute('aria-expanded') === 'true';
+  burger.setAttribute('aria-expanded', String(!open));
+  burger.setAttribute('aria-label', open ? 'Menü öffnen' : 'Menü schliessen');
+  mnav.classList.toggle('is-open', !open);
+});
+$$('#mnav a').forEach(a => a.addEventListener('click', () => {
+  burger.setAttribute('aria-expanded', 'false');
+  mnav.classList.remove('is-open');
+}));
+
+const io = new IntersectionObserver((entries) => {
+  entries.forEach(e => {
+    if (e.isIntersecting) { e.target.classList.add('is-in'); io.unobserve(e.target); }
+  });
+}, { rootMargin: '0px 0px -12% 0px', threshold: 0.08 });
+$$('.rv').forEach(el => io.observe(el));
+
+/* =========================================================================
+   Faserdichte-Simulation
+   Zwei Ebenen: das vorhandene Resthaar (konstant, in der Mitte ausgedünnt)
+   und die Fasern (Anzahl folgt dem Regler). Bewusst schematisch — die
+   Grafik illustriert das Prinzip, sie zeigt kein reales Ergebnis.
+   ========================================================================= */
+const cv = $('#fiberCanvas');
+const ctx = cv.getContext('2d');
+const range = $('#demoRange');
+const valOut = $('#demoVal');
+const reduceMotion = matchMedia('(prefers-reduced-motion: reduce)');
+
+let dichte = 0, basis = [], fasern = [], W = 0, H = 0;
+
+/* deterministischer Zufall — gleiche Grafik bei jedem Neuzeichnen */
+function mulberry32(a) {
+  return function () {
+    a |= 0; a = a + 0x6D2B79F5 | 0;
+    let t = Math.imul(a ^ a >>> 15, 1 | a);
+    t = t + Math.imul(t ^ t >>> 7, 61 | t) ^ t;
+    return ((t ^ t >>> 14) >>> 0) / 4294967296;
+  };
+}
+
+/* Der Wirbel, um den das Haar ausgerichtet ist */
+const WIRBEL = { x: .5, y: .40 };
+
+/* 0 = Zentrum der Ausdünnung, 1 = volle Deckung */
+function deckung(x, y) {
+  const dx = (x - WIRBEL.x) / .40, dy = (y - WIRBEL.y) / .38;
+  const d = Math.sqrt(dx * dx + dy * dy);
+  const s = Math.min(1, Math.max(0, d));
+  return .06 + .94 * (s * s * (3 - 2 * s));
+}
+
+/* Wuchsrichtung: dreht sich als Wirbel nach aussen, mit leichter Streuung */
+const SWIRL = .42;
+function wuchs(x, y, jitter) {
+  return Math.atan2(y - WIRBEL.y, x - WIRBEL.x) + SWIRL + jitter;
+}
+
+function baueStrahlen() {
+  const rnd = mulberry32(20260728);
+  basis = []; fasern = [];
+
+  for (let i = 0; i < 4200; i++) {
+    const x = rnd() * 1.1 - .05, y = rnd() * 1.1 - .05;
+    if (rnd() > deckung(x, y)) continue;
+    basis.push({
+      x, y,
+      len: .028 + rnd() * .052,
+      ang: wuchs(x, y, (rnd() - .5) * .55),
+      curl: (rnd() - .5) * .5,
+      w: .5 + rnd() * .6,
+      tone: rnd()
+    });
+  }
+
+  /* Fasern setzen genau dort an, wo die Kopfhaut durchscheint */
+  for (let i = 0; i < 5600; i++) {
+    const x = rnd() * 1.1 - .05, y = rnd() * 1.1 - .05;
+    if (rnd() < deckung(x, y) * .95) continue;
+    fasern.push({
+      x, y,
+      len: .024 + rnd() * .044,
+      ang: wuchs(x, y, (rnd() - .5) * .85),
+      curl: (rnd() - .5) * .6,
+      w: .55 + rnd() * .6,
+      tone: rnd()
+    });
+  }
+}
+
+function mische(hex, dl) {
+  const n = parseInt(hex.slice(1), 16);
+  const f = (v) => Math.max(0, Math.min(255, Math.round(v + dl)));
+  return `rgb(${f(n >> 16 & 255)},${f(n >> 8 & 255)},${f(n & 255)})`;
+}
+
+function strich(s, farbe, sc) {
+  const x = s.x * W, y = s.y * H, l = s.len * Math.max(W, H);
+  const ex = x + Math.cos(s.ang) * l, ey = y + Math.sin(s.ang) * l;
+  ctx.strokeStyle = farbe;
+  ctx.lineWidth = s.w * sc;
+  ctx.beginPath();
+  ctx.moveTo(x, y);
+  ctx.quadraticCurveTo(x + Math.cos(s.ang + s.curl) * l * .6, y + Math.sin(s.ang + s.curl) * l * .6, ex, ey);
+  ctx.stroke();
+}
+
+function zeichne() {
+  if (!W || !H) return;
+  const hex = aktiveFarbe.hex;
+  const css = getComputedStyle(document.documentElement);
+  const sc = Math.max(.85, Math.min(W, H) / 320);
+
+  /* Kopfhaut */
+  const g = ctx.createRadialGradient(W * .5, H * .42, 10, W * .5, H * .5, Math.max(W, H) * .72);
+  g.addColorStop(0, css.getPropertyValue('--scalp-a').trim() || '#e9cfb8');
+  g.addColorStop(1, css.getPropertyValue('--scalp-b').trim() || '#d6b198');
+  ctx.clearRect(0, 0, W, H);
+  ctx.fillStyle = g;
+  ctx.fillRect(0, 0, W, H);
+
+  ctx.lineCap = 'round';
+
+  /* Schattenwurf des Resthaars auf die Kopfhaut */
+  ctx.globalAlpha = .14;
+  ctx.save();
+  ctx.translate(sc * 1.4, sc * 1.8);
+  basis.forEach(s => strich(s, '#000', sc * 1.2));
+  ctx.restore();
+  ctx.globalAlpha = 1;
+
+  /* Resthaar */
+  basis.forEach(s => strich(s, mische(hex, -22 + s.tone * 58), sc));
+
+  /* Fasern — Anzahl folgt dem Regler */
+  const n = Math.round(fasern.length * dichte);
+  ctx.globalAlpha = .92;
+  for (let i = 0; i < n; i++) {
+    strich(fasern[i], mische(hex, -10 + fasern[i].tone * 66), sc * 1.1);
+  }
+  ctx.globalAlpha = 1;
+
+  /* Vignette, damit der Ausschnitt nicht hart endet */
+  const v = ctx.createRadialGradient(W * .5, H * .5, Math.min(W, H) * .32, W * .5, H * .5, Math.max(W, H) * .68);
+  v.addColorStop(0, 'rgba(0,0,0,0)');
+  v.addColorStop(1, 'rgba(0,0,0,.30)');
+  ctx.fillStyle = v;
+  ctx.fillRect(0, 0, W, H);
+}
+
+function messen() {
+  const r = cv.getBoundingClientRect();
+  const dpr = Math.min(2, devicePixelRatio || 1);
+  W = Math.round(r.width); H = Math.round(r.height);
+  if (!W || !H) return;
+  cv.width = Math.round(W * dpr);
+  cv.height = Math.round(H * dpr);
+  ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+  zeichne();
+}
+
+function setzeDichte(t, ausRegler) {
+  dichte = Math.max(0, Math.min(1, t));
+  const p = Math.round(dichte * 100);
+  valOut.textContent = p + ' %';
+  range.style.setProperty('--fill', p + '%');
+  if (!ausRegler) range.value = String(p);
+  zeichne();
+}
+
+range.addEventListener('input', () => setzeDichte(range.value / 100, true));
+
+baueStrahlen();
+messen();
+setzeDichte(0);
+new ResizeObserver(messen).observe(cv);
+
+/* Theme-Wechsel: Kopfhautton neu einlesen */
+matchMedia('(prefers-color-scheme: dark)').addEventListener('change', zeichne);
+new MutationObserver(zeichne).observe(document.documentElement, { attributes: true, attributeFilter: ['data-theme'] });
+
+/* Einmaliger Aufbau, sobald die Simulation im Blick ist */
+const demoIO = new IntersectionObserver((entries) => {
+  if (!entries[0].isIntersecting) return;
+  demoIO.disconnect();
+  if (reduceMotion.matches) { setzeDichte(1); return; }
+  const dauer = 1500, start = performance.now();
+  const tick = (now) => {
+    const p = Math.min(1, (now - start) / dauer);
+    setzeDichte(1 - Math.pow(1 - p, 3));
+    if (p < 1) requestAnimationFrame(tick);
+  };
+  setTimeout(() => requestAnimationFrame(tick), 500);
+}, { threshold: .35 });
+demoIO.observe(cv);
+</script>
+</body>
+</html>
