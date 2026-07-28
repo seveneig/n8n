@@ -102,6 +102,12 @@ def build(variant: str, report: bool = False) -> str:
             value = data_uri(path)
         html = html.replace(token, value)
 
+    # Reiseprogramm als Data-URI (nur eine Fundstelle, deshalb nicht in IMAGES)
+    pdf = ASSETS / "reiseprogramm.pdf"
+    if report:
+        print("  %-16s -> %-16s %7.1f KB" % ("PDF", pdf.name, pdf.stat().st_size / 1024))
+    html = html.replace("__PDF_DATA__", data_uri(pdf))
+
     html = html.replace("__QR_LIB__", (ASSETS / "qrcode.min.js").read_text(encoding="utf-8"))
     html = html.replace("__SPHINX_URL__", SPHINX_URL)
 
@@ -117,7 +123,7 @@ def build(variant: str, report: bool = False) -> str:
 
     html = html.replace("__DATA_LAYER__", layer)
 
-    leftovers = [t for t in ("__LOGO_", "__IMG_", "__QR_LIB__", "__SPHINX_URL__",
+    leftovers = [t for t in ("__LOGO_", "__IMG_", "__PDF_DATA__", "__QR_LIB__", "__SPHINX_URL__",
                              "__ADMIN_PW__", "__DATA_LAYER__", "__BOOT_EXTRA__")
                  if t in html]
     if leftovers:

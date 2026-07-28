@@ -3,6 +3,7 @@
    Die Anmeldungen liegen nur im Browser des jeweiligen Geräts.
    ------------------------------------------------------------ */
 var SITE_URL_RAW = (window.location.href.split('#')[0]);
+var IN_APPS_SCRIPT = false;
 var STORE_KEY = 'zc27-anmeldungen';
 
 function _readAll(){

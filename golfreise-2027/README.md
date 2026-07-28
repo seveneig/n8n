@@ -161,6 +161,24 @@ Der Build listet auf, welche Datei er für welchen Platz genommen hat.
 Die unbearbeiteten Originale liegen in `src/originale/` — von dort lassen sich
 jederzeit neue Zuschnitte rechnen.
 
+### Reiseprogramm (PDF)
+
+`src/assets/reiseprogramm.pdf` wird als Data-URI eingebettet und steht auf der
+Seite unter den Preisen sowie in der Fusszeile zum Download bereit.
+
+Das Original von Sphinx Travel (`src/originale/reiseprogramm-original.pdf`)
+ist 1,94 MB gross — zu viel für eine eingebettete Datei. Für die Seite sind
+die Bilder darin von JPEG-2000 auf JPEG umgestellt, das ergibt 0,20 MB bei
+praktisch gleichem Aussehen. Ein neues PDF also erst verkleinern, dann als
+`reiseprogramm.pdf` ablegen.
+
+Wer das PDF lieber extern hostet (z. B. Google Drive), trägt die Adresse in
+`CONFIG.pdfUrl` ein — dann wird das eingebettete PDF nicht mehr verwendet.
+
+In Apps Script läuft die Seite in einem iFrame ohne Download-Erlaubnis; dort
+öffnet der Button das PDF in einem neuen Tab statt es zu speichern. Das
+steuert `IN_APPS_SCRIPT` aus der jeweiligen Datenschicht.
+
 **Aktueller Stand:** Wappen und Fotos sind Originaldateien vom Verein bzw.
 vom Hotel — kein Nachbau, keine hochskalierten PDF-Auszüge mehr. Alle Bilder
 sind als WebP eingebettet; das Logo steckt einmal in einer CSS-Variablen und
@@ -191,12 +209,12 @@ Stapelreihenfolge bei.
 
 - **Ziischtigsclub — 10 Jahre Jubiläumsreise**, Andalusien / Spanien
 - **3.–7. März 2027**, 4 Nächte
-- **La Zambra Resort ★★★★**, Mijas Costa — Deluxe-Doppelzimmer, Halbpension,
+- **La Zambra Resort ★★★★★**, Mijas Costa — Deluxe-Doppelzimmer, Halbpension,
   lokale Flughafentransfers
 - **Flug Swiss:** 03.03. LX 2110 ZRH → AGP 09:35–12:20 ·
   07.03. LX 2117 AGP → ZRH 19:00–21:40
-- **Golf:** 2 × Los Olivos 18, 1 × Los Lagos 18, 1 × Santana 18 (inkl.
-  Transfers), 1 × Los Lagos 9 — Buggy inbegriffen
+- **Golf (chronologisch):** 1 × Los Lagos 9 (Begrüssungsrunde), 2 × Los Olivos 18,
+  1 × Los Lagos 18, 1 × Santana 18 (inkl. Transfers) — Buggy inbegriffen
 - **Preise p. P.:** CHF 1'935 im Doppelzimmer / CHF 2'480 zur Einzelnutzung.
   Exkl. Golfgepäck und alle nicht aufgeführten Leistungen. Preisänderungen
   und Verfügbarkeiten vorbehalten.

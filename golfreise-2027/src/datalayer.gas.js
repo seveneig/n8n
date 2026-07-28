@@ -4,6 +4,7 @@
    Das Passwort wird ausschliesslich serverseitig (Code.gs) geprüft.
    ------------------------------------------------------------ */
 var SITE_URL_RAW = '<?!= siteUrl ?>';
+var IN_APPS_SCRIPT = true;
 
 function _gcall(fn, args){
   return new Promise(function(resolve, reject){
