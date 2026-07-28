@@ -170,7 +170,8 @@ html[data-theme="dark"] .footer__mark{background-image:var(--logo-white)}
   display:inline-flex; align-items:center; justify-content:center;
   transition:color .2s var(--ease), border-color .2s var(--ease), transform .3s var(--ease);
 }
-.icon-btn:hover{color:var(--gold); border-color:var(--line-2); transform:rotate(-14deg)}
+.icon-btn:hover{color:var(--gold); border-color:var(--line-2)}
+#themeBtn:hover{transform:rotate(-14deg)}
 .icon-btn svg{width:17px; height:17px}
 .menu-btn{display:none}
 @media (max-width:860px){ .menu-btn{display:inline-flex} }
@@ -759,6 +760,7 @@ tbody tr.is-in:hover{background:linear-gradient(90deg,var(--ok-bg),var(--surface
       <a class="btn btn--gold btn--sm" href="https://www.sphinxtravel.ch/anmeldung-ziischtigsclub-golfreise-2027" target="_blank" rel="noopener">
         Anmeldung Sphinx <svg><use href="#i-ext"/></svg>
       </a>
+      <button class="icon-btn" id="pdfBtnHead" aria-label="Reiseprogramm als PDF" title="Reiseprogramm als PDF"><svg><use href="#i-doc"/></svg></button>
       <button class="icon-btn" id="themeBtn" aria-label="Helles/dunkles Design umschalten" title="Design umschalten"><svg><use href="#i-theme"/></svg></button>
       <button class="icon-btn menu-btn" id="menuBtn" aria-label="Menü öffnen"><svg><use href="#i-menu"/></svg></button>
     </nav>
@@ -773,6 +775,7 @@ tbody tr.is-in:hover{background:linear-gradient(90deg,var(--ok-bg),var(--surface
     <button class="nav__link" data-go="start">Übersicht</button>
     <button class="nav__link" data-go="form">Anmelden</button>
     <button class="nav__link" data-go="list">Teilnehmer</button>
+    <button class="nav__link" id="pdfBtnSheet">Reiseprogramm (PDF)</button>
     <button class="nav__link" data-go="admin">Organisator</button>
     <a class="btn btn--gold" style="margin-top:18px" href="https://www.sphinxtravel.ch/anmeldung-ziischtigsclub-golfreise-2027" target="_blank" rel="noopener">Anmeldung Sphinx <svg><use href="#i-ext"/></svg></a>
   </div>
@@ -1579,6 +1582,8 @@ function openPdf(){
 }
 $('#pdfBtn').addEventListener('click', openPdf);
 $('#pdfBtnFoot').addEventListener('click', openPdf);
+$('#pdfBtnHead').addEventListener('click', openPdf);
+$('#pdfBtnSheet').addEventListener('click', function(){ closeSheet(); openPdf(); });
 
 /* ============================================================
    7) Wartelisten-Logik
