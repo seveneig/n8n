@@ -197,6 +197,11 @@ html[data-theme="dark"] .footer__mark{background-image:var(--logo-white)}
    ============================================================ */
 .view{display:none}
 .view.is-active{display:block; animation:viewIn .5s var(--ease)}
+/* Die Startseite endet mit einer Sektion, die schon Abstand mitbringt.
+   Formular, Teilnehmerliste und Organisator hören dagegen direkt nach
+   Panel oder Tabelle auf und brauchen den Abstand zur Fusszeile hier. */
+#view-form, #view-list, #view-admin{padding-bottom:96px}
+@media (max-width:640px){ #view-form, #view-list, #view-admin{padding-bottom:64px} }
 @keyframes viewIn{from{opacity:0; transform:translateY(10px)}to{opacity:1; transform:none}}
 
 /* ============================================================
