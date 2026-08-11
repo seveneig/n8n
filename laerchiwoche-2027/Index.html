@@ -1,0 +1,1397 @@
+<!doctype html>
+<html lang="de" data-theme="light">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Lärchi-Trophy 2027 · Golfplanung · Hotel Lärchenhof Erpfendorf</title>
+<style>
+/* ═══════════════════════════════════════════════════════════════════════════
+   TOKENS — Farbwelt Lärchi-Trophy / Hotel Lärchenhof
+   Gold #b8924a · Lärchenholz-Braun · Creme
+   ═══════════════════════════════════════════════════════════════════════════ */
+:root{
+  --bg:#faf7f1;      --bg-2:#f2ebdf;
+  --card:#ffffff;    --card-2:#fbf8f2;
+  --ink:#241d14;     --ink-2:#54452f;   --muted:#8b7a60;
+  --line:#e6dcc8;    --line-2:#f0e9da;
+  --brand:#3a2e1d;   --brand-2:#5c4a2f; --brand-3:#836b45;
+  --gold:#b8924a;    --gold-2:#d3b06c;  --gold-3:#e8d3a1;  --gold-soft:#f3e8cf;
+  --dark:#100d09;    --dark-2:#1b160f;  --dark-3:#2a2217;
+  --ok:#4f7a3d;      --ok-bg:#eef4e9;
+  --warn:#a3652a;    --warn-bg:#faf0e4;
+  --err:#96382e;     --err-bg:#fbeceb;
+  --shadow:0 1px 2px rgba(36,29,20,.05), 0 8px 28px rgba(36,29,20,.07);
+  --shadow-lg:0 2px 6px rgba(36,29,20,.08), 0 22px 60px rgba(36,29,20,.15);
+  --r:14px; --r-s:10px; --r-l:20px;
+  --serif:Georgia,'Iowan Old Style','Times New Roman',serif;
+  --sans:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,'Helvetica Neue',Arial,sans-serif;
+}
+[data-theme="dark"]{
+  --bg:#151109;      --bg-2:#1e1810;
+  --card:#211a11;    --card-2:#282016;
+  --ink:#f4ecdd;     --ink-2:#dbcbac;   --muted:#a8977a;
+  --line:#3a3022;    --line-2:#31281c;
+  --brand:#ecdfc4;   --brand-2:#dbc9a4; --brand-3:#c2ad86;
+  --gold:#cfae63;    --gold-2:#e3c88a;  --gold-3:#f0dcb0;  --gold-soft:#3a3022;
+  --ok:#8ab375;      --ok-bg:#242e1d;
+  --warn:#d2a069;    --warn-bg:#332618;
+  --err:#dd8a7e;     --err-bg:#33201d;
+  --shadow:0 1px 2px rgba(0,0,0,.3), 0 8px 28px rgba(0,0,0,.35);
+  --shadow-lg:0 2px 6px rgba(0,0,0,.35), 0 22px 60px rgba(0,0,0,.5);
+}
+
+/* ═══════════════════════════════════════════════════ RESET */
+*,*::before,*::after{box-sizing:border-box}
+html,body{margin:0;padding:0}
+html{-webkit-text-size-adjust:100%;scroll-behavior:smooth}
+body{
+  background:var(--bg); color:var(--ink);
+  font-family:var(--sans); font-size:16px; line-height:1.6;
+  -webkit-font-smoothing:antialiased;
+  transition:background .3s ease,color .3s ease;
+}
+img{max-width:100%;display:block}
+button{font:inherit;color:inherit}
+h1,h2,h3,h4{font-family:var(--serif);font-weight:400;letter-spacing:.005em;margin:0}
+.wrap{width:100%;max-width:1240px;margin:0 auto;padding:0 26px}
+.sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0)}
+
+/* ═══════════════════════════════════════════════════ KOPFZEILE (immer dunkel) */
+.topbar{position:sticky;top:0;z-index:70;background:var(--dark);border-bottom:1px solid rgba(184,146,74,.22)}
+.topbar-in{display:flex;align-items:center;gap:18px;min-height:74px}
+.brand{display:flex;align-items:center;gap:13px;cursor:pointer;background:none;border:0;padding:8px 0;text-align:left}
+.brand .mark{width:40px;height:44px;flex:0 0 40px;display:block}
+.brand .mark svg,.brand .mark img{width:100%;height:100%;object-fit:contain;display:block}
+.brand-txt{line-height:1.2}
+.brand-txt b{display:block;font-family:var(--serif);font-size:15.5px;font-weight:400;letter-spacing:.13em;text-transform:uppercase;color:#f6efe1}
+.brand-txt span{display:block;font-size:10px;letter-spacing:.2em;text-transform:uppercase;color:var(--gold)}
+.nav{margin-left:auto;display:flex;align-items:center;gap:4px}
+.nav button{
+  background:none;border:0;cursor:pointer;padding:10px 15px;border-radius:2px;
+  font-size:12.5px;letter-spacing:.1em;text-transform:uppercase;color:rgba(246,239,225,.72);
+  position:relative;transition:color .2s;
+}
+.nav button::after{content:"";position:absolute;left:15px;right:15px;bottom:4px;height:1px;background:var(--gold);transform:scaleX(0);transition:transform .25s ease}
+.nav button:hover{color:#fff}
+.nav button:hover::after,.nav button.on::after{transform:scaleX(1)}
+.nav button.on{color:var(--gold-2)}
+.top-cta{
+  display:inline-flex;align-items:center;gap:9px;padding:11px 20px;cursor:pointer;
+  border:1px solid var(--gold);background:transparent;color:var(--gold-2);
+  font-size:12.5px;letter-spacing:.1em;text-transform:uppercase;transition:.22s;
+}
+.top-cta:hover{background:var(--gold);color:#1a1409}
+.top-cta svg{width:15px;height:15px}
+.icon-btn{
+  width:40px;height:40px;display:grid;place-items:center;cursor:pointer;flex:0 0 40px;
+  border:1px solid rgba(246,239,225,.2);background:transparent;color:rgba(246,239,225,.75);transition:.2s;
+}
+.icon-btn:hover{border-color:var(--gold);color:var(--gold)}
+.nav-toggle{display:none}
+
+/* ═══════════════════════════════════════════════════ HERO */
+.hero{position:relative;background:var(--dark);color:#f6efe1;overflow:hidden;min-height:min(88vh,760px);display:flex;align-items:stretch}
+.hero-media{position:absolute;top:0;right:0;bottom:0;width:58%;background-size:cover;background-position:center}
+.hero-media::after{
+  content:"";position:absolute;inset:0;
+  background:linear-gradient(90deg,var(--dark) 0%,rgba(16,13,9,.92) 22%,rgba(16,13,9,.35) 62%,rgba(16,13,9,.55) 100%);
+}
+.hero-in{position:relative;z-index:3;width:100%;display:flex;flex-direction:column;justify-content:center;padding:70px 0 0}
+.eyebrow{display:flex;align-items:center;gap:14px;font-size:11.5px;letter-spacing:.22em;text-transform:uppercase;color:var(--gold-2);margin-bottom:26px}
+.eyebrow .ln{width:44px;height:1px;background:var(--gold);display:block}
+.hero h1{
+  font-size:clamp(36px,5.6vw,68px);line-height:1.06;color:#fff;margin-bottom:26px;max-width:16ch;
+  font-weight:400;letter-spacing:-.01em;
+}
+.hero h1 .g{color:var(--gold-2);font-style:italic}
+.hero-lead{font-size:clamp(15.5px,1.7vw,18px);max-width:46ch;color:rgba(246,239,225,.72);margin:0 0 36px}
+.hero-cta{display:flex;flex-wrap:wrap;align-items:center;gap:26px;margin-bottom:56px}
+.link-cta{
+  display:inline-flex;align-items:center;gap:10px;background:none;border:0;cursor:pointer;padding:8px 0;
+  color:#f6efe1;font-size:14.5px;border-bottom:1px solid rgba(246,239,225,.35);transition:.22s;
+}
+.link-cta:hover{color:var(--gold-2);border-color:var(--gold-2)}
+.link-cta svg{width:17px;height:17px;transition:transform .25s}
+.link-cta:hover svg{transform:translateX(5px)}
+
+.hero-bar{
+  position:relative;z-index:3;display:grid;grid-template-columns:repeat(4,1fr);
+  border:1px solid rgba(184,146,74,.32);background:rgba(16,13,9,.62);
+  backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);margin-bottom:56px;
+}
+.hero-bar .cell{padding:22px 24px;border-right:1px solid rgba(184,146,74,.22)}
+.hero-bar .cell:last-child{border-right:0}
+.hero-bar svg{width:19px;height:19px;color:var(--gold);margin-bottom:12px}
+.hero-bar .ln{width:22px;height:1px;background:var(--gold);margin-bottom:12px}
+.hero-bar b{display:block;font-weight:500;font-size:14.5px;color:#f6efe1}
+.hero-bar b span{display:inline;font-size:inherit;letter-spacing:0;text-transform:none;color:inherit;margin:0}
+.hero-bar .cell > span{display:block;font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:rgba(246,239,225,.5);margin-top:4px}
+
+/* ═══════════════════════════════════════════════════ BUTTONS */
+.btn{
+  display:inline-flex;align-items:center;justify-content:center;gap:10px;
+  padding:15px 27px;border:1px solid transparent;cursor:pointer;
+  font-size:14.5px;font-weight:500;text-decoration:none;border-radius:2px;
+  transition:transform .16s cubic-bezier(.2,.8,.3,1),box-shadow .2s,background .2s,border-color .2s,color .2s;
+}
+.btn:active{transform:scale(.977)}
+.btn svg{width:17px;height:17px;flex:0 0 17px}
+.btn-gold{background:var(--gold);color:#171106;box-shadow:0 6px 24px rgba(184,146,74,.3)}
+.btn-gold:hover{background:var(--gold-2);box-shadow:0 10px 32px rgba(184,146,74,.42);transform:translateY(-1px)}
+.btn-solid{background:var(--brand);color:#faf7f1;border-radius:2px}
+[data-theme="dark"] .btn-solid{color:var(--dark)}
+.btn-solid:hover{background:var(--brand-2);transform:translateY(-1px);box-shadow:var(--shadow)}
+.btn-line{background:transparent;border-color:var(--line);color:var(--ink)}
+.btn-line:hover{border-color:var(--gold);color:var(--gold)}
+.btn-ghost{background:rgba(255,255,255,.06);border-color:rgba(255,255,255,.34);color:#fff}
+.btn-ghost:hover{background:rgba(255,255,255,.14);border-color:#fff}
+.btn-danger{background:var(--err);color:#fff}
+.btn-danger:hover{filter:brightness(1.1)}
+.btn-sm{padding:10px 17px;font-size:13px}
+.btn[disabled]{opacity:.5;pointer-events:none}
+
+/* ═══════════════════════════════════════════════════ LAYOUT */
+main{min-height:50vh}
+.view{display:none;animation:fade .4s ease both}
+.view.on{display:block}
+@keyframes fade{from{opacity:0;transform:translateY(12px)}to{opacity:1;transform:none}}
+.sec{padding:66px 0}
+.sec-head{margin-bottom:32px}
+.sec-head .kicker{display:flex;align-items:center;gap:12px;font-size:11px;letter-spacing:.22em;text-transform:uppercase;color:var(--gold);margin-bottom:12px}
+.sec-head .kicker::before{content:"";width:32px;height:1px;background:var(--gold)}
+.sec-head h2{font-size:clamp(26px,3.6vw,38px);color:var(--ink);margin-bottom:10px}
+.sec-head p{color:var(--muted);margin:0;max-width:64ch}
+.card{background:var(--card);border:1px solid var(--line);border-radius:var(--r);box-shadow:var(--shadow)}
+.pad{padding:28px}
+
+/* ═══════════════════════════════════════════════════ START-KACHELN */
+.tiles{display:grid;grid-template-columns:repeat(3,1fr);gap:20px}
+.tile{
+  position:relative;overflow:hidden;text-align:left;cursor:pointer;
+  background:var(--card);border:1px solid var(--line);border-radius:var(--r-l);
+  padding:34px 30px 30px;box-shadow:var(--shadow);
+  transition:transform .24s cubic-bezier(.2,.8,.3,1),box-shadow .24s,border-color .24s;
+}
+.tile:hover{transform:translateY(-5px);box-shadow:var(--shadow-lg);border-color:var(--gold-2)}
+.tile::before{content:"";position:absolute;left:0;top:0;height:3px;width:0;background:linear-gradient(90deg,var(--gold),var(--gold-3));transition:width .35s ease}
+.tile:hover::before{width:100%}
+.tile .no{font-family:var(--serif);font-size:12px;letter-spacing:.2em;color:var(--gold);margin-bottom:16px;display:block}
+.tile .ic{width:50px;height:50px;border-radius:50%;background:var(--gold-soft);color:var(--brand-2);display:grid;place-items:center;margin-bottom:20px}
+.tile .ic svg{width:23px;height:23px}
+.tile h3{font-size:22px;margin-bottom:9px}
+.tile p{margin:0 0 18px;color:var(--muted);font-size:14.5px}
+.tile .go{display:inline-flex;align-items:center;gap:8px;font-size:13px;letter-spacing:.09em;text-transform:uppercase;color:var(--gold);font-weight:500}
+.tile .go svg{width:15px;height:15px;transition:transform .24s}
+.tile:hover .go svg{transform:translateX(5px)}
+
+/* ═══════════════════════════════════════════════════ PLATZ-LISTE */
+.courses{display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));border-top:1px solid var(--line);border-left:1px solid var(--line)}
+.courses .c{padding:24px 22px 26px;border-right:1px solid var(--line);border-bottom:1px solid var(--line);background:var(--card);transition:background .2s}
+.courses .c:hover{background:var(--gold-soft)}
+.c .d{font-size:10.5px;letter-spacing:.2em;text-transform:uppercase;color:var(--gold);margin-bottom:8px}
+.c .dt{font-family:var(--serif);font-size:20px;color:var(--ink);margin-bottom:6px}
+.c .nm{font-size:13.5px;color:var(--ink-2);line-height:1.45}
+.c .o{font-size:12.5px;color:var(--muted);margin-top:3px}
+
+/* ═══════════════════════════════════════════════════ FORMULAR */
+.form-grid{display:grid;grid-template-columns:1fr 1fr;gap:20px}
+.field{display:flex;flex-direction:column;gap:8px}
+.field label{font-size:11.5px;letter-spacing:.12em;text-transform:uppercase;color:var(--ink-2);font-weight:600}
+.field label i{color:var(--err);font-style:normal}
+.field .hint{font-size:12.5px;color:var(--muted)}
+input[type=text],input[type=password],select{
+  width:100%;padding:14px 16px;border:1px solid var(--line);border-radius:var(--r-s);
+  background:var(--card-2);color:var(--ink);font-size:15.5px;font-family:inherit;
+  transition:border-color .2s,box-shadow .2s,background .2s;
+}
+input:focus,select:focus{outline:0;border-color:var(--gold);background:var(--card);box-shadow:0 0 0 3px rgba(184,146,74,.17)}
+input.bad,select.bad{border-color:var(--err);box-shadow:0 0 0 3px rgba(150,56,46,.13)}
+.err-txt{font-size:12.5px;color:var(--err);display:none}
+.err-txt.on{display:block}
+
+/* ═══════════════════════════════════════════════════ ERFOLG */
+.success{text-align:center;padding:56px 28px}
+.success .ring{width:92px;height:92px;margin:0 auto 26px;border-radius:50%;background:var(--ok-bg);color:var(--ok);display:grid;place-items:center;animation:pop .55s cubic-bezier(.2,1.4,.4,1) both}
+.success .ring svg{width:44px;height:44px;stroke-dasharray:60;stroke-dashoffset:60;animation:draw .6s .28s ease forwards}
+@keyframes pop{from{transform:scale(.5);opacity:0}to{transform:scale(1);opacity:1}}
+@keyframes draw{to{stroke-dashoffset:0}}
+.codebox{display:inline-flex;flex-direction:column;gap:5px;align-items:center;border:1px dashed var(--gold);background:var(--gold-soft);border-radius:var(--r);padding:17px 32px;margin:10px 7px 0}
+.codebox span{font-size:10.5px;letter-spacing:.2em;text-transform:uppercase;color:var(--brand-2)}
+.codebox b{font-family:var(--serif);font-size:29px;letter-spacing:.15em;color:var(--brand)}
+[data-theme="dark"] .codebox b{color:var(--gold-2)}
+
+/* ═══════════════════════════════════════════════════ AUSWAHL */
+.who{display:flex;flex-wrap:wrap;align-items:center;gap:16px;background:var(--card);border:1px solid var(--line);border-left:3px solid var(--gold);border-radius:var(--r);padding:18px 22px;margin-bottom:26px;box-shadow:var(--shadow)}
+.who .av{width:48px;height:48px;border-radius:50%;background:var(--brand);color:#f6efe1;display:grid;place-items:center;font-family:var(--serif);font-size:17px;flex:0 0 48px;letter-spacing:.04em}
+[data-theme="dark"] .who .av{background:var(--gold);color:var(--dark)}
+.who .nm{font-family:var(--serif);font-size:20px}
+.who .mt{font-size:13px;color:var(--muted)}
+.who .sp{margin-left:auto;display:flex;gap:9px;flex-wrap:wrap}
+
+.pick{display:grid;gap:14px}
+.pick-row{display:flex;flex-wrap:wrap;align-items:center;gap:18px;background:var(--card);border:1px solid var(--line);border-radius:var(--r);padding:19px 22px;transition:border-color .22s,box-shadow .22s,background .22s}
+.pick-row.sel{border-color:var(--ok);background:var(--ok-bg)}
+.pick-day{min-width:200px;flex:1 1 250px}
+.pick-day .d{font-size:10.5px;letter-spacing:.19em;text-transform:uppercase;color:var(--gold);margin-bottom:4px}
+.pick-day .n{font-family:var(--serif);font-size:18px;line-height:1.3}
+.pick-day .o{font-size:12.5px;color:var(--muted)}
+.seg{display:inline-flex;background:var(--bg-2);border:1px solid var(--line);border-radius:999px;padding:4px;gap:3px;margin-left:auto}
+.seg button{border:0;background:none;cursor:pointer;padding:10px 18px;border-radius:999px;font-size:13.5px;color:var(--muted);transition:.2s;white-space:nowrap}
+.seg button:hover{color:var(--ink)}
+.seg button.on{background:var(--brand);color:#faf7f1;box-shadow:var(--shadow)}
+[data-theme="dark"] .seg button.on{color:var(--dark)}
+.seg button.on[data-h="9"],.seg button.on[data-h="18"]{background:var(--ok);color:#fff}
+.savebar{position:sticky;bottom:0;z-index:30;margin-top:24px;display:flex;flex-wrap:wrap;align-items:center;gap:16px;background:var(--card);border:1px solid var(--line);border-radius:var(--r);padding:16px 22px;box-shadow:var(--shadow-lg)}
+.savebar .info{font-size:14px;color:var(--muted)}
+.savebar .info b{color:var(--ink);font-weight:600}
+.savebar .sp{margin-left:auto;display:flex;gap:10px;flex-wrap:wrap}
+
+/* ═══════════════════════════════════════════════════ LIVE-TABELLE */
+.stats{display:grid;grid-template-columns:repeat(4,1fr);gap:16px;margin-bottom:28px}
+.stat{background:var(--card);border:1px solid var(--line);border-radius:var(--r);padding:20px 22px;box-shadow:var(--shadow)}
+.stat b{display:block;font-family:var(--serif);font-size:32px;line-height:1.1;color:var(--brand)}
+[data-theme="dark"] .stat b{color:var(--gold-2)}
+.stat span{font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--muted)}
+
+.tablewrap{overflow-x:auto;-webkit-overflow-scrolling:touch;border:1px solid var(--line);border-radius:var(--r);background:var(--card);box-shadow:var(--shadow)}
+table.matrix{border-collapse:separate;border-spacing:0;width:100%;min-width:940px;font-size:14px}
+table.matrix th,table.matrix td{padding:12px;text-align:center;border-bottom:1px solid var(--line-2)}
+table.matrix thead th{background:var(--brand);color:#f6efe1;font-weight:500;font-size:11.5px;letter-spacing:.1em;text-transform:uppercase;position:sticky;top:0;z-index:2;border-bottom:0}
+[data-theme="dark"] table.matrix thead th{background:var(--dark-3);color:var(--gold-2)}
+table.matrix thead tr.sub th{background:var(--brand-2);font-size:11px;letter-spacing:.02em;text-transform:none;font-family:var(--serif);font-weight:400}
+[data-theme="dark"] table.matrix thead tr.sub th{background:var(--dark-2)}
+table.matrix th.nm,table.matrix td.nm{text-align:left;position:sticky;left:0;z-index:3;background:var(--card);border-right:1px solid var(--line);min-width:230px}
+table.matrix thead th.nm{background:var(--brand);z-index:4}
+[data-theme="dark"] table.matrix thead th.nm{background:var(--dark-3)}
+table.matrix thead tr.sub th.nm{background:var(--brand-2)}
+[data-theme="dark"] table.matrix thead tr.sub th.nm{background:var(--dark-2)}
+table.matrix tbody tr:nth-child(even) td,table.matrix tbody tr:nth-child(even) td.nm{background:var(--card-2)}
+table.matrix tbody tr:hover td,table.matrix tbody tr:hover td.nm{background:var(--gold-soft)}
+table.matrix tfoot td,table.matrix tfoot td.nm{background:var(--bg-2);font-weight:600;font-size:12.5px;color:var(--ink-2)}
+.hcp{display:inline-block;min-width:44px;padding:2px 8px;margin-right:10px;border-radius:5px;background:var(--gold-soft);color:var(--brand-2);font-size:12px;text-align:center}
+[data-theme="dark"] .hcp{color:var(--gold-2)}
+.me-row td{box-shadow:inset 0 0 0 2px var(--gold)}
+.chip{display:inline-flex;align-items:center;justify-content:center;min-width:38px;padding:4px 10px;border-radius:999px;font-size:12.5px;font-weight:600}
+.chip-18{background:var(--ok);color:#fff}
+.chip-9{background:var(--gold);color:#171106}
+[data-theme="dark"] .chip-18{color:#16210f}
+.chip-no{color:var(--line);font-size:17px}
+.legend{display:flex;flex-wrap:wrap;gap:18px;align-items:center;margin-top:18px;font-size:13px;color:var(--muted)}
+.legend i{font-style:normal;display:inline-flex;align-items:center;gap:8px}
+
+/* ═══════════════════════════════════════════════════ ADMIN */
+.adm-list{display:grid;gap:10px}
+.adm-item{display:flex;flex-wrap:wrap;align-items:center;gap:16px;background:var(--card);border:1px solid var(--line);border-radius:var(--r-s);padding:15px 20px}
+.adm-item .nm{font-family:var(--serif);font-size:17px;min-width:180px}
+.adm-item .mt{font-size:13px;color:var(--muted)}
+.adm-item .sp{margin-left:auto;display:flex;gap:8px}
+
+/* ═══════════════════════════════════════════════════ MODAL / TOAST */
+.overlay{position:fixed;inset:0;z-index:200;display:none;place-items:center;padding:20px;background:rgba(16,13,9,.62);backdrop-filter:blur(5px);-webkit-backdrop-filter:blur(5px)}
+.overlay.on{display:grid;animation:fade .22s ease both}
+.modal{width:100%;max-width:450px;background:var(--card);border:1px solid var(--line);border-radius:var(--r-l);box-shadow:var(--shadow-lg);padding:32px 30px;animation:up .32s cubic-bezier(.2,.9,.3,1) both}
+@keyframes up{from{transform:translateY(18px) scale(.97);opacity:0}to{transform:none;opacity:1}}
+.modal h3{font-size:23px;margin-bottom:11px}
+.modal p{color:var(--muted);margin:0 0 24px;font-size:15px}
+.modal .row{display:flex;gap:10px;justify-content:flex-end;flex-wrap:wrap}
+.toast{
+  position:fixed;left:50%;top:96px;transform:translate(-50%,-24px);z-index:300;
+  opacity:0;visibility:hidden;pointer-events:none;
+  background:var(--brand);color:#f6efe1;padding:15px 24px;border-radius:999px;
+  box-shadow:var(--shadow-lg);font-size:14.5px;max-width:calc(100vw - 32px);text-align:center;
+  transition:transform .38s cubic-bezier(.2,1.2,.3,1),opacity .28s ease,visibility .28s;
+}
+[data-theme="dark"] .toast{background:var(--gold);color:var(--dark)}
+.toast.on{transform:translate(-50%,0);opacity:1;visibility:visible}
+.toast.ok{background:var(--ok);color:#fff}
+.toast.err{background:var(--err);color:#fff}
+
+/* ═══════════════════════════════════════════════════ DIVERSES */
+.notice{display:flex;gap:14px;padding:16px 19px;border-radius:var(--r-s);font-size:14.5px;line-height:1.55}
+.notice svg{width:19px;height:19px;flex:0 0 19px;margin-top:2px}
+.notice-info{background:var(--gold-soft);color:var(--brand)}
+[data-theme="dark"] .notice-info{color:var(--gold-2)}
+.notice-warn{background:var(--warn-bg);color:var(--warn)}
+.empty{text-align:center;padding:60px 20px;color:var(--muted)}
+.empty svg{width:46px;height:46px;opacity:.4;margin-bottom:16px}
+footer{background:var(--dark);color:rgba(246,239,225,.6);padding:44px 0;margin-top:56px;font-size:13.5px}
+.foot{display:flex;flex-wrap:wrap;gap:18px;align-items:center}
+.foot .fm{width:34px;height:38px;opacity:.8}
+.foot .sp{margin-left:auto;display:flex;gap:20px;flex-wrap:wrap}
+.foot button{color:rgba(246,239,225,.6);background:none;border:0;cursor:pointer;font-size:13px;letter-spacing:.08em;text-transform:uppercase;padding:0}
+.foot button:hover{color:var(--gold-2)}
+
+/* ═══════════════════════════════════════════════════ RESPONSIV */
+@media(max-width:980px){
+  .hero-media{width:100%;opacity:.34}
+  .hero-media::after{background:linear-gradient(180deg,rgba(16,13,9,.7),rgba(16,13,9,.94))}
+  .hero-bar{grid-template-columns:repeat(2,1fr)}
+  .hero-bar .cell:nth-child(2){border-right:0}
+  .hero-bar .cell:nth-child(1),.hero-bar .cell:nth-child(2){border-bottom:1px solid rgba(184,146,74,.22)}
+  .tiles{grid-template-columns:1fr}
+  .stats{grid-template-columns:repeat(2,1fr)}
+  .form-grid{grid-template-columns:1fr}
+  .nav{display:none;position:absolute;top:74px;left:0;right:0;flex-direction:column;align-items:stretch;gap:0;background:var(--dark);border-bottom:1px solid rgba(184,146,74,.25);padding:8px 16px 16px}
+  .nav.open{display:flex}
+  .nav button{text-align:left;padding:14px 4px}
+  .nav button::after{left:4px;right:4px;bottom:8px}
+  .nav-toggle{display:grid;margin-left:auto}
+  .top-cta{display:none}
+  .sec{padding:48px 0}
+  .seg{margin-left:0;width:100%;justify-content:space-between}
+  .seg button{flex:1}
+}
+@media(max-width:560px){
+  .wrap{padding:0 18px}
+  .hero-bar{grid-template-columns:1fr}
+  .hero-bar .cell{border-right:0;border-bottom:1px solid rgba(184,146,74,.22)}
+  .hero-cta{gap:16px}
+  .hero-cta .btn{width:100%}
+  .who .sp,.savebar .sp{margin-left:0;width:100%}
+  .savebar .sp .btn{flex:1}
+}
+@media print{.topbar,.hero-cta,.savebar,.nav,footer,.toast{display:none!important}body{background:#fff}}
+@media(prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+</style>
+</head>
+<body>
+
+<!-- ══════════════════════════ KOPFZEILE ══════════════════════════ -->
+<div class="topbar">
+  <div class="wrap topbar-in">
+    <button class="brand" onclick="go('start')" aria-label="Zur Startseite">
+      <span class="mark" id="brandMark"></span>
+      <span class="brand-txt"><b>Lärchi-Trophy</b><span>Lärchiwoche 2027</span></span>
+    </button>
+    <nav class="nav" id="nav">
+      <button data-v="start" onclick="go('start')">Start</button>
+      <button data-v="anmeldung" onclick="go('anmeldung')">Anmeldung</button>
+      <button data-v="auswahl" onclick="go('auswahl')">Meine Plätze</button>
+      <button data-v="live" onclick="go('live')">Live-Ansicht</button>
+    </nav>
+    <button class="top-cta" id="topCta" onclick="go('anmeldung')">
+      <span id="topCtaTxt">Anmelden</span>
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+    </button>
+    <button class="icon-btn nav-toggle" id="navToggle" aria-label="Menü">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" width="19" height="19"><path d="M4 7h16M4 12h16M4 17h16"/></svg>
+    </button>
+    <button class="icon-btn" id="themeBtn" title="Hell / Dunkel" aria-label="Design umschalten">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" width="18" height="18"><circle cx="12" cy="12" r="9"/><path d="M12 3a9 9 0 000 18z" fill="currentColor" stroke="none"/></svg>
+    </button>
+  </div>
+</div>
+
+<main>
+
+<!-- ══════════════════════════ 1 · START ══════════════════════════ -->
+<section class="view on" id="v-start">
+
+  <div class="hero">
+    <div class="hero-media" id="heroMedia"></div>
+    <div class="wrap hero-in">
+      <div class="eyebrow"><span class="ln"></span> Lärchiwoche 2027 · Hotel Lärchenhof Erpfendorf</div>
+      <h1>Sieben Tage.<br>Sieben Plätze.<br><span class="g">Eine Lärchi-Trophy.</span></h1>
+      <p class="hero-lead">
+        Melde dich an und trage dich schon jetzt für deine Wunschplätze ein –
+        wahlweise 9 oder 18 Loch. Wer wann wo spielt, ist für alle live einsehbar.
+      </p>
+      <div class="hero-cta">
+        <button class="btn btn-gold" id="ctaMain" onclick="go('anmeldung')">
+          <span id="ctaMainTxt">Jetzt anmelden</span>
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+        </button>
+        <button class="link-cta" onclick="go('live')">
+          Live-Ansicht der Anmeldungen
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+        </button>
+      </div>
+
+      <div class="hero-bar">
+        <div class="cell">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M21 10c0 6-9 12-9 12s-9-6-9-12a9 9 0 0118 0z"/><circle cx="12" cy="10" r="3"/></svg>
+          <b>Erpfendorf, Tirol</b><span>Hotel Lärchenhof</span>
+        </div>
+        <div class="cell">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><rect x="3" y="5" width="18" height="16" rx="2"/><path d="M3 10h18M8 3v4M16 3v4"/></svg>
+          <b>18. – 24. Juli 2027</b><span>Sonntag bis Samstag</span>
+        </div>
+        <div class="cell">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M6 21V4M6 4l11 3-11 3"/></svg>
+          <b>7 Plätze · 9 oder 18 Loch</b><span>Freie Auswahl je Tag</span>
+        </div>
+        <div class="cell">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M17 21v-2a4 4 0 00-4-4H6a4 4 0 00-4 4v2"/><circle cx="9.5" cy="7" r="4"/><path d="M22 21v-2a4 4 0 00-3-3.9"/></svg>
+          <b><span id="fTn">–</span> angemeldet</b><span>Aktueller Stand</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="wrap sec">
+    <div class="sec-head">
+      <div class="kicker">In drei Schritten</div>
+      <h2>So funktioniert die Planung</h2>
+      <p>Einmal anmelden, Plätze wählen, fertig. Deine Auswahl ist jederzeit änderbar – und für alle sichtbar.</p>
+    </div>
+    <div class="tiles">
+      <button class="tile" id="tile1" onclick="go('anmeldung')">
+        <span class="no">01</span>
+        <span class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M16 21v-2a4 4 0 00-4-4H6a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M19 8v6M22 11h-6"/></svg></span>
+        <h3>Anmeldung</h3>
+        <p>Vorname, Nachname, Handicap und Heimatclub – in einer halben Minute erledigt. Danach bekommst du deinen persönlichen Zugangscode.</p>
+        <span class="go" id="tile1Go">Anmeldung öffnen <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span>
+      </button>
+      <button class="tile" onclick="go('auswahl')">
+        <span class="no">02</span>
+        <span class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M9 11l3 3L22 4"/><path d="M21 12v7a2 2 0 01-2 2H5a2 2 0 01-2-2V5a2 2 0 012-2h11"/></svg></span>
+        <h3>Golfplätze wählen</h3>
+        <p>Für jeden der sieben Tage 9 Loch, 18 Loch oder „nicht dabei“ auswählen. Bearbeiten kann die Auswahl nur, wem sie gehört.</p>
+        <span class="go">Auswahl öffnen <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span>
+      </button>
+      <button class="tile" onclick="go('live')">
+        <span class="no">03</span>
+        <span class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M3 9h18M9 9v12"/></svg></span>
+        <h3>Live-Ansicht</h3>
+        <p>Die komplette Übersicht: wer spielt an welchem Tag auf welchem Platz – öffentlich für alle einsehbar, in Echtzeit.</p>
+        <span class="go">Übersicht ansehen <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span>
+      </button>
+    </div>
+  </div>
+
+  <div class="wrap sec" style="padding-top:0">
+    <div class="sec-head">
+      <div class="kicker">Die Woche im Überblick</div>
+      <h2>Sieben Plätze im Kitzbüheler Land</h2>
+      <p>Alle Plätze stehen mit 9 oder 18 Loch zur Auswahl. Die Teetimes werden nach Abschluss der Planung fixiert.</p>
+    </div>
+    <div class="courses" id="courseList"></div>
+    <div style="margin-top:32px;display:flex;gap:14px;flex-wrap:wrap">
+      <button class="btn btn-gold" onclick="go('anmeldung')">Zur Anmeldung</button>
+      <button class="btn btn-line" onclick="copyLink()">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M10 13a5 5 0 007.5.5l3-3a5 5 0 00-7-7l-1.7 1.7"/><path d="M14 11a5 5 0 00-7.5-.5l-3 3a5 5 0 007 7l1.7-1.7"/></svg>
+        Link teilen
+      </button>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════════════════ 2 · ANMELDUNG ══════════════════════════ -->
+<section class="view" id="v-anmeldung">
+  <div class="wrap sec">
+    <div class="sec-head">
+      <div class="kicker">Schritt 01 von 02</div>
+      <h2>Anmeldung zur Lärchi-Trophy 2027</h2>
+      <p>Bitte einmalig registrieren. Danach kannst du deine Golfplätze auswählen und jederzeit ändern.</p>
+    </div>
+
+    <div id="regForm">
+      <div class="card pad" style="max-width:760px">
+        <div class="form-grid">
+          <div class="field">
+            <label for="fVorname">Vorname <i>*</i></label>
+            <input type="text" id="fVorname" autocomplete="given-name" placeholder="z. B. Fabian">
+            <div class="err-txt" id="eVorname">Bitte Vorname angeben</div>
+          </div>
+          <div class="field">
+            <label for="fNachname">Nachname <i>*</i></label>
+            <input type="text" id="fNachname" autocomplete="family-name" placeholder="z. B. Karlovich">
+            <div class="err-txt" id="eNachname">Bitte Nachname angeben</div>
+          </div>
+          <div class="field">
+            <label for="fHcp">Handicap <i>*</i></label>
+            <input type="text" id="fHcp" inputmode="decimal" placeholder="z. B. 16,2">
+            <div class="hint">Zahl zwischen -10 und 54 (Punkt oder Komma)</div>
+            <div class="err-txt" id="eHcp">Bitte gültiges Handicap angeben</div>
+          </div>
+          <div class="field">
+            <label for="fClub">Heimatclub <i>*</i></label>
+            <input type="text" id="fClub" placeholder="z. B. GC Kitzbühel-Schwarzsee-Reith">
+            <div class="err-txt" id="eClub">Bitte Heimatclub angeben</div>
+          </div>
+        </div>
+        <div style="margin-top:26px;display:flex;gap:12px;flex-wrap:wrap">
+          <button class="btn btn-gold" id="btnReg" onclick="doRegister()">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M5 12l5 5L20 7"/></svg>
+            Anmeldung abschicken
+          </button>
+          <button class="btn btn-line" onclick="go('start')">Abbrechen</button>
+        </div>
+      </div>
+
+      <div class="card pad" style="max-width:760px;margin-top:22px">
+        <h3 style="font-size:20px;margin-bottom:7px">Schon angemeldet?</h3>
+        <p style="color:var(--muted);font-size:14.5px;margin:0 0 20px">
+          Melde dich mit deinem Namen und deinem persönlichen Zugangscode an, um deine Golfplatz-Auswahl zu bearbeiten.
+        </p>
+        <div class="form-grid">
+          <div class="field">
+            <label for="lName">Teilnehmer</label>
+            <select id="lName"><option value="">– bitte wählen –</option></select>
+          </div>
+          <div class="field">
+            <label for="lCode">Zugangscode</label>
+            <input type="text" id="lCode" inputmode="numeric" maxlength="6" placeholder="6-stellig"
+                   onkeydown="if(event.key==='Enter')doLogin()">
+          </div>
+        </div>
+        <div class="err-txt" id="eLogin" style="margin-top:12px">Zugangscode stimmt nicht</div>
+        <div style="margin-top:22px;display:flex;gap:10px;flex-wrap:wrap">
+          <button class="btn btn-line" onclick="doLogin()">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M15 3h4a2 2 0 012 2v14a2 2 0 01-2 2h-4"/><path d="M10 17l5-5-5-5M15 12H3"/></svg>
+            Einloggen
+          </button>
+          <button class="btn btn-line btn-sm" onclick="askCode()">Code vergessen?</button>
+        </div>
+      </div>
+    </div>
+
+    <div id="regDone" style="display:none">
+      <div class="card success" style="max-width:760px">
+        <div class="ring"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 12.5l5.2 5.2L20 7"/></svg></div>
+        <h2 style="font-size:30px;margin-bottom:10px">Willkommen bei der Lärchi-Trophy!</h2>
+        <p style="color:var(--muted);max-width:48ch;margin:0 auto 8px" id="doneName"></p>
+        <div>
+          <div class="codebox"><span>Referenz</span><b id="doneRef">–</b></div>
+          <div class="codebox"><span>Dein Zugangscode</span><b id="doneCode">–</b></div>
+        </div>
+        <div class="notice notice-warn" style="max-width:54ch;margin:26px auto 0;text-align:left">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M12 9v4M12 17h.01"/><path d="M10.3 3.9L1.8 18a2 2 0 001.7 3h17a2 2 0 001.7-3L14.7 3.9a2 2 0 00-3.4 0z"/></svg>
+          <span>Bitte den Zugangscode notieren – du brauchst ihn, um deine Auswahl später auf einem anderen Gerät zu bearbeiten.</span>
+        </div>
+        <div style="margin-top:30px;display:flex;gap:12px;justify-content:center;flex-wrap:wrap">
+          <button class="btn btn-gold" onclick="go('auswahl')">Weiter zur Golfplatz-Auswahl</button>
+          <button class="btn btn-line" onclick="go('live')">Live-Ansicht</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════════════════ 3 · AUSWAHL ══════════════════════════ -->
+<section class="view" id="v-auswahl">
+  <div class="wrap sec">
+    <div class="sec-head">
+      <div class="kicker">Schritt 02 von 02</div>
+      <h2>Meine Golfplätze</h2>
+      <p>Wähle für jeden Tag 9 Loch, 18 Loch oder „nicht dabei“. Änderungen sind jederzeit möglich.</p>
+    </div>
+
+    <div id="needLogin" style="display:none">
+      <div class="card pad" style="max-width:620px">
+        <div class="notice notice-info" style="margin-bottom:24px">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><circle cx="12" cy="12" r="9"/><path d="M12 16v-5M12 8h.01"/></svg>
+          <span>Nur angemeldete Teilnehmer können ihre eigene Auswahl bearbeiten. Bitte zuerst anmelden oder mit dem Zugangscode einloggen.</span>
+        </div>
+        <div style="display:flex;gap:12px;flex-wrap:wrap">
+          <button class="btn btn-gold" onclick="go('anmeldung')">Zur Anmeldung / Login</button>
+          <button class="btn btn-line" onclick="go('live')">Nur ansehen</button>
+        </div>
+      </div>
+    </div>
+
+    <div id="pickArea" style="display:none">
+      <div class="who">
+        <div class="av" id="whoAv">–</div>
+        <div>
+          <div class="nm" id="whoName">–</div>
+          <div class="mt" id="whoMeta">–</div>
+        </div>
+        <div class="sp">
+          <button class="btn btn-line btn-sm" onclick="go('live')">Live-Ansicht</button>
+          <button class="btn btn-line btn-sm" onclick="logout()">Abmelden</button>
+        </div>
+      </div>
+      <div class="pick" id="pickList"></div>
+      <div class="savebar">
+        <div class="info" id="pickInfo">–</div>
+        <div class="sp">
+          <button class="btn btn-line btn-sm" onclick="resetPicks()">Zurücksetzen</button>
+          <button class="btn btn-gold" id="btnSave" onclick="savePicks()">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M19 21H5a2 2 0 01-2-2V5a2 2 0 012-2h11l5 5v11a2 2 0 01-2 2z"/><path d="M17 21v-8H7v8M7 3v5h8"/></svg>
+            Auswahl speichern
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════════════════ 4 · LIVE ══════════════════════════ -->
+<section class="view" id="v-live">
+  <div class="wrap sec">
+    <div class="sec-head" style="display:flex;flex-wrap:wrap;align-items:flex-end;gap:18px">
+      <div style="flex:1 1 400px">
+        <div class="kicker">Öffentlich · für alle sichtbar</div>
+        <h2>Live-Ansicht der Anmeldungen</h2>
+        <p>Wer spielt wann und wo – der aktuelle Stand der Lärchi-Trophy 2027.</p>
+      </div>
+      <div style="display:flex;gap:10px;flex-wrap:wrap">
+        <button class="btn btn-line btn-sm" onclick="loadAll(true)">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M21 12a9 9 0 11-3-6.7L21 8"/><path d="M21 3v5h-5"/></svg>
+          Aktualisieren
+        </button>
+        <button class="btn btn-line btn-sm" onclick="copyLink()">Link teilen</button>
+        <button class="btn btn-solid btn-sm" onclick="go('auswahl')">Meine Auswahl</button>
+      </div>
+    </div>
+
+    <div class="stats" id="stats"></div>
+    <div id="liveBody"></div>
+    <div class="legend">
+      <i><span class="chip chip-18">18</span> 18 Loch</i>
+      <i><span class="chip chip-9">9</span> 9 Loch</i>
+      <i><span class="chip-no">·</span> nicht dabei</i>
+      <i style="margin-left:auto">Stand: <span id="stamp">–</span></i>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════════════════ 5 · ORGANISATION ══════════════════════════ -->
+<section class="view" id="v-admin">
+  <div class="wrap sec">
+    <div class="sec-head">
+      <div class="kicker">Intern</div>
+      <h2>Organisator-Bereich</h2>
+      <p>Teilnehmer verwalten, Zugangscodes nachsehen, Einträge löschen und die Planung als CSV exportieren.</p>
+    </div>
+
+    <div id="admLogin">
+      <div class="card pad" style="max-width:450px">
+        <div class="field">
+          <label for="aPw">Passwort</label>
+          <input type="password" id="aPw" placeholder="••••••••" onkeydown="if(event.key==='Enter')doAdmin()">
+          <div class="err-txt" id="eAdm">Passwort stimmt nicht</div>
+        </div>
+        <div style="margin-top:22px"><button class="btn btn-solid" onclick="doAdmin()">Anmelden</button></div>
+      </div>
+    </div>
+
+    <div id="admArea" style="display:none">
+      <div class="stats" id="admStats"></div>
+      <div style="display:flex;gap:10px;flex-wrap:wrap;margin-bottom:22px">
+        <button class="btn btn-line btn-sm" onclick="exportCsv()">CSV exportieren</button>
+        <button class="btn btn-line btn-sm" onclick="loadAll(true)">Aktualisieren</button>
+        <button class="btn btn-line btn-sm" onclick="admLogout()">Abmelden</button>
+      </div>
+      <div class="adm-list" id="admList"></div>
+    </div>
+  </div>
+</section>
+
+</main>
+
+<footer>
+  <div class="wrap foot">
+    <span class="fm" id="footMark"></span>
+    <span>Lärchi-Trophy 2027 · Golfplanung · Hotel Lärchenhof, Erpfendorf</span>
+    <span class="sp">
+      <button onclick="go('live')">Live-Ansicht</button>
+      <button onclick="copyLink()">Link teilen</button>
+      <button onclick="go('admin')">Organisation</button>
+    </span>
+  </div>
+</footer>
+
+<!-- Eigenes Bestätigungs-Fenster (confirm() ist im iFrame blockiert) -->
+<div class="overlay" id="ov">
+  <div class="modal">
+    <h3 id="ovTitle">Titel</h3>
+    <p id="ovText">Text</p>
+    <div class="row">
+      <button class="btn btn-line btn-sm" id="ovNo">Abbrechen</button>
+      <button class="btn btn-danger btn-sm" id="ovYes">Bestätigen</button>
+    </div>
+  </div>
+</div>
+
+<div class="toast" id="toast"><span id="toastTxt"></span></div>
+
+<script>
+/* ═══════════════════════════════════════════════════════════════════════════
+   KONFIGURATION
+   ═══════════════════════════════════════════════════════════════════════════ */
+var CONFIG = {
+  /* Echtes Lärchi-Trophy-Logo: hier die Bild-Adresse eintragen (z. B. das weiße
+     Logo auf dem dunklen Kopfbereich). Leer = eingebautes SVG-Wappen. */
+  logoBild: '',
+  /* Hero-Hintergrundbild vom Lärchenhof (Golfplatz-Foto). Leer = gezeichnete
+     Bergkulisse. Beispiel: 'https://www.laerchenhof-tirol.at/.../golf.jpg' */
+  heroBild: '',
+  /* Nur für die Vorschau ohne Google-Tabelle. Live gilt das Passwort aus Code.gs */
+  adminPasswort: 'laerchi2027'
+};
+
+/* Die sieben Golfplätze der Woche */
+var COURSES = [
+  {id:'d1', tag:'Sonntag',    datum:'18. Juli 2027', kurz:'18.07', name:'Golfclub Wilder Kaiser Ellmau',       ort:'Ellmau'},
+  {id:'d2', tag:'Montag',     datum:'19. Juli 2027', kurz:'19.07', name:'Golfclub Kitzbühel-Schwarzsee-Reith', ort:'Reith bei Kitzbühel'},
+  {id:'d3', tag:'Dienstag',   datum:'20. Juli 2027', kurz:'20.07', name:'Kaiserwinkl Golf Kössen-Lärchenhof',  ort:'Kössen'},
+  {id:'d4', tag:'Mittwoch',   datum:'21. Juli 2027', kurz:'21.07', name:'Golfclub Kitzbühel – Platz Kaps',     ort:'Kitzbühel'},
+  {id:'d5', tag:'Donnerstag', datum:'22. Juli 2027', kurz:'22.07', name:'Golfclub Reit im Winkl-Kössen',       ort:'Reit im Winkl'},
+  {id:'d6', tag:'Freitag',    datum:'23. Juli 2027', kurz:'23.07', name:'Golfclub Eichenheim Kitzbühel',       ort:'Kitzbühel'},
+  {id:'d7', tag:'Samstag',    datum:'24. Juli 2027', kurz:'24.07', name:'Golf & Countryclub Lärchenhof',       ort:'Erpfendorf'}
+];
+
+/* ═══════════════════════════════════════════════════════════════════════════
+   DATENSCHICHT — Google Apps Script  ODER  localStorage (Vorschau)
+   ═══════════════════════════════════════════════════════════════════════════ */
+var HAS_GS = (typeof google !== 'undefined' && google.script && google.script.run);
+
+function gsCall(fn){
+  var args = Array.prototype.slice.call(arguments, 1);
+  return new Promise(function(res, rej){
+    var r = google.script.run
+      .withSuccessHandler(res)
+      .withFailureHandler(function(e){ rej(new Error((e && e.message) || 'Serverfehler')); });
+    r[fn].apply(r, args);
+  });
+}
+
+var LS_KEY = 'lt2027.teilnehmer';
+var Local = {
+  read:  function(){ try{ return JSON.parse(localStorage.getItem(LS_KEY) || '[]'); }catch(e){ return []; } },
+  write: function(a){ try{ localStorage.setItem(LS_KEY, JSON.stringify(a)); }catch(e){} }
+};
+
+var DB = {
+  list: function(){
+    if(HAS_GS) return gsCall('apiList');
+    return Promise.resolve(Local.read().map(function(p){
+      var c = {}; for(var k in p){ c[k] = p[k]; } delete c.code; return c;
+    }));
+  },
+  register: function(d){
+    if(HAS_GS) return gsCall('apiRegister', d);
+    var all = Local.read();
+    var dup = all.filter(function(p){
+      return p.vorname.toLowerCase() === d.vorname.toLowerCase() &&
+             p.nachname.toLowerCase() === d.nachname.toLowerCase();
+    })[0];
+    if(dup) return Promise.resolve({ok:false, error:'Diese Person ist bereits angemeldet. Bitte mit dem Zugangscode einloggen.'});
+    var p = {
+      id: 'p' + Date.now() + Math.floor(Math.random()*1000),
+      ref: 'LT27-' + ('00' + (all.length+1)).slice(-3),
+      code: String(Math.floor(100000 + Math.random()*900000)),
+      created: new Date().toISOString(),
+      vorname: d.vorname, nachname: d.nachname, handicap: d.handicap, heimatclub: d.heimatclub,
+      sel: {}
+    };
+    all.push(p); Local.write(all);
+    return Promise.resolve({ok:true, teilnehmer:p});
+  },
+  login: function(id, code){
+    if(HAS_GS) return gsCall('apiLogin', id, code);
+    var p = Local.read().filter(function(x){ return x.id === id; })[0];
+    if(!p || String(p.code) !== String(code)) return Promise.resolve({ok:false, error:'Zugangscode stimmt nicht.'});
+    return Promise.resolve({ok:true, teilnehmer:p});
+  },
+  save: function(id, code, sel){
+    if(HAS_GS) return gsCall('apiSave', id, code, sel);
+    var all = Local.read(), hit = null;
+    for(var i=0;i<all.length;i++){ if(all[i].id === id) hit = all[i]; }
+    if(!hit || String(hit.code) !== String(code)) return Promise.resolve({ok:false, error:'Nicht berechtigt.'});
+    hit.sel = sel; Local.write(all);
+    return Promise.resolve({ok:true});
+  },
+  admList: function(pw){
+    if(HAS_GS) return gsCall('apiAdminList', pw);
+    if(pw !== CONFIG.adminPasswort) return Promise.resolve({ok:false, error:'Passwort stimmt nicht.'});
+    return Promise.resolve({ok:true, teilnehmer:Local.read()});
+  },
+  admDelete: function(pw, id){
+    if(HAS_GS) return gsCall('apiAdminDelete', pw, id);
+    if(pw !== CONFIG.adminPasswort) return Promise.resolve({ok:false, error:'Passwort stimmt nicht.'});
+    Local.write(Local.read().filter(function(p){ return p.id !== id; }));
+    return Promise.resolve({ok:true});
+  }
+};
+
+/* ═══════════════════════════════════════════════════════════════════════════
+   ZUSTAND
+   ═══════════════════════════════════════════════════════════════════════════ */
+var STATE = { view:'start', all:[], me:null, picks:{}, saved:{}, admPw:null, admAll:[], zeigeErfolg:false };
+var SESS = 'lt2027.session';
+function saveSession(){ try{ localStorage.setItem(SESS, JSON.stringify(STATE.me)); }catch(e){} }
+function loadSession(){ try{ return JSON.parse(localStorage.getItem(SESS) || 'null'); }catch(e){ return null; } }
+function clearSession(){ try{ localStorage.removeItem(SESS); }catch(e){} }
+
+/* ═══════════════════════════════════════════════════════════════════════════
+   HILFSFUNKTIONEN
+   ═══════════════════════════════════════════════════════════════════════════ */
+function $(id){ return document.getElementById(id); }
+function esc(s){
+  return String(s == null ? '' : s).replace(/[&<>"']/g, function(c){
+    return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c];
+  });
+}
+function hcpTxt(h){
+  var n = parseFloat(String(h).replace(',', '.'));
+  if(isNaN(n)) return String(h || '');
+  return (Math.round(n*10)/10).toFixed(1).replace('.', ',');
+}
+function toast(msg, kind){
+  var t = $('toast');
+  t.className = 'toast on' + (kind ? ' ' + kind : '');
+  $('toastTxt').textContent = msg;
+  clearTimeout(toast._t);
+  toast._t = setTimeout(function(){ t.className = 'toast'; }, 3600);
+}
+/* eigenes Modal statt confirm() — im iFrame zwingend nötig */
+function ask(title, text, yesLabel, onlyOk){
+  return new Promise(function(res){
+    $('ovTitle').textContent = title;
+    $('ovText').textContent = text;
+    $('ovYes').textContent = yesLabel || 'Bestätigen';
+    $('ovYes').style.display = onlyOk ? 'none' : '';
+    $('ovNo').textContent = onlyOk ? 'Verstanden' : 'Abbrechen';
+    $('ov').className = 'overlay on';
+    function done(v){
+      $('ov').className = 'overlay';
+      $('ovYes').style.display = ''; $('ovNo').textContent = 'Abbrechen';
+      $('ovYes').onclick = null; $('ovNo').onclick = null;
+      res(v);
+    }
+    $('ovYes').onclick = function(){ done(true); };
+    $('ovNo').onclick  = function(){ done(false); };
+  });
+}
+function askCode(){
+  ask('Zugangscode vergessen?',
+      'Melde dich bitte kurz bei der Organisation der Lärchi-Trophy – dort kann der Code im Organisator-Bereich nachgesehen werden.',
+      null, true);
+}
+
+/* ═══════════════════════════════════════════════════════════════════════════
+   NAVIGATION
+   ═══════════════════════════════════════════════════════════════════════════ */
+function go(v){
+  /* Erfolgs-Screen nur so lange zeigen, wie man auf der Anmeldeseite bleibt */
+  if(v !== 'anmeldung') STATE.zeigeErfolg = false;
+  STATE.view = v;
+  ['start','anmeldung','auswahl','live','admin'].forEach(function(x){
+    var el = $('v-' + x);
+    if(el) el.className = 'view' + (x === v ? ' on' : '');
+  });
+  Array.prototype.forEach.call(document.querySelectorAll('.nav button'), function(b){
+    b.className = (b.getAttribute('data-v') === v ? 'on' : '');
+  });
+  $('nav').classList.remove('open');
+  window.scrollTo({top:0, behavior:'smooth'});
+  if(v === 'auswahl')   renderPick();
+  if(v === 'live')      renderLive();
+  if(v === 'anmeldung') renderLoginSelect();
+  if(v === 'admin' && STATE.admPw) renderAdmin();
+}
+
+/* ═══════════════════════════════════════════════════════════════════════════
+   WAPPEN — Nachbau der Lärchi-Trophy (bis das Original-PNG eingesetzt wird)
+   ═══════════════════════════════════════════════════════════════════════════ */
+var STAR_PTS = '0,-8 1.48,-3.06 6.25,-4.99 3.32,-0.76 7.8,1.78 2.66,2.12 3.47,7.21 '
+             + '0,3.4 -3.47,7.21 -2.66,2.12 -7.8,1.78 -3.32,-0.76 -6.25,-4.99 -1.48,-3.06';
+
+function crestSvg(farbe){
+  var g = farbe || '#b8924a';
+  var mantling =
+    '<path d="M72 86 C60 74 46 76 39 87 C33 97 38 108 47 111 C38 116 34 128 40 136 '
+  + 'C47 145 60 144 68 136 C63 130 63 121 68 117 C61 113 58 104 62 98 C65 93 70 89 72 86 Z"/>'
+  + '<path d="M45 96 C50 92 57 92 60 96" fill="none" stroke="'+g+'" stroke-width="1.6"/>'
+  + '<path d="M46 126 C51 122 58 122 61 126" fill="none" stroke="'+g+'" stroke-width="1.6"/>';
+
+  return '<svg viewBox="0 0 200 240" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Lärchi-Trophy">'
+    /* Helmzier / Federbusch */
+    + '<g fill="'+g+'">'
+    +   '<path d="M100 14 C93 24 90 34 93 44 L100 40 L107 44 C110 34 107 24 100 14 Z"/>'
+    +   '<path d="M88 30 C84 38 84 46 88 52 L94 46 Z"/>'
+    +   '<path d="M112 30 C116 38 116 46 112 52 L106 46 Z"/>'
+    /* Wulst */
+    +   '<path d="M84 58 h32 a8 8 0 0 1 -8 8 h-16 a8 8 0 0 1 -8 -8 Z"/>'
+    + '</g>'
+    /* Laubwerk links + gespiegelt rechts */
+    + '<g fill="'+g+'">' + mantling + '</g>'
+    + '<g fill="'+g+'" transform="translate(200,0) scale(-1,1)">' + mantling + '</g>'
+    /* Schild */
+    + '<path d="M70 76 H130 V124 C130 148 112 161 100 169 C88 161 70 148 70 124 Z" '
+    +   'fill="none" stroke="'+g+'" stroke-width="4"/>'
+    /* Golfball auf Tee */
+    + '<circle cx="100" cy="112" r="14" fill="'+g+'"/>'
+    + '<g fill="#fff" opacity=".55">'
+    +   '<circle cx="95" cy="112" r="1.3"/><circle cx="100" cy="112" r="1.3"/><circle cx="105" cy="112" r="1.3"/>'
+    +   '<circle cx="97.5" cy="116" r="1.3"/><circle cx="102.5" cy="116" r="1.3"/><circle cx="100" cy="119.5" r="1.3"/>'
+    + '</g>'
+    + '<path d="M96 127 h8 l-2.6 22 h-2.8 Z" fill="'+g+'"/>'
+    /* fünf Sterne */
+    + '<g fill="'+g+'">'
+    +   '<g transform="translate(64,192) scale(.72)"><polygon points="'+STAR_PTS+'"/></g>'
+    +   '<g transform="translate(82,186) scale(.88)"><polygon points="'+STAR_PTS+'"/></g>'
+    +   '<g transform="translate(100,183)"><polygon points="'+STAR_PTS+'"/></g>'
+    +   '<g transform="translate(118,186) scale(.88)"><polygon points="'+STAR_PTS+'"/></g>'
+    +   '<g transform="translate(136,192) scale(.72)"><polygon points="'+STAR_PTS+'"/></g>'
+    + '</g>'
+    + '</svg>';
+}
+
+/* gezeichnete Bergkulisse als Hero-Rückfallbild */
+var HERO_SVG = 'url("data:image/svg+xml;utf8,' + encodeURIComponent(
+   '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 800" preserveAspectRatio="xMidYMid slice">'
+ + '<defs>'
+ + '<linearGradient id="sky" x1="0" y1="0" x2="0" y2="1">'
+ +   '<stop offset="0%" stop-color="#6b5535"/><stop offset="55%" stop-color="#3b2d1b"/><stop offset="100%" stop-color="#191309"/>'
+ + '</linearGradient>'
+ + '<linearGradient id="m1" x1="0" y1="0" x2="0" y2="1">'
+ +   '<stop offset="0%" stop-color="#8a7047"/><stop offset="100%" stop-color="#2f2415"/>'
+ + '</linearGradient>'
+ + '</defs>'
+ + '<rect width="1200" height="800" fill="url(#sky)"/>'
+ + '<circle cx="880" cy="180" r="70" fill="#c9a961" opacity=".28"/>'
+ + '<path d="M0 470 L150 300 L250 380 L390 220 L540 430 L690 320 L830 450 L960 290 L1090 430 L1200 360 L1200 800 L0 800 Z" fill="url(#m1)" opacity=".9"/>'
+ + '<path d="M0 560 L180 450 L330 530 L500 410 L680 540 L880 450 L1050 560 L1200 480 L1200 800 L0 800 Z" fill="#241b11" opacity=".92"/>'
+ + '<path d="M0 660 Q300 610 600 665 T1200 640 L1200 800 L0 800 Z" fill="#15100a"/>'
+ + '<g fill="#0f0b06">'
+ +   '<path d="M120 800 l26-108 26 108z"/><path d="M186 800 l18-78 18 78z"/>'
+ +   '<path d="M1010 800 l22-92 22 92z"/><path d="M1062 800 l28-116 28 116z"/>'
+ + '</g></svg>') + '")';
+
+/* ═══════════════════════════════════════════════════════════════════════════
+   START
+   ═══════════════════════════════════════════════════════════════════════════ */
+function renderStart(){
+  var logo = CONFIG.logoBild
+    ? '<img src="' + esc(CONFIG.logoBild) + '" alt="Lärchi-Trophy">'
+    : crestSvg('#c9a961');
+  $('brandMark').innerHTML = logo;
+  $('footMark').innerHTML  = logo;
+
+  $('heroMedia').style.backgroundImage = CONFIG.heroBild
+    ? 'url("' + CONFIG.heroBild + '")'
+    : HERO_SVG;
+
+  $('courseList').innerHTML = COURSES.map(function(c){
+    return '<div class="c">'
+      + '<div class="d">' + esc(c.tag) + '</div>'
+      + '<div class="dt">' + esc(c.datum) + '</div>'
+      + '<div class="nm">' + esc(c.name) + '</div>'
+      + '<div class="o">' + esc(c.ort) + ' · 9 oder 18 Loch</div>'
+      + '</div>';
+  }).join('');
+}
+
+/* ═══════════════════════════════════════════════════════════════════════════
+   ANMELDUNG
+   ═══════════════════════════════════════════════════════════════════════════ */
+function fieldErr(inp, err, on){
+  $(inp).className = on ? 'bad' : '';
+  $(err).className = on ? 'err-txt on' : 'err-txt';
+}
+function validHcp(v){
+  var n = parseFloat(String(v).replace(',', '.'));
+  return !isNaN(n) && n >= -10 && n <= 54;
+}
+function doRegister(){
+  var v = $('fVorname').value.trim(),
+      n = $('fNachname').value.trim(),
+      h = $('fHcp').value.trim(),
+      c = $('fClub').value.trim();
+  var bad = false;
+  fieldErr('fVorname','eVorname', !v);    bad = bad || !v;
+  fieldErr('fNachname','eNachname', !n);  bad = bad || !n;
+  fieldErr('fHcp','eHcp', !validHcp(h));  bad = bad || !validHcp(h);
+  fieldErr('fClub','eClub', !c);          bad = bad || !c;
+  if(bad){ toast('Bitte alle Felder korrekt ausfüllen.', 'err'); return; }
+
+  $('btnReg').disabled = true;
+  DB.register({vorname:v, nachname:n, handicap:hcpTxt(h), heimatclub:c}).then(function(r){
+    $('btnReg').disabled = false;
+    if(!r || !r.ok){ toast((r && r.error) || 'Anmeldung fehlgeschlagen.', 'err'); return; }
+    var t = r.teilnehmer;
+    STATE.me = t; STATE.saved = t.sel || {}; STATE.picks = {};
+    STATE.zeigeErfolg = true;
+    saveSession();
+    $('doneName').textContent = t.vorname + ' ' + t.nachname + ' · HCP ' + t.handicap + ' · ' + t.heimatclub;
+    $('doneRef').textContent  = t.ref;
+    $('doneCode').textContent = t.code;
+    $('regForm').style.display = 'none';
+    $('regDone').style.display = '';
+    ['fVorname','fNachname','fHcp','fClub'].forEach(function(i){ $(i).value = ''; });
+    toast('Anmeldung gespeichert – willkommen!', 'ok');
+    loadAll();
+  }).catch(function(e){
+    $('btnReg').disabled = false;
+    toast('Fehler: ' + e.message, 'err');
+  });
+}
+
+function renderLoginSelect(){
+  if(STATE.zeigeErfolg){                      /* frisch angemeldet: Erfolgs-Screen stehen lassen */
+    $('regForm').style.display = 'none';
+    $('regDone').style.display = '';
+    return;
+  }
+  if(STATE.me){ go('auswahl'); return; }      /* schon angemeldet → direkt zum Auswahlbereich */
+  var s = $('lName'), cur = s.value;
+  s.innerHTML = '<option value="">– bitte wählen –</option>' + STATE.all.map(function(p){
+    return '<option value="' + esc(p.id) + '">' + esc(p.vorname + ' ' + p.nachname) + '</option>';
+  }).join('');
+  s.value = cur;
+  $('regForm').style.display = '';
+  $('regDone').style.display = 'none';
+}
+
+function doLogin(){
+  var id = $('lName').value, code = $('lCode').value.trim();
+  if(!id || !code){ toast('Bitte Teilnehmer wählen und Code eingeben.', 'err'); return; }
+  DB.login(id, code).then(function(r){
+    if(!r || !r.ok){ $('eLogin').className = 'err-txt on'; toast((r && r.error) || 'Login fehlgeschlagen.', 'err'); return; }
+    $('eLogin').className = 'err-txt';
+    $('lCode').value = '';
+    STATE.me = r.teilnehmer; STATE.saved = r.teilnehmer.sel || {}; STATE.picks = {};
+    saveSession();
+    toast('Willkommen zurück, ' + r.teilnehmer.vorname + '!', 'ok');
+    updateCta();
+    go('auswahl');
+  }).catch(function(e){ toast('Fehler: ' + e.message, 'err'); });
+}
+
+function logout(){
+  ask('Abmelden?', 'Deine gespeicherte Auswahl bleibt selbstverständlich erhalten.', 'Abmelden').then(function(y){
+    if(!y) return;
+    STATE.me = null; STATE.picks = {}; STATE.saved = {};
+    clearSession(); updateCta();
+    toast('Abgemeldet.');
+    go('start');
+  });
+}
+
+/* ═══════════════════════════════════════════════════════════════════════════
+   GOLFPLATZ-AUSWAHL
+   ═══════════════════════════════════════════════════════════════════════════ */
+function curSel(){
+  var s = {};
+  COURSES.forEach(function(c){
+    s[c.id] = (STATE.picks[c.id] !== undefined) ? STATE.picks[c.id] : (STATE.saved[c.id] || '');
+  });
+  return s;
+}
+function renderPick(){
+  var on = !!STATE.me;
+  $('needLogin').style.display = on ? 'none' : '';
+  $('pickArea').style.display  = on ? '' : 'none';
+  if(!on) return;
+
+  var me = STATE.me;
+  $('whoAv').textContent   = (me.vorname[0] || '') + (me.nachname[0] || '');
+  $('whoName').textContent = me.vorname + ' ' + me.nachname;
+  $('whoMeta').textContent = 'HCP ' + me.handicap + ' · ' + me.heimatclub + ' · Referenz ' + me.ref;
+
+  var sel = curSel();
+  $('pickList').innerHTML = COURSES.map(function(c){
+    var v = sel[c.id];
+    return '<div class="pick-row' + (v ? ' sel' : '') + '" id="row-' + c.id + '">'
+      + '<div class="pick-day">'
+      +   '<div class="d">' + esc(c.tag) + ' · ' + esc(c.datum) + '</div>'
+      +   '<div class="n">' + esc(c.name) + '</div>'
+      +   '<div class="o">' + esc(c.ort) + '</div>'
+      + '</div>'
+      + '<div class="seg">'
+      +   '<button data-h=""   ' + (v === ''   ? 'class="on"' : '') + " onclick=\"setPick('" + c.id + "','')\">Nicht dabei</button>"
+      +   '<button data-h="9"  ' + (v === '9'  ? 'class="on"' : '') + " onclick=\"setPick('" + c.id + "','9')\">9 Loch</button>"
+      +   '<button data-h="18" ' + (v === '18' ? 'class="on"' : '') + " onclick=\"setPick('" + c.id + "','18')\">18 Loch</button>"
+      + '</div>'
+      + '</div>';
+  }).join('');
+  updatePickInfo();
+}
+function setPick(cid, val){
+  STATE.picks[cid] = val;
+  var row = $('row-' + cid);
+  row.className = 'pick-row' + (val ? ' sel' : '');
+  Array.prototype.forEach.call(row.querySelectorAll('.seg button'), function(b){
+    b.className = (b.getAttribute('data-h') === val) ? 'on' : '';
+  });
+  updatePickInfo();
+}
+function dirty(){
+  var sel = curSel(), d = false;
+  COURSES.forEach(function(c){ if((STATE.saved[c.id] || '') !== sel[c.id]) d = true; });
+  return d;
+}
+function updatePickInfo(){
+  var sel = curSel(), n18 = 0, n9 = 0;
+  COURSES.forEach(function(c){
+    if(sel[c.id] === '18') n18++;
+    if(sel[c.id] === '9')  n9++;
+  });
+  $('pickInfo').innerHTML = '<b>' + (n18 + n9) + '</b> von 7 Tagen gewählt · '
+    + n18 + '× 18 Loch · ' + n9 + '× 9 Loch'
+    + (dirty() ? ' · <span style="color:var(--warn)">noch nicht gespeichert</span>' : ' · gespeichert');
+}
+function resetPicks(){
+  STATE.picks = {};
+  COURSES.forEach(function(c){ STATE.picks[c.id] = ''; });
+  renderPick();
+  toast('Auswahl zurückgesetzt – noch nicht gespeichert.');
+}
+function savePicks(){
+  if(!STATE.me){ go('anmeldung'); return; }
+  var sel = curSel();
+  $('btnSave').disabled = true;
+  DB.save(STATE.me.id, STATE.me.code, sel).then(function(r){
+    $('btnSave').disabled = false;
+    if(!r || !r.ok){ toast((r && r.error) || 'Speichern fehlgeschlagen.', 'err'); return; }
+    STATE.saved = sel; STATE.picks = {};
+    STATE.me.sel = sel; saveSession();
+    updatePickInfo();
+    toast('Deine Auswahl wurde gespeichert.', 'ok');
+    loadAll();
+  }).catch(function(e){
+    $('btnSave').disabled = false;
+    toast('Fehler: ' + e.message, 'err');
+  });
+}
+
+/* ═══════════════════════════════════════════════════════════════════════════
+   LIVE-ANSICHT
+   ═══════════════════════════════════════════════════════════════════════════ */
+function renderLive(){
+  var list = STATE.all.slice().sort(function(a, b){
+    var x = (a.nachname + a.vorname).toLowerCase(), y = (b.nachname + b.vorname).toLowerCase();
+    return x < y ? -1 : x > y ? 1 : 0;
+  });
+
+  var t18 = 0, t9 = 0, spots = 0;
+  list.forEach(function(p){
+    COURSES.forEach(function(c){
+      var v = (p.sel || {})[c.id];
+      if(v === '18'){ t18++; spots++; } else if(v === '9'){ t9++; spots++; }
+    });
+  });
+  $('stats').innerHTML = stat(list.length, 'Teilnehmer') + stat(spots, 'Startplätze gesamt')
+                       + stat(t18, '× 18 Loch') + stat(t9, '× 9 Loch');
+  $('fTn').textContent = list.length;
+  $('stamp').textContent = zeit();
+
+  if(!list.length){
+    $('liveBody').innerHTML = '<div class="card empty">'
+      + '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M3 9h18M9 9v12"/></svg>'
+      + '<h3 style="font-size:21px;margin-bottom:7px">Noch keine Anmeldungen</h3>'
+      + '<p style="margin:0 0 22px">Sei der oder die Erste bei der Lärchi-Trophy 2027.</p>'
+      + '<button class="btn btn-gold" onclick="go(\'anmeldung\')">Jetzt anmelden</button></div>';
+    return;
+  }
+
+  var head1 = '<tr><th class="nm">Teilnehmer</th>' + COURSES.map(function(c){
+    return '<th>' + esc(c.kurz) + '<br><span style="opacity:.7;font-size:10px">' + esc(c.tag) + '</span></th>';
+  }).join('') + '<th>Tage</th></tr>';
+
+  var head2 = '<tr class="sub"><th class="nm">HCP · Name · Heimatclub</th>' + COURSES.map(function(c){
+    return '<th>' + esc(c.name.replace('Golfclub ', 'GC ').replace('Golf & Countryclub ', 'G&CC ')) + '</th>';
+  }).join('') + '<th>ges.</th></tr>';
+
+  var body = list.map(function(p){
+    var mine = STATE.me && STATE.me.id === p.id, days = 0;
+    var cells = COURSES.map(function(c){
+      var v = (p.sel || {})[c.id];
+      if(v === '18'){ days++; return '<td><span class="chip chip-18">18</span></td>'; }
+      if(v === '9'){  days++; return '<td><span class="chip chip-9">9</span></td>'; }
+      return '<td><span class="chip-no">·</span></td>';
+    }).join('');
+    return '<tr' + (mine ? ' class="me-row"' : '') + '>'
+      + '<td class="nm"><span class="hcp">' + esc(hcpTxt(p.handicap)) + '</span>'
+      + '<b style="font-weight:600">' + esc(p.vorname + ' ' + p.nachname) + '</b>'
+      + '<div style="font-size:12px;color:var(--muted);margin-left:54px">' + esc(p.heimatclub) + '</div></td>'
+      + cells + '<td><b>' + days + '</b></td></tr>';
+  }).join('');
+
+  var sums = COURSES.map(function(c){
+    var n18 = 0, n9 = 0;
+    list.forEach(function(p){
+      var v = (p.sel || {})[c.id];
+      if(v === '18') n18++; else if(v === '9') n9++;
+    });
+    var t = n18 + n9;
+    return '<td>' + (t
+      ? t + '<div style="font-weight:400;font-size:11px;color:var(--muted)">' + n18 + '×18 · ' + n9 + '×9</div>'
+      : '–') + '</td>';
+  }).join('');
+
+  $('liveBody').innerHTML = '<div class="tablewrap"><table class="matrix">'
+    + '<thead>' + head1 + head2 + '</thead>'
+    + '<tbody>' + body + '</tbody>'
+    + '<tfoot><tr><td class="nm">Anmeldungen je Platz</td>' + sums + '<td><b>' + spots + '</b></td></tr></tfoot>'
+    + '</table></div>';
+}
+function stat(n, l){ return '<div class="stat"><b>' + n + '</b><span>' + esc(l) + '</span></div>'; }
+function zeit(){
+  var d = new Date();
+  function p(x){ return ('0' + x).slice(-2); }
+  return p(d.getDate()) + '.' + p(d.getMonth()+1) + '.' + d.getFullYear() + ', ' + p(d.getHours()) + ':' + p(d.getMinutes()) + ' Uhr';
+}
+function copyLink(){
+  var url = (window.location && window.location.href) ? window.location.href : '';
+  if(!url){ toast('Link konnte nicht ermittelt werden.', 'err'); return; }
+  var ok = function(){ toast('Link kopiert – jetzt teilbar.', 'ok'); };
+  if(navigator.clipboard && navigator.clipboard.writeText){
+    navigator.clipboard.writeText(url).then(ok).catch(function(){ fb(url, ok); });
+  } else fb(url, ok);
+  function fb(u, cb){
+    var t = document.createElement('textarea');
+    t.value = u; t.style.position = 'fixed'; t.style.opacity = '0';
+    document.body.appendChild(t); t.select();
+    try{ document.execCommand('copy'); cb(); }
+    catch(e){ toast('Bitte den Link aus der Adresszeile kopieren.', 'err'); }
+    document.body.removeChild(t);
+  }
+}
+
+/* ═══════════════════════════════════════════════════════════════════════════
+   ORGANISATOR-BEREICH
+   ═══════════════════════════════════════════════════════════════════════════ */
+function doAdmin(){
+  var pw = $('aPw').value;
+  DB.admList(pw).then(function(r){
+    if(!r || !r.ok){ $('eAdm').className = 'err-txt on'; toast('Passwort stimmt nicht.', 'err'); return; }
+    $('eAdm').className = 'err-txt';
+    STATE.admPw = pw; STATE.admAll = r.teilnehmer || [];
+    $('aPw').value = '';
+    $('admLogin').style.display = 'none';
+    $('admArea').style.display  = '';
+    renderAdmin();
+  }).catch(function(e){ toast('Fehler: ' + e.message, 'err'); });
+}
+function admLogout(){
+  STATE.admPw = null; STATE.admAll = [];
+  $('admLogin').style.display = '';
+  $('admArea').style.display  = 'none';
+  toast('Organisator-Bereich verlassen.');
+}
+function renderAdmin(){
+  var list = STATE.admAll, spots = 0;
+  list.forEach(function(p){ COURSES.forEach(function(c){ if((p.sel || {})[c.id]) spots++; }); });
+  var ohne = list.filter(function(p){
+    var any = false; COURSES.forEach(function(c){ if((p.sel || {})[c.id]) any = true; });
+    return !any;
+  }).length;
+
+  $('admStats').innerHTML = stat(list.length, 'Teilnehmer') + stat(spots, 'Startplätze')
+                          + stat(ohne, 'ohne Auswahl') + stat(COURSES.length, 'Golfplätze');
+
+  $('admList').innerHTML = list.map(function(p){
+    var tage = COURSES.filter(function(c){ return (p.sel || {})[c.id]; }).length;
+    var nm = (p.vorname + ' ' + p.nachname).replace(/'/g, "\\'");
+    return '<div class="adm-item">'
+      + '<div><div class="nm">' + esc(p.vorname + ' ' + p.nachname) + '</div>'
+      + '<div class="mt">HCP ' + esc(hcpTxt(p.handicap)) + ' · ' + esc(p.heimatclub) + ' · ' + esc(p.ref)
+      + ' · Code <b>' + esc(p.code || '–') + '</b> · ' + tage + ' Tag(e)</div></div>'
+      + '<div class="sp"><button class="btn btn-line btn-sm" onclick="admDel(\'' + p.id + '\',\'' + esc(nm) + '\')">Löschen</button></div>'
+      + '</div>';
+  }).join('') || '<div class="empty">Noch keine Teilnehmer.</div>';
+}
+function admDel(id, name){
+  ask('Teilnehmer löschen?',
+      name + ' wird mitsamt der Golfplatz-Auswahl entfernt. Das lässt sich nicht rückgängig machen.',
+      'Endgültig löschen').then(function(y){
+    if(!y) return;
+    DB.admDelete(STATE.admPw, id).then(function(r){
+      if(!r || !r.ok){ toast((r && r.error) || 'Löschen fehlgeschlagen.', 'err'); return; }
+      toast('Teilnehmer gelöscht.', 'ok');
+      if(STATE.me && STATE.me.id === id){ STATE.me = null; clearSession(); updateCta(); }
+      STATE.admAll = STATE.admAll.filter(function(p){ return p.id !== id; });
+      renderAdmin();
+      loadAll();
+    }).catch(function(e){ toast('Fehler: ' + e.message, 'err'); });
+  });
+}
+function exportCsv(){
+  var head = ['Referenz','Angemeldet','Vorname','Nachname','Handicap','Heimatclub']
+    .concat(COURSES.map(function(c){ return c.kurz + ' ' + c.name; }))
+    .concat(['Tage gesamt']);
+  var rows = STATE.admAll.map(function(p){
+    var sel = p.sel || {}, tage = 0;
+    var cells = COURSES.map(function(c){ if(sel[c.id]) tage++; return sel[c.id] ? sel[c.id] + ' Loch' : ''; });
+    return [p.ref, String(p.created || '').substring(0,10), p.vorname, p.nachname, hcpTxt(p.handicap), p.heimatclub]
+      .concat(cells).concat([String(tage)]);
+  });
+  var csv = [head].concat(rows).map(function(r){
+    return r.map(function(f){ return '"' + String(f == null ? '' : f).replace(/"/g, '""') + '"'; }).join(';');
+  }).join('\r\n');
+  try{
+    var blob = new Blob(['﻿' + csv], {type:'text/csv;charset=utf-8;'});
+    var a = document.createElement('a');
+    a.href = URL.createObjectURL(blob);
+    a.download = 'laerchi-trophy-2027-golfplanung.csv';
+    document.body.appendChild(a); a.click(); document.body.removeChild(a);
+    toast('CSV wurde erstellt.', 'ok');
+  }catch(e){ toast('Export in dieser Umgebung nicht möglich.', 'err'); }
+}
+
+/* ═══════════════════════════════════════════════════════════════════════════
+   LADEN & START
+   ═══════════════════════════════════════════════════════════════════════════ */
+function loadAll(withToast){
+  return DB.list().then(function(list){
+    STATE.all = (list || []).map(function(p){ p.sel = p.sel || {}; return p; });
+    $('fTn').textContent = STATE.all.length;
+    if(STATE.me){
+      var mine = STATE.all.filter(function(p){ return p.id === STATE.me.id; })[0];
+      if(mine){
+        STATE.saved       = mine.sel || {};
+        STATE.me.vorname  = mine.vorname;
+        STATE.me.nachname = mine.nachname;
+        STATE.me.handicap = mine.handicap;
+        STATE.me.heimatclub = mine.heimatclub;
+        STATE.me.ref      = mine.ref;
+      } else { STATE.me = null; clearSession(); }   /* Eintrag wurde entfernt */
+    }
+    updateCta();
+    if(STATE.view === 'live')      renderLive();
+    if(STATE.view === 'auswahl')   renderPick();
+    if(STATE.view === 'anmeldung') renderLoginSelect();
+    if(withToast) toast('Daten aktualisiert.', 'ok');
+  }).catch(function(e){
+    toast('Daten konnten nicht geladen werden: ' + e.message, 'err');
+  });
+}
+function updateCta(){
+  var on = !!STATE.me;
+  $('ctaMainTxt').textContent = on ? 'Meine Golfplätze wählen' : 'Jetzt anmelden';
+  $('topCtaTxt').textContent  = on ? 'Meine Plätze' : 'Anmelden';
+  $('tile1Go').firstChild.nodeValue = on ? 'Angemeldet – zur Auswahl ' : 'Anmeldung öffnen ';
+  var target = on ? 'auswahl' : 'anmeldung';
+  $('ctaMain').setAttribute('onclick', "go('" + target + "')");
+  $('topCta').setAttribute('onclick', "go('" + target + "')");
+  $('tile1').setAttribute('onclick', "go('" + target + "')");
+}
+function initTheme(){
+  var t = 'light';
+  try{ t = localStorage.getItem('lt2027.theme') || 'light'; }catch(e){}
+  document.documentElement.setAttribute('data-theme', t);
+  $('themeBtn').onclick = function(){
+    var n = document.documentElement.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
+    document.documentElement.setAttribute('data-theme', n);
+    try{ localStorage.setItem('lt2027.theme', n); }catch(e){}
+  };
+}
+function init(){
+  initTheme();
+  renderStart();
+  $('navToggle').onclick = function(){ $('nav').classList.toggle('open'); };
+  $('ov').addEventListener('click', function(e){ if(e.target === $('ov')) $('ovNo').click(); });
+  document.addEventListener('keydown', function(e){
+    if(e.key === 'Escape' && $('ov').className.indexOf('on') > -1) $('ovNo').click();
+  });
+
+  STATE.me = loadSession();
+  if(STATE.me) STATE.saved = STATE.me.sel || {};
+
+  var hash = (window.location.hash || '').replace('#', '');
+  loadAll().then(function(){
+    go(['anmeldung','auswahl','live','admin'].indexOf(hash) > -1 ? hash : 'start');
+  });
+
+  /* Live-Ansicht alle 60 Sekunden auffrischen */
+  setInterval(function(){ if(STATE.view === 'live' && !document.hidden) loadAll(); }, 60000);
+}
+init();
+</script>
+</body>
+</html>
