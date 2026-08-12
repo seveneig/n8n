@@ -1,0 +1,22 @@
+# Alle Anfragen, die keine echte Datei/kein echtes Verzeichnis sind, an index.php leiten.
+# Damit funktionieren /fr/streuhaar, /it/shop usw. ohne eigene Ordner.
+
+<IfModule mod_rewrite.c>
+	RewriteEngine On
+
+	# Optional: www erzwingen und immer HTTPS (an die eigene Domain anpassen)
+	# RewriteCond %{HTTPS} off [OR]
+	# RewriteCond %{HTTP_HOST} !^www\. [NC]
+	# RewriteRule ^(.*)$ https://www.hairhelp-haarverdichter.ch/$1 [R=301,L]
+
+	RewriteCond %{REQUEST_FILENAME} !-f
+	RewriteCond %{REQUEST_FILENAME} !-d
+	RewriteRule ^ index.php [L]
+</IfModule>
+
+# Sprachdateien, Bibliothek und Templates nur ueber index.php erreichbar machen.
+RedirectMatch 404 ^/(lang|lib|pages)/
+
+<IfModule mod_headers.c>
+	Header set X-Content-Type-Options "nosniff"
+</IfModule>
