@@ -6,17 +6,21 @@
  *
  * Aufruf:  node build-elementor.mjs
  */
-import { readFileSync, writeFileSync, statSync } from 'node:fs';
+import { readFileSync, writeFileSync, statSync, mkdirSync } from 'node:fs';
 import { dirname, resolve } from 'node:path';
 import { fileURLToPath } from 'node:url';
 
 const root = dirname(fileURLToPath(import.meta.url));
 
 const PAGES = [
-  { src: 'index.html',     out: 'elementor-startseite.html', titel: 'Startseite' },
-  { src: 'produkt.html',   out: 'elementor-produkt.html',    titel: 'Produkt' },
-  { src: 'ueber-uns.html', out: 'elementor-ueber-uns.html',  titel: 'Über uns' },
+  { src: 'index.html',     out: 'elementor-startseite.html', txt: 'startseite.txt', titel: 'Startseite' },
+  { src: 'produkt.html',   out: 'elementor-produkt.html',    txt: 'produkt.txt',    titel: 'Produkt' },
+  { src: 'ueber-uns.html', out: 'elementor-ueber-uns.html',  txt: 'ueber-uns.txt',  titel: 'Über uns' },
 ];
+
+// Zusaetzlich als .txt ablegen: laesst sich per Doppelklick in Notepad oeffnen,
+// waehrend .html im Browser landen wuerde.
+mkdirSync(resolve(root, 'zum-kopieren'), { recursive: true });
 
 const MIME = {
   webp: 'image/webp', png: 'image/png', jpg: 'image/jpeg',
@@ -73,6 +77,9 @@ ${inlined}
 `;
 
   writeFileSync(resolve(root, page.out), out);
+  // Mit BOM, damit Windows-Notepad die Umlaute sicher als UTF-8 liest.
+  // Beim Markieren mit Strg+A wird das BOM nicht mitkopiert.
+  writeFileSync(resolve(root, 'zum-kopieren', page.txt), '\uFEFF' + out, 'utf8');
   const kb = (statSync(resolve(root, page.out)).size / 1024).toFixed(0);
-  console.log(`${page.out.padEnd(30)} ${String(kb).padStart(4)} KB  ${used.size} Bilder`);
+  console.log(`${page.out.padEnd(30)} ${String(kb).padStart(4)} KB  ${used.size} Bilder  -> zum-kopieren/${page.txt}`);
 }

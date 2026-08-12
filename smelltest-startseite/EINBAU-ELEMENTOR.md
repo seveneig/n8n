@@ -1,16 +1,55 @@
 # Einbau in Elementor
 
-## Für jede Seite: drei Schritte
+## Schritt für Schritt
 
-| WordPress-Seite | Datei zum Kopieren |
+### 1. Die richtige Datei öffnen
+
+| WordPress-Seite | Datei |
 |---|---|
-| Startseite | `elementor-startseite.html` |
-| Produkt | `elementor-produkt.html` |
-| Über uns | `elementor-ueber-uns.html` |
+| Startseite | `zum-kopieren/startseite.txt` |
+| Produkt | `zum-kopieren/produkt.txt` |
+| Über uns | `zum-kopieren/ueber-uns.txt` |
 
-1. Die passende Datei öffnen und den **gesamten Inhalt** kopieren (Strg/Cmd + A, Strg/Cmd + C).
-2. In Elementor eine **neue Sektion / Container** anlegen und darin ein **HTML-Widget** platzieren.
-3. Den kopierten Code in das HTML-Widget einfügen und speichern.
+Diese drei Textdateien liegen im Ordner `zum-kopieren/`. Ein Doppelklick öffnet sie
+direkt in Notepad. Inhaltlich sind sie identisch mit den `elementor-*.html`-Dateien –
+nur die Endung ist anders, damit Windows sie im Editor öffnet statt im Browser.
+
+> **Wichtig:** Es sind die **`elementor-*`**- bzw. **`zum-kopieren/*`**-Dateien, die
+> in Elementor gehören. Die Dateien `index.html`, `produkt.html` und `ueber-uns.html`
+> sind die Arbeitsdateien – sie verweisen auf einen separaten Bilderordner und
+> funktionieren im Widget **nicht**.
+
+### 2. Alles kopieren
+
+**Strg + A**, dann **Strg + C**. Nichts herausschneiden, nichts anpassen – die
+komplette Datei ist genau der Code, der ins Widget gehört. Auch die Kommentarzeilen
+am Anfang können mitkopiert werden, sie sind im Browser unsichtbar.
+
+Die Dateien sind 380–570 KB gross, weil Schrift und Bilder eingebettet sind. Notepad
+braucht dafür einen Moment. Scrollen ist nicht nötig – Strg + A markiert alles.
+
+### 3. In Elementor einfügen
+
+1. Die Seite in Elementor bearbeiten.
+2. Einen **neuen Container** (bzw. eine neue Sektion) anlegen.
+3. Aus der Widget-Liste das Widget **HTML** hineinziehen
+   *(in der Suche „HTML" eingeben – es heisst je nach Version «HTML» oder «Custom HTML»)*.
+4. In das Codefeld klicken und mit **Strg + V** einfügen.
+5. Container-Einstellungen setzen (siehe nächster Abschnitt) und **Veröffentlichen**.
+
+Im Elementor-Editor kann die Vorschau etwas anders aussehen als auf der fertigen
+Seite – der Editor legt eigene Styles über die Vorschau. Massgeblich ist die
+veröffentlichte Seite.
+
+### Falls etwas nicht klappt
+
+- **Der Code wird beim Speichern verstümmelt**: Dann fehlt dem angemeldeten Benutzer
+  das Recht `unfiltered_html`. Mit einem Administrator-Konto einfügen.
+- **Umlaute erscheinen als `Ã¤` oder `?`**: Die Textdateien sind als UTF-8
+  gespeichert und tragen eine Kennung, die Notepad das mitteilt. Falls es trotzdem
+  auftritt, die Datei stattdessen mit Notepad++ oder VS Code öffnen.
+- **Notepad reagiert träge**: Normal bei dieser Dateigrösse. Einfach Strg + A und
+  Strg + C ausführen, ohne zu scrollen.
 
 ## Wichtig: Container-Einstellungen
 

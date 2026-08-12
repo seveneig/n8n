@@ -12,7 +12,9 @@ Sprache: **Deutsch**. Markenfarben unverändert übernommen.
 | Über uns | `ueber-uns.html` | **`elementor-ueber-uns.html`** (383 KB) |
 
 Die `elementor-*.html` sind die fertigen Copy-Paste-Blöcke: Schrift und alle Bilder
-sind eingebettet, es werden keine externen Dateien benötigt. Anleitung in
+sind eingebettet, es werden keine externen Dateien benötigt. Im Ordner
+**`zum-kopieren/`** liegen dieselben drei Blöcke als `.txt`, damit sie sich per
+Doppelklick in Notepad öffnen lassen statt im Browser. Anleitung in
 **`EINBAU-ELEMENTOR.md`**.
 
 ## Weitere Dateien
