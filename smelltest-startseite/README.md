@@ -68,10 +68,14 @@ Die Aussagen der alten Seite sind erhalten, aber geschärft:
 - Kontaktadresse und Firmenzeile im Footer sind Platzhalter.
 - „Wieder verfügbar" im Hero stammt sinngemäss aus der alten Seite – bitte
   prüfen, ob das noch aktuell ist.
-- **Keine Zeitangabe mehr.** Die Fünf-Minuten-Aussage der alten Seite ist überall
-  entfernt und durch unbestimmte Formulierungen ersetzt („rasch", „unkompliziert",
-  „geringer Zeitaufwand"). In der Kennzahlen-Leiste steht an dieser Stelle nun
-  „3 Schritte" statt einer Dauer.
+- **Zwei Aussagen sind bewusst entfernt** – siehe `CLAUDE.md`, die Regeln gelten
+  auch für alle künftigen Seiten:
+  - **Keine Zeitangabe.** Die Fünf-Minuten-Aussage ist überall ersetzt durch
+    „rasch", „unkompliziert", „geringer Zeitaufwand". In der Kennzahlen-Leiste
+    steht an dieser Stelle „3 Schritte" statt einer Dauer.
+  - **Keine Wiederverwendbarkeit.** „Disketten wiederverwendbar" ist gestrichen,
+    ebenso „Refills nach ca. 12 Monaten" – der Zeitraum implizierte dasselbe.
+    Geblieben ist nur „Refills einzeln nachbestellbar".
 
 ## Kontrolle
 
