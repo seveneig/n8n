@@ -7,9 +7,14 @@ Sprache: **Deutsch**. Markenfarben unverändert übernommen.
 
 | Seite | Quelldatei | Zum Einfügen in Elementor |
 |---|---|---|
-| Startseite | `index.html` | **`elementor-startseite.html`** (569 KB) |
+| Startseite (Variante A) | `index.html` | **`elementor-startseite.html`** (569 KB) |
+| Startseite (Variante B) | `index-alt.html` | **`elementor-startseite-variante-b.html`** (580 KB) |
 | Produkt | `produkt.html` | **`elementor-produkt.html`** (464 KB) |
 | Über uns | `ueber-uns.html` | **`elementor-ueber-uns.html`** (383 KB) |
+
+Von der Startseite gibt es zwei Fassungen – **eine davon auswählen**, nicht beide
+einbauen. Der Unterschied ist rein gestalterisch, die Inhalte sind identisch.
+Siehe Abschnitt «Variante B».
 
 Die `elementor-*.html` sind die fertigen Copy-Paste-Blöcke: Schrift und alle Bilder
 sind eingebettet, es werden keine externen Dateien benötigt. Im Ordner
@@ -21,7 +26,8 @@ Doppelklick in Notepad öffnen lassen statt im Browser. Anleitung in
 
 | Datei | Zweck |
 |---|---|
-| `assets/css/sd.css` | **Gemeinsames Stylesheet aller drei Seiten** – hier wird das Design gepflegt |
+| `assets/css/sd.css` | **Gemeinsames Stylesheet aller Seiten** – hier wird das Design gepflegt |
+| `assets/css/sd-alt.css` | Überschreibungen für Variante B, wird nach `sd.css` geladen |
 | `assets/fonts/lato.css` | Lato als Base64 (SIL OFL), kein Google-Fonts-Aufruf |
 | `build-elementor.mjs` | Baut alle drei Elementor-Fassungen: `node build-elementor.mjs` |
 | `CLAUDE.md` | Inhaltsregeln, gelten auch für künftige Seiten und Übersetzungen |
@@ -61,6 +67,28 @@ Flächen und Ränder.
 Schrift: **Lato**, Gewichte 400/700/900. Alle drei Seiten teilen sich dieselben
 Bausteine (Karten, Kennzahlenband, Seitenkopf, Tabellen, Zeitstrahl, Team,
 Publikationen) und dieselbe Navigation, damit sie zusammengehören.
+
+## Variante B der Startseite
+
+Gleiche Inhalte, gleiche Struktur, anderes Gewand. Umgesetzt als reine
+Überschreibungs-Ebene (`assets/css/sd-alt.css`) über dem gemeinsamen Stylesheet –
+die Grundstruktur bleibt damit identisch mit den übrigen Seiten.
+
+| | Variante A | Variante B |
+|---|---|---|
+| Header | weisse Leiste über dem Hero | **transparent, direkt auf dem Herobild** |
+| Schaltflächen | Pillenform, abgerundet | **kantig, Grossbuchstaben, gesperrt** |
+| Hover | dunkleres Blau | **helleres Blau `#6098BA`**, Sekundär: Fläche in Hellblau |
+| Kennzahlenband | Navy | **Brand-Hellblau `#DCE9F3`**, Zahlen in Navy |
+| Evidenz-Abschnitt | Navy | **Hellblau mit weissen Karten** |
+| Navy | grossflächig | **nur Akzent**: Überschriften, Schrittnummern, 10,3-%-Kasten, Footer |
+| Karten | Schatten, 22 px Radius | **nur Haarlinie, 2 px Radius** |
+| Weissraum | Abschnitte 64–116 px | **88–168 px**, grössere Karten- und Rasterabstände |
+
+Damit der Text im Hero nicht auf der Packung liegt, ist die Bildebene um 20 % nach
+rechts versetzt – links bleibt eine ruhige weisse Fläche für die Schrift. Auf
+Geräten unter 900 px läuft der Header wieder normal mit, sonst würde er das Bild
+verdecken.
 
 ## Inhaltliche Anpassungen
 

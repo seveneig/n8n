@@ -1,0 +1,246 @@
+/* ================================================================
+   SMELL DISCETTES – VARIANTE B
+   Wird NACH sd.css geladen und überschreibt gezielt.
+   Leitlinien:
+     · Header transparent über dem Herobild
+     · kantige, ruhigere Schaltflächen ohne Rundung
+     · Brand-Hellblau (#BCD3E5) tragend, Navy nur als Akzent
+     · Hover heller statt dunkler
+     · deutlich mehr Weissraum
+   ================================================================ */
+
+/* ---------- 1. Farb- und Formwerte ------------------------------ */
+.sdx {
+  --blue:        #407BA0;   /* Brandblau, unverändert */
+  --blue-light:  #6098BA;   /* Hover: heller statt dunkler */
+  --blue-deep:   #35688A;   /* nur für Text auf hellen Flächen */
+  --blue-soft:   #BCD3E5;   /* Brand-Hellblau – jetzt tragend */
+  --sky:         #DCE9F3;   /* Bänder und Flächen */
+  --blue-mist:   #EDF4F9;
+  --navy:        #00102E;   /* nur noch Akzent */
+  --ink:         #12203A;
+  --muted:       #5B6D84;
+  --line:        #D3E1EC;
+  --tint:        #F3F8FC;
+
+  --wrap: 1220px;
+
+  /* kantig statt rund */
+  --r-sm: 0;
+  --r-md: 2px;
+  --r-lg: 2px;
+
+  /* ruhiger: kaum Schatten, dafür präzise Linien */
+  --sh-sm: none;
+  --sh-md: 0 24px 56px -34px rgba(0,16,46,.42);
+
+  line-height: 1.7;
+}
+
+/* ---------- 2. Mehr Luft ---------------------------------------- */
+.sdx .sd-wrap { padding-left: 40px; padding-right: 40px; }
+.sdx .sd-sec  { padding: clamp(88px, 10vw, 168px) 0; }
+.sdx .sd-head { max-width: 780px; }
+.sdx .sd-h2 { margin-top: 22px; letter-spacing: -.018em; }
+.sdx .sd-h2 + .sd-lead { margin-top: 24px; }
+.sdx .sd-lead { line-height: 1.78; }
+.sdx .sd-grid3 { gap: 34px; margin-top: 76px; }
+.sdx .sd-steps__grid { gap: 30px; margin-top: 76px; }
+.sdx .sd-pubs { gap: 30px; margin-top: 68px; }
+
+/* ---------- 3. Auszeichnungen ----------------------------------- */
+.sdx .sd-eyebrow { font-size: 11.5px; letter-spacing: .22em; color: var(--blue); }
+.sdx .sd-eyebrow::before { width: 32px; height: 1px; background: var(--blue); }
+
+.sdx .sd-link { color: var(--blue-deep); font-weight: 700; box-shadow: inset 0 -1px 0 var(--blue-soft); }
+.sdx .sd-link:hover { color: var(--blue); box-shadow: inset 0 -1px 0 var(--blue); }
+
+/* ---------- 4. Schaltflächen: kantig, ruhig, klar --------------- */
+.sdx .sd-btn {
+  border-radius: 0;
+  padding: 17px 30px;
+  font-size: 12.5px; font-weight: 700;
+  letter-spacing: .13em; text-transform: uppercase; line-height: 1;
+  box-shadow: none;
+  transition: background-color .2s ease, color .2s ease, box-shadow .2s ease;
+}
+.sdx .sd-btn:hover { transform: none; }
+.sdx .sd-btn__arrow { font-size: 15px; transform: none; }
+
+.sdx .sd-btn--primary { background: var(--blue); color: #FFFFFF; box-shadow: none; }
+.sdx .sd-btn--primary:hover { background: var(--blue-light); box-shadow: none; }
+
+.sdx .sd-btn--ghost { color: var(--ink); background: transparent; box-shadow: inset 0 0 0 1px var(--blue-soft); }
+.sdx .sd-btn--ghost:hover { color: var(--blue-deep); background: var(--sky); box-shadow: inset 0 0 0 1px var(--blue-soft); }
+
+.sdx .sd-btn--light { background: #FFFFFF; color: var(--ink); box-shadow: inset 0 0 0 1px var(--line); }
+.sdx .sd-btn--light:hover { background: var(--sky); box-shadow: inset 0 0 0 1px var(--blue-soft); }
+
+.sdx .sd-btn--onNavy { color: #FFFFFF; box-shadow: inset 0 0 0 1px rgba(255,255,255,.42); }
+.sdx .sd-btn--onNavy:hover { background: rgba(255,255,255,.14); box-shadow: inset 0 0 0 1px rgba(255,255,255,.75); }
+
+/* ---------- 5. Header: transparent über dem Herobild ------------ */
+.sdx { position: relative; }
+.sdx .sd-header--float {
+  position: absolute; top: 0; left: 0; right: 0; z-index: 6;
+  background: transparent; backdrop-filter: none; border-bottom: 0;
+}
+.sdx .sd-header--float .sd-header__in { height: 108px; }
+.sdx .sd-header--float .sd-header__logo img { height: 58px; }
+.sdx .sd-header--float .sd-nav { gap: 38px; }
+.sdx .sd-header--float .sd-nav a { font-size: 13px; font-weight: 700; letter-spacing: .1em; text-transform: uppercase; color: var(--ink); }
+.sdx .sd-header--float .sd-nav a::after { height: 1px; background: var(--blue); }
+.sdx .sd-header--float .sd-nav a:hover { color: var(--blue); }
+.sdx .sd-header--float .sd-lang { font-size: 12px; letter-spacing: .1em; }
+.sdx .sd-header--float .sd-lang a { border-radius: 0; padding: 5px 8px; }
+.sdx .sd-header--float .sd-lang a:hover { background: var(--sky); color: var(--blue-deep); }
+.sdx .sd-header--float .sd-lang .is-active { background: transparent; color: var(--navy); box-shadow: inset 0 -1px 0 var(--blue); }
+.sdx .sd-header--float .sd-lang span { color: var(--blue-soft); }
+.sdx .sd-header--float .sd-btn { padding: 14px 26px; font-size: 11.5px; }
+
+/* ---------- 6. Hero --------------------------------------------- */
+.sdx .sd-hero--float { background: #FFFFFF; }
+/* Bildebene nach rechts versetzt: schafft links eine ruhige Fläche für den Text,
+   ohne die Packung anzuschneiden. Links bleibt der weisse Hero-Hintergrund. */
+.sdx .sd-hero--float .sd-hero__media { left: 20%; right: -2%; }
+.sdx .sd-hero--float .sd-hero__media img { object-position: 62% 50%; }
+.sdx .sd-hero--float .sd-hero__veil {
+  background: linear-gradient(96deg, #FFFFFF 0%, #FFFFFF 34%, rgba(255,255,255,.92) 46%, rgba(255,255,255,.30) 62%, rgba(255,255,255,0) 74%);
+}
+.sdx .sd-hero--float .sd-hero__in {
+  min-height: 800px;
+  padding-top: clamp(168px, 15vw, 212px);
+  padding-bottom: clamp(96px, 10vw, 140px);
+}
+.sdx .sd-hero--float .sd-hero__col { max-width: 610px; }
+
+.sdx .sd-pill {
+  border-radius: 0; padding: 9px 16px;
+  background: var(--sky); box-shadow: none;
+  font-size: 11.5px; letter-spacing: .18em; color: var(--blue-deep);
+}
+.sdx .sd-pill i { width: 6px; height: 6px; border-radius: 0; background: var(--blue); box-shadow: none; }
+
+.sdx .sd-hero h1 { margin-top: 34px; letter-spacing: -.028em; line-height: 1.04; }
+.sdx .sd-hero h1 em { color: var(--blue); }
+.sdx .sd-hero__lead { margin-top: 30px; max-width: 530px; line-height: 1.78; }
+.sdx .sd-hero__cta { margin-top: 46px; gap: 16px; }
+.sdx .sd-hero__meta { margin-top: 56px; gap: 16px 28px; }
+.sdx .sd-hero__meta li { font-size: 13px; font-weight: 700; letter-spacing: .04em; color: var(--blue-deep); }
+.sdx .sd-hero__meta li::before { width: 8px; height: 8px; border-radius: 0; background: var(--blue-soft); box-shadow: none; }
+
+/* ---------- 7. Kennzahlen: hellblaues Band statt Navy ----------- */
+.sdx .sd-stats { background: var(--sky); color: var(--muted); }
+.sdx .sd-stats__grid { border-top: 1px solid rgba(0,16,46,.10); }
+.sdx .sd-stat { padding: 64px 40px; border-left: 1px solid rgba(0,16,46,.10); }
+.sdx .sd-stat:first-child { padding-left: 0; }
+.sdx .sd-stat:last-child { padding-right: 0; }
+.sdx .sd-stat b { color: var(--navy); font-size: clamp(34px, 3.2vw, 46px); letter-spacing: -.03em; }
+.sdx .sd-stat span { margin-top: 16px; color: #33475F; font-size: 14.5px; }
+.sdx .sd-stat span u { color: rgba(0,16,46,.45); margin-top: 8px; }
+
+/* ---------- 8. Karten: nur Linien, kein Schatten ---------------- */
+.sdx .sd-card {
+  background: #FFFFFF; border-radius: var(--r-md);
+  padding: 48px 44px 46px;
+  box-shadow: inset 0 0 0 1px var(--line);
+}
+.sdx .sd-card:hover { transform: none; box-shadow: inset 0 0 0 1px var(--blue-soft); background: var(--tint); }
+.sdx .sd-card__pikto { height: 148px; }
+.sdx .sd-card__pikto img { max-height: 148px; }
+.sdx .sd-card__label { margin-top: 34px; font-size: 11.5px; letter-spacing: .22em; }
+.sdx .sd-card h3 { margin-top: 14px; }
+.sdx .sd-card p { margin-top: 18px; line-height: 1.78; }
+.sdx .sd-card cite { padding-top: 30px; color: var(--blue-deep); }
+.sdx .sd-card cite::before { background: var(--blue-soft); margin-bottom: 20px; }
+
+/* ---------- 9. Anwendung ---------------------------------------- */
+.sdx .sd-steps { background: var(--tint); }
+.sdx .sd-step {
+  background: #FFFFFF; border-radius: var(--r-md);
+  padding: 44px 40px 44px;
+  box-shadow: inset 0 0 0 1px var(--line);
+}
+.sdx .sd-step__fig { height: 210px; border-radius: 0; background: var(--blue-mist); }
+.sdx .sd-step__no {
+  top: 0; left: 0; width: 52px; height: 52px; border-radius: 0;
+  background: var(--navy); color: #FFFFFF; font-size: 14px;
+}
+.sdx .sd-step h3 { margin-top: 32px; }
+.sdx .sd-step p { margin-top: 14px; line-height: 1.75; }
+.sdx .sd-notes { margin-top: 40px; gap: 14px; }
+.sdx .sd-notes li {
+  border-radius: 0; padding: 15px 24px; background: #FFFFFF;
+  box-shadow: inset 0 0 0 1px var(--line);
+  font-size: 13px; font-weight: 700; letter-spacing: .06em; text-transform: uppercase; color: var(--blue-deep);
+}
+.sdx .sd-notes li::before { width: 5px; height: 5px; border-radius: 0; background: var(--blue-soft); }
+
+/* ---------- 10. Präoperativ ------------------------------------- */
+.sdx .sd-split { gap: clamp(48px, 6vw, 96px); }
+.sdx .sd-split__fig img { border-radius: var(--r-md); }
+.sdx .sd-quotebox {
+  right: -32px; bottom: -32px; width: 292px; border-radius: 0;
+  background: var(--navy); box-shadow: none; padding: 32px 34px 34px;
+}
+.sdx .sd-quotebox b { font-size: 46px; }
+.sdx .sd-quotebox span { color: rgba(255,255,255,.80); margin-top: 12px; }
+.sdx .sd-checks { margin-top: 38px; gap: 20px; }
+.sdx .sd-checks li::before { border-radius: 0; background: var(--sky); color: var(--blue-deep); }
+
+/* ---------- 11. Evidenz: hell statt dunkel ---------------------- */
+.sdx .sd-evid { background: var(--sky); color: var(--muted); }
+.sdx .sd-evid::before { display: none; }
+.sdx .sd-evid .sd-h2 { color: var(--navy); }
+.sdx .sd-evid .sd-eyebrow { color: var(--blue-deep); }
+.sdx .sd-evid .sd-eyebrow::before { background: var(--blue-deep); }
+.sdx .sd-evid .sd-lead { color: #33475F; }
+.sdx .sd-pub {
+  background: #FFFFFF; border-radius: var(--r-md);
+  padding: 44px 42px 46px; box-shadow: inset 0 0 0 1px rgba(0,16,46,.08);
+}
+.sdx .sd-pub__j { color: var(--blue); font-size: 11.5px; letter-spacing: .22em; }
+.sdx .sd-pub h3 { color: var(--navy); margin-top: 16px; }
+.sdx .sd-pub p { color: var(--muted); margin-top: 16px; line-height: 1.78; }
+.sdx .sd-evid__foot { margin-top: 40px; color: var(--muted); font-size: 14.5px; }
+
+/* ---------- 12. Abschluss-CTA ----------------------------------- */
+.sdx .sd-cta { background: #FFFFFF; }
+.sdx .sd-cta__box {
+  border-radius: var(--r-md); background: var(--tint);
+  box-shadow: inset 0 0 0 1px var(--line);
+  border-left: 4px solid var(--navy);
+  padding: clamp(56px, 6vw, 84px) clamp(40px, 6vw, 84px);
+  gap: 56px;
+}
+.sdx .sd-cta__box p { margin-top: 20px; line-height: 1.78; }
+.sdx .sd-cta__btns { margin-top: 42px; gap: 16px; }
+.sdx .sd-cta__mascot { width: 232px; }
+
+/* ---------- 13. Footer ------------------------------------------ */
+.sdx .sd-footer { background: var(--navy); padding: 92px 0 38px; }
+.sdx .sd-footer h4 { font-size: 11.5px; letter-spacing: .22em; }
+.sdx .sd-footer__grid { gap: 56px; }
+.sdx .sd-footer__bar { margin-top: 72px; }
+
+/* ---------- 14. Responsive -------------------------------------- */
+@media (max-width: 1080px) {
+  .sdx .sd-stat { padding: 44px 32px; }
+  .sdx .sd-stat:nth-child(odd) { padding-left: 0; }
+  .sdx .sd-stat:nth-child(1), .sdx .sd-stat:nth-child(2) { border-bottom: 1px solid rgba(0,16,46,.10); }
+}
+@media (max-width: 900px) {
+  /* Header wieder mitlaufend, damit er das Bild auf schmalen Geräten nicht überdeckt */
+  .sdx .sd-header--float { position: static; background: #FFFFFF; border-bottom: 1px solid var(--line); }
+  .sdx .sd-header--float .sd-header__in { height: 88px; }
+  .sdx .sd-hero--float .sd-hero__in { min-height: 0; padding-top: 56px; padding-bottom: 68px; }
+  .sdx .sd-quotebox { right: 20px; bottom: -26px; width: 258px; }
+}
+@media (max-width: 680px) {
+  .sdx .sd-wrap { padding-left: 24px; padding-right: 24px; }
+  .sdx .sd-stat { border-left: 0 !important; padding: 34px 0; border-bottom: 1px solid rgba(0,16,46,.10); }
+  .sdx .sd-stat:last-child { border-bottom: 0; }
+  .sdx .sd-card, .sdx .sd-step { padding: 36px 30px 36px; }
+  .sdx .sd-cta__box { border-left-width: 3px; }
+  .sdx .sd-btn { padding: 17px 26px; }
+}

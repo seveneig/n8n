@@ -16,6 +16,8 @@ const PAGES = [
   { src: 'index.html',     out: 'elementor-startseite.html', txt: 'startseite.txt', titel: 'Startseite' },
   { src: 'produkt.html',   out: 'elementor-produkt.html',    txt: 'produkt.txt',    titel: 'Produkt' },
   { src: 'ueber-uns.html', out: 'elementor-ueber-uns.html',  txt: 'ueber-uns.txt',  titel: 'Über uns' },
+  { src: 'index-alt.html', out: 'elementor-startseite-variante-b.html', txt: 'startseite-variante-b.txt',
+    titel: 'Startseite Variante B', extraCss: 'assets/css/sd-alt.css' },
 ];
 
 // Zusaetzlich als .txt ablegen: laesst sich per Doppelklick in Notepad oeffnen,
@@ -51,7 +53,8 @@ for (const page of PAGES) {
 
   // Seiteneigenes <style> (falls vorhanden) mitnehmen
   const own = html.match(/<style>([\s\S]*?)<\/style>/);
-  const ownCss = own ? '\n\n' + own[1].trim() : '';
+  const ownCss = (page.extraCss ? '\n\n' + readFileSync(resolve(root, page.extraCss), 'utf8').trim() : '')
+               + (own ? '\n\n' + own[1].trim() : '');
 
   const used = new Set();
   const inlined = body.replace(/src="(assets\/[^"]+)"/g, (_m, rel) => {

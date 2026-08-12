@@ -55,7 +55,11 @@ Diese stammen aus den Publikationen und dürfen genannt werden:
 
 ## Technik
 
-- Bestehende Seiten: `index.html` (Startseite), `produkt.html`, `ueber-uns.html`
+- Bestehende Seiten: `index.html` (Startseite Variante A), `index-alt.html`
+  (Startseite Variante B), `produkt.html`, `ueber-uns.html`
+- Variante B ist reine Überschreibung via `assets/css/sd-alt.css` – Änderungen am
+  Inhalt der Startseite müssen in **beiden** Quelldateien nachgezogen werden,
+  solange nicht entschieden ist, welche Variante bleibt
 - **Das Design liegt gemeinsam in `assets/css/sd.css`** – neue Seiten binden dieses
   Stylesheet ein und verwenden die vorhandenen Bausteine, statt eigenes CSS zu
   erfinden. Nur wirklich neue Komponenten kommen dort ergänzend hinzu.
