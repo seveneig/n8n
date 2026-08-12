@@ -1,0 +1,635 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Smell Discettes – Olfaktorischer Identifikationstest</title>
+<meta name="description" content="Smell Discettes: validierter Riechtest mit acht überschwelligen Riechstoffen. Entwickelt an der Universität Zürich, in fünf Minuten durchführbar, delegierbar an MPA oder Pflege.">
+
+<!-- ================================================================
+     SMELL DISCETTES – STARTSEITE
+     Alles unterhalb liegt in einem einzigen Wrapper .sdx und ist
+     vollständig gekapselt (eigener Reset), damit es in Elementor
+     exakt so aussieht wie hier.
+     ================================================================ -->
+
+<!-- Lato als Base64 eingebettet (SIL OFL) – garantiert identische Darstellung in Elementor -->
+<link rel="stylesheet" href="assets/fonts/lato.css">
+
+<style>
+/* ---------- 1. Kapselung / Reset -------------------------------- */
+.sdx, .sdx *, .sdx *::before, .sdx *::after { box-sizing: border-box; }
+.sdx * {
+  margin: 0; padding: 0; border: 0; outline: 0;
+  background: transparent; box-shadow: none;
+  font: inherit; line-height: inherit; color: inherit;
+  letter-spacing: inherit; word-spacing: inherit; text-align: inherit;
+  text-transform: none; text-decoration: none; text-indent: 0; text-shadow: none;
+  list-style: none; vertical-align: baseline; white-space: normal;
+  float: none; max-width: none; min-width: 0;
+}
+.sdx img, .sdx svg { display: block; max-width: 100%; height: auto; }
+.sdx a { color: inherit; text-decoration: none; }
+.sdx button { cursor: pointer; -webkit-appearance: none; appearance: none; }
+.sdx strong, .sdx b { font-weight: 700; }
+.sdx i, .sdx em { font-style: italic; }
+
+/* ---------- 2. Design-Tokens ------------------------------------ */
+.sdx {
+  --blue:        #407BA0;
+  --blue-deep:   #31637F;
+  --blue-soft:   #BCD3E5;
+  --blue-mist:   #EDF4F9;
+  --navy:        #00102E;
+  --navy-2:      #12294A;
+  --ink:         #16233A;
+  --muted:       #5C6E85;
+  --line:        #E1EAF2;
+  --tint:        #F5F9FC;
+  --white:       #FFFFFF;
+  --red:         #D8362C;
+
+  --wrap: 1200px;
+  --r-sm: 8px;
+  --r-md: 14px;
+  --r-lg: 22px;
+  --sh-sm: 0 1px 2px rgba(0,16,46,.05), 0 8px 24px -14px rgba(0,16,46,.18);
+  --sh-md: 0 1px 2px rgba(0,16,46,.05), 0 22px 48px -24px rgba(0,16,46,.30);
+
+  font-family: 'LatoSD', 'Lato', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Arial, sans-serif;
+  font-size: 17px;
+  font-weight: 400;
+  font-style: normal;
+  font-variant: normal;
+  line-height: 1.65;
+  letter-spacing: normal;
+  word-spacing: normal;
+  color: var(--ink);
+  text-align: left;
+  text-transform: none;
+  direction: ltr;
+  background: var(--white);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
+  overflow: hidden;           /* verhindert horizontales Überlaufen in Elementor */
+  scroll-behavior: smooth;
+}
+
+/* ---------- 3. Bausteine ---------------------------------------- */
+.sdx .sd-wrap { width: 100%; max-width: var(--wrap); margin: 0 auto; padding-left: 28px; padding-right: 28px; }
+.sdx .sd-sec  { padding: clamp(64px, 8vw, 116px) 0; }
+
+.sdx .sd-eyebrow {
+  display: inline-flex; align-items: center; gap: 10px;
+  font-size: 12px; font-weight: 700; letter-spacing: .16em;
+  text-transform: uppercase; color: var(--blue);
+}
+.sdx .sd-eyebrow::before { content: ""; width: 26px; height: 2px; background: var(--blue-soft); }
+
+.sdx .sd-h2 {
+  font-size: clamp(30px, 3.6vw, 46px); font-weight: 900; line-height: 1.14;
+  letter-spacing: -.021em; color: var(--navy); margin-top: 18px;
+}
+.sdx .sd-h3 { font-size: 21px; font-weight: 900; line-height: 1.3; letter-spacing: -.012em; color: var(--navy); }
+.sdx .sd-lead { font-size: clamp(17px, 1.25vw, 19px); color: var(--muted); line-height: 1.72; }
+.sdx .sd-head { max-width: 720px; }
+.sdx .sd-h2 + .sd-lead { margin-top: 18px; }
+
+.sdx .sd-btn {
+  display: inline-flex; align-items: center; justify-content: center; gap: 10px;
+  padding: 15px 28px; border-radius: 999px;
+  font-size: 15px; font-weight: 700; letter-spacing: .012em; line-height: 1.2;
+  transition: transform .18s ease, box-shadow .18s ease, background-color .18s ease, color .18s ease, border-color .18s ease;
+}
+.sdx .sd-btn--primary { background: var(--blue); color: var(--white); box-shadow: 0 10px 24px -12px rgba(64,123,160,.85); }
+.sdx .sd-btn--primary:hover { background: var(--blue-deep); transform: translateY(-1px); box-shadow: 0 16px 30px -14px rgba(64,123,160,.95); }
+.sdx .sd-btn--ghost { color: var(--navy); box-shadow: inset 0 0 0 1.5px rgba(0,16,46,.16); }
+.sdx .sd-btn--ghost:hover { box-shadow: inset 0 0 0 1.5px var(--blue); color: var(--blue); transform: translateY(-1px); }
+.sdx .sd-btn--light { background: var(--white); color: var(--navy); }
+.sdx .sd-btn--light:hover { transform: translateY(-1px); box-shadow: 0 14px 28px -14px rgba(0,0,0,.5); }
+.sdx .sd-btn--onNavy { color: var(--white); box-shadow: inset 0 0 0 1.5px rgba(255,255,255,.32); }
+.sdx .sd-btn--onNavy:hover { box-shadow: inset 0 0 0 1.5px rgba(255,255,255,.85); transform: translateY(-1px); }
+.sdx .sd-btn__arrow { font-size: 17px; line-height: 1; transform: translateY(-1px); }
+
+/* ---------- 4. Header ------------------------------------------- */
+.sdx .sd-header { border-bottom: 1px solid var(--line); background: rgba(255,255,255,.92); backdrop-filter: saturate(140%) blur(8px); }
+.sdx .sd-header__in { display: flex; align-items: center; gap: 32px; height: 84px; }
+.sdx .sd-header__logo img { height: 52px; width: auto; }
+.sdx .sd-nav { display: flex; align-items: center; gap: 30px; margin-left: auto; }
+.sdx .sd-nav a { font-size: 15px; font-weight: 700; color: var(--ink); position: relative; padding: 6px 0; }
+.sdx .sd-nav a::after { content: ""; position: absolute; left: 0; right: 100%; bottom: 0; height: 2px; background: var(--blue); transition: right .25s ease; }
+.sdx .sd-nav a:hover { color: var(--blue); }
+.sdx .sd-nav a:hover::after { right: 0; }
+.sdx .sd-lang { display: flex; align-items: center; gap: 4px; font-size: 13px; font-weight: 700; letter-spacing: .06em; color: var(--muted); }
+.sdx .sd-lang a { padding: 4px 7px; border-radius: 6px; }
+.sdx .sd-lang a:hover { color: var(--blue); background: var(--blue-mist); }
+.sdx .sd-lang .is-active { color: var(--navy); background: var(--blue-mist); }
+.sdx .sd-lang span { color: var(--line); }
+.sdx .sd-header .sd-btn { padding: 12px 22px; font-size: 14px; }
+
+/* ---------- 5. Hero --------------------------------------------- */
+.sdx .sd-hero { position: relative; isolation: isolate; background: var(--tint); }
+.sdx .sd-hero__media { position: absolute; inset: 0; z-index: 0; }
+.sdx .sd-hero__media img { width: 100%; height: 100%; object-fit: cover; object-position: 78% 50%; }
+.sdx .sd-hero__veil {
+  position: absolute; inset: 0; z-index: 1;
+  background: linear-gradient(96deg, #FFFFFF 0%, rgba(255,255,255,.97) 30%, rgba(255,255,255,.80) 46%, rgba(255,255,255,.20) 62%, rgba(255,255,255,0) 74%);
+}
+.sdx .sd-hero__in { position: relative; z-index: 2; padding-top: clamp(72px, 8vw, 112px); padding-bottom: clamp(72px, 8vw, 112px); min-height: 660px; display: flex; align-items: center; }
+.sdx .sd-hero__col { max-width: 620px; }
+.sdx .sd-pill {
+  display: inline-flex; align-items: center; gap: 9px;
+  padding: 7px 15px 7px 11px; border-radius: 999px;
+  background: var(--white); box-shadow: inset 0 0 0 1px var(--line), var(--sh-sm);
+  font-size: 12.5px; font-weight: 700; letter-spacing: .1em; text-transform: uppercase; color: var(--blue-deep);
+}
+.sdx .sd-pill i { width: 7px; height: 7px; border-radius: 50%; background: var(--blue); box-shadow: 0 0 0 4px rgba(64,123,160,.16); }
+.sdx .sd-hero h1 {
+  margin-top: 26px;
+  font-size: clamp(38px, 4.7vw, 62px); font-weight: 900; line-height: 1.06;
+  letter-spacing: -.03em; color: var(--navy);
+}
+.sdx .sd-hero h1 em { font-style: normal; color: var(--blue); }
+.sdx .sd-hero__lead { margin-top: 24px; font-size: clamp(17px, 1.3vw, 19.5px); line-height: 1.72; color: var(--muted); max-width: 560px; }
+.sdx .sd-hero__cta { display: flex; flex-wrap: wrap; gap: 14px; margin-top: 36px; }
+.sdx .sd-hero__meta { display: flex; align-items: center; flex-wrap: wrap; gap: 14px 22px; margin-top: 40px; }
+.sdx .sd-hero__meta img { height: 40px; width: auto; }
+.sdx .sd-hero__meta ul { display: flex; flex-wrap: wrap; gap: 8px 20px; }
+.sdx .sd-hero__meta li { font-size: 14px; font-weight: 700; color: var(--muted); display: flex; align-items: center; gap: 8px; }
+.sdx .sd-hero__meta li::before { content: ""; width: 15px; height: 15px; flex: none; border-radius: 50%; background: var(--blue-mist); box-shadow: inset 0 0 0 1.5px var(--blue-soft); }
+
+/* ---------- 6. Kennzahlen --------------------------------------- */
+.sdx .sd-stats { background: var(--navy); color: rgba(255,255,255,.72); }
+.sdx .sd-stats__grid { display: grid; grid-template-columns: repeat(4, 1fr); }
+.sdx .sd-stat { padding: 46px 34px; border-left: 1px solid rgba(255,255,255,.10); }
+.sdx .sd-stat:first-child { border-left: 0; padding-left: 0; }
+.sdx .sd-stat:last-child { padding-right: 0; }
+.sdx .sd-stat b { display: block; font-size: clamp(32px, 3vw, 42px); font-weight: 900; line-height: 1; letter-spacing: -.028em; color: var(--white); }
+.sdx .sd-stat span { display: block; margin-top: 12px; font-size: 14.5px; line-height: 1.55; }
+.sdx .sd-stat span u { text-decoration: none; color: rgba(255,255,255,.45); display: block; margin-top: 6px; font-size: 12.5px; letter-spacing: .02em; }
+
+/* ---------- 7. Karten ------------------------------------------- */
+.sdx .sd-grid3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 26px; margin-top: 56px; }
+.sdx .sd-card {
+  background: var(--white); border-radius: var(--r-lg); padding: 38px 34px 40px;
+  box-shadow: inset 0 0 0 1px var(--line), var(--sh-sm);
+  transition: transform .22s ease, box-shadow .22s ease;
+  display: flex; flex-direction: column;
+}
+.sdx .sd-card:hover { transform: translateY(-3px); box-shadow: inset 0 0 0 1px var(--blue-soft), var(--sh-md); }
+.sdx .sd-card__pikto { height: 132px; display: flex; align-items: flex-end; }
+.sdx .sd-card__pikto img { max-height: 132px; width: auto; }
+.sdx .sd-card__label { margin-top: 26px; font-size: 12px; font-weight: 700; letter-spacing: .16em; text-transform: uppercase; color: var(--blue); }
+.sdx .sd-card h3 { margin-top: 10px; }
+.sdx .sd-card p { margin-top: 14px; font-size: 15.5px; line-height: 1.7; color: var(--muted); }
+.sdx .sd-card cite { display: block; margin-top: auto; padding-top: 24px; font-style: normal; font-size: 13px; font-weight: 700; color: var(--blue-deep); letter-spacing: .01em; }
+.sdx .sd-card cite::before { content: ""; display: block; width: 100%; height: 1px; background: var(--line); margin-bottom: 16px; }
+
+/* ---------- 8. Anwendung ---------------------------------------- */
+.sdx .sd-steps { background: var(--tint); }
+.sdx .sd-steps__grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; margin-top: 56px; }
+.sdx .sd-step { background: var(--white); border-radius: var(--r-lg); padding: 34px 32px 36px; box-shadow: inset 0 0 0 1px var(--line); position: relative; }
+.sdx .sd-step__fig { height: 190px; display: flex; align-items: center; justify-content: center; border-radius: var(--r-md); background: linear-gradient(180deg, var(--blue-mist), #FFFFFF); }
+.sdx .sd-step__fig img { max-height: 154px; width: auto; }
+.sdx .sd-step__no {
+  position: absolute; top: 24px; left: 24px;
+  width: 40px; height: 40px; border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+  background: var(--navy); color: var(--white);
+  font-size: 15px; font-weight: 900; letter-spacing: 0;
+}
+.sdx .sd-step h3 { margin-top: 26px; }
+.sdx .sd-step p { margin-top: 12px; font-size: 15.5px; line-height: 1.7; color: var(--muted); }
+.sdx .sd-notes { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 30px; }
+.sdx .sd-notes li {
+  display: flex; align-items: center; gap: 10px;
+  padding: 13px 20px; border-radius: 999px; background: var(--white);
+  box-shadow: inset 0 0 0 1px var(--line);
+  font-size: 14.5px; font-weight: 700; color: var(--ink);
+}
+.sdx .sd-notes li::before { content: ""; width: 6px; height: 6px; border-radius: 50%; background: var(--blue); }
+
+/* ---------- 9. Präoperativ -------------------------------------- */
+.sdx .sd-split { display: grid; grid-template-columns: 0.92fr 1fr; gap: clamp(40px, 5vw, 76px); align-items: center; }
+.sdx .sd-split__fig { position: relative; }
+.sdx .sd-split__fig img { border-radius: var(--r-lg); box-shadow: var(--sh-md); width: 100%; aspect-ratio: 4 / 4.6; object-fit: cover; object-position: 50% 24%; }
+.sdx .sd-quotebox {
+  position: absolute; right: -28px; bottom: -30px; width: 268px;
+  background: var(--blue); color: var(--white); border-radius: var(--r-md);
+  padding: 24px 26px 26px; box-shadow: var(--sh-md);
+}
+.sdx .sd-quotebox b { display: block; font-size: 42px; font-weight: 900; line-height: 1; letter-spacing: -.03em; }
+.sdx .sd-quotebox span { display: block; margin-top: 10px; font-size: 14px; line-height: 1.55; color: rgba(255,255,255,.88); }
+.sdx .sd-checks { margin-top: 30px; display: grid; gap: 16px; }
+.sdx .sd-checks li { display: grid; grid-template-columns: 26px 1fr; gap: 14px; align-items: start; font-size: 16px; line-height: 1.65; color: var(--muted); }
+.sdx .sd-checks li b { color: var(--ink); font-weight: 700; }
+.sdx .sd-checks li::before {
+  content: "✓"; width: 26px; height: 26px; border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+  background: var(--blue-mist); color: var(--blue-deep);
+  font-size: 13px; font-weight: 900; margin-top: 2px;
+}
+.sdx .sd-source { margin-top: 26px; font-size: 13px; color: var(--muted); letter-spacing: .01em; }
+
+/* ---------- 10. Evidenz (dunkel) -------------------------------- */
+.sdx .sd-evid { background: var(--navy); color: rgba(255,255,255,.74); position: relative; overflow: hidden; }
+.sdx .sd-evid::before {
+  content: ""; position: absolute; top: -220px; right: -180px; width: 640px; height: 640px; border-radius: 50%;
+  background: radial-gradient(circle, rgba(64,123,160,.36), rgba(64,123,160,0) 68%);
+}
+.sdx .sd-evid .sd-wrap { position: relative; z-index: 1; }
+.sdx .sd-evid .sd-h2 { color: var(--white); }
+.sdx .sd-evid .sd-eyebrow { color: var(--blue-soft); }
+.sdx .sd-evid .sd-eyebrow::before { background: rgba(188,211,229,.45); }
+.sdx .sd-evid .sd-lead { color: rgba(255,255,255,.70); }
+.sdx .sd-pubs { display: grid; grid-template-columns: 1fr 1fr; gap: 22px; margin-top: 52px; }
+.sdx .sd-pub { padding: 32px 32px 34px; border-radius: var(--r-md); background: rgba(255,255,255,.045); box-shadow: inset 0 0 0 1px rgba(255,255,255,.10); }
+.sdx .sd-pub__j { font-size: 12px; font-weight: 700; letter-spacing: .15em; text-transform: uppercase; color: var(--blue-soft); }
+.sdx .sd-pub h3 { margin-top: 12px; color: var(--white); font-size: 19px; }
+.sdx .sd-pub p { margin-top: 12px; font-size: 15px; line-height: 1.7; }
+.sdx .sd-evid__foot { margin-top: 30px; font-size: 14px; color: rgba(255,255,255,.52); }
+
+/* ---------- 11. Abschluss-CTA ----------------------------------- */
+.sdx .sd-cta { background: var(--tint); }
+.sdx .sd-cta__box {
+  position: relative; overflow: hidden;
+  border-radius: var(--r-lg); background: var(--white);
+  box-shadow: inset 0 0 0 1px var(--line), var(--sh-md);
+  padding: clamp(44px, 5vw, 68px) clamp(32px, 5vw, 72px);
+  display: grid; grid-template-columns: 1fr auto; gap: 40px; align-items: center;
+}
+.sdx .sd-cta__box .sd-h2 { margin-top: 16px; }
+.sdx .sd-cta__box p { margin-top: 16px; max-width: 560px; font-size: 17px; line-height: 1.7; color: var(--muted); }
+.sdx .sd-cta__btns { display: flex; flex-wrap: wrap; gap: 14px; margin-top: 32px; }
+.sdx .sd-cta__mascot { width: 210px; }
+.sdx .sd-cta__mascot img { width: 100%; }
+
+/* ---------- 12. Footer ------------------------------------------ */
+.sdx .sd-footer { background: var(--navy); color: rgba(255,255,255,.62); padding: 72px 0 34px; }
+.sdx .sd-footer__grid { display: grid; grid-template-columns: 1.5fr 1fr 1fr 1fr; gap: 44px; }
+.sdx .sd-footer__logo img { height: 62px; width: auto; filter: brightness(0) invert(1); opacity: .95; }
+.sdx .sd-footer__grid p { margin-top: 20px; font-size: 14.5px; line-height: 1.7; max-width: 300px; }
+.sdx .sd-footer h4 { font-size: 12px; font-weight: 700; letter-spacing: .16em; text-transform: uppercase; color: var(--white); }
+.sdx .sd-footer ul { margin-top: 18px; display: grid; gap: 11px; }
+.sdx .sd-footer li a, .sdx .sd-footer li { font-size: 14.5px; }
+.sdx .sd-footer li a:hover { color: var(--white); }
+.sdx .sd-footer__bar {
+  margin-top: 56px; padding-top: 26px; border-top: 1px solid rgba(255,255,255,.12);
+  display: flex; flex-wrap: wrap; gap: 12px 26px; align-items: center;
+  font-size: 13.5px; color: rgba(255,255,255,.45);
+}
+.sdx .sd-footer__bar nav { margin-left: auto; display: flex; flex-wrap: wrap; gap: 22px; }
+.sdx .sd-footer__bar a:hover { color: var(--white); }
+
+/* ---------- 13. Responsive -------------------------------------- */
+@media (max-width: 1080px) {
+  .sdx .sd-grid3, .sdx .sd-steps__grid { grid-template-columns: 1fr 1fr; }
+  .sdx .sd-stats__grid { grid-template-columns: 1fr 1fr; }
+  .sdx .sd-stat { padding: 34px 28px; }
+  .sdx .sd-stat:nth-child(odd) { border-left: 0; padding-left: 0; }
+  .sdx .sd-stat:nth-child(1), .sdx .sd-stat:nth-child(2) { border-bottom: 1px solid rgba(255,255,255,.10); }
+  .sdx .sd-footer__grid { grid-template-columns: 1fr 1fr; gap: 36px; }
+}
+@media (max-width: 900px) {
+  .sdx { font-size: 16px; }
+  .sdx .sd-hero { background: var(--white); }
+  .sdx .sd-hero__media { position: static; }
+  .sdx .sd-hero__media img { height: auto; aspect-ratio: 5 / 4; object-position: 76% 50%; }
+  .sdx .sd-hero__veil { display: none; }
+  .sdx .sd-hero__in { min-height: 0; padding-top: 48px; padding-bottom: 56px; }
+  .sdx .sd-hero__col { max-width: none; }
+  .sdx .sd-split { grid-template-columns: 1fr; }
+  .sdx .sd-quotebox { right: 16px; bottom: -22px; width: 240px; }
+  .sdx .sd-pubs { grid-template-columns: 1fr; }
+  .sdx .sd-cta__box { grid-template-columns: 1fr; }
+  .sdx .sd-cta__mascot { width: 150px; }
+  .sdx .sd-nav { display: none; }
+}
+@media (max-width: 680px) {
+  .sdx .sd-wrap { padding-left: 20px; padding-right: 20px; }
+  .sdx .sd-grid3, .sdx .sd-steps__grid, .sdx .sd-stats__grid { grid-template-columns: 1fr; }
+  .sdx .sd-stat { border-left: 0 !important; padding: 28px 0; border-bottom: 1px solid rgba(255,255,255,.10); }
+  .sdx .sd-stat:last-child { border-bottom: 0; }
+  .sdx .sd-header__in { height: 72px; gap: 16px; }
+  .sdx .sd-header__logo img { height: 44px; }
+  .sdx .sd-header .sd-btn { display: none; }
+  .sdx .sd-lang { margin-left: auto; }
+  .sdx .sd-btn { width: 100%; }
+  .sdx .sd-card, .sdx .sd-step { padding: 30px 26px 32px; }
+  .sdx .sd-footer__grid { grid-template-columns: 1fr; }
+  .sdx .sd-footer__bar nav { margin-left: 0; }
+}
+</style>
+</head>
+<body style="margin:0">
+
+<!-- ==== AB HIER IN DEN ELEMENTOR-HTML-WIDGET KOPIEREN ==== -->
+<div class="sdx">
+
+  <!-- ---------- Header (löschbar, falls das Theme bereits einen Header hat) ---------- -->
+  <header class="sd-header">
+    <div class="sd-wrap sd-header__in">
+      <a class="sd-header__logo" href="#" aria-label="Smell Discettes Startseite">
+        <img src="assets/logo/logo.webp" alt="Smell Discettes" width="420" height="370">
+      </a>
+      <nav class="sd-nav">
+        <a href="#evidenz">Evidenz</a>
+        <a href="#anwendung">Anwendung</a>
+        <a href="#praeoperativ">Präoperativ</a>
+        <a href="#bestellen">Bestellen</a>
+      </nav>
+      <div class="sd-lang">
+        <a class="is-active" href="#">DE</a><span>/</span><a href="#">FR</a><span>/</span><a href="#">IT</a>
+      </div>
+      <a class="sd-btn sd-btn--primary" href="#bestellen">Bestellen</a>
+    </div>
+  </header>
+
+  <!-- ---------- Hero ---------- -->
+  <section class="sd-hero">
+    <div class="sd-hero__media">
+      <img src="assets/bilder/hero/hero.webp" alt="Smell Discettes Olfaction Test – Verpackung mit acht Riechstoff-Disketten" width="2000" height="1186">
+    </div>
+    <div class="sd-hero__veil"></div>
+    <div class="sd-wrap sd-hero__in">
+      <div class="sd-hero__col">
+        <span class="sd-pill"><i></i> Wieder verfügbar</span>
+        <h1>Riechvermögen objektiv testen.<br><em>In fünf Minuten.</em></h1>
+        <p class="sd-hero__lead">
+          Smell Discettes ist ein validierter olfaktorischer Identifikationstest mit acht
+          überschwelligen Riechstoffen. Entwickelt an der Universität Zürich, in vier
+          Publikationen bestätigt – und ohne Strom, Labor oder Kalibrierung direkt in der
+          Sprechstunde einsetzbar.
+        </p>
+        <div class="sd-hero__cta">
+          <a class="sd-btn sd-btn--primary" href="#bestellen">Smell Discettes bestellen <span class="sd-btn__arrow">→</span></a>
+          <a class="sd-btn sd-btn--ghost" href="#partner">Vertriebspartner werden</a>
+        </div>
+        <div class="sd-hero__meta">
+          <img src="assets/icons/swiss-made.webp" alt="Swiss Made" width="520" height="153">
+          <ul>
+            <li>Delegierbar an MPA und Pflege</li>
+            <li>Disketten wiederverwendbar</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ---------- Kennzahlen ---------- -->
+  <section class="sd-stats">
+    <div class="sd-wrap">
+      <div class="sd-stats__grid">
+        <div class="sd-stat">
+          <b>99,74 %</b>
+          <span>statistische Sicherheit bei einem Score von 7 oder 8<u>Briner &amp; Simmen 1999, n = 124</u></span>
+        </div>
+        <div class="sd-stat">
+          <b>&lt; 5 Min.</b>
+          <span>für Durchführung und Auswertung<u>ohne Vorbereitung oder Gerät</u></span>
+        </div>
+        <div class="sd-stat">
+          <b>8</b>
+          <span>überschwellige Riechstoffe auf Polyester-Disketten<u>Format 5 × 6 cm, wiederverwendbar</u></span>
+        </div>
+        <div class="sd-stat">
+          <b>4</b>
+          <span>Publikationen zur Validierung<u>Rhinology und Clinical Otolaryngology</u></span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ---------- Die wichtigsten Punkte ---------- -->
+  <section class="sd-sec" id="evidenz">
+    <div class="sd-wrap">
+      <div class="sd-head">
+        <span class="sd-eyebrow">Die wichtigsten Punkte</span>
+        <h2 class="sd-h2">Ein Riechtest, der in den Praxisalltag passt</h2>
+        <p class="sd-lead">
+          Wissenschaftlich abgesichert, in wenigen Minuten durchgeführt und dort relevant,
+          wo eine Dokumentation zählt: vor dem Eingriff.
+        </p>
+      </div>
+
+      <div class="sd-grid3">
+        <article class="sd-card">
+          <div class="sd-card__pikto"><img src="assets/icons/pikto-evidenz.webp" alt="" width="620" height="473"></div>
+          <span class="sd-card__label">Evidenz</span>
+          <h3 class="sd-h3">Validiert, publiziert, bewährt</h3>
+          <p>
+            Entwickelt an der Universität Zürich, Klinik für Ohren-, Nasen-, Hals- und
+            Gesichtschirurgie, und in vier Publikationen in <i>Rhinology</i> und
+            <i>Clinical Otolaryngology</i> validiert.
+          </p>
+          <cite>Briner &amp; Simmen 1999 (n = 124): 99,74 % Sicherheit bei Score 7 oder 8</cite>
+        </article>
+
+        <article class="sd-card">
+          <div class="sd-card__pikto"><img src="assets/icons/pikto-effizienz.webp" alt="" width="620" height="473"></div>
+          <span class="sd-card__label">Effizienz</span>
+          <h3 class="sd-h3">Drei Schritte, fünf Minuten, acht Gerüche</h3>
+          <p>
+            Acht Polyester-Disketten (5 × 6 cm) mit überschwelligen Riechstoffen. Die
+            Identifikation erfolgt im Triple-Forced-Choice-Verfahren mit je drei
+            Bildantworten – ohne Strom, ohne Labor.
+          </p>
+          <cite>Vollständig an MPA oder Pflege delegierbar</cite>
+        </article>
+
+        <article class="sd-card">
+          <div class="sd-card__pikto"><img src="assets/icons/pikto-praeop.webp" alt="" width="620" height="473"></div>
+          <span class="sd-card__label">Präoperative Relevanz</span>
+          <h3 class="sd-h3">Sicherheit vor jeder Nasenoperation</h3>
+          <p>
+            10,3 % der Patientinnen und Patienten haben bereits vor dem Eingriff eine
+            eingeschränkte Riechfunktion – meist unbemerkt. Ohne Baseline droht, ein
+            bestehender Riechverlust der Operation zugeschrieben zu werden.
+          </p>
+          <cite>Briner, Simmen &amp; Jones 2003</cite>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <!-- ---------- Anwendung ---------- -->
+  <section class="sd-sec sd-steps" id="anwendung">
+    <div class="sd-wrap">
+      <div class="sd-head">
+        <span class="sd-eyebrow">Anwendung</span>
+        <h2 class="sd-h2">Einfach und rasch – in drei Schritten</h2>
+        <p class="sd-lead">
+          Keine Vorbereitung, keine Kalibrierung, kein Gerät. Der gesamte Ablauf ist
+          delegierbar und liefert ein sofort dokumentierbares Ergebnis.
+        </p>
+      </div>
+
+      <div class="sd-steps__grid">
+        <article class="sd-step">
+          <span class="sd-step__no">1</span>
+          <div class="sd-step__fig"><img src="assets/bilder/anwendung/schritt-1.webp" alt="Diskette öffnen"></div>
+          <h3 class="sd-h3">Diskette öffnen</h3>
+          <p>Die Diskette aufziehen – der Riechstoff steht unmittelbar zur Verfügung.</p>
+        </article>
+        <article class="sd-step">
+          <span class="sd-step__no">2</span>
+          <div class="sd-step__fig"><img src="assets/bilder/anwendung/schritt-2.webp" alt="An der Diskette riechen"></div>
+          <h3 class="sd-h3">Riechen lassen</h3>
+          <p>Mit einem oder beiden Nasenlöchern an der geöffneten Diskette riechen.</p>
+        </article>
+        <article class="sd-step">
+          <span class="sd-step__no">3</span>
+          <div class="sd-step__fig"><img src="assets/bilder/anwendung/schritt-3.webp" alt="Aus drei Bildantworten auswählen"></div>
+          <h3 class="sd-h3">Antwort auswählen</h3>
+          <p>Aus drei Bildantworten die passende wählen. Das Ergebnis liegt sofort vor.</p>
+        </article>
+      </div>
+
+      <ul class="sd-notes">
+        <li>Disketten wiederverwendbar</li>
+        <li>Refills nach ca. 12 Monaten einzeln nachbestellbar</li>
+        <li>Kein Strom, kein Labor, keine Kalibrierung</li>
+      </ul>
+    </div>
+  </section>
+
+  <!-- ---------- Präoperativ ---------- -->
+  <section class="sd-sec" id="praeoperativ">
+    <div class="sd-wrap sd-split">
+      <div class="sd-split__fig">
+        <img src="assets/bilder/personen/praxis.webp" alt="Arzt mit Smell Discettes Olfaction Test in der Sprechstunde" width="1200" height="1800">
+        <div class="sd-quotebox">
+          <b>10,3 %</b>
+          <span>zeigen bereits vor einer Nasenoperation eine eingeschränkte Riechfunktion.</span>
+        </div>
+      </div>
+      <div>
+        <span class="sd-eyebrow">Präoperative Dokumentation</span>
+        <h2 class="sd-h2">Eine Baseline, die im Zweifelsfall zählt</h2>
+        <p class="sd-lead">
+          Riechstörungen bleiben im Alltag häufig unbemerkt – bis nach einem Eingriff
+          danach gefragt wird. Eine dokumentierte Ausgangsmessung schafft Klarheit für
+          beide Seiten.
+        </p>
+        <ul class="sd-checks">
+          <li><span><b>Objektiv statt anamnestisch.</b> Ein reproduzierbarer Score ersetzt die Selbsteinschätzung der Patientin oder des Patienten.</span></li>
+          <li><span><b>Unter fünf Minuten Aufwand.</b> Vollständig delegierbar an MPA oder Pflege, ohne Terminverlängerung.</span></li>
+          <li><span><b>Dokumentierbar für die Krankengeschichte.</b> Klar nachvollziehbares Ergebnis auf dem Auswertungsbogen.</span></li>
+        </ul>
+        <p class="sd-source">Quelle: Briner HR, Simmen D, Jones N. – <i>Clinical Otolaryngology</i>, 2003.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ---------- Evidenz ---------- -->
+  <section class="sd-sec sd-evid">
+    <div class="sd-wrap">
+      <div class="sd-head">
+        <span class="sd-eyebrow">Evidenz</span>
+        <h2 class="sd-h2">Publiziert und peer-reviewed</h2>
+        <p class="sd-lead">
+          Smell Discettes wurde an der Universität Zürich entwickelt und in vier
+          Publikationen in <i>Rhinology</i> und <i>Clinical Otolaryngology</i> validiert.
+        </p>
+      </div>
+      <div class="sd-pubs">
+        <article class="sd-pub">
+          <span class="sd-pub__j">Rhinology · 1999</span>
+          <h3>Briner &amp; Simmen</h3>
+          <p>
+            Validierung des Identifikationstests an 124 Probandinnen und Probanden.
+            Bei einem Score von 7 oder 8 beträgt die statistische Sicherheit einer
+            normalen Riechfunktion 99,74 %.
+          </p>
+        </article>
+        <article class="sd-pub">
+          <span class="sd-pub__j">Clinical Otolaryngology · 2003</span>
+          <h3>Briner, Simmen &amp; Jones</h3>
+          <p>
+            Untersuchung der Riechfunktion vor Nasenoperationen: 10,3 % der Patientinnen
+            und Patienten weisen bereits präoperativ eine eingeschränkte Riechfunktion auf.
+          </p>
+        </article>
+      </div>
+      <p class="sd-evid__foot">Vollständige Literaturangaben und weitere Validierungsarbeiten senden wir Ihnen auf Anfrage zu.</p>
+    </div>
+  </section>
+
+  <!-- ---------- Abschluss-CTA ---------- -->
+  <section class="sd-sec sd-cta" id="bestellen">
+    <div class="sd-wrap">
+      <div class="sd-cta__box">
+        <div>
+          <span class="sd-eyebrow">Bestellen</span>
+          <h2 class="sd-h2">Smell Discettes für Ihre Praxis</h2>
+          <p>
+            Das komplette Set mit acht wiederverwendbaren Riechstoff-Disketten,
+            Auswertungsbögen und Gebrauchsanweisung. Refills sind einzeln nachbestellbar.
+            Sie möchten Smell Discettes in Ihrem Markt vertreiben? Sprechen Sie uns an.
+          </p>
+          <div class="sd-cta__btns" id="partner">
+            <a class="sd-btn sd-btn--primary" href="#">Jetzt bestellen <span class="sd-btn__arrow">→</span></a>
+            <a class="sd-btn sd-btn--ghost" href="#">Vertriebspartner werden</a>
+          </div>
+        </div>
+        <div class="sd-cta__mascot">
+          <img src="assets/icons/maskottchen.webp" alt="" width="680" height="734">
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ---------- Footer ---------- -->
+  <footer class="sd-footer">
+    <div class="sd-wrap">
+      <div class="sd-footer__grid">
+        <div>
+          <div class="sd-footer__logo"><img src="assets/logo/logo.webp" alt="Smell Discettes" width="420" height="370"></div>
+          <p>Olfaktorischer Identifikationstest für Klinik und Praxis. Entwickelt und hergestellt in der Schweiz.</p>
+        </div>
+        <div>
+          <h4>Produkt</h4>
+          <ul>
+            <li><a href="#anwendung">Anwendung</a></li>
+            <li><a href="#evidenz">Evidenz</a></li>
+            <li><a href="#bestellen">Bestellen</a></li>
+            <li><a href="#">Refills</a></li>
+          </ul>
+        </div>
+        <div>
+          <h4>Fachpersonen</h4>
+          <ul>
+            <li><a href="#praeoperativ">Präoperative Dokumentation</a></li>
+            <li><a href="#">Publikationen</a></li>
+            <li><a href="#">Gebrauchsanweisung</a></li>
+            <li><a href="#partner">Vertriebspartner</a></li>
+          </ul>
+        </div>
+        <div>
+          <h4>Kontakt</h4>
+          <ul>
+            <li>Smell Discettes</li>
+            <li>Schweiz</li>
+            <li><a href="mailto:info@smelldiscettes.ch">info@smelldiscettes.ch</a></li>
+          </ul>
+        </div>
+      </div>
+      <div class="sd-footer__bar">
+        <span>© 2026 Smell Discettes. Alle Rechte vorbehalten.</span>
+        <nav>
+          <a href="#">Deutsch</a>
+          <a href="#">Français</a>
+          <a href="#">Italiano</a>
+          <a href="#">Impressum</a>
+          <a href="#">Datenschutz</a>
+        </nav>
+      </div>
+    </div>
+  </footer>
+
+</div>
+<!-- ==== ENDE ELEMENTOR-BLOCK ==== -->
+
+</body>
+</html>

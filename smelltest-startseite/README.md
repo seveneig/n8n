@@ -1,89 +1,76 @@
 # Smell Discettes – Neue Startseite
 
-Arbeitsverzeichnis für die Neugestaltung der Startseite (aktuell: `https://tazazehi.myhostpoint.ch/de/`).
+Neugestaltung der Startseite (bisher: `https://tazazehi.myhostpoint.ch/de/`).
+Sprache: **Deutsch**. Markenfarben unverändert übernommen.
 
-## 📁 Hier Logo und Bilder hochladen
+## Dateien
 
-```
-smelltest-startseite/
-└── assets/
-    ├── logo/                  ← Logo (alle Varianten)
-    ├── bilder/
-    │   ├── hero/              ← Grosses Titelbild oben (Packung, Freisteller, Hintergrund)
-    │   ├── produkt/           ← Packung, Disketten, Refills, Auswertungsbogen
-    │   ├── anwendung/         ← Die 3 Schritte: öffnen / riechen / auswählen
-    │   ├── personen/          ← Ärzte, Praxis, Anwendung am Patienten
-    │   └── partner/           ← Logos Universität Zürich, Kliniken, Vertriebspartner
-    ├── icons/                 ← Einzelne Icons (SVG bevorzugt)
-    ├── downloads/             ← PDFs: Studien, Anleitung, Datenblatt, Preisliste
-    └── fonts/                 ← Nur falls eigene Schriftdateien vorhanden (sonst leer lassen)
-```
-
-### So lädst du hoch
-
-**Variante A – GitHub Weboberfläche (am einfachsten)**
-1. Repo auf GitHub öffnen, Branch `claude/smell-test-startseite-dd93l7` wählen
-2. In den gewünschten Ordner navigieren, z. B. `smelltest-startseite/assets/logo/`
-3. `Add file` → `Upload files` → Dateien reinziehen → `Commit changes`
-
-**Variante B – Direkt im Chat**
-Du kannst die Dateien auch einfach hier im Chat anhängen, dann lege ich sie am richtigen Ort ab.
-
----
-
-## 📷 Was ich brauche (Wunschliste)
-
-| Ordner | Datei | Beschreibung | Format |
-|---|---|---|---|
-| `logo/` | `logo.svg` | Hauptlogo, am besten als Vektor | SVG (sonst PNG ≥ 1000 px) |
-| `logo/` | `logo-weiss.svg` | Weisse Variante für dunkle Flächen | SVG / PNG transparent |
-| `logo/` | `favicon.png` | Quadratisch, nur die Rauch-Signatur | PNG 512 × 512 |
-| `bilder/hero/` | `hero.jpg` | Titelbild, quer, viel freier Raum links für Text | JPG/WebP ≥ 2400 px breit |
-| `bilder/produkt/` | `packung-*.jpg` | Packung freigestellt, Disketten einzeln, Set | JPG/WebP ≥ 1600 px |
-| `bilder/anwendung/` | `schritt-1.jpg`, `schritt-2.jpg`, `schritt-3.jpg` | Diskette öffnen / riechen / auswählen | JPG/WebP ≥ 1200 px, gleiches Seitenverhältnis |
-| `bilder/personen/` | `*.jpg` | Arzt/MPA in der Praxis, Anwendung | JPG ≥ 1600 px |
-| `bilder/partner/` | `*.svg` / `*.png` | Logos Uni Zürich, Kliniken, Partner | SVG / PNG transparent |
-| `downloads/` | `*.pdf` | Publikationen (Briner & Simmen 1999, Briner/Simmen/Jones 2003), Anleitung | PDF |
-
-**Hinweise**
-- Bitte Originalauflösung hochladen – ich optimiere und skaliere selbst (WebP + responsive Grössen).
-- Freisteller (transparenter Hintergrund) am liebsten als PNG.
-- Wenn zu einem Bild ein bestimmter Platz auf der Seite gedacht ist: kurz dazuschreiben, oder Dateiname sprechend wählen.
-- Dateinamen: klein, ohne Umlaute/Leerzeichen, mit Bindestrich (z. B. `packung-freisteller.png`).
-
----
-
-## 🎨 Was ich aus der bestehenden Seite bereits übernommen habe
-
-In `referenz/` liegt die Analyse der aktuellen Seite:
-
-- `referenz/aktuelle-startseite.html` – die bestehende Seite (Base64-Bilder entfernt, zur Struktur-Referenz)
-- `referenz/bestand-alte-seite/` – die aus der alten Seite extrahierten Bilder in Originalqualität:
-  - `logo-smell-discettes.webp` – aktuelles Logo
-  - `icon-diskette.svg` – Diskette-Icon (Vektor)
-  - `hero-packung.webp` – Packung mit Diskettenreihe, Laborhintergrund
-  - `foto-arzt.jpg` – Arzt mit Packung in der Praxis
-  - `img02.png`, `img04–img07.webp` – weitere Bestandsbilder
-
-**Erkanntes Design der aktuellen Seite**
-
-| | |
+| Datei | Zweck |
 |---|---|
-| Primärblau | `#407BA0` |
-| Dunkelblau / Navy | `#00102E` |
-| Sekundärblau | `#324A6D` |
-| Hellblau (Icon) | `#BCD3E5` |
-| Schrift | Lato |
-| Sprachen | DE / FR / IT |
+| **`elementor-embed.html`** | **Das Ergebnis zum Einfügen.** Kompletter Block mit eingebetteter Schrift und allen Bildern – in ein Elementor-HTML-Widget kopieren. 561 KB. |
+| `index.html` | Quelldatei zum Bearbeiten (normale Bildpfade, gut lesbar). Lässt sich direkt im Browser öffnen. |
+| `build-elementor.mjs` | Baut aus `index.html` die Elementor-Version: `node build-elementor.mjs` |
+| `EINBAU-ELEMENTOR.md` | **Einbauanleitung** inkl. Container-Einstellungen und offener Links |
+| `assets/` | Aufbereitete Bilder, Piktogramme und die eingebettete Schrift |
+| `assets/_originale/` | Die hochgeladenen Originaldateien, unverändert |
+| `referenz/` | Die alte Startseite als HTML plus die daraus extrahierten Bestandsbilder |
 
-**Inhalt der aktuellen Startseite**
-1. Hero: „Smell Discettes Olfaction Test – À nouveau disponible pour vous" + Buttons *SmellTest starten* / *Vertriebspartner werden*
-2. „Die wichtigsten Punkte" – 3 Karten: **Evidenz** (4 Publikationen, Studie Briner & Simmen 1999, n = 124, 99,74 %), **Effizienz** (3 Schritte, 5 Minuten, 8 Gerüche), **Präoperative Relevanz** (10,3 % mit Riechstörung vor OP)
-3. „Anwendung – Einfach und rasch" – 3 Schritte mit Bildern
-4. Bestellen / Footer mit Sprachumschaltung
+## Aufbau der Seite
 
----
+1. **Header** – Logo, Navigation, Sprachumschaltung DE/FR/IT, Bestellen-Button
+2. **Hero** – Produktbild über die volle Breite, Text links, Badge „Wieder verfügbar", zwei Handlungsaufrufe, Swiss-Made-Signet
+3. **Kennzahlen** – dunkelblaues Band: 99,74 % · < 5 Min. · 8 Riechstoffe · 4 Publikationen
+4. **Die wichtigsten Punkte** – drei Karten mit den Piktogrammen: Evidenz, Effizienz, Präoperative Relevanz
+5. **Anwendung** – die drei Schritte mit den Illustrationen aus der Gebrauchsanweisung
+6. **Präoperative Dokumentation** – Praxisfoto mit hervorgehobener 10,3-%-Kennzahl und drei Argumenten
+7. **Evidenz** – dunkler Abschnitt mit den beiden Publikationen
+8. **Bestellen** – Abschluss-Handlungsaufruf mit dem Nasen-Maskottchen
+9. **Footer** – Logo, drei Linkspalten, Kontakt, Sprachen, Rechtliches
 
-## ➡️ Nächster Schritt
+## Gestaltung
 
-Bilder hochladen, dann von dir die Gestaltungswünsche (Stil, Struktur, Texte, Zielgruppe) – danach baue ich die neue Startseite.
+Die Markenfarben sind unverändert; hinzugekommen sind abgestufte Zwischentöne für
+Flächen und Ränder, damit die Seite hochwertiger wirkt.
+
+| | Wert | Verwendung |
+|---|---|---|
+| Primärblau | `#407BA0` | Handlungsaufrufe, Auszeichnungen, Akzente |
+| Blau dunkel | `#31637F` | Hover-Zustände |
+| Navy | `#00102E` | Überschriften, dunkle Bänder, Footer |
+| Blau hell | `#BCD3E5` | Linien, Piktogramm-Flächen |
+| Blaudunst | `#EDF4F9` | Flächen hinter Illustrationen |
+| Fläche | `#F5F9FC` | Abschnittshintergründe |
+| Text | `#16233A` / `#5C6E85` | Fliesstext / Sekundärtext |
+
+Schrift: **Lato** (wie bisher), Gewichte 400/700/900, als Base64 eingebettet –
+dadurch keine Anfrage an Google Fonts und garantiert gleiche Darstellung.
+
+## Inhaltliche Anpassungen
+
+Die Aussagen der alten Seite sind erhalten, aber geschärft:
+
+- **Hero deutlich ausgebaut** – statt nur „À nouveau disponible pour vous" jetzt ein
+  Nutzenversprechen („Riechvermögen objektiv testen. In fünf Minuten.") mit
+  Erklärabsatz und Vertrauensmerkmalen.
+- **Neue Kennzahlen-Leiste** – die vier stärksten Zahlen sofort sichtbar,
+  statt sie im Fliesstext zu verstecken.
+- **Titel konkreter** – „Ein Riechtest, der in den Praxisalltag passt",
+  „Eine Baseline, die im Zweifelsfall zählt", „Publiziert und peer-reviewed".
+- **Neuer Abschnitt zur präoperativen Dokumentation** mit dem Praxisfoto und der
+  10,3-%-Kennzahl als eigenständiges Argument.
+- **Neuer Evidenz-Abschnitt** mit den beiden Publikationen einzeln aufgeführt.
+
+### Bitte gegenlesen
+
+- Die Publikationen sind mit **Autor, Journal und Jahr** angegeben, ohne genauen
+  Titel und Seitenzahlen – die vollständigen Angaben bitte ergänzen. Es sind
+  zwei von vier Studien benannt; die beiden übrigen fehlen mir.
+- Kontaktadresse und Firmenzeile im Footer sind Platzhalter.
+- „Wieder verfügbar" im Hero stammt sinngemäss aus der alten Seite – bitte
+  prüfen, ob das noch aktuell ist.
+
+## Kontrolle
+
+Die Seite wurde bei 1440 px, 768 px und 390 px Breite gerendert: kein horizontales
+Überlaufen, keine gebrochenen Bilder, Schrift lädt. Zusätzlich gegen ein bewusst
+störendes Test-Theme geprüft – dort **pixelidentisch** zur Standalone-Version.
