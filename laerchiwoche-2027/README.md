@@ -99,25 +99,36 @@ echten Einsatz. Organisator-Passwort in der Vorschau: `banfhold15`.
 
 ---
 
-## Logo und Bilder einsetzen
+## Logo und Bilder
 
-Aktuell zeichnet die Seite das Lärchi-Trophy-Wappen als **SVG-Nachbau**
-(Schild mit Golfball auf Tee, Laubwerk, Helmzier, fünf Sterne) und den
-Hero-Hintergrund als Bergkulisse. Beides lässt sich durch die Originale
-ersetzen — in `Index.html` ganz oben im Block `CONFIG`:
+Die Bilder sind **fest in `Index.html` eingebettet** (als `data:`-Adressen im
+Block zwischen `/* ASSETS-START */` und `/* ASSETS-ENDE */`). Damit bleibt die
+Seite eine einzige Datei und lädt ohne Zugriff auf fremde Server — Voraussetzung
+für den Betrieb in Google Apps Script.
 
-```js
-var CONFIG = {
-  logoBild: 'https://…/laerchi-trophy-weiss.png',   // weißes Logo für den dunklen Kopfbereich
-  heroBild: 'https://…/golfplatz.jpg',              // Foto für den Hero-Hintergrund
-  adminPasswort: 'banfhold15'
-};
+Im Einsatz sind:
+
+| Bild | wo |
+|---|---|
+| Wappen der Lärchi-Trophy (weiß) | Kopfzeile |
+| Vollständiges Logo mit Schriftzug (weiß) | Fußzeile |
+| Foto des Golfhotels | Hintergrund des Kopfbereichs, mit warmem Dunkelfilter |
+
+**Bilder austauschen:** neue Dateien nach `assets/` legen (Namen siehe
+`assets/README.md`) und einmal
+
+```
+pip install pillow
+python3 assets/build-embed.py
 ```
 
-Die Bilder brauchen eine öffentlich erreichbare Adresse. Bewährt: die Dateien in
-Google Drive ablegen, Freigabe auf „Jeder mit dem Link“ setzen und die Adresse
-`https://lh3.googleusercontent.com/d/DATEI-ID` verwenden — oder direkt die URLs
-von der Lärchenhof-Website nehmen.
+ausführen. Das Skript verkleinert die Bilder, rechnet sie um und schreibt den
+Assets-Block in `Index.html` neu. Danach die Datei wieder in Apps Script
+einfügen und neu bereitstellen.
+
+Für einen schnellen Test ohne Skript nehmen `CONFIG.logoBild` und
+`CONFIG.heroBild` ganz oben in `Index.html` auch eine normale Bild-Adresse
+entgegen — die hat Vorrang vor dem eingebetteten Bild.
 
 ---
 
