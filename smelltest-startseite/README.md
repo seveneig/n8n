@@ -9,12 +9,14 @@ Sprache: **Deutsch**. Markenfarben unverändert übernommen.
 |---|---|---|
 | Startseite (Variante A) | `index.html` | **`elementor-startseite.html`** (569 KB) |
 | Startseite (Variante B) | `index-alt.html` | **`elementor-startseite-variante-b.html`** (580 KB) |
+| Startseite (Variante C) | `index-c.html` | **`elementor-startseite-variante-c.html`** (445 KB) |
 | Produkt | `produkt.html` | **`elementor-produkt.html`** (464 KB) |
 | Über uns | `ueber-uns.html` | **`elementor-ueber-uns.html`** (383 KB) |
 
-Von der Startseite gibt es zwei Fassungen – **eine davon auswählen**, nicht beide
-einbauen. Der Unterschied ist rein gestalterisch, die Inhalte sind identisch.
-Siehe Abschnitt «Variante B».
+Von der Startseite gibt es drei Fassungen – **eine davon auswählen**, nicht mehrere
+einbauen. Die Aussagen sind in allen dreien dieselben; A und B unterscheiden sich nur
+gestalterisch, C ordnet die Abschnitte zusätzlich neu. Siehe «Variante B» und
+«Variante C».
 
 Die `elementor-*.html` sind die fertigen Copy-Paste-Blöcke: Schrift und alle Bilder
 sind eingebettet, es werden keine externen Dateien benötigt. Im Ordner
@@ -28,6 +30,8 @@ Doppelklick in Notepad öffnen lassen statt im Browser. Anleitung in
 |---|---|
 | `assets/css/sd.css` | **Gemeinsames Stylesheet aller Seiten** – hier wird das Design gepflegt |
 | `assets/css/sd-alt.css` | Überschreibungen für Variante B, wird nach `sd.css` geladen |
+| `assets/css/sd-c.css` | Eigenständiges Stylesheet für Variante C (ersetzt `sd.css`) |
+| `assets/fonts/lato-300.css` | Lato 300, nur von Variante C verwendet |
 | `assets/fonts/lato.css` | Lato als Base64 (SIL OFL), kein Google-Fonts-Aufruf |
 | `build-elementor.mjs` | Baut alle drei Elementor-Fassungen: `node build-elementor.mjs` |
 | `CLAUDE.md` | Inhaltsregeln, gelten auch für künftige Seiten und Übersetzungen |
@@ -89,6 +93,42 @@ Damit der Text im Hero nicht auf der Packung liegt, ist die Bildebene um 20 % na
 rechts versetzt – links bleibt eine ruhige weisse Fläche für die Schrift. Auf
 Geräten unter 900 px läuft der Header wieder normal mit, sonst würde er das Bild
 verdecken.
+
+## Variante C der Startseite – «Klinisches Dossier»
+
+Der weitestgehende Entwurf. Ausgangspunkt war die Frage, warum dieses Produkt
+gekauft wird: wegen der Evidenz, und weil eine dokumentierte Ausgangsmessung
+vor einem späteren Vorwurf schützt. Die Seite ist deshalb wie ein sauber gesetztes
+klinisches Dokument aufgebaut.
+
+**Was anders ist**
+
+- **Erzählung statt Merkmalsliste.** Reihenfolge: `01 Das Problem` → `02 Der Test` →
+  `03 Die Evidenz` → `04 Bezug`. Die präoperative Dokumentation steht damit ganz
+  oben statt in der Seitenmitte, weil sie das eigentliche Kaufargument ist.
+- **Quellenziffern.** Jede Zahl trägt eine hochgestellte Ziffer, die auf die
+  nummerierte Publikationsliste in Kapitel 03 springt – so wie in einer Publikation.
+  Die Behauptung und ihr Beleg sind einen Klick voneinander entfernt.
+- **Regulatorik weit oben.** CE, MD, UDI, Universität Zürich und Swiss Made stehen
+  in einer Leiste direkt unter dem Hero statt im Footer.
+- **Die acht Düfte werden benannt.** Kaffee, Vanille, Pfirsich, Gras, Ananas, Rose,
+  Schokolade, Fisch – als Raster. Das macht das Produkt greifbar und gab es bisher
+  nur auf der Produktseite.
+- **Kapitelziffern in der Marginalspalte** (01–04) zur Orientierung beim Scrollen.
+- **Typografie.** Überschriften in Lato 700 statt 900, grosse Lesetexte in Lato 300 –
+  ruhiger und redaktioneller. Randloses Herobild rechts, Text im Raster links.
+- **Ein einziger dunkler Block**, der Evidenzteil. Sonst Papierton `#F7FAFC` und Weiss.
+- **Leichter:** 445 KB statt 569/580 KB, weil weniger Bilder gebraucht werden.
+
+**Grundlage.** Die Recherche zu Medizinprodukt-Websites nennt drei Punkte, die hier
+umgesetzt sind: klinische Evidenz ist das stärkste Vertrauenssignal gegenüber
+Ärztinnen und Ärzten; regulatorische Kennzeichen gehören sichtbar platziert und
+nicht in den Footer; und die Seite muss Klinik **und** Einkauf gleichzeitig bedienen –
+deshalb stehen GTIN und der Hinweis auf die Artikelnummern direkt im Bestellblock.
+
+**Barrierefreiheit.** Fliesstext 17 px, Zeilenhöhe 1,72. Alle Text-Hintergrund-Paare
+wurden gerechnet und erfüllen WCAG AA (mindestens 4,5:1) – der schwächste Wert ist
+das Brandblau auf Weiss mit 4,61:1.
 
 ## Inhaltliche Anpassungen
 

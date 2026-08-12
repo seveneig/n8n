@@ -57,9 +57,11 @@ Diese stammen aus den Publikationen und dürfen genannt werden:
 
 - Bestehende Seiten: `index.html` (Startseite Variante A), `index-alt.html`
   (Startseite Variante B), `produkt.html`, `ueber-uns.html`
-- Variante B ist reine Überschreibung via `assets/css/sd-alt.css` – Änderungen am
-  Inhalt der Startseite müssen in **beiden** Quelldateien nachgezogen werden,
-  solange nicht entschieden ist, welche Variante bleibt
+- Variante B (`index-alt.html`) ist reine Überschreibung via `assets/css/sd-alt.css`;
+  Variante C (`index-c.html`) hat mit `assets/css/sd-c.css` ein eigenständiges
+  Stylesheet und eine eigene Abschnittsreihenfolge
+- Inhaltliche Änderungen an der Startseite müssen in **allen drei** Quelldateien
+  nachgezogen werden, solange nicht entschieden ist, welche Variante bleibt
 - **Das Design liegt gemeinsam in `assets/css/sd.css`** – neue Seiten binden dieses
   Stylesheet ein und verwenden die vorhandenen Bausteine, statt eigenes CSS zu
   erfinden. Nur wirklich neue Komponenten kommen dort ergänzend hinzu.

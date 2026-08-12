@@ -8,11 +8,12 @@
 |---|---|
 | Startseite – Variante A | `zum-kopieren/startseite.txt` |
 | Startseite – Variante B | `zum-kopieren/startseite-variante-b.txt` |
+| Startseite – Variante C | `zum-kopieren/startseite-variante-c.txt` |
 | Produkt | `zum-kopieren/produkt.txt` |
 | Über uns | `zum-kopieren/ueber-uns.txt` |
 
-> Für die Startseite **eine der beiden Varianten** wählen. Die Inhalte sind
-> identisch, nur die Gestaltung unterscheidet sich.
+> Für die Startseite **eine der drei Varianten** wählen. Die Aussagen sind in allen
+> dreien dieselben.
 
 Diese drei Textdateien liegen im Ordner `zum-kopieren/`. Ein Doppelklick öffnet sie
 direkt in Notepad. Inhaltlich sind sie identisch mit den `elementor-*.html`-Dateien –

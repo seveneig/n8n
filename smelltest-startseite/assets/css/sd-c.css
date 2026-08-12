@@ -1,0 +1,304 @@
+/* ================================================================
+   SMELL DISCETTES – VARIANTE C  «Klinisches Dossier»
+   Eigenständiges Stylesheet (ersetzt sd.css, lädt nicht darauf auf).
+   Klassenpräfix: .sdc-
+
+   Gestaltungsthese
+   ----------------
+   Gekauft wird dieses Produkt, weil es Evidenz hat und weil es vor
+   einem Vorwurf schützt. Die Seite ist deshalb wie ein sauber
+   gesetztes klinisches Dokument aufgebaut:
+     · Erzählung: Problem → Test → Evidenz → Bezug
+     · jede Zahl trägt eine hochgestellte Quellenziffer, die auf die
+       nummerierte Publikationsliste zeigt
+     · Regulatorik (CE, MD, UDI, Swiss Made) steht weit oben, nicht im Footer
+     · Kapitelziffern 01–04 in der Marginalspalte zur Orientierung
+     · Lato 300 für grosse Lesetexte, 700 für Überschriften – ruhiger
+       und redaktioneller als durchgehend 900
+   ================================================================ */
+
+/* ---------- 1. Kapselung / Reset -------------------------------- */
+.sdx, .sdx *, .sdx *::before, .sdx *::after { box-sizing: border-box; }
+.sdx * {
+  margin: 0; padding: 0; border: 0; outline: 0;
+  background: transparent; box-shadow: none;
+  font: inherit; line-height: inherit; color: inherit;
+  letter-spacing: inherit; word-spacing: inherit; text-align: inherit;
+  text-transform: none; text-decoration: none; text-indent: 0; text-shadow: none;
+  list-style: none; vertical-align: baseline; white-space: normal;
+  float: none; max-width: none; min-width: 0;
+}
+.sdx img, .sdx svg { display: block; max-width: 100%; height: auto; }
+.sdx a { color: inherit; text-decoration: none; }
+.sdx strong, .sdx b { font-weight: 700; }
+.sdx i, .sdx em { font-style: italic; }
+
+/* ---------- 2. Werte -------------------------------------------- */
+.sdx {
+  --paper:  #F7FAFC;
+  --white:  #FFFFFF;
+  --blue:   #407BA0;
+  --blue-d: #2F6084;
+  --blue-l: #6FA3C2;
+  --sky:    #DCE9F3;
+  --mist:   #EDF4F9;
+  --navy:   #00102E;
+  --ink:    #101E36;
+  --muted:  #55677E;   /* 6,0:1 auf Papier – WCAG AA erfüllt */
+  --rule:   #DBE6EF;
+
+  --wrap: 1280px;
+  --pad: 48px;
+  --gutter: max(var(--pad), calc((100% - var(--wrap)) / 2));
+
+  font-family: 'LatoSD', 'Lato', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Arial, sans-serif;
+  font-size: 17px;             /* über dem empfohlenen Minimum von 16 px */
+  font-weight: 400;
+  font-style: normal;
+  font-variant: normal;
+  line-height: 1.72;           /* über dem empfohlenen 1,5 */
+  letter-spacing: normal;
+  word-spacing: normal;
+  color: var(--ink);
+  text-align: left;
+  text-transform: none;
+  direction: ltr;
+  background: var(--paper);
+  position: relative;
+  overflow: hidden;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
+  scroll-behavior: smooth;
+}
+
+/* ---------- 3. Raster ------------------------------------------- */
+.sdx .sdc-wrap { width: 100%; max-width: var(--wrap); margin: 0 auto; padding: 0 var(--pad); }
+.sdx .sdc-sec { padding: clamp(80px, 9vw, 148px) 0; }
+.sdx .sdc-sec--paper { background: var(--paper); }
+.sdx .sdc-sec--white { background: var(--white); }
+.sdx .sdc-rule { height: 1px; background: var(--rule); }
+
+/* Kapitelkopf: Ziffer in der Marginalspalte, Titel daneben */
+.sdx .sdc-chap { display: grid; grid-template-columns: 132px 1fr; gap: 0 32px; align-items: start; }
+.sdx .sdc-chap__no {
+  font-size: 15px; font-weight: 700; letter-spacing: .2em; color: var(--blue);
+  padding-top: 12px; border-top: 2px solid var(--blue);
+}
+.sdx .sdc-chap__label { font-size: 12px; font-weight: 700; letter-spacing: .2em; text-transform: uppercase; color: var(--muted); display: block; margin-top: 6px; }
+.sdx .sdc-chap h2 {
+  font-size: clamp(30px, 3.4vw, 46px); font-weight: 700; line-height: 1.1;
+  letter-spacing: -.024em; color: var(--navy); max-width: 18ch;
+}
+.sdx .sdc-chap__lead {
+  margin-top: 22px; max-width: 62ch;
+  font-size: clamp(18px, 1.4vw, 21px); font-weight: 300; line-height: 1.62; color: #2A3B54;
+}
+.sdx .sdc-chap__body { grid-column: 2; }
+
+/* ---------- 4. Quellenziffern ----------------------------------- */
+.sdx .sdc-ref {
+  font-size: .58em; font-weight: 700; vertical-align: super; line-height: 0;
+  color: var(--blue); margin-left: 2px; letter-spacing: 0;
+}
+a.sdc-ref:hover { color: var(--blue-d); text-decoration: underline; }
+
+/* ---------- 5. Schaltflächen ------------------------------------ */
+.sdx .sdc-btn {
+  display: inline-flex; align-items: center; justify-content: center; gap: 12px;
+  padding: 19px 34px; border-radius: 2px;
+  font-size: 13px; font-weight: 700; letter-spacing: .1em; text-transform: uppercase; line-height: 1;
+  transition: background-color .2s ease, color .2s ease, box-shadow .2s ease;
+}
+.sdx .sdc-btn--solid { background: var(--blue); color: var(--white); }
+.sdx .sdc-btn--solid:hover { background: var(--blue-l); }
+.sdx .sdc-btn--line { color: var(--navy); box-shadow: inset 0 0 0 1px var(--blue); }
+.sdx .sdc-btn--line:hover { background: var(--sky); color: var(--blue-d); }
+.sdx .sdc-btn--onNavy { color: var(--white); box-shadow: inset 0 0 0 1px rgba(255,255,255,.45); }
+.sdx .sdc-btn--onNavy:hover { background: rgba(255,255,255,.14); box-shadow: inset 0 0 0 1px #FFFFFF; }
+.sdx .sdc-btn i { font-style: normal; font-size: 15px; }
+
+.sdx .sdc-txtlink { color: var(--blue-d); font-weight: 700; box-shadow: inset 0 -1px 0 var(--blue-l); }
+.sdx .sdc-txtlink:hover { color: var(--blue); box-shadow: inset 0 -1px 0 var(--blue); }
+
+/* ---------- 6. Kopfzeile ---------------------------------------- */
+.sdx .sdc-head { background: var(--white); border-bottom: 1px solid var(--rule); }
+.sdx .sdc-head__in { display: flex; align-items: center; gap: 36px; height: 92px; }
+.sdx .sdc-head__logo img { height: 54px; width: auto; }
+.sdx .sdc-nav { display: flex; align-items: center; gap: 34px; margin-left: auto; }
+.sdx .sdc-nav a { font-size: 13px; font-weight: 700; letter-spacing: .08em; text-transform: uppercase; color: var(--ink); padding: 8px 0; position: relative; }
+.sdx .sdc-nav a::after { content: ""; position: absolute; left: 0; right: 100%; bottom: 0; height: 2px; background: var(--blue); transition: right .25s ease; }
+.sdx .sdc-nav a:hover { color: var(--blue); }
+.sdx .sdc-nav a:hover::after { right: 0; }
+.sdx .sdc-lang { display: flex; align-items: center; gap: 3px; font-size: 12px; font-weight: 700; letter-spacing: .08em; color: var(--muted); }
+.sdx .sdc-lang a { padding: 5px 7px; }
+.sdx .sdc-lang a:hover { color: var(--blue); }
+.sdx .sdc-lang .is-on { color: var(--navy); box-shadow: inset 0 -2px 0 var(--blue); }
+.sdx .sdc-lang span { color: var(--rule); }
+.sdx .sdc-head .sdc-btn { padding: 14px 24px; font-size: 12px; }
+
+/* ---------- 7. Hero: Text links im Raster, Bild randlos rechts --- */
+.sdx .sdc-hero {
+  display: grid; grid-template-columns: minmax(0, 1.02fr) minmax(0, 1fr);
+  background: var(--white);
+  padding-left: var(--gutter);
+  border-bottom: 1px solid var(--rule);
+}
+.sdx .sdc-hero__text { padding: clamp(72px, 7vw, 110px) clamp(40px, 4vw, 72px) clamp(72px, 7vw, 110px) 0; align-self: center; }
+.sdx .sdc-hero__fig { position: relative; background: var(--mist); }
+.sdx .sdc-hero__fig img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; object-position: 44% 52%; }
+
+.sdx .sdc-kicker { display: flex; align-items: flex-start; gap: 12px; font-size: 12px; font-weight: 700; letter-spacing: .2em; text-transform: uppercase; color: var(--blue); }
+.sdx .sdc-kicker::before { content: ""; width: 34px; height: 2px; flex: none; margin-top: 7px; background: var(--blue); }
+
+.sdx .sdc-hero h1 {
+  margin-top: 28px;
+  font-size: clamp(40px, 4.4vw, 64px); font-weight: 700; line-height: 1.03;
+  letter-spacing: -.032em; color: var(--navy);
+}
+.sdx .sdc-hero h1 em { font-style: normal; color: var(--blue); }
+.sdx .sdc-hero__lead {
+  margin-top: 28px; max-width: 54ch;
+  font-size: clamp(18px, 1.4vw, 21px); font-weight: 300; line-height: 1.6; color: #2A3B54;
+}
+.sdx .sdc-hero__cta { display: flex; flex-wrap: wrap; gap: 14px; margin-top: 40px; }
+.sdx .sdc-hero__note { margin-top: 26px; font-size: 14.5px; color: var(--muted); }
+
+/* ---------- 8. Regulatorik-Leiste (bewusst weit oben) ------------ */
+.sdx .sdc-reg { background: var(--white); border-bottom: 1px solid var(--rule); }
+.sdx .sdc-reg__in { display: flex; flex-wrap: wrap; align-items: center; gap: 14px 26px; padding: 22px 0; }
+.sdx .sdc-reg img { height: 30px; width: auto; }
+.sdx .sdc-reg ul { display: flex; flex-wrap: wrap; gap: 12px; }
+.sdx .sdc-reg li {
+  padding: 8px 15px; box-shadow: inset 0 0 0 1px var(--rule); border-radius: 2px;
+  font-size: 12px; font-weight: 700; letter-spacing: .1em; text-transform: uppercase; color: var(--blue-d);
+}
+.sdx .sdc-reg p { margin-left: auto; font-size: 14px; color: var(--muted); }
+
+/* ---------- 9. Kennzahlenreihe ---------------------------------- */
+.sdx .sdc-facts { display: grid; grid-template-columns: repeat(4, 1fr); }
+.sdx .sdc-fact { padding: 56px 34px 56px 0; border-left: 1px solid var(--rule); padding-left: 34px; }
+.sdx .sdc-fact:first-child { border-left: 0; padding-left: 0; }
+.sdx .sdc-fact b { display: block; font-size: clamp(36px, 3.4vw, 50px); font-weight: 700; line-height: 1; letter-spacing: -.032em; color: var(--navy); }
+.sdx .sdc-fact span { display: block; margin-top: 14px; font-size: 15px; line-height: 1.55; color: var(--muted); }
+
+/* ---------- 10. Problemkapitel ---------------------------------- */
+.sdx .sdc-case { display: grid; grid-template-columns: 132px 1fr; gap: 0 32px; margin-top: 60px; }
+.sdx .sdc-case__body { grid-column: 2; display: grid; grid-template-columns: 1.05fr .95fr; gap: clamp(40px, 5vw, 76px); align-items: start; }
+.sdx .sdc-bignum {
+  font-size: clamp(72px, 8vw, 116px); font-weight: 700; line-height: .92;
+  letter-spacing: -.045em; color: var(--blue);
+}
+.sdx .sdc-bigcap { margin-top: 18px; font-size: clamp(19px, 1.5vw, 23px); font-weight: 300; line-height: 1.5; color: var(--navy); max-width: 28ch; }
+.sdx .sdc-body p { font-size: 17px; line-height: 1.75; color: var(--muted); }
+.sdx .sdc-body p + p { margin-top: 18px; }
+.sdx .sdc-list { margin-top: 30px; display: grid; gap: 0; border-top: 1px solid var(--rule); }
+.sdx .sdc-list li { padding: 22px 0; border-bottom: 1px solid var(--rule); display: grid; grid-template-columns: 30px 1fr; gap: 16px; font-size: 16px; line-height: 1.6; color: var(--muted); }
+.sdx .sdc-list li b { display: block; color: var(--ink); }
+.sdx .sdc-list li::before { content: "→"; color: var(--blue); font-weight: 700; }
+.sdx .sdc-figure img { width: 100%; border-radius: 2px; }
+.sdx .sdc-figure figcaption { margin-top: 14px; font-size: 13.5px; line-height: 1.6; color: var(--muted); }
+
+/* ---------- 11. Der Test: Düfte und Ablauf ---------------------- */
+.sdx .sdc-scents { display: grid; grid-template-columns: repeat(4, 1fr); gap: 1px; background: var(--rule); margin-top: 56px; box-shadow: 0 0 0 1px var(--rule); }
+.sdx .sdc-scent { background: var(--white); padding: 26px 24px; display: flex; align-items: center; gap: 16px; }
+.sdx .sdc-scent b { font-size: 12px; font-weight: 700; letter-spacing: .1em; color: var(--blue); }
+.sdx .sdc-scent span { font-size: 17px; font-weight: 700; color: var(--navy); }
+.sdx .sdc-scentnote { margin-top: 22px; font-size: 14.5px; color: var(--muted); }
+
+.sdx .sdc-steps { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1px; background: var(--rule); margin-top: 60px; box-shadow: 0 0 0 1px var(--rule); }
+.sdx .sdc-step { background: var(--white); padding: 40px 36px 42px; }
+.sdx .sdc-step__fig { height: 176px; display: flex; align-items: center; justify-content: center; }
+.sdx .sdc-step__fig img { max-height: 158px; width: auto; }
+.sdx .sdc-step__no { display: block; font-size: 12px; font-weight: 700; letter-spacing: .2em; color: var(--blue); }
+.sdx .sdc-step h3 { margin-top: 12px; font-size: 20px; font-weight: 700; line-height: 1.3; letter-spacing: -.012em; color: var(--navy); }
+.sdx .sdc-step p { margin-top: 12px; font-size: 15.5px; line-height: 1.68; color: var(--muted); }
+
+/* ---------- 12. Evidenzkapitel (einziger dunkler Block) ---------- */
+.sdx .sdc-ev { background: var(--navy); color: rgba(255,255,255,.76); }
+.sdx .sdc-ev .sdc-chap__no { color: var(--sky); border-top-color: var(--sky); }
+.sdx .sdc-ev .sdc-chap__label { color: rgba(255,255,255,.55); }
+.sdx .sdc-ev .sdc-chap h2 { color: var(--white); }
+.sdx .sdc-ev .sdc-chap__lead { color: rgba(255,255,255,.74); }
+.sdx .sdc-pubs { grid-column: 2; margin-top: 56px; border-top: 1px solid rgba(255,255,255,.16); }
+.sdx .sdc-pub {
+  display: grid; grid-template-columns: 56px 1fr auto; gap: 28px; align-items: baseline;
+  padding: 30px 0; border-bottom: 1px solid rgba(255,255,255,.16);
+}
+.sdx .sdc-pub__no { font-size: 14px; font-weight: 700; letter-spacing: .1em; color: var(--sky); }
+.sdx .sdc-pub h3 { font-size: 19px; font-weight: 700; line-height: 1.4; color: var(--white); }
+.sdx .sdc-pub p { margin-top: 10px; font-size: 15px; line-height: 1.65; color: rgba(255,255,255,.66); max-width: 62ch; }
+.sdx .sdc-pub__src { font-size: 12.5px; font-weight: 700; letter-spacing: .1em; text-transform: uppercase; color: rgba(255,255,255,.55); white-space: nowrap; }
+.sdx .sdc-evfoot { grid-column: 2; margin-top: 34px; font-size: 14.5px; color: rgba(255,255,255,.55); }
+.sdx .sdc-ev .sdc-txtlink { color: var(--sky); box-shadow: inset 0 -1px 0 rgba(188,211,229,.5); }
+.sdx .sdc-ev .sdc-txtlink:hover { color: #FFFFFF; box-shadow: inset 0 -1px 0 #FFFFFF; }
+
+/* ---------- 13. Bezug ------------------------------------------- */
+.sdx .sdc-order { display: grid; grid-template-columns: 132px 1fr; gap: 0 32px; }
+.sdx .sdc-order__body { grid-column: 2; display: grid; grid-template-columns: 1fr 1fr; gap: 1px; background: var(--rule); margin-top: 56px; box-shadow: 0 0 0 1px var(--rule); }
+.sdx .sdc-order__card { background: var(--white); padding: 48px 44px 50px; display: flex; flex-direction: column; }
+.sdx .sdc-order__card h3 { font-size: 22px; font-weight: 700; line-height: 1.3; letter-spacing: -.014em; color: var(--navy); margin-top: 12px; }
+.sdx .sdc-order__card p { margin-top: 14px; font-size: 16px; line-height: 1.7; color: var(--muted); }
+.sdx .sdc-order__card .sdc-btn { margin-top: 32px; align-self: flex-start; }
+.sdx .sdc-order__meta { margin-top: 26px; padding-top: 20px; border-top: 1px solid var(--rule); font-size: 13.5px; color: var(--muted); }
+.sdx .sdc-order__meta b { color: var(--ink); font-variant-numeric: tabular-nums; }
+
+/* ---------- 14. Fusszeile --------------------------------------- */
+.sdx .sdc-foot { background: var(--white); border-top: 1px solid var(--rule); padding: 72px 0 32px; color: var(--muted); }
+.sdx .sdc-foot__grid { display: grid; grid-template-columns: 1.6fr 1fr 1fr 1fr; gap: 48px; }
+.sdx .sdc-foot__logo img { height: 58px; width: auto; }
+.sdx .sdc-foot__grid p { margin-top: 20px; font-size: 14.5px; line-height: 1.7; max-width: 300px; }
+.sdx .sdc-foot h4 { font-size: 11.5px; font-weight: 700; letter-spacing: .2em; text-transform: uppercase; color: var(--navy); }
+.sdx .sdc-foot ul { margin-top: 18px; display: grid; gap: 11px; }
+.sdx .sdc-foot li, .sdx .sdc-foot li a { font-size: 14.5px; }
+.sdx .sdc-foot li a:hover { color: var(--blue); }
+.sdx .sdc-foot__bar {
+  margin-top: 64px; padding-top: 24px; border-top: 1px solid var(--rule);
+  display: flex; flex-wrap: wrap; gap: 12px 26px; align-items: center; font-size: 13.5px;
+}
+.sdx .sdc-foot__bar nav { margin-left: auto; display: flex; flex-wrap: wrap; gap: 22px; }
+.sdx .sdc-foot__bar a:hover { color: var(--blue); }
+
+/* ---------- 15. Responsive -------------------------------------- */
+@media (max-width: 1180px) {
+  .sdx .sdc-chap, .sdx .sdc-case, .sdx .sdc-order { grid-template-columns: 96px 1fr; }
+  .sdx .sdc-scents { grid-template-columns: repeat(2, 1fr); }
+}
+@media (max-width: 1000px) {
+  .sdx { --pad: 32px; }
+  .sdx .sdc-hero { grid-template-columns: 1fr; padding-left: 0; }
+  .sdx .sdc-hero__text { padding: 56px var(--pad) 60px; }
+  .sdx .sdc-hero__fig { min-height: 0; aspect-ratio: 16 / 10; }
+  .sdx .sdc-hero__fig img { position: static; height: 100%; }
+  .sdx .sdc-facts { grid-template-columns: 1fr 1fr; }
+  .sdx .sdc-fact { padding: 40px 24px; }
+  .sdx .sdc-fact:nth-child(odd) { border-left: 0; padding-left: 0; }
+  .sdx .sdc-fact:nth-child(1), .sdx .sdc-fact:nth-child(2) { border-bottom: 1px solid var(--rule); }
+  .sdx .sdc-case__body, .sdx .sdc-order__body { grid-template-columns: 1fr; }
+  .sdx .sdc-steps { grid-template-columns: 1fr; }
+  .sdx .sdc-nav { display: none; }
+  .sdx .sdc-foot__grid { grid-template-columns: 1fr 1fr; }
+}
+@media (max-width: 720px) {
+  .sdx { --pad: 22px; font-size: 16.5px; }
+  .sdx .sdc-chap, .sdx .sdc-case, .sdx .sdc-order { grid-template-columns: 1fr; gap: 0; }
+  .sdx .sdc-chap__body, .sdx .sdc-pubs, .sdx .sdc-evfoot,
+  .sdx .sdc-case__body, .sdx .sdc-order__body { grid-column: 1; }
+  .sdx .sdc-chap__no { display: inline-block; margin-bottom: 22px; }
+  .sdx .sdc-chap h2 { max-width: none; }
+  .sdx .sdc-scents { grid-template-columns: 1fr; }
+  .sdx .sdc-facts { grid-template-columns: 1fr; }
+  .sdx .sdc-fact { border-left: 0 !important; padding: 30px 0 !important; border-bottom: 1px solid var(--rule); }
+  .sdx .sdc-fact:last-child { border-bottom: 0; }
+  .sdx .sdc-pub { grid-template-columns: 1fr; gap: 8px; }
+  .sdx .sdc-pub__src { white-space: normal; }
+  .sdx .sdc-order__card { padding: 36px 28px 38px; }
+  .sdx .sdc-btn { width: 100%; }
+  .sdx .sdc-head__in { height: 76px; gap: 14px; }
+  .sdx .sdc-head__logo img { height: 44px; }
+  .sdx .sdc-head .sdc-btn { display: none; }
+  .sdx .sdc-lang { margin-left: auto; }
+  .sdx .sdc-reg p { margin-left: 0; }
+  .sdx .sdc-foot__grid { grid-template-columns: 1fr; }
+  .sdx .sdc-foot__bar nav { margin-left: 0; }
+}

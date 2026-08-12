@@ -18,6 +18,8 @@ const PAGES = [
   { src: 'ueber-uns.html', out: 'elementor-ueber-uns.html',  txt: 'ueber-uns.txt',  titel: 'Über uns' },
   { src: 'index-alt.html', out: 'elementor-startseite-variante-b.html', txt: 'startseite-variante-b.txt',
     titel: 'Startseite Variante B', extraCss: 'assets/css/sd-alt.css' },
+  { src: 'index-c.html',   out: 'elementor-startseite-variante-c.html', txt: 'startseite-variante-c.txt',
+    titel: 'Startseite Variante C', baseCss: 'assets/css/sd-c.css', extraFonts: ['assets/fonts/lato-300.css'] },
 ];
 
 // Zusaetzlich als .txt ablegen: laesst sich per Doppelklick in Notepad oeffnen,
@@ -41,7 +43,7 @@ const dataUri = (rel) => {
 };
 
 const fontCss = readFileSync(resolve(root, 'assets/fonts/lato.css'), 'utf8').trim();
-const sharedCss = readFileSync(resolve(root, 'assets/css/sd.css'), 'utf8').trim();
+const defaultCss = readFileSync(resolve(root, 'assets/css/sd.css'), 'utf8').trim();
 
 for (const page of PAGES) {
   const html = readFileSync(resolve(root, page.src), 'utf8');
@@ -52,6 +54,13 @@ for (const page of PAGES) {
     .replace(/\s*<!-- ==== ENDE ELEMENTOR-BLOCK ==== -->$/, '');
 
   // Seiteneigenes <style> (falls vorhanden) mitnehmen
+  // baseCss ersetzt das gemeinsame Stylesheet, extraCss ergänzt es
+  const sharedCss = page.baseCss
+    ? readFileSync(resolve(root, page.baseCss), 'utf8').trim()
+    : defaultCss;
+  const extraFontCss = (page.extraFonts || [])
+    .map((f) => readFileSync(resolve(root, f), 'utf8').trim()).join('\n');
+
   const own = html.match(/<style>([\s\S]*?)<\/style>/);
   const ownCss = (page.extraCss ? '\n\n' + readFileSync(resolve(root, page.extraCss), 'utf8').trim() : '')
                + (own ? '\n\n' + own[1].trim() : '');
@@ -71,7 +80,7 @@ for (const page of PAGES) {
   ============================================================
 -->
 <style>
-${fontCss}
+${fontCss}${extraFontCss ? '\n' + extraFontCss : ''}
 
 ${sharedCss}${ownCss}
 </style>
