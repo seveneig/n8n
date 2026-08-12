@@ -12,7 +12,7 @@
 /* ─────────────────────────── EINSTELLUNGEN ─────────────────────────── */
 
 /** Passwort für den Organisator-Bereich. Bitte ändern! */
-var ADMIN_PASSWORT = 'laerchi2027';
+var ADMIN_PASSWORT = 'banfhold15';
 
 /** Name des Tabellenblatts */
 var BLATT = 'Anmeldungen';

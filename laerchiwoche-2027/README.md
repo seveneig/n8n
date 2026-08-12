@@ -70,7 +70,7 @@ anpassen (gleiche Reihenfolge und gleiche IDs `d1` … `d7`).
 
 `Index.html` doppelklicken. Die Seite läuft vollständig, die Daten liegen dabei
 nur im jeweiligen Browser (`localStorage`) — ideal zum Zeigen, **nicht** für den
-echten Einsatz. Organisator-Passwort in der Vorschau: `laerchi2027`.
+echten Einsatz. Organisator-Passwort in der Vorschau: `banfhold15`.
 
 ---
 
@@ -110,7 +110,7 @@ ersetzen — in `Index.html` ganz oben im Block `CONFIG`:
 var CONFIG = {
   logoBild: 'https://…/laerchi-trophy-weiss.png',   // weißes Logo für den dunklen Kopfbereich
   heroBild: 'https://…/golfplatz.jpg',              // Foto für den Hero-Hintergrund
-  adminPasswort: 'laerchi2027'
+  adminPasswort: 'banfhold15'
 };
 ```
 
