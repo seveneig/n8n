@@ -25,6 +25,18 @@ Wenn eine dieser Aussagen aus einer Vorlage, der alten Website oder einem
 nicht übernehmen. Beim Übersetzen gilt das sinngemäss auch für
 *réutilisable* / *riutilizzabile* und *cinq minutes* / *cinque minuti*.
 
+## Publikationen
+
+Die vier Validierungsarbeiten (Titel gemäss der bestehenden Website):
+
+1. Olfaction in rhinology – methods of assessing the sense of smell
+2. Olfaction after endoscopic sinus surgery: long-term results
+3. Impaired sense of smell in patients with nasal surgery *(Briner, Simmen & Jones, Clinical Otolaryngology, 2003)*
+4. Smell diskettes as screening test of olfaction *(Briner & Simmen, Rhinology, 1999)*
+
+Für 1 und 2 sind Journal und Jahr **nicht bekannt** – nicht erfinden, sondern
+offen lassen, bis die Angaben vorliegen.
+
 ## Weiterhin zulässige Kennzahlen
 
 Diese stammen aus den Publikationen und dürfen genannt werden:
@@ -43,6 +55,11 @@ Diese stammen aus den Publikationen und dürfen genannt werden:
 
 ## Technik
 
-- Quelldatei bearbeiten ist immer `index.html` (bzw. die jeweilige Sprachdatei)
-- Danach `node build-elementor.mjs` ausführen – erzeugt die Elementor-Fassung neu
+- Bestehende Seiten: `index.html` (Startseite), `produkt.html`, `ueber-uns.html`
+- **Das Design liegt gemeinsam in `assets/css/sd.css`** – neue Seiten binden dieses
+  Stylesheet ein und verwenden die vorhandenen Bausteine, statt eigenes CSS zu
+  erfinden. Nur wirklich neue Komponenten kommen dort ergänzend hinzu.
+- Danach `node build-elementor.mjs` ausführen – erzeugt alle Elementor-Fassungen neu.
+  Neue Seiten in der Liste `PAGES` im Build-Script eintragen.
 - Alles bleibt im Wrapper `.sdx` gekapselt, kein Selektor greift nach aussen
+- Header-Navigation und Footer sind auf allen Seiten identisch zu halten

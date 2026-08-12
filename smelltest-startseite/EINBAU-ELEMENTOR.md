@@ -1,8 +1,14 @@
 # Einbau in Elementor
 
-## In drei Schritten
+## Für jede Seite: drei Schritte
 
-1. **`elementor-embed.html` öffnen** und den **gesamten Inhalt** kopieren (Strg/Cmd + A, Strg/Cmd + C).
+| WordPress-Seite | Datei zum Kopieren |
+|---|---|
+| Startseite | `elementor-startseite.html` |
+| Produkt | `elementor-produkt.html` |
+| Über uns | `elementor-ueber-uns.html` |
+
+1. Die passende Datei öffnen und den **gesamten Inhalt** kopieren (Strg/Cmd + A, Strg/Cmd + C).
 2. In Elementor eine **neue Sektion / Container** anlegen und darin ein **HTML-Widget** platzieren.
 3. Den kopierten Code in das HTML-Widget einfügen und speichern.
 
@@ -29,11 +35,11 @@ einschnüren, statt sie über die volle Breite laufen zu lassen.
   eigenem CSS-Reset. Theme- und Elementor-Styles (Schriftart, Zeilenhöhe,
   Laufweite, Listenpunkte, Bildrahmen, Link-Unterstreichungen) können nicht
   hineinwirken.
-- **Getestet.** Der Block wurde gegen ein absichtlich „feindliches" Test-Theme
-  gerendert (Serifenschrift, rote Überschriften, Bildrahmen, Unterstreichungen,
-  abweichende Laufweite) und ist dort **pixelidentisch** mit der Standalone-Version –
-  0 abweichende Pixel bei 1440 px Breite.
-- **Keine externen Dateien.** Schrift (Lato, SIL Open Font License) und alle elf
+- **Getestet.** Jede der drei Seiten wurde gegen ein absichtlich „feindliches"
+  Test-Theme gerendert (Serifenschrift, rote Überschriften, Bildrahmen,
+  Unterstreichungen, abweichende Laufweite) und ist dort **pixelidentisch** mit der
+  Standalone-Version – 0 abweichende Pixel, bei 1440 px und bei 390 px.
+- **Keine externen Dateien.** Schrift (Lato, SIL Open Font License) und alle
   Bilder sind als Base64 eingebettet. Es gibt keine gebrochenen Bildpfade, egal
   wohin der Block kopiert wird, und es werden keine Anfragen an Google Fonts
   gestellt (relevant für den DSGVO-Hinweis der Seite).
@@ -59,33 +65,41 @@ Alle Links stehen aktuell auf Platzhalter (`href="#"`). Zu ersetzen sind:
 
 | Stelle | Platzhalter | Ziel |
 |---|---|---|
-| Hero + CTA | „Smell Discettes bestellen" / „Jetzt bestellen" | Shop- oder Bestellseite |
-| Hero + CTA | „Vertriebspartner werden" | Kontakt-/Partnerformular |
+| Alle Seiten | „Vertriebspartner finden" / „Vertriebspartner werden" | Partnerliste bzw. Bewerbungsformular |
+| Produkt | Platzhalter für die **Länderkarte** im Abschnitt Bezugsquellen | Interaktive Karte oder Partnerliste |
 | Header + Footer | `FR` / `IT` | Die französische und italienische Seite |
-| Footer | Refills, Publikationen, Gebrauchsanweisung, Impressum, Datenschutz | Entsprechende Unterseiten |
-| Footer | `info@smelldiscettes.ch` | Die echte Kontaktadresse |
+| Footer | Impressum, Datenschutz | Entsprechende Unterseiten |
+| Überall | `info@smelldiscettes.ch` | Die echte Kontaktadresse |
 
-Die internen Sprungmarken (`#evidenz`, `#anwendung`, `#praeoperativ`, `#bestellen`)
-funktionieren bereits.
+**Die Verlinkung zwischen den drei Seiten steht bereits** – im Code als
+`index.html`, `produkt.html` und `ueber-uns.html`. Diese drei Pfade müssen nach
+dem Einfügen auf die tatsächlichen WordPress-Adressen geändert werden, zum
+Beispiel `/de/`, `/de/produkt/` und `/de/ueber-uns/`. Am schnellsten geht das mit
+Suchen-und-Ersetzen im HTML-Widget, bevor gespeichert wird.
+
+Die internen Sprungmarken (`#anwendung`, `#praeoperativ`, `#artikel`,
+`#bestellen`, `#publikationen`, `#geschichte`) funktionieren bereits.
 
 ## Änderungen später
 
-Bearbeitet wird immer **`index.html`** – das ist die Quelldatei mit normalen
-Bildpfaden und daher gut lesbar. Danach:
+Bearbeitet werden immer die Quelldateien `index.html`, `produkt.html` und
+`ueber-uns.html` – sie haben normale Bildpfade und sind gut lesbar. Das Design
+aller drei Seiten liegt gemeinsam in `assets/css/sd.css`; eine Änderung dort wirkt
+sich auf alle Seiten aus. Danach:
 
 ```bash
 node build-elementor.mjs
 ```
 
-Das erzeugt `elementor-embed.html` neu (Schrift und Bilder wieder eingebettet).
-Der neue Inhalt wird dann wieder ins HTML-Widget kopiert.
+Das erzeugt alle drei `elementor-*.html` neu (Schrift und Bilder wieder
+eingebettet). Der neue Inhalt wird dann wieder ins jeweilige HTML-Widget kopiert.
 
 ## Alternative: Bilder aus der WordPress-Mediathek
 
-`elementor-embed.html` ist rund 560 KB, weil alle Bilder eingebettet sind. Das ist
-für ein Widget in Ordnung, aber nicht optimal für die Ladezeit. Wer es schlanker
+Die Elementor-Dateien sind 380–570 KB gross, weil alle Bilder eingebettet sind. Das
+ist für ein Widget in Ordnung, aber nicht optimal für die Ladezeit. Wer es schlanker
 möchte: die Dateien aus `assets/` in die WordPress-Mediathek hochladen und
-stattdessen den Inhalt von `index.html` verwenden, wobei jeder Pfad
+stattdessen den Inhalt der jeweiligen Quelldatei verwenden, wobei jeder Pfad
 `assets/…` durch die jeweilige Mediathek-URL ersetzt wird
 (`https://.../wp-content/uploads/…`). Der Font-Block aus `assets/fonts/lato.css`
 muss dabei im `<style>` bleiben, sonst greift wieder die Theme-Schrift.
