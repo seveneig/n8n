@@ -19,7 +19,7 @@ Sprache: **Deutsch**. Markenfarben unverändert übernommen.
 
 1. **Header** – Logo, Navigation, Sprachumschaltung DE/FR/IT, Bestellen-Button
 2. **Hero** – Produktbild über die volle Breite, Text links, Badge „Wieder verfügbar", zwei Handlungsaufrufe, Swiss-Made-Signet
-3. **Kennzahlen** – dunkelblaues Band: 99,74 % · < 5 Min. · 8 Riechstoffe · 4 Publikationen
+3. **Kennzahlen** – dunkelblaues Band: 99,74 % · 3 Schritte · 8 Riechstoffe · 4 Publikationen
 4. **Die wichtigsten Punkte** – drei Karten mit den Piktogrammen: Evidenz, Effizienz, Präoperative Relevanz
 5. **Anwendung** – die drei Schritte mit den Illustrationen aus der Gebrauchsanweisung
 6. **Präoperative Dokumentation** – Praxisfoto mit hervorgehobener 10,3-%-Kennzahl und drei Argumenten
@@ -50,7 +50,7 @@ dadurch keine Anfrage an Google Fonts und garantiert gleiche Darstellung.
 Die Aussagen der alten Seite sind erhalten, aber geschärft:
 
 - **Hero deutlich ausgebaut** – statt nur „À nouveau disponible pour vous" jetzt ein
-  Nutzenversprechen („Riechvermögen objektiv testen. In fünf Minuten.") mit
+  Nutzenversprechen („Riechvermögen objektiv testen. Direkt in der Praxis.") mit
   Erklärabsatz und Vertrauensmerkmalen.
 - **Neue Kennzahlen-Leiste** – die vier stärksten Zahlen sofort sichtbar,
   statt sie im Fliesstext zu verstecken.
@@ -68,6 +68,10 @@ Die Aussagen der alten Seite sind erhalten, aber geschärft:
 - Kontaktadresse und Firmenzeile im Footer sind Platzhalter.
 - „Wieder verfügbar" im Hero stammt sinngemäss aus der alten Seite – bitte
   prüfen, ob das noch aktuell ist.
+- **Keine Zeitangabe mehr.** Die Fünf-Minuten-Aussage der alten Seite ist überall
+  entfernt und durch unbestimmte Formulierungen ersetzt („rasch", „unkompliziert",
+  „geringer Zeitaufwand"). In der Kennzahlen-Leiste steht an dieser Stelle nun
+  „3 Schritte" statt einer Dauer.
 
 ## Kontrolle
 
