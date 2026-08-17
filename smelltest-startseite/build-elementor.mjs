@@ -20,6 +20,10 @@ const PAGES = [
     titel: 'Startseite Variante B', extraCss: 'assets/css/sd-alt.css' },
   { src: 'index-c.html',   out: 'elementor-startseite-variante-c.html', txt: 'startseite-variante-c.txt',
     titel: 'Startseite Variante C', baseCss: 'assets/css/sd-c.css', extraFonts: ['assets/fonts/lato-300.css'] },
+  { src: 'kontakt.html',          out: 'elementor-kontakt.html',          txt: 'kontakt.txt',          titel: 'Kontakt' },
+  { src: 'vertriebspartner.html', out: 'elementor-vertriebspartner.html', txt: 'vertriebspartner.txt', titel: 'Vertriebspartner' },
+  { src: 'impressum.html',        out: 'elementor-impressum.html',        txt: 'impressum.txt',        titel: 'Impressum' },
+  { src: 'datenschutz.html',      out: 'elementor-datenschutz.html',      txt: 'datenschutz.txt',      titel: 'Datenschutz' },
 ];
 
 // Zusaetzlich als .txt ablegen: laesst sich per Doppelklick in Notepad oeffnen,

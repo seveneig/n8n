@@ -11,6 +11,10 @@
 | Startseite – Variante C | `zum-kopieren/startseite-variante-c.txt` |
 | Produkt | `zum-kopieren/produkt.txt` |
 | Über uns | `zum-kopieren/ueber-uns.txt` |
+| Kontakt | `zum-kopieren/kontakt.txt` |
+| Vertriebspartner | `zum-kopieren/vertriebspartner.txt` |
+| Impressum | `zum-kopieren/impressum.txt` |
+| Datenschutz | `zum-kopieren/datenschutz.txt` |
 
 > Für die Startseite **eine der drei Varianten** wählen. Die Aussagen sind in allen
 > dreien dieselben.
@@ -115,8 +119,14 @@ Alle Links stehen aktuell auf Platzhalter (`href="#"`). Zu ersetzen sind:
 | Footer | Impressum, Datenschutz | Entsprechende Unterseiten |
 | Überall | `info@smelldiscettes.ch` | Die echte Kontaktadresse |
 
-**Die Verlinkung zwischen den drei Seiten steht bereits** – im Code als
-`index.html`, `produkt.html` und `ueber-uns.html`. Diese drei Pfade müssen nach
+**Die Formulare auf Kontakt- und Vertriebspartnerseite sind gestaltet, aber noch
+nicht angebunden.** Entweder `action` und `method` im Formular auf den eigenen
+Endpunkt setzen, oder den Formularblock löschen und darunter ein
+Elementor-Formular-Widget platzieren. Im Quelltext ist die Stelle kommentiert.
+
+**Die Verlinkung zwischen den Seiten steht bereits** – im Code als
+`index.html`, `produkt.html`, `ueber-uns.html`, `kontakt.html`,
+`vertriebspartner.html`, `impressum.html` und `datenschutz.html`. Diese Pfade müssen nach
 dem Einfügen auf die tatsächlichen WordPress-Adressen geändert werden, zum
 Beispiel `/de/`, `/de/produkt/` und `/de/ueber-uns/`. Am schnellsten geht das mit
 Suchen-und-Ersetzen im HTML-Widget, bevor gespeichert wird.

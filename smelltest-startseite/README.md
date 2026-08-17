@@ -3,15 +3,19 @@
 Neugestaltung des Webauftritts (bisher: `https://tazazehi.myhostpoint.ch/`).
 Sprache: **Deutsch**. Markenfarben unverändert übernommen.
 
-## Die drei Seiten
+## Die Seiten
 
 | Seite | Quelldatei | Zum Einfügen in Elementor |
 |---|---|---|
 | Startseite (Variante A) | `index.html` | **`elementor-startseite.html`** (570 KB) |
 | Startseite (Variante B) | `index-alt.html` | **`elementor-startseite-variante-b.html`** (580 KB) |
 | Startseite (Variante C) | `index-c.html` | **`elementor-startseite-variante-c.html`** (445 KB) |
-| Produkt | `produkt.html` | **`elementor-produkt.html`** (464 KB) |
-| Über uns | `ueber-uns.html` | **`elementor-ueber-uns.html`** (383 KB) |
+| Produkt | `produkt.html` | **`elementor-produkt.html`** (469 KB) |
+| Über uns | `ueber-uns.html` | **`elementor-ueber-uns.html`** (389 KB) |
+| Kontakt | `kontakt.html` | **`elementor-kontakt.html`** (186 KB) |
+| Vertriebspartner | `vertriebspartner.html` | **`elementor-vertriebspartner.html`** (243 KB) |
+| Impressum | `impressum.html` | **`elementor-impressum.html`** (185 KB) |
+| Datenschutz | `datenschutz.html` | **`elementor-datenschutz.html`** (184 KB) |
 
 Von der Startseite gibt es drei Fassungen – **eine davon auswählen**, nicht mehrere
 einbauen. Die Aussagen sind in allen dreien dieselben; A und B unterscheiden sich nur
@@ -48,6 +52,17 @@ Praxisfoto · Evidenz · Bestellen · Footer
 **Produkt** – Seitenkopf mit geöffneter TestBox · Kennzahlen (8 · 3 · CE · CH) ·
 drei Einsatzkarten · zwei Detailaufnahmen · Artikeltabelle Set · Artikeltabelle
 der acht Ersatzdisketten mit Art-Nr., UDI-ID und Duft · Bezugsquellen · Footer
+
+**Kontakt** – Seitenkopf · Kontaktangaben als Liste (Adresse, E-Mail, Telefon,
+Bestellweg) · gestaltetes Kontaktformular · Footer
+
+**Vertriebspartner** – Seitenkopf mit TestBox · Bezugsquellen mit markiertem Platz
+für die Länderkarte · zwei Karten (direkt anfragen / Artikelangaben) · Formular für
+die Partnerbewerbung · Footer
+
+**Impressum** – Anbieterin, Kontakt, Haftung, Urheberrecht, Datenschutzverweis
+
+**Datenschutz** – gestaltetes Gerüst; der Rechtstext selbst fehlt bewusst
 
 **Über uns** – Seitenkopf mit Packshot · «Warum» als Fliesstext mit den Begriffen
 Normosmie/Hyposmie/Anosmie · Zeitstrahl der Geschichte (25+ Jahre → 2023 → 2024 →
@@ -146,6 +161,21 @@ Die Aussagen der bestehenden Seiten sind erhalten, aber geschärft und ins Deuts
 die Geschichte statt Fliesstext, und die Artikelangaben als Tabelle, die auf dem
 Handy in Karten umbricht.
 
+## Was noch fehlt
+
+`smelldiscettes.com` ist vom Egress-Proxy dieser Umgebung gesperrt (Gateway
+antwortet mit 403 auf CONNECT) – über Browser, curl und Fetch gleichermassen. Die
+Inhalte der dort bestehenden Seiten konnte ich deshalb nicht auslesen. Der
+zuverlässigste Weg ist derselbe wie bisher: die Seiten im Browser über
+«Seite speichern unter» als HTML sichern und hier anhängen.
+
+Konkret fehlen mir:
+
+- die **Liste der Vertriebspartner** je Land (Platz dafür ist markiert)
+- der Text der **Datenschutzerklärung** (existiert unter `/policies/`)
+- **UID, Handelsregistereintrag und vertretungsberechtigte Person** fürs Impressum
+- eine allfällige Seite mit der **Gebrauchsanweisung**
+
 ### Bitte gegenlesen
 
 - **Publikationen 1 und 2** («Olfaction in rhinology…» und «Olfaction after
@@ -158,8 +188,10 @@ Handy in Karten umbricht.
 - **Länderkarte** auf der Produktseite fehlt: Auf der alten Seite konnte man ein Land
   anklicken, um den Vertriebspartner zu finden. Ich habe an dieser Stelle einen
   Button gesetzt und die Stelle im Quelltext markiert.
-- **Kontaktadresse** `info@smelldiscettes.ch` ist ein Platzhalter – die alte Seite
-  nennt `info@tazazehi.myhostpoint.ch`, was eine Hosting-Adresse ist.
+- **Kontaktdaten** stammen aus öffentlich auffindbaren Angaben, nicht von der
+  Website selbst (die gesperrt ist): SMELL Discettes GmbH, Schartenrainstrasse 22,
+  CH-5430 Wettingen, `info@smelldiscettes.com`, +41 79 705 04 31. Bitte gegenlesen.
+  Der frühere Platzhalter `info@smelldiscettes.ch` ist überall ersetzt.
 - **Zwei Aussagen sind bewusst entfernt** – siehe `CLAUDE.md`, die Regeln gelten
   auch für alle künftigen Seiten:
   - **Keine Zeitangabe.** Die Fünf-Minuten-Aussage ist überall ersetzt durch
