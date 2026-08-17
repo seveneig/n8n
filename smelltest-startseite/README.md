@@ -7,7 +7,7 @@ Sprache: **Deutsch**. Markenfarben unverändert übernommen.
 
 | Seite | Quelldatei | Zum Einfügen in Elementor |
 |---|---|---|
-| Startseite (Variante A) | `index.html` | **`elementor-startseite.html`** (569 KB) |
+| Startseite (Variante A) | `index.html` | **`elementor-startseite.html`** (570 KB) |
 | Startseite (Variante B) | `index-alt.html` | **`elementor-startseite-variante-b.html`** (580 KB) |
 | Startseite (Variante C) | `index-c.html` | **`elementor-startseite-variante-c.html`** (445 KB) |
 | Produkt | `produkt.html` | **`elementor-produkt.html`** (464 KB) |
@@ -71,6 +71,15 @@ Flächen und Ränder.
 Schrift: **Lato**, Gewichte 400/700/900. Alle drei Seiten teilen sich dieselben
 Bausteine (Karten, Kennzahlenband, Seitenkopf, Tabellen, Zeitstrahl, Team,
 Publikationen) und dieselbe Navigation, damit sie zusammengehören.
+
+## Variante A der Startseite
+
+Die Ausgangsfassung, inzwischen mit **transparentem Header direkt auf dem Herobild**
+und **harmonischeren Hover-Farben**: Die Hauptschaltfläche hellt beim Überfahren auf
+`#6098BA` auf statt ins Dunkelblau zu kippen, die Sekundärschaltfläche füllt sich mit
+`#EDF4F9`. Dieselben Hover-Werte gelten dadurch auch auf der Produkt- und der
+Über-uns-Seite. Der transparente Header nutzt einen eigenen Modifier `--glass`,
+damit Variante B mit ihrem `--float`-Modifier davon unberührt bleibt.
 
 ## Variante B der Startseite
 
@@ -156,8 +165,15 @@ Handy in Karten umbricht.
   - **Keine Zeitangabe.** Die Fünf-Minuten-Aussage ist überall ersetzt durch
     „rasch", „unkompliziert", „geringer Zeitaufwand".
   - **Keine Wiederverwendbarkeit.** „Disketten wiederverwendbar" ist gestrichen,
-    ebenso „Refills nach ca. 12 Monaten". Geblieben ist „einzeln ersetzbar" bzw.
-    „einzeln nachbestellbar" – beides betrifft den Ersatz, nicht die Mehrfachnutzung.
+    ebenso „Refills nach ca. 12 Monaten".
+  - **Keine Nachbestellbarkeit.** „Refills einzeln nachbestellbar", „Ersatzdisketten
+    einzeln erhältlich" und „einzeln ersetzbar" sind überall entfernt. Der frühere
+    Abschnitt „Ersatzdisketten" auf der Produktseite heisst jetzt „Die acht
+    Disketten – Artikel- und UDI-Kennzeichnung" und führt die Angaben als reine
+    Kennzeichnung, ohne Bezugsaussage.
+  - **Keine Negativ-Aufzählung.** „Kein Strom, kein Labor, keine Kalibrierung",
+    „ohne Gerät", „keine Vorbereitung" sind gestrichen und durch positive Aussagen
+    ersetzt (delegierbar, sofort dokumentierbar, Triple-Forced-Choice).
 
 ## Kontrolle
 

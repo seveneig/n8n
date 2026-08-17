@@ -32,6 +32,7 @@
 .sdx {
   --blue:        #407BA0;
   --blue-deep:   #31637F;
+  --blue-light:  #6098BA;   /* Hover: heller statt dunkler */
   --blue-soft:   #BCD3E5;
   --blue-mist:   #EDF4F9;
   --navy:        #00102E;
@@ -97,13 +98,13 @@
   transition: transform .18s ease, box-shadow .18s ease, background-color .18s ease, color .18s ease, border-color .18s ease;
 }
 .sdx .sd-btn--primary { background: var(--blue); color: var(--white); box-shadow: 0 10px 24px -12px rgba(64,123,160,.85); }
-.sdx .sd-btn--primary:hover { background: var(--blue-deep); transform: translateY(-1px); box-shadow: 0 16px 30px -14px rgba(64,123,160,.95); }
+.sdx .sd-btn--primary:hover { background: var(--blue-light); transform: translateY(-1px); box-shadow: 0 16px 30px -14px rgba(96,152,186,.85); }
 .sdx .sd-btn--ghost { color: var(--navy); box-shadow: inset 0 0 0 1.5px rgba(0,16,46,.16); }
-.sdx .sd-btn--ghost:hover { box-shadow: inset 0 0 0 1.5px var(--blue); color: var(--blue); transform: translateY(-1px); }
+.sdx .sd-btn--ghost:hover { background: var(--blue-mist); box-shadow: inset 0 0 0 1.5px var(--blue-soft); color: var(--blue-deep); transform: translateY(-1px); }
 .sdx .sd-btn--light { background: var(--white); color: var(--navy); }
-.sdx .sd-btn--light:hover { transform: translateY(-1px); box-shadow: 0 14px 28px -14px rgba(0,0,0,.5); }
+.sdx .sd-btn--light:hover { background: var(--blue-mist); transform: translateY(-1px); box-shadow: 0 14px 28px -18px rgba(0,16,46,.45); }
 .sdx .sd-btn--onNavy { color: var(--white); box-shadow: inset 0 0 0 1.5px rgba(255,255,255,.32); }
-.sdx .sd-btn--onNavy:hover { box-shadow: inset 0 0 0 1.5px rgba(255,255,255,.85); transform: translateY(-1px); }
+.sdx .sd-btn--onNavy:hover { background: rgba(188,211,229,.16); box-shadow: inset 0 0 0 1.5px rgba(188,211,229,.85); transform: translateY(-1px); }
 .sdx .sd-btn__arrow { font-size: 17px; line-height: 1; transform: translateY(-1px); }
 
 /* ---------- 4. Header ------------------------------------------- */
@@ -171,7 +172,7 @@
   transition: transform .22s ease, box-shadow .22s ease;
   display: flex; flex-direction: column;
 }
-.sdx .sd-card:hover { transform: translateY(-3px); box-shadow: inset 0 0 0 1px var(--blue-soft), var(--sh-md); }
+.sdx .sd-card:hover { transform: translateY(-3px); box-shadow: inset 0 0 0 1px var(--blue-soft), 0 1px 2px rgba(0,16,46,.04), 0 22px 48px -26px rgba(64,123,160,.55); }
 .sdx .sd-card__pikto { height: 132px; display: flex; align-items: flex-end; }
 .sdx .sd-card__pikto img { max-height: 132px; width: auto; }
 .sdx .sd-card__label { margin-top: 26px; font-size: 12px; font-weight: 700; letter-spacing: .16em; text-transform: uppercase; color: var(--blue); }
@@ -409,7 +410,7 @@
   background: var(--white); box-shadow: inset 0 0 0 1px var(--line);
   transition: box-shadow .2s ease;
 }
-.sdx .sd-publist li:hover { box-shadow: inset 0 0 0 1px var(--blue-soft), var(--sh-sm); }
+.sdx .sd-publist li:hover { background: var(--blue-mist); box-shadow: inset 0 0 0 1px var(--blue-soft); }
 .sdx .sd-publist .sd-pubno { font-size: 13px; font-weight: 900; color: var(--blue); letter-spacing: .08em; padding-top: 3px; }
 .sdx .sd-publist h3 { font-size: 17.5px; font-weight: 700; line-height: 1.45; color: var(--navy); }
 .sdx .sd-publist span { display: block; margin-top: 8px; font-size: 14px; color: var(--muted); }
@@ -459,6 +460,38 @@
 
 /* --- Artikelnummern nicht umbrechen --- */
 .sdx .sd-table td:first-child b, .sdx .sd-table td b.sd-art { white-space: nowrap; }
+
+/* ================================================================
+   16. Transparenter Header über dem Herobild
+   Eigene Modifier (--glass), damit Variante B mit ihrem
+   --float-Modifier unberührt bleibt.
+   ================================================================ */
+.sdx { position: relative; }
+.sdx .sd-header--glass {
+  position: absolute; top: 0; left: 0; right: 0; z-index: 6;
+  background: transparent; backdrop-filter: none; border-bottom: 0;
+}
+.sdx .sd-header--glass .sd-header__in { height: 100px; }
+.sdx .sd-header--glass .sd-header__logo img { height: 56px; }
+.sdx .sd-header--glass .sd-lang .is-active { background: rgba(255,255,255,.72); }
+
+/* Hero: Bildebene nach rechts versetzt, damit der Text auf einer
+   ruhigen Fläche liegt und die Packung frei steht. */
+.sdx .sd-hero--glass .sd-hero__media { left: 18%; right: -2%; }
+.sdx .sd-hero--glass .sd-hero__media img { object-position: 62% 50%; }
+.sdx .sd-hero--glass .sd-hero__veil {
+  background: linear-gradient(96deg, #FFFFFF 0%, #FFFFFF 33%, rgba(255,255,255,.92) 45%, rgba(255,255,255,.30) 62%, rgba(255,255,255,0) 74%);
+}
+.sdx .sd-hero--glass { background: #FFFFFF; }
+.sdx .sd-hero--glass .sd-hero__in { min-height: 760px; padding-top: clamp(150px, 13vw, 196px); }
+.sdx .sd-hero--glass .sd-hero__col { max-width: 600px; }
+
+@media (max-width: 900px) {
+  /* Auf schmalen Geräten läuft der Header wieder mit, sonst verdeckt er das Bild */
+  .sdx .sd-header--glass { position: static; background: rgba(255,255,255,.96); border-bottom: 1px solid var(--line); }
+  .sdx .sd-header--glass .sd-header__in { height: 84px; }
+  .sdx .sd-hero--glass .sd-hero__in { min-height: 0; padding-top: 48px; }
+}
 </style>
 
 <div class="sdx">
@@ -707,8 +740,7 @@
           <h2 class="sd-h2">Smell Discettes für Ihre Praxis</h2>
           <p>
             Das komplette Set mit acht Riechstoff-Disketten, Auswertungsbögen und
-            Gebrauchsanweisung. Erhältlich über unsere Vertriebspartner – Ersatzdisketten
-            sind einzeln nachbestellbar.
+            Gebrauchsanweisung. Erhältlich über unsere Vertriebspartner.
           </p>
           <div class="sd-cta__btns">
             <a class="sd-btn sd-btn--primary" href="produkt.html#bestellen">Bezugsquellen <span class="sd-btn__arrow">→</span></a>

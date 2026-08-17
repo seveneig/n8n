@@ -20,10 +20,23 @@ Diese Aussagen dürfen auf keiner Seite vorkommen – weder im Text, noch in
    Zulässig bleibt: „Refills sind einzeln nachbestellbar" – ohne Zeitraum und
    ohne Hinweis auf Mehrfachnutzung.
 
+3. **Keine Aussage, dass Disketten oder Refills nachbestellbar sind.**
+   Verboten: „Refills sind einzeln nachbestellbar", „Ersatzdisketten einzeln
+   erhältlich", „jede Diskette einzeln ersetzbar", „Nachbestellung".
+   Zulässig bleibt: Artikelnummern und UDI-IDs der acht Disketten als reine
+   Kennzeichnungsangabe – ohne Hinweis darauf, dass sie separat bezogen werden können.
+
+4. **Keine Negativ-Aufzählung der Anforderungen.**
+   Verboten: „kein Strom", „kein Labor", „keine Kalibrierung", „kein Gerät",
+   „keine Vorbereitung", „ohne Strom/Labor/Gerät" – auch in Kombinationen.
+   Stattdessen positiv formulieren, was der Test leistet: *delegierbar an MPA oder
+   Pflege*, *Ergebnis sofort dokumentierbar*, *Triple-Forced-Choice mit Bildantworten*.
+
 Wenn eine dieser Aussagen aus einer Vorlage, der alten Website oder einem
-Übersetzungstext stammt: **ersatzlos streichen oder unbestimmt umformulieren**,
-nicht übernehmen. Beim Übersetzen gilt das sinngemäss auch für
-*réutilisable* / *riutilizzabile* und *cinq minutes* / *cinque minuti*.
+Übersetzungstext stammt: **ersatzlos streichen oder umformulieren**, nicht
+übernehmen. Beim Übersetzen gilt das sinngemäss auch für *réutilisable* /
+*riutilizzabile*, *cinq minutes* / *cinque minuti*, *discettes de rechange* /
+*ricariche* und *sans électricité, sans laboratoire*.
 
 ## Publikationen
 
