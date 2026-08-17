@@ -1,0 +1,2210 @@
+<title>HairHelp Streuhaar</title>
+<meta name="description" content="HairHelp™ NextGen Streuhaar – Haarverdichter mit pflanzlichem Keratin. 12 g, 6 Farben, CHF 28.90.">
+
+<style>
+/* ==========================================================================
+   HairHelp – Produktseite
+   Markensystem der bestehenden Website:
+   Gold #A39772 · helles Gold #D1BC92 · warmes Schwarz #1A1A18 ·
+   Creme #FAF9F6 · Hausschrift Jost
+   ========================================================================== */
+
+/* FONT-FACE-JOST */
+
+:root{
+  /* Grundflächen */
+  --ground:#FFFFFF;
+  --ground-alt:#FAF9F6;
+  --surface:#FFFFFF;
+  --surface-sunk:#F6F4EE;
+
+  /* Schrift */
+  --text:#1A1A18;
+  --text-soft:#6E6959;
+  --text-faint:#948E7E;
+
+  /* Marke */
+  --gold:#A39772;
+  --gold-lt:#D1BC92;
+  --gold-wash:#F4F0E6;
+
+  /* Linien */
+  --line:#EBE6DB;
+  --line-firm:#D9D2C2;
+
+  /* Dunkles Band */
+  --ink:#1A1A18;
+  --ink-raise:#25241F;
+  --ink-text:#F3F0E9;
+  --ink-text-soft:#B0AB98;
+  --ink-line:#332F26;
+
+  /* Bedienelemente */
+  --cta-bg:#1A1A18;
+  --cta-text:#F3F0E9;
+  --cta-hover-bg:#A39772;
+  --cta-hover-text:#1A1A18;
+  --chip-bg:#1A1A18;
+  --chip-text:#D1BC92;
+
+  /* Semantik */
+  --ok:#3F7D5C;
+  --alert:#8C5A2B;
+
+  --shadow-s:0 1px 2px rgba(26,26,24,.05), 0 4px 14px rgba(26,26,24,.05);
+  --shadow-m:0 2px 6px rgba(26,26,24,.06), 0 18px 44px rgba(26,26,24,.09);
+
+  --spine:1200px;
+  --radius:4px;
+}
+
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --ground:#141310;
+    --ground-alt:#1B1A15;
+    --surface:#1D1C17;
+    --surface-sunk:#232118;
+    --text:#F2EFE7;
+    --text-soft:#A8A294;
+    --text-faint:#877F6E;
+    --gold:#C2B58A;
+    --gold-lt:#DACA9F;
+    --gold-wash:#262316;
+    --line:#332F26;
+    --line-firm:#443E31;
+    --ink:#0E0D0B;
+    --ink-raise:#1B1A15;
+    --ink-text:#F3F0E9;
+    --ink-text-soft:#ABA593;
+    --ink-line:#2B2820;
+    --cta-bg:#C2B58A;
+    --cta-text:#141310;
+    --cta-hover-bg:#F2EFE7;
+    --cta-hover-text:#141310;
+    --chip-bg:#2E2B21;
+    --chip-text:#DACA9F;
+    --ok:#6FA98A;
+    --alert:#C79157;
+    --shadow-s:0 1px 2px rgba(0,0,0,.4), 0 4px 14px rgba(0,0,0,.3);
+    --shadow-m:0 2px 6px rgba(0,0,0,.45), 0 18px 44px rgba(0,0,0,.4);
+  }
+}
+:root[data-theme="dark"]{
+  --ground:#141310;
+  --ground-alt:#1B1A15;
+  --surface:#1D1C17;
+  --surface-sunk:#232118;
+  --text:#F2EFE7;
+  --text-soft:#A8A294;
+  --text-faint:#877F6E;
+  --gold:#C2B58A;
+  --gold-lt:#DACA9F;
+  --gold-wash:#262316;
+  --line:#332F26;
+  --line-firm:#443E31;
+  --ink:#0E0D0B;
+  --ink-raise:#1B1A15;
+  --ink-text:#F3F0E9;
+  --ink-text-soft:#ABA593;
+  --ink-line:#2B2820;
+  --cta-bg:#C2B58A;
+  --cta-text:#141310;
+  --cta-hover-bg:#F2EFE7;
+  --cta-hover-text:#141310;
+  --chip-bg:#2E2B21;
+  --chip-text:#DACA9F;
+  --ok:#6FA98A;
+  --alert:#C79157;
+  --shadow-s:0 1px 2px rgba(0,0,0,.4), 0 4px 14px rgba(0,0,0,.3);
+  --shadow-m:0 2px 6px rgba(0,0,0,.45), 0 18px 44px rgba(0,0,0,.4);
+}
+
+*,*::before,*::after{box-sizing:border-box}
+
+body{
+  margin:0;
+  background:var(--ground);
+  color:var(--text);
+  font-family:Jost,"Century Gothic","Futura",system-ui,sans-serif;
+  font-size:17px;
+  line-height:1.7;
+  -webkit-font-smoothing:antialiased;
+}
+
+img{max-width:100%;display:block}
+a{color:inherit}
+button{font:inherit;color:inherit}
+
+:focus-visible{
+  outline:2px solid var(--gold);
+  outline-offset:3px;
+  border-radius:2px;
+}
+
+@media (prefers-reduced-motion: reduce){
+  *,*::before,*::after{animation-duration:.001ms!important;transition-duration:.001ms!important;scroll-behavior:auto!important}
+}
+
+html{scroll-behavior:smooth}
+
+.skiplink{
+  position:absolute;
+  left:16px;top:-60px;
+  z-index:100;
+  padding:11px 18px;
+  background:var(--cta-bg);
+  color:var(--cta-text);
+  border-radius:var(--radius);
+  font-size:13px;
+  font-weight:600;
+  letter-spacing:.1em;
+  text-transform:uppercase;
+  text-decoration:none;
+  transition:top .2s ease;
+}
+.skiplink:focus{top:16px}
+
+/* ---------- Typografische Skala ---------- */
+
+.eyebrow{
+  font-size:12px;
+  font-weight:500;
+  letter-spacing:.18em;
+  text-transform:uppercase;
+  color:var(--gold);
+  margin:0;
+}
+
+/* Markentypische zweifarbige Sektionsüberschrift */
+.sect-head{
+  display:flex;
+  flex-direction:column;
+  gap:14px;
+  padding-top:22px;
+  border-top:1px solid var(--gold);
+  margin-bottom:44px;
+}
+.sect-head h2{
+  font-size:clamp(28px,3.6vw,42px);
+  font-weight:700;
+  letter-spacing:-.005em;
+  line-height:1.12;
+  text-transform:uppercase;
+  margin:0;
+  text-wrap:balance;
+}
+.sect-head h2 .lead{color:var(--gold);font-weight:500}
+.sect-head p{
+  margin:0;
+  max-width:58ch;
+  color:var(--text-soft);
+  font-size:17px;
+}
+
+.spine{
+  max-width:var(--spine);
+  margin:0 auto;
+  padding:0 32px;
+}
+
+.band{padding:88px 0}
+.band--alt{background:var(--ground-alt)}
+.band--ink{
+  background:var(--ink);
+  color:var(--ink-text);
+}
+.band--ink .sect-head{border-top-color:var(--gold)}
+.band--ink .sect-head p{color:var(--ink-text-soft)}
+
+/* ==========================================================================
+   Kopfzeile
+   ========================================================================== */
+
+.topbar{
+  background:var(--ink);
+  color:var(--ink-text-soft);
+  font-size:12px;
+  letter-spacing:.14em;
+  text-transform:uppercase;
+  font-weight:500;
+}
+.topbar .spine{
+  display:flex;
+  justify-content:center;
+  gap:38px;
+  flex-wrap:wrap;
+  padding-top:9px;
+  padding-bottom:9px;
+}
+.topbar span{display:flex;align-items:center;gap:8px}
+.topbar svg{width:14px;height:14px;stroke:var(--gold);fill:none;stroke-width:1.8}
+
+.masthead{
+  position:sticky;
+  top:0;
+  z-index:60;
+  background:color-mix(in srgb, var(--ground) 92%, transparent);
+  backdrop-filter:blur(12px);
+  border-bottom:1px solid var(--line);
+}
+.masthead .spine{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:28px;
+  height:74px;
+}
+.brand{display:flex;align-items:center;text-decoration:none;flex-shrink:0}
+.brand img{height:34px;width:auto}
+:root[data-theme="dark"] .brand img{filter:invert(1)}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]) .brand img{filter:invert(1)}
+}
+
+.mainnav{
+  display:flex;
+  gap:30px;
+  list-style:none;
+  margin:0;
+  padding:0;
+  font-size:13px;
+  font-weight:500;
+  letter-spacing:.11em;
+  text-transform:uppercase;
+}
+.mainnav a{text-decoration:none;color:var(--text);padding:6px 0;border-bottom:1px solid transparent;transition:border-color .2s,color .2s}
+.mainnav a:hover{border-bottom-color:var(--gold);color:var(--gold)}
+.mainnav a[aria-current]{color:var(--gold);border-bottom-color:var(--gold)}
+
+.mast-actions{display:flex;align-items:center;gap:14px}
+.icon-btn{
+  width:42px;height:42px;
+  display:grid;place-items:center;
+  border:1px solid var(--line);
+  border-radius:var(--radius);
+  background:var(--surface);
+  cursor:pointer;
+  transition:border-color .2s,color .2s;
+}
+.icon-btn:hover{border-color:var(--gold);color:var(--gold)}
+.icon-btn svg{width:19px;height:19px;stroke:currentColor;fill:none;stroke-width:1.6}
+
+@media (max-width:1080px){ .mainnav{display:none} }
+
+/* ==========================================================================
+   Kaufmodul
+   ========================================================================== */
+
+.buy{padding:52px 0 84px}
+.buy-grid{
+  display:grid;
+  grid-template-columns:minmax(0,1.05fr) minmax(0,1fr);
+  gap:70px;
+  align-items:start;
+}
+
+/* --- Galerie --- */
+.gallery{position:sticky;top:96px}
+.gallery-stage{
+  position:relative;
+  background:var(--surface-sunk);
+  border:1px solid var(--line);
+  border-radius:var(--radius);
+  aspect-ratio:1/1;
+  overflow:hidden;
+}
+.gallery-stage img{
+  width:100%;height:100%;
+  object-fit:cover;
+  transition:opacity .35s ease;
+}
+.gallery-stage img.is-swapping{opacity:0}
+.stage-tag{
+  position:absolute;
+  top:16px;left:16px;
+  background:var(--chip-bg);
+  color:var(--chip-text);
+  font-size:10px;
+  font-weight:600;
+  letter-spacing:.2em;
+  text-transform:uppercase;
+  padding:7px 13px;
+  border-radius:2px;
+}
+.thumbs{
+  display:grid;
+  grid-template-columns:repeat(5,1fr);
+  gap:10px;
+  margin-top:10px;
+}
+.thumb{
+  padding:0;
+  border:1px solid var(--line);
+  border-radius:var(--radius);
+  background:var(--surface-sunk);
+  aspect-ratio:1/1;
+  overflow:hidden;
+  cursor:pointer;
+  transition:border-color .2s;
+}
+.thumb img{width:100%;height:100%;object-fit:cover}
+.thumb[aria-pressed="true"]{border-color:var(--gold);border-width:2px}
+.thumb:hover{border-color:var(--gold)}
+
+/* --- Kaufspalte --- */
+.buycol{display:flex;flex-direction:column;gap:26px;min-width:0}
+
+.buy-title{
+  font-size:clamp(30px,3.4vw,40px);
+  font-weight:600;
+  line-height:1.14;
+  letter-spacing:-.01em;
+  margin:8px 0 0;
+  text-wrap:balance;
+}
+.buy-sub{
+  margin:10px 0 0;
+  color:var(--text-soft);
+  font-size:16px;
+}
+
+.ratingline{
+  display:flex;
+  align-items:center;
+  gap:11px;
+  flex-wrap:wrap;
+  font-size:14px;
+}
+.stars{display:inline-flex;gap:2px}
+.stars svg{width:15px;height:15px;fill:var(--gold-lt)}
+.ratingline a{color:var(--text-soft);text-decoration:underline;text-underline-offset:3px;text-decoration-color:var(--line-firm)}
+.ratingline a:hover{color:var(--gold)}
+
+.pricebox{
+  display:flex;
+  align-items:baseline;
+  gap:14px;
+  flex-wrap:wrap;
+  padding-bottom:24px;
+  border-bottom:1px solid var(--line);
+}
+.price{
+  font-size:38px;
+  font-weight:600;
+  letter-spacing:-.01em;
+  font-variant-numeric:tabular-nums;
+  line-height:1;
+}
+.price small{font-size:19px;font-weight:500;color:var(--text-soft);margin-right:3px}
+.price-note{font-size:14px;color:var(--text-soft)}
+
+/* Feldgruppen */
+.field{display:flex;flex-direction:column;gap:13px}
+.field-head{
+  display:flex;
+  align-items:baseline;
+  justify-content:space-between;
+  gap:14px;
+}
+.field-label{
+  font-size:11px;
+  font-weight:600;
+  letter-spacing:.18em;
+  text-transform:uppercase;
+  color:var(--text-faint);
+}
+.field-value{font-size:15px;font-weight:500}
+
+/* Farbauswahl */
+.swatches{display:flex;gap:10px;flex-wrap:wrap}
+.swatch{
+  position:relative;
+  width:66px;height:52px;
+  padding:0;
+  border:1px solid var(--line-firm);
+  border-radius:var(--radius);
+  overflow:hidden;
+  cursor:pointer;
+  background:none;
+  transition:box-shadow .18s, border-color .18s;
+}
+.swatch img{width:100%;height:100%;object-fit:cover}
+.swatch[aria-checked="true"]{
+  border-color:var(--gold);
+  box-shadow:0 0 0 2px var(--ground), 0 0 0 3px var(--gold);
+}
+.swatch:hover{border-color:var(--gold)}
+
+/* Mengenstufen */
+.tiers{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}
+.tier{
+  position:relative;
+  display:flex;
+  flex-direction:column;
+  gap:5px;
+  padding:16px 13px 14px;
+  border:1px solid var(--line-firm);
+  border-radius:var(--radius);
+  background:var(--surface);
+  text-align:left;
+  cursor:pointer;
+  transition:border-color .18s, background .18s;
+}
+.tier:hover{border-color:var(--gold)}
+.tier[aria-checked="true"]{
+  border-color:var(--gold);
+  border-width:2px;
+  padding:15px 12px 13px;
+  background:var(--gold-wash);
+}
+.tier-flag{
+  position:absolute;
+  top:-9px;left:12px;
+  background:var(--chip-bg);
+  color:var(--chip-text);
+  font-size:9px;
+  font-weight:600;
+  letter-spacing:.16em;
+  text-transform:uppercase;
+  padding:3px 8px;
+  border-radius:2px;
+}
+.tier-qty{font-size:15px;font-weight:600;font-variant-numeric:tabular-nums}
+.tier-perk{font-size:12.5px;line-height:1.45;color:var(--text-soft);flex:1}
+.tier-perk b{color:var(--gold);font-weight:600}
+.tier-unit{
+  margin-top:auto;
+  padding-top:6px;
+  font-size:12px;
+  color:var(--text-faint);
+  font-variant-numeric:tabular-nums;
+}
+
+/* Fortschritt zur nächsten Stufe */
+.nudge{
+  display:flex;
+  align-items:center;
+  gap:12px;
+  padding:11px 14px;
+  background:var(--gold-wash);
+  border-left:2px solid var(--gold);
+  border-radius:2px;
+  font-size:13.5px;
+  color:var(--text-soft);
+}
+.nudge b{color:var(--text);font-weight:600}
+.nudge svg{width:16px;height:16px;stroke:var(--gold);fill:none;stroke-width:1.8;flex-shrink:0}
+
+/* Warenkorbzeile */
+.cartrow{display:flex;gap:12px;align-items:stretch}
+.stepper{
+  display:flex;
+  align-items:center;
+  border:1px solid var(--line-firm);
+  border-radius:var(--radius);
+  background:var(--surface);
+  flex-shrink:0;
+}
+.stepper button{
+  width:46px;height:100%;
+  min-height:58px;
+  background:none;border:0;
+  font-size:19px;
+  cursor:pointer;
+  color:var(--text-soft);
+  transition:color .18s;
+}
+.stepper button:hover{color:var(--gold)}
+.stepper output{
+  width:38px;
+  text-align:center;
+  font-size:16px;
+  font-weight:600;
+  font-variant-numeric:tabular-nums;
+}
+
+.cta{
+  flex:1;
+  min-height:58px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  gap:12px;
+  padding:0 22px;
+  background:var(--cta-bg);
+  color:var(--cta-text);
+  border:1px solid var(--cta-bg);
+  border-radius:var(--radius);
+  font-size:14px;
+  font-weight:600;
+  letter-spacing:.14em;
+  text-transform:uppercase;
+  cursor:pointer;
+  transition:background .2s, color .2s, border-color .2s;
+}
+.cta:hover{background:var(--cta-hover-bg);border-color:var(--cta-hover-bg);color:var(--cta-hover-text)}
+.cta .amount{font-variant-numeric:tabular-nums;letter-spacing:.04em}
+.cta .sep{font-style:normal;opacity:.55;margin-right:2px}
+.cta--ghost{
+  background:none;
+  color:var(--text);
+  border-color:var(--line-firm);
+}
+.cta--ghost:hover{background:none;border-color:var(--gold);color:var(--gold)}
+
+/* Zusicherungen */
+.assure{display:flex;flex-direction:column;gap:9px;margin:0;padding:0;list-style:none;font-size:14px}
+.assure li{display:flex;align-items:center;gap:10px;color:var(--text-soft)}
+.assure svg{width:16px;height:16px;flex-shrink:0;stroke:var(--gold);fill:none;stroke-width:1.7}
+.assure .dot{width:8px;height:8px;border-radius:50%;background:var(--ok);flex-shrink:0;margin:0 4px}
+
+.paystrip{
+  display:flex;
+  align-items:center;
+  gap:14px;
+  padding-top:22px;
+  border-top:1px solid var(--line);
+  font-size:12px;
+  letter-spacing:.12em;
+  text-transform:uppercase;
+  color:var(--text-faint);
+}
+.paystrip img{height:22px;width:auto}
+
+/* Merkmalliste */
+.speclist{
+  margin:0;padding:0;list-style:none;
+  display:flex;flex-direction:column;gap:11px;
+  font-size:15px;
+}
+.speclist li{display:flex;gap:11px;align-items:flex-start;line-height:1.5}
+.speclist img{width:17px;height:17px;margin-top:4px;flex-shrink:0}
+
+.metarow{
+  display:flex;
+  gap:34px;
+  flex-wrap:wrap;
+  padding-top:20px;
+  border-top:1px solid var(--line);
+  font-size:13px;
+  color:var(--text-faint);
+}
+.metarow b{color:var(--text-soft);font-weight:500}
+
+/* Starter-Set-Karte */
+.upsell{
+  display:flex;
+  gap:18px;
+  align-items:center;
+  padding:16px;
+  border:1px solid var(--line);
+  border-radius:var(--radius);
+  background:var(--surface-sunk);
+}
+.upsell img{width:96px;height:96px;object-fit:cover;border-radius:2px;flex-shrink:0}
+.upsell-body{display:flex;flex-direction:column;gap:5px;min-width:0}
+.upsell h3{margin:0;font-size:15px;font-weight:600;line-height:1.3}
+.upsell p{margin:0;font-size:13px;color:var(--text-soft);line-height:1.45}
+.upsell-price{display:flex;align-items:baseline;gap:9px;font-variant-numeric:tabular-nums}
+.upsell-price s{color:var(--text-faint);font-size:13px}
+.upsell-price b{font-size:17px;font-weight:600}
+.upsell-price .save{
+  font-size:10px;font-weight:600;letter-spacing:.12em;text-transform:uppercase;
+  color:var(--gold);border:1px solid var(--gold);padding:2px 7px;border-radius:2px;
+}
+
+/* ==========================================================================
+   Klebende Kaufleiste
+   ========================================================================== */
+
+.stickybuy{
+  position:fixed;
+  left:0;right:0;bottom:0;
+  z-index:70;
+  background:color-mix(in srgb, var(--ground) 95%, transparent);
+  backdrop-filter:blur(14px);
+  border-top:1px solid var(--line);
+  transform:translateY(105%);
+  transition:transform .3s ease;
+}
+.stickybuy.is-shown{transform:translateY(0)}
+.stickybuy .spine{
+  display:flex;
+  align-items:center;
+  gap:20px;
+  padding-top:12px;
+  padding-bottom:12px;
+}
+.stickybuy img{width:46px;height:46px;object-fit:cover;border-radius:2px;background:var(--surface-sunk)}
+.sticky-info{display:flex;flex-direction:column;line-height:1.3;min-width:0}
+.sticky-info strong{font-size:14px;font-weight:600}
+.sticky-info span{font-size:12.5px;color:var(--text-soft)}
+.stickybuy .cta{margin-left:auto;flex:0 0 auto;min-height:48px}
+
+@media (max-width:640px){
+  .stickybuy img{display:none}
+  .stickybuy .cta{padding:0 16px;font-size:12px}
+}
+
+/* ==========================================================================
+   Vertrauensband
+   ========================================================================== */
+
+.trustband{border-top:1px solid var(--line);border-bottom:1px solid var(--line);background:var(--ground-alt)}
+.trustband .spine{
+  display:grid;
+  grid-template-columns:repeat(4,1fr);
+  gap:20px;
+  padding-top:30px;
+  padding-bottom:30px;
+}
+.trust{display:flex;align-items:center;gap:13px}
+.trust img{width:38px;height:38px;object-fit:contain;flex-shrink:0}
+.trust-swiss{width:38px;height:38px;flex-shrink:0;color:var(--gold)}
+:root[data-theme="dark"] .trust img,
+:root[data-theme="dark"] .featurecard img,
+:root[data-theme="dark"] .speclist img{filter:invert(.88) hue-rotate(180deg)}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]) .trust img,
+  :root:not([data-theme="light"]) .featurecard img,
+  :root:not([data-theme="light"]) .speclist img{filter:invert(.88) hue-rotate(180deg)}
+}
+.trust div{display:flex;flex-direction:column;line-height:1.35}
+.trust strong{font-size:13.5px;font-weight:600}
+.trust span{font-size:12.5px;color:var(--text-soft)}
+
+@media (max-width:860px){
+  .trustband .spine{grid-template-columns:repeat(2,1fr);gap:24px}
+}
+
+/* ==========================================================================
+   Ergebnisse – Vorher/Nachher
+   ========================================================================== */
+
+.compare-grid{
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  gap:26px;
+}
+.compare{display:flex;flex-direction:column;gap:14px}
+
+.cmp{
+  position:relative;
+  aspect-ratio:1/1;
+  overflow:hidden;
+  border-radius:var(--radius);
+  background:var(--ink-raise);
+  --pos:50%;
+  touch-action:pan-y;
+}
+.cmp img{
+  position:absolute;
+  inset:0;
+  width:100%;height:100%;
+  object-fit:cover;
+  user-select:none;
+  -webkit-user-drag:none;
+}
+.cmp .after{clip-path:inset(0 0 0 var(--pos))}
+.cmp-label{
+  position:absolute;
+  bottom:14px;
+  font-size:10px;
+  font-weight:600;
+  letter-spacing:.2em;
+  text-transform:uppercase;
+  padding:5px 10px;
+  border-radius:2px;
+  background:rgba(15,14,12,.72);
+  color:#F3F0E9;
+  pointer-events:none;
+}
+.cmp-label.is-before{left:14px}
+.cmp-label.is-after{right:14px;color:var(--gold-lt)}
+
+.cmp-handle{
+  position:absolute;
+  top:0;bottom:0;
+  left:var(--pos);
+  width:2px;
+  background:var(--gold);
+  transform:translateX(-1px);
+  pointer-events:none;
+}
+.cmp-handle::after{
+  content:"";
+  position:absolute;
+  top:50%;left:50%;
+  width:46px;height:46px;
+  transform:translate(-50%,-50%);
+  border:2px solid var(--gold);
+  border-radius:50%;
+  background:rgba(26,26,24,.55);
+  backdrop-filter:blur(3px);
+}
+.cmp-handle::before{
+  content:"";
+  position:absolute;
+  top:50%;left:50%;
+  width:17px;height:9px;
+  transform:translate(-50%,-50%);
+  background:var(--gold);
+  clip-path:polygon(0 50%,36% 0,36% 100%, 64% 0,64% 100%,100% 50%);
+  z-index:1;
+}
+.cmp-range{
+  position:absolute;
+  inset:0;
+  width:100%;
+  margin:0;
+  opacity:0;
+  cursor:ew-resize;
+  appearance:none;
+  background:none;
+}
+.cmp-range::-webkit-slider-thumb{appearance:none;width:56px;height:100%}
+.cmp-range:focus-visible + .cmp-handle::after{box-shadow:0 0 0 4px rgba(163,151,114,.45)}
+
+.compare figcaption{display:flex;flex-direction:column;gap:3px}
+.compare .who{font-size:15px;font-weight:600}
+.compare .what{font-size:13.5px;color:var(--ink-text-soft)}
+
+.cmp-hint{
+  display:flex;
+  align-items:center;
+  gap:9px;
+  margin:34px 0 0;
+  font-size:13px;
+  color:var(--ink-text-soft);
+}
+.cmp-hint svg{width:17px;height:17px;stroke:var(--gold);fill:none;stroke-width:1.7}
+
+@media (max-width:900px){ .compare-grid{grid-template-columns:1fr;max-width:440px;margin:0 auto} }
+
+/* ==========================================================================
+   Anwendung
+   ========================================================================== */
+
+.steps{display:grid;grid-template-columns:repeat(3,1fr);gap:32px}
+.step{display:flex;flex-direction:column;gap:16px}
+.step-figure{
+  border:1px solid var(--line);
+  border-radius:var(--radius);
+  background:var(--surface);
+  overflow:hidden;
+  position:relative;
+}
+.step-figure img{width:100%;aspect-ratio:1/1.1;object-fit:cover;object-position:top center}
+.step-no{
+  position:absolute;
+  top:12px;left:12px;
+  width:32px;height:32px;
+  display:grid;place-items:center;
+  border-radius:50%;
+  background:var(--chip-bg);
+  color:var(--chip-text);
+  font-size:13px;
+  font-weight:600;
+  font-variant-numeric:tabular-nums;
+}
+.step h3{
+  margin:0;
+  font-size:19px;
+  font-weight:600;
+  letter-spacing:-.005em;
+}
+.step p{margin:0;font-size:15px;color:var(--text-soft);line-height:1.6}
+
+@media (max-width:820px){ .steps{grid-template-columns:1fr;gap:36px} }
+
+/* ==========================================================================
+   Technologievergleich
+   ========================================================================== */
+
+.vs{
+  border:1px solid var(--line);
+  border-radius:var(--radius);
+  overflow:hidden;
+  background:var(--surface);
+}
+.vs-row{
+  display:grid;
+  grid-template-columns:minmax(0,1fr) 190px 190px;
+  align-items:stretch;
+  border-top:1px solid var(--line);
+}
+.vs-row:first-child{border-top:0}
+.vs-head{background:var(--surface-sunk)}
+.vs-head .vs-cell{
+  padding:18px 20px;
+  font-size:11px;
+  font-weight:600;
+  letter-spacing:.16em;
+  text-transform:uppercase;
+  color:var(--text-faint);
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  text-align:center;
+}
+.vs-head .vs-cell:first-child{justify-content:flex-start;text-align:left}
+.vs-head .vs-cell.is-them{background:var(--surface-sunk);color:var(--text-soft)}
+.vs-head .vs-cell.is-us{
+  background:var(--ink);
+  color:var(--gold-lt);
+  flex-direction:column;
+  gap:2px;
+  line-height:1.3;
+}
+.vs-head .vs-cell.is-us em{
+  font-style:normal;
+  color:var(--ink-text);
+  letter-spacing:.05em;
+  font-size:12.5px;
+  text-transform:none;
+  font-weight:500;
+}
+.vs-feature{padding:22px 20px;display:flex;flex-direction:column;gap:5px;min-width:0}
+.vs-feature strong{font-size:16px;font-weight:600;line-height:1.3}
+.vs-feature span{font-size:13.5px;color:var(--text-soft);line-height:1.5}
+.vs-cell{display:grid;place-items:center;padding:22px 16px}
+.vs-cell.is-us{background:var(--ink)}
+.vs-cell.is-them{background:var(--surface-sunk)}
+.vs-mark{width:30px;height:30px;display:grid;place-items:center;border-radius:50%}
+.vs-mark.yes{border:1.5px solid var(--gold-lt)}
+.vs-mark svg{width:16px;height:16px;fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+.vs-mark.yes svg{stroke:var(--gold-lt)}
+.vs-mark.no svg{stroke:var(--text-faint);width:19px;height:19px}
+
+.vs-wrap{overflow-x:auto}
+
+/* Unter 760px wird die Tabelle zu gestapelten Karten – kein Seitwärtsscrollen,
+   und beide Häkchen bleiben ohne Scrollen sichtbar. */
+@media (max-width:760px){
+  .vs-wrap{overflow-x:visible}
+  .vs{border:0;border-radius:0;background:none;overflow:visible}
+  .vs-row.vs-head{display:none}
+  .vs-row{
+    display:block;
+    border:1px solid var(--line);
+    border-top:1px solid var(--line);
+    border-radius:var(--radius);
+    background:var(--surface);
+    overflow:hidden;
+    margin-bottom:12px;
+  }
+  .vs-feature{padding:20px 18px 15px}
+  .vs-cell{
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    gap:14px;
+    padding:11px 18px;
+    font-size:11px;
+    font-weight:600;
+    letter-spacing:.14em;
+    text-transform:uppercase;
+  }
+  .vs-cell::before{content:attr(data-label)}
+  .vs-cell.is-us{background:var(--chip-bg);color:var(--chip-text)}
+  .vs-cell.is-them{background:var(--surface-sunk);color:var(--text-faint)}
+  .vs-mark{width:24px;height:24px}
+}
+
+/* Merkmalraster */
+.features{
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  gap:2px;
+  background:var(--line);
+  border:1px solid var(--line);
+  border-radius:var(--radius);
+  overflow:hidden;
+  margin-top:54px;
+}
+.featurecard{
+  background:var(--surface);
+  padding:28px 24px;
+  display:flex;
+  flex-direction:column;
+  gap:13px;
+}
+.featurecard img{width:44px;height:44px;object-fit:contain}
+.featurecard strong{font-size:15.5px;font-weight:600;line-height:1.35}
+.featurecard span{font-size:13.5px;color:var(--text-soft);line-height:1.55}
+
+@media (max-width:860px){ .features{grid-template-columns:repeat(2,1fr)} }
+@media (max-width:520px){ .features{grid-template-columns:1fr} }
+
+/* ==========================================================================
+   Garantie
+   ========================================================================== */
+
+.guarantee{
+  display:grid;
+  grid-template-columns:minmax(0,1fr) 300px;
+  gap:60px;
+  align-items:center;
+}
+.guarantee-list{
+  margin:32px 0 0;padding:0;list-style:none;
+  display:flex;flex-direction:column;gap:18px;
+}
+.guarantee-list li{display:flex;gap:15px;align-items:flex-start}
+.guarantee-list svg{width:20px;height:20px;flex-shrink:0;margin-top:4px;stroke:var(--gold);fill:none;stroke-width:1.7}
+.guarantee-list strong{font-weight:600}
+.guarantee-list span{color:var(--ink-text-soft)}
+.guarantee-seal img{width:100%;max-width:280px;margin:0 auto}
+
+@media (max-width:860px){
+  .guarantee{grid-template-columns:1fr;gap:38px}
+  .guarantee-seal{max-width:200px}
+}
+
+/* ==========================================================================
+   Bewertungen
+   ========================================================================== */
+
+.reviews-top{
+  display:grid;
+  grid-template-columns:250px minmax(0,1fr);
+  gap:56px;
+  align-items:center;
+  padding:32px 34px;
+  border:1px solid var(--line);
+  border-radius:var(--radius);
+  background:var(--surface);
+  margin-bottom:44px;
+}
+.score{display:flex;flex-direction:column;align-items:center;gap:6px;text-align:center}
+.score b{font-size:52px;font-weight:600;line-height:1;font-variant-numeric:tabular-nums}
+.score .stars svg{width:18px;height:18px}
+.score span{font-size:13px;color:var(--text-soft)}
+
+.histogram{display:flex;flex-direction:column;gap:8px}
+.histrow{display:grid;grid-template-columns:52px minmax(0,1fr) 46px;align-items:center;gap:14px;font-size:13px}
+.histrow .lab{color:var(--text-soft);display:flex;align-items:center;gap:4px}
+.histrow .lab svg{width:12px;height:12px;fill:var(--gold-lt)}
+.histbar{height:7px;border-radius:99px;background:var(--surface-sunk);overflow:hidden}
+.histbar i{display:block;height:100%;background:var(--gold);border-radius:99px}
+.histrow .pct{text-align:right;color:var(--text-soft);font-variant-numeric:tabular-nums}
+
+@media (max-width:760px){ .reviews-top{grid-template-columns:1fr;gap:28px;padding:26px} }
+
+.reviewlist{
+  display:grid;
+  grid-template-columns:repeat(2,1fr);
+  gap:2px;
+  background:var(--line);
+  border:1px solid var(--line);
+  border-radius:var(--radius);
+  overflow:hidden;
+}
+.review{
+  background:var(--surface);
+  padding:26px 26px 28px;
+  display:flex;
+  flex-direction:column;
+  gap:12px;
+}
+.review-head{display:flex;align-items:flex-start;justify-content:space-between;gap:16px}
+.review-who{display:flex;flex-direction:column;gap:2px;line-height:1.35}
+.review-who strong{font-size:15px;font-weight:600}
+.review-who .verified{display:flex;align-items:center;gap:5px;font-size:12px;color:var(--ok)}
+.review-who .verified svg{width:12px;height:12px;stroke:currentColor;fill:none;stroke-width:2.4}
+.review-date{font-size:12.5px;color:var(--text-faint);white-space:nowrap}
+.review p{margin:0;font-size:15px;line-height:1.62;color:var(--text-soft)}
+.review-photos{display:flex;gap:8px}
+.review-photos img{width:74px;height:74px;object-fit:cover;border-radius:2px}
+.review-reply{
+  margin-top:4px;
+  padding:14px 16px;
+  background:var(--surface-sunk);
+  border-left:2px solid var(--gold);
+  border-radius:0 2px 2px 0;
+  display:flex;flex-direction:column;gap:6px;
+}
+.review-reply strong{font-size:12px;letter-spacing:.12em;text-transform:uppercase;color:var(--gold)}
+.review-reply p{font-size:14px;line-height:1.55}
+
+@media (max-width:760px){ .reviewlist{grid-template-columns:1fr} }
+
+.reviews-more{display:flex;justify-content:center;margin-top:36px}
+
+/* ==========================================================================
+   Kundengeschichte
+   ========================================================================== */
+
+.story{
+  display:grid;
+  grid-template-columns:230px minmax(0,1fr);
+  gap:48px;
+  align-items:start;
+}
+.story-portrait img{width:100%;border-radius:var(--radius)}
+.story-portrait figcaption{
+  margin-top:14px;
+  font-size:13px;
+  line-height:1.5;
+  color:var(--text-soft);
+}
+.story-portrait b{display:block;color:var(--text);font-size:14px;font-weight:600}
+.story-body h3{
+  margin:0 0 20px;
+  font-size:clamp(24px,2.8vw,32px);
+  font-weight:600;
+  line-height:1.2;
+  letter-spacing:-.01em;
+  text-wrap:balance;
+}
+.story-body p{margin:0 0 16px;color:var(--text-soft);max-width:62ch}
+.story-body p:last-child{margin-bottom:0}
+.story-body .pull{
+  color:var(--text);
+  font-size:19px;
+  line-height:1.55;
+  padding-left:20px;
+  border-left:2px solid var(--gold);
+}
+
+@media (max-width:760px){
+  .story{grid-template-columns:1fr;gap:28px}
+  .story-portrait{max-width:180px}
+}
+
+/* ==========================================================================
+   FAQ
+   ========================================================================== */
+
+.faq{border-top:1px solid var(--line)}
+.faq details{border-bottom:1px solid var(--line)}
+.faq summary{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:22px;
+  padding:22px 4px;
+  cursor:pointer;
+  list-style:none;
+  font-size:17.5px;
+  font-weight:500;
+  transition:color .18s;
+}
+.faq summary::-webkit-details-marker{display:none}
+.faq summary:hover{color:var(--gold)}
+.faq summary::after{
+  content:"";
+  width:13px;height:13px;
+  flex-shrink:0;
+  background:var(--gold);
+  clip-path:polygon(46% 0,54% 0,54% 46%,100% 46%,100% 54%,54% 54%,54% 100%,46% 100%,46% 54%,0 54%,0 46%,46% 46%);
+  transition:transform .25s ease;
+}
+.faq details[open] summary::after{transform:rotate(135deg)}
+.faq-body{padding:0 4px 26px;max-width:72ch}
+.faq-body p{margin:0 0 12px;color:var(--text-soft);font-size:15.5px}
+.faq-body p:last-child{margin-bottom:0}
+.faq-body b{color:var(--text);font-weight:600}
+
+.fit{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:26px;margin-top:18px}
+.fit-col h4{
+  margin:0 0 12px;
+  display:flex;align-items:center;gap:9px;
+  font-size:13px;font-weight:600;letter-spacing:.1em;text-transform:uppercase;
+}
+.fit-col ul{margin:0;padding:0;list-style:none;display:flex;flex-direction:column;gap:7px;font-size:15px;color:var(--text-soft)}
+.fit-col li{padding-left:18px;position:relative}
+.fit-col li::before{content:"";position:absolute;left:0;top:11px;width:6px;height:1px;background:var(--line-firm)}
+.fit-yes h4{color:var(--ok)}
+.fit-no h4{color:var(--alert)}
+@media (max-width:600px){ .fit{grid-template-columns:1fr} }
+
+/* ==========================================================================
+   Schlussaufruf
+   ========================================================================== */
+
+.closer{
+  position:relative;
+  min-height:520px;
+  display:grid;
+  align-items:center;
+  background:var(--ink);
+  color:var(--ink-text);
+  overflow:hidden;
+}
+.closer-media{
+  position:absolute;
+  inset:0;
+}
+.closer-media img{width:100%;height:100%;object-fit:cover;object-position:60% center}
+.closer-media::after{
+  content:"";
+  position:absolute;inset:0;
+  background:linear-gradient(100deg, rgba(20,19,16,.97) 0%, rgba(20,19,16,.93) 42%, rgba(20,19,16,.55) 72%, rgba(20,19,16,.2) 100%);
+}
+.closer .spine{position:relative;z-index:1;padding-top:72px;padding-bottom:72px}
+.closer-inner{max-width:480px;display:flex;flex-direction:column;gap:22px}
+.closer h2{
+  margin:0;
+  font-size:clamp(30px,4vw,46px);
+  font-weight:700;
+  line-height:1.1;
+  letter-spacing:-.01em;
+  text-transform:uppercase;
+  text-wrap:balance;
+}
+.closer h2 .lead{display:block;color:var(--gold);font-weight:500;font-size:.55em;letter-spacing:.16em;margin-bottom:12px}
+.closer p{margin:0;color:var(--ink-text-soft);font-size:16.5px}
+.closer .cta{
+  align-self:flex-start;
+  background:var(--gold);
+  border-color:var(--gold);
+  color:#1A1A18;
+  padding:0 34px;
+}
+.closer .cta:hover{background:var(--ink-text);border-color:var(--ink-text)}
+.closer-assure{
+  display:flex;gap:26px;flex-wrap:wrap;
+  font-size:13px;color:var(--ink-text-soft);
+  padding-top:6px;
+}
+.closer-assure span{display:flex;align-items:center;gap:8px}
+.closer-assure svg{width:15px;height:15px;stroke:var(--gold);fill:none;stroke-width:1.8}
+
+/* ==========================================================================
+   Fusszeile
+   ========================================================================== */
+
+.sitefoot{background:var(--ink);color:var(--ink-text-soft);font-size:14px}
+.sitefoot .spine{padding-top:64px;padding-bottom:34px}
+.foot-grid{
+  display:grid;
+  grid-template-columns:1.25fr 1fr 1fr 1fr;
+  gap:44px;
+}
+.foot-col h4{
+  margin:0 0 18px;
+  font-size:11px;
+  font-weight:600;
+  letter-spacing:.2em;
+  text-transform:uppercase;
+  color:var(--gold);
+}
+.foot-col ul{margin:0;padding:0;list-style:none;display:flex;flex-direction:column;gap:9px}
+.foot-col a{text-decoration:none;transition:color .18s}
+.foot-col a:hover{color:var(--gold)}
+.foot-contact{display:flex;flex-direction:column;gap:12px}
+.foot-contact div{display:flex;gap:11px;align-items:flex-start;line-height:1.5}
+.foot-contact svg{width:16px;height:16px;margin-top:4px;stroke:var(--gold);fill:none;stroke-width:1.6;flex-shrink:0}
+.foot-base{
+  margin-top:48px;
+  padding-top:22px;
+  border-top:1px solid var(--ink-line);
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:22px;
+  flex-wrap:wrap;
+  font-size:12.5px;
+}
+.foot-pay{display:flex;align-items:center;gap:12px;font-size:11px;letter-spacing:.14em;text-transform:uppercase}
+.foot-pay img{height:20px}
+
+@media (max-width:900px){ .foot-grid{grid-template-columns:repeat(2,1fr);gap:34px} }
+@media (max-width:520px){ .foot-grid{grid-template-columns:1fr} }
+
+/* ==========================================================================
+   Umbrüche
+   ========================================================================== */
+
+@media (max-width:980px){
+  .buy-grid{grid-template-columns:1fr;gap:44px}
+  .gallery{position:static}
+  .compare-grid{gap:20px}
+}
+@media (max-width:720px){
+  body{font-size:16px}
+  .cta{font-size:12.5px;letter-spacing:.08em;padding:0 14px;gap:7px}
+  .stepper button{width:40px}
+  .stepper output{width:32px}
+  /* Auf schmalen Geräten wird der Preis bewusst zur zweiten Zeile */
+  .cartrow .cta{flex-direction:column;gap:1px;line-height:1.25;padding:10px 14px}
+  .cartrow .cta .sep{display:none}
+  .spine{padding:0 20px}
+  .band{padding:64px 0}
+  .buy{padding:34px 0 60px}
+  .tiers{grid-template-columns:1fr}
+  .tier{flex-direction:row;align-items:center;gap:14px;flex-wrap:wrap}
+  .tier-unit{margin-top:0;padding-top:0;margin-left:auto}
+  .thumbs{grid-template-columns:repeat(5,1fr);gap:7px}
+  .topbar .spine{gap:18px}
+}
+</style>
+
+<a class="skiplink" href="#hauptinhalt">Zum Inhalt springen</a>
+
+<!-- ====================== Kopfzeile ====================== -->
+
+<div class="topbar">
+  <div class="spine">
+    <span><svg viewBox="0 0 24 24"><path d="M3 7h13v10H3z"/><path d="M16 10h4l1 3v4h-5z"/><circle cx="7" cy="18" r="1.6"/><circle cx="18" cy="18" r="1.6"/></svg>Versand in 24 Stunden</span>
+    <span><svg viewBox="0 0 24 24"><path d="M12 3l7 3v6c0 4-3 7-7 9-4-2-7-5-7-9V6z"/><path d="M9 12l2 2 4-4"/></svg>30 Tage Rückgabe</span>
+    <span><svg viewBox="0 0 24 24"><path d="M4 6h16v12H4z"/><path d="M12 8v8M8 12h8"/></svg>Schweizer Shop</span>
+  </div>
+</div>
+
+<header class="masthead">
+  <div class="spine">
+    <a class="brand" href="#" aria-label="HairHelp Startseite">
+      <img src="ASSET:logo" alt="HairHelp" width="300" height="247">
+    </a>
+    <nav aria-label="Hauptnavigation">
+      <ul class="mainnav">
+        <li><a href="#">Für Männer</a></li>
+        <li><a href="#">Für Frauen</a></li>
+        <li><a href="#anwendung">Anwendung</a></li>
+        <li><a href="#technologie">Technologie</a></li>
+        <li><a href="#bewertungen">Erfahrungen</a></li>
+        <li><a href="#" aria-current="page">Shop</a></li>
+      </ul>
+    </nav>
+    <div class="mast-actions">
+      <button class="icon-btn" type="button" aria-label="Suchen">
+        <svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"/><path d="M20 20l-3.5-3.5"/></svg>
+      </button>
+      <button class="icon-btn" type="button" aria-label="Konto">
+        <svg viewBox="0 0 24 24"><circle cx="12" cy="8" r="4"/><path d="M4 21c0-4.4 3.6-7 8-7s8 2.6 8 7"/></svg>
+      </button>
+      <button class="icon-btn" type="button" aria-label="Warenkorb">
+        <svg viewBox="0 0 24 24"><path d="M6 8h12l-1 12H7z"/><path d="M9 8V6a3 3 0 0 1 6 0v2"/></svg>
+      </button>
+    </div>
+  </div>
+</header>
+
+<main id="hauptinhalt">
+
+<!-- ====================== Kaufmodul ====================== -->
+
+<section class="buy">
+  <div class="spine buy-grid">
+
+    <!-- Galerie -->
+    <div class="gallery">
+      <div class="gallery-stage">
+        <span class="stage-tag" id="stageTag">Dunkelbraun</span>
+        <img id="stageImg"
+             src="https://hairhelp-haarverdichter.ch/wp-content/uploads/2024/10/Dark-Brown-HairHelp-Dose.webp"
+             alt="HairHelp Streuhaar Dose in Dunkelbraun mit Farbmuster">
+      </div>
+      <div class="thumbs" id="thumbs">
+        <button class="thumb" type="button" aria-pressed="true"
+                data-full="https://hairhelp-haarverdichter.ch/wp-content/uploads/2024/10/Dark-Brown-HairHelp-Dose.webp"
+                data-tag="Dunkelbraun" data-variant="true">
+          <img src="https://hairhelp-haarverdichter.ch/wp-content/uploads/2024/10/Dark-Brown-HairHelp-Dose.webp" alt="Dose in Dunkelbraun">
+        </button>
+        <button class="thumb" type="button" aria-pressed="false"
+                data-full="https://hairhelp-haarverdichter.ch/wp-content/uploads/2024/10/hairhelp-Streuhaar-Dose-offen-mit-Deckel-daneben.jpg"
+                data-tag="12 g Dose">
+          <img src="https://hairhelp-haarverdichter.ch/wp-content/uploads/2024/10/hairhelp-Streuhaar-Dose-offen-mit-Deckel-daneben.jpg" alt="Geöffnete Dose mit Streusieb und Deckel">
+        </button>
+        <button class="thumb" type="button" aria-pressed="false"
+                data-full="https://hairhelp-haarverdichter.ch/wp-content/uploads/2024/10/Tonsur-Hinterkopf-Andwendung-Streuhaar-von-HairHelp.jpg"
+                data-tag="Anwendung">
+          <img src="https://hairhelp-haarverdichter.ch/wp-content/uploads/2024/10/Tonsur-Hinterkopf-Andwendung-Streuhaar-von-HairHelp.jpg" alt="Anwendung am Hinterkopf">
+        </button>
+        <button class="thumb" type="button" aria-pressed="false"
+                data-full="https://hairhelp-haarverdichter.ch/wp-content/uploads/2024/10/Frau-Front-Anwendung-Streuhaar-hairhelp.jpg"
+                data-tag="Anwendung">
+          <img src="https://hairhelp-haarverdichter.ch/wp-content/uploads/2024/10/Frau-Front-Anwendung-Streuhaar-hairhelp.jpg" alt="Frau mit HairHelp Dose und Applikator">
+        </button>
+        <button class="thumb" type="button" aria-pressed="false"
+                data-full="https://hairhelp-haarverdichter.ch/wp-content/uploads/2026/01/HairHelp-Starter-Set-Gold-rahmen.webp"
+                data-tag="Starter-Set">
+          <img src="https://hairhelp-haarverdichter.ch/wp-content/uploads/2026/01/HairHelp-Starter-Set-Gold-rahmen.webp" alt="Starter-Set aus Streuhaar und Präzisions-Applikator">
+        </button>
+      </div>
+    </div>
+
+    <!-- Kaufspalte -->
+    <div class="buycol">
+
+      <div>
+        <p class="eyebrow">NextGen Hair Fibers · 12 g</p>
+        <h1 class="buy-title">HairHelp™ Streuhaar</h1>
+        <p class="buy-sub">Haarverdichter aus pflanzlichem Keratin. Sichtbar dichteres Haar in Sekunden.</p>
+      </div>
+
+      <div class="ratingline">
+        <span class="stars" role="img" aria-label="4,8 von 5 Sternen">
+          <svg viewBox="0 0 24 24"><path d="M12 2l3 6.6 7 .9-5.1 4.8 1.3 7L12 18l-6.2 3.3 1.3-7L2 9.5l7-.9z"/></svg>
+          <svg viewBox="0 0 24 24"><path d="M12 2l3 6.6 7 .9-5.1 4.8 1.3 7L12 18l-6.2 3.3 1.3-7L2 9.5l7-.9z"/></svg>
+          <svg viewBox="0 0 24 24"><path d="M12 2l3 6.6 7 .9-5.1 4.8 1.3 7L12 18l-6.2 3.3 1.3-7L2 9.5l7-.9z"/></svg>
+          <svg viewBox="0 0 24 24"><path d="M12 2l3 6.6 7 .9-5.1 4.8 1.3 7L12 18l-6.2 3.3 1.3-7L2 9.5l7-.9z"/></svg>
+          <svg viewBox="0 0 24 24"><path d="M12 2l3 6.6 7 .9-5.1 4.8 1.3 7L12 18l-6.2 3.3 1.3-7L2 9.5l7-.9z"/></svg>
+        </span>
+        <strong>4.8</strong>
+        <a href="#bewertungen">82 Bewertungen</a>
+      </div>
+
+      <div class="pricebox">
+        <span class="price"><small>CHF</small><span id="unitPrice">28.90</span></span>
+        <span class="price-note">inkl. MwSt. · reicht ca. 4–6 Wochen</span>
+      </div>
+
+      <!-- Farbe -->
+      <div class="field">
+        <div class="field-head">
+          <span class="field-label">Farbe</span>
+          <span class="field-value" id="colorName">Dunkelbraun</span>
+        </div>
+        <div class="swatches" id="swatches" role="radiogroup" aria-label="Farbe wählen">
+          <button class="swatch" type="button" role="radio" aria-checked="false" data-name="Schwarz" data-sku="701.01"
+                  data-dose="https://hairhelp-haarverdichter.ch/wp-content/uploads/2024/10/Schwarz-HairHelp-Dose.webp">
+            <img src="ASSET:swatch-schwarz" alt="Schwarz"></button>
+          <button class="swatch" type="button" role="radio" aria-checked="true" data-name="Dunkelbraun" data-sku="702.02"
+                  data-dose="https://hairhelp-haarverdichter.ch/wp-content/uploads/2024/10/Dark-Brown-HairHelp-Dose.webp">
+            <img src="ASSET:swatch-dunkelbraun" alt="Dunkelbraun"></button>
+          <button class="swatch" type="button" role="radio" aria-checked="false" data-name="Braun" data-sku="702.03"
+                  data-dose="https://hairhelp-haarverdichter.ch/wp-content/uploads/2024/10/Brown-HairHelp-Dose.webp">
+            <img src="ASSET:swatch-braun" alt="Braun"></button>
+          <button class="swatch" type="button" role="radio" aria-checked="false" data-name="Hellbraun" data-sku="702.04"
+                  data-dose="https://hairhelp-haarverdichter.ch/wp-content/uploads/2024/10/Light-Brown-HairHelp-Dose.webp">
+            <img src="ASSET:swatch-hellbraun" alt="Hellbraun"></button>
+          <button class="swatch" type="button" role="radio" aria-checked="false" data-name="Mittelblond" data-sku="703.05"
+                  data-dose="https://hairhelp-haarverdichter.ch/wp-content/uploads/2024/10/Medium-Blond-HairHelp-Dose.webp">
+            <img src="ASSET:swatch-mittelblond" alt="Mittelblond"></button>
+          <button class="swatch" type="button" role="radio" aria-checked="false" data-name="Grau" data-sku="704.06"
+                  data-dose="https://hairhelp-haarverdichter.ch/wp-content/uploads/2024/10/Grey-HairHelp-Dose.webp">
+            <img src="ASSET:swatch-grau" alt="Grau"></button>
+        </div>
+      </div>
+
+      <!-- Mengenrabatte -->
+      <div class="field">
+        <div class="field-head">
+          <span class="field-label">Menge &amp; Rabatt</span>
+          <span class="field-value" id="tierSummary">Basispreis</span>
+        </div>
+        <div class="tiers" id="tiers" role="radiogroup" aria-label="Menge wählen">
+          <button class="tier" type="button" role="radio" aria-checked="true" data-qty="1">
+            <span class="tier-qty">1 Dose</span>
+            <span class="tier-perk">Basispreis</span>
+            <span class="tier-unit">CHF 28.90 / Dose</span>
+          </button>
+          <button class="tier" type="button" role="radio" aria-checked="false" data-qty="2">
+            <span class="tier-qty">2 Dosen</span>
+            <span class="tier-perk"><b>5 % Rabatt</b><br>Gratis Versand</span>
+            <span class="tier-unit">CHF 27.46 / Dose</span>
+          </button>
+          <button class="tier" type="button" role="radio" aria-checked="false" data-qty="3">
+            <span class="tier-flag">Bester Deal</span>
+            <span class="tier-qty">3 Dosen</span>
+            <span class="tier-perk"><b>1 Dose oder Applikator gratis</b><br>5 % Rabatt · Gratis Versand</span>
+            <span class="tier-unit">CHF 27.46 / Dose</span>
+          </button>
+        </div>
+        <p class="nudge" id="nudge" hidden>
+          <svg viewBox="0 0 24 24"><path d="M12 5v14M5 12l7-7 7 7"/></svg>
+          <span></span>
+        </p>
+      </div>
+
+      <!-- Warenkorb -->
+      <div class="cartrow">
+        <div class="stepper">
+          <button type="button" id="qtyMinus" aria-label="Menge verringern">−</button>
+          <output id="qtyOut" aria-live="polite">1</output>
+          <button type="button" id="qtyPlus" aria-label="Menge erhöhen">+</button>
+        </div>
+        <button class="cta" type="button" id="addToCart">
+          In den Warenkorb <span class="amount"><i class="sep">·</i> CHF <span id="totalPrice">28.90</span></span>
+        </button>
+      </div>
+
+      <ul class="assure">
+        <li><span class="dot" aria-hidden="true"></span> Sofort lieferbar · Versand innerhalb von 24 Stunden</li>
+        <li><svg viewBox="0 0 24 24"><path d="M12 3l7 3v6c0 4-3 7-7 9-4-2-7-5-7-9V6z"/><path d="M9 12l2 2 4-4"/></svg> 30-Tage-Rückgabe-Garantie in der Schweiz und Liechtenstein</li>
+        <li><svg viewBox="0 0 24 24"><path d="M3 7h13v10H3z"/><path d="M16 10h4l1 3v4h-5z"/><circle cx="7" cy="18" r="1.6"/><circle cx="18" cy="18" r="1.6"/></svg> Kostenloser Versand ab CHF 35.–</li>
+      </ul>
+
+      <div class="paystrip">
+        <span>Sicher bezahlen</span>
+        <img src="ASSET:payments" alt="TWINT, Apple Pay, PostFinance, Mastercard, VISA, PayPal">
+      </div>
+
+      <!-- Starter-Set -->
+      <div class="upsell">
+        <img src="https://hairhelp-haarverdichter.ch/wp-content/uploads/2026/01/HairHelp-Starter-Set-Gold-rahmen.webp" alt="HairHelp Starter-Set">
+        <div class="upsell-body">
+          <h3>Starter-Set: Streuhaar + Präzisions-Applikator</h3>
+          <p>Für gezieltes Auftragen an Scheitel und Geheimratsecken. Optimal für Einsteiger.</p>
+          <div class="upsell-price">
+            <s>CHF 58.80</s><b>CHF 49.90</b><span class="save">15 % sparen</span>
+          </div>
+        </div>
+      </div>
+
+      <ul class="speclist">
+        <li><img src="ASSET:check" alt=""> 12 g NextGen HairHelp Streuhaar Haarverdichter</li>
+        <li><img src="ASSET:check" alt=""> Sofort volleres &amp; dichtes Haar in Sekunden</li>
+        <li><img src="ASSET:check" alt=""> Selbst aus nächster Nähe nicht zu erkennen</li>
+        <li><img src="ASSET:check" alt=""> AirLight™-Technologie: feinere &amp; leichtere Fasern für mehr Halt</li>
+        <li><img src="ASSET:check" alt=""> Dermatologisch geprüft &amp; sanft zur Kopfhaut</li>
+        <li><img src="ASSET:check" alt=""> Wetterfest: hält bei Wind, Regen &amp; Sport</li>
+        <li><img src="ASSET:check" alt=""> Aus natürlichem, pflanzlichem Keratin</li>
+      </ul>
+
+      <div class="metarow">
+        <span><b>Artikelnummer</b> <span id="skuOut">702.02</span></span>
+        <span><b>Kategorie</b> Haarverdichtung</span>
+        <span><b>Inhalt</b> 12 g</span>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ====================== Vertrauensband ====================== -->
+
+<section class="trustband" aria-label="Leistungen">
+  <div class="spine">
+    <div class="trust">
+      <img src="https://hairhelp-haarverdichter.ch/wp-content/uploads/2026/01/30-Tage-testen.webp" alt="">
+      <div><strong>30 Tage risikofrei testen</strong><span>Auch angebrauchte Dosen</span></div>
+    </div>
+    <div class="trust">
+      <img src="https://hairhelp-haarverdichter.ch/wp-content/uploads/2026/01/ab-40CHF-kostenlose-Lieferung.webp" alt="">
+      <div><strong>Kostenloser Versand</strong><span>Ab CHF 35.– Bestellwert</span></div>
+    </div>
+    <div class="trust">
+      <img src="https://hairhelp-haarverdichter.ch/wp-content/uploads/2026/01/geldzurueck.webp" alt="">
+      <div><strong>Geld-zurück-Garantie</strong><span>Voller Kaufpreis zurück</span></div>
+    </div>
+    <div class="trust">
+      <svg class="trust-swiss" viewBox="0 0 38 38" aria-hidden="true" focusable="false">
+        <rect x="1" y="1" width="36" height="36" rx="2" fill="none" stroke="currentColor" stroke-width="1.4"/>
+        <path d="M16 10h6v6h6v6h-6v6h-6v-6h-6v-6h6z" fill="currentColor"/>
+      </svg>
+      <div><strong>Schweizer Shop</strong><span>Versand aus der Schweiz</span></div>
+    </div>
+  </div>
+</section>
+
+<!-- ====================== Ergebnisse ====================== -->
+
+<section class="band band--ink" id="ergebnisse">
+  <div class="spine">
+    <div class="sect-head">
+      <p class="eyebrow">Echte Kundinnen und Kunden</p>
+      <h2><span class="lead">Sehen Sie</span> den Unterschied</h2>
+      <p>Keine Retusche, keine Studiotricks – dieselbe Person, dieselbe Beleuchtung, einmal ohne und einmal mit HairHelp. Ziehen Sie den Regler.</p>
+    </div>
+
+    <div class="compare-grid">
+
+      <figure class="compare" style="margin:0">
+        <div class="cmp" data-cmp>
+          <img class="before" src="https://hairhelp-haarverdichter.ch/wp-content/uploads/2026/04/frau-vorher-duenner-scheitel-scaled.webp" alt="Priska vor der Anwendung">
+          <img class="after" src="https://hairhelp-haarverdichter.ch/wp-content/uploads/2026/01/frau-nachher-duenner-scheitel-scaled.webp" alt="Priska nach der Anwendung">
+          <span class="cmp-label is-before">Vorher</span>
+          <span class="cmp-label is-after">Nachher</span>
+          <input class="cmp-range" type="range" min="0" max="100" value="50" aria-label="Vorher-Nachher-Regler Priska">
+          <span class="cmp-handle" aria-hidden="true"></span>
+        </div>
+        <figcaption>
+          <span class="who">Priska, 58</span>
+          <span class="what">Lichter Scheitel · Farbe Dunkelbraun</span>
+        </figcaption>
+      </figure>
+
+      <figure class="compare" style="margin:0">
+        <div class="cmp" data-cmp>
+          <img class="before" src="https://hairhelp-haarverdichter.ch/wp-content/uploads/2026/01/VorherOliver1.webp" alt="Oliver vor der Anwendung">
+          <img class="after" src="https://hairhelp-haarverdichter.ch/wp-content/uploads/2026/01/olivernachher.webp" alt="Oliver nach der Anwendung">
+          <span class="cmp-label is-before">Vorher</span>
+          <span class="cmp-label is-after">Nachher</span>
+          <input class="cmp-range" type="range" min="0" max="100" value="50" aria-label="Vorher-Nachher-Regler Oliver">
+          <span class="cmp-handle" aria-hidden="true"></span>
+        </div>
+        <figcaption>
+          <span class="who">Oliver, 41</span>
+          <span class="what">Geheimratsecken · Farbe Braun</span>
+        </figcaption>
+      </figure>
+
+      <figure class="compare" style="margin:0">
+        <div class="cmp" data-cmp>
+          <img class="before" src="https://hairhelp-haarverdichter.ch/wp-content/uploads/2026/01/Mariana-mit-HairhelpundApplikator1.webp" alt="Mariana vor der Anwendung">
+          <img class="after" src="https://hairhelp-haarverdichter.ch/wp-content/uploads/2026/01/NachherMariana2.webp" alt="Mariana nach der Anwendung">
+          <span class="cmp-label is-before">Vorher</span>
+          <span class="cmp-label is-after">Nachher</span>
+          <input class="cmp-range" type="range" min="0" max="100" value="50" aria-label="Vorher-Nachher-Regler Mariana">
+          <span class="cmp-handle" aria-hidden="true"></span>
+        </div>
+        <figcaption>
+          <span class="who">Mariana, 34</span>
+          <span class="what">Dünner Ansatz · Farbe Dunkelbraun</span>
+        </figcaption>
+      </figure>
+
+    </div>
+
+    <p class="cmp-hint">
+      <svg viewBox="0 0 24 24"><path d="M8 8L4 12l4 4M16 8l4 4-4 4M12 4v16"/></svg>
+      Regler ziehen oder mit den Pfeiltasten steuern
+    </p>
+  </div>
+</section>
+
+<!-- ====================== Anwendung ====================== -->
+
+<section class="band" id="anwendung">
+  <div class="spine">
+    <div class="sect-head">
+      <p class="eyebrow">Drei Schritte, keine 60 Sekunden</p>
+      <h2><span class="lead">So</span> funktionierts</h2>
+    </div>
+
+    <div class="steps">
+      <div class="step">
+        <figure class="step-figure" style="margin:0">
+          <span class="step-no">1</span>
+          <img src="ASSET:step1" alt="Geschlossene Dose kräftig schütteln">
+        </figure>
+        <h3>Schütteln</h3>
+        <p>Schütteln Sie die geschlossene Dose kräftig. Dadurch laden sich die Fasern statisch auf und der «magnetische Halt» wird aktiviert.</p>
+      </div>
+      <div class="step">
+        <figure class="step-figure" style="margin:0">
+          <span class="step-no">2</span>
+          <img src="ASSET:step2" alt="Fasern über die lichte Stelle streuen">
+        </figure>
+        <h3>Streuen</h3>
+        <p>Dose 10–15 cm über die lichte Stelle halten und in kurzen, leichten Schüttlern streuen.</p>
+      </div>
+      <div class="step">
+        <figure class="step-figure" style="margin:0">
+          <span class="step-no">3</span>
+          <img src="ASSET:step3" alt="Fasern sanft einklopfen">
+        </figure>
+        <h3>Fixieren</h3>
+        <p>Mit den Fingerkuppen oder einer weichen Bürste sanft einklopfen, damit die Fasern das Haar «umarmen» und gleichmässig wirken.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ====================== Technologie ====================== -->
+
+<section class="band band--alt" id="technologie">
+  <div class="spine">
+    <div class="sect-head">
+      <p class="eyebrow">AirLight™ Faser-Technologie</p>
+      <h2><span class="lead">Eine Generation</span> voraus</h2>
+      <p>Ein Klassenunterschied, den Sie sehen und spüren. Die aktuell beste Haarfaser-Technologie, die Sie kaufen können. Exklusiv in der Schweiz.</p>
+    </div>
+
+    <div class="vs-wrap">
+      <div class="vs">
+        <div class="vs-row vs-head">
+          <div class="vs-cell">Merkmal</div>
+          <div class="vs-cell is-us">NextGen<em>HairHelp Haarverdichter</em></div>
+          <div class="vs-cell is-them">Herkömmliches Streuhaar</div>
+        </div>
+
+        <div class="vs-row">
+          <div class="vs-feature">
+            <strong>AirLight™-Faserstruktur</strong>
+            <span>Mehr Volumen, weniger Gewicht. Haftet am Haar, nicht an der Kopfhaut.</span>
+          </div>
+          <div class="vs-cell is-us" data-label="NextGen HairHelp"><span class="vs-mark yes"><svg viewBox="0 0 24 24"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg></span></div>
+          <div class="vs-cell is-them" data-label="Herkömmlich"><span class="vs-mark no"><svg viewBox="0 0 24 24"><path d="M6 6l12 12M18 6L6 18"/></svg></span></div>
+        </div>
+
+        <div class="vs-row">
+          <div class="vs-feature">
+            <strong>Elektrostatische Aufladung mit Anti-Static-Agent</strong>
+            <span>Mikrofeine Verteilung ohne Verklumpung.</span>
+          </div>
+          <div class="vs-cell is-us" data-label="NextGen HairHelp"><span class="vs-mark yes"><svg viewBox="0 0 24 24"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg></span></div>
+          <div class="vs-cell is-them" data-label="Herkömmlich"><span class="vs-mark no"><svg viewBox="0 0 24 24"><path d="M6 6l12 12M18 6L6 18"/></svg></span></div>
+        </div>
+
+        <div class="vs-row">
+          <div class="vs-feature">
+            <strong>Vegan und pflanzliches Keratin</strong>
+            <span>Menschlichem Haar nachempfunden, natürliche Lichtreflexion.</span>
+          </div>
+          <div class="vs-cell is-us" data-label="NextGen HairHelp"><span class="vs-mark yes"><svg viewBox="0 0 24 24"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg></span></div>
+          <div class="vs-cell is-them" data-label="Herkömmlich"><span class="vs-mark no"><svg viewBox="0 0 24 24"><path d="M6 6l12 12M18 6L6 18"/></svg></span></div>
+        </div>
+
+        <div class="vs-row">
+          <div class="vs-feature">
+            <strong>Dynamische Transluzenz</strong>
+            <span>Passt sich farblich besser ans Haar an, wirkt nicht wie aufgemalt, kein Pudereffekt.</span>
+          </div>
+          <div class="vs-cell is-us" data-label="NextGen HairHelp"><span class="vs-mark yes"><svg viewBox="0 0 24 24"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg></span></div>
+          <div class="vs-cell is-them" data-label="Herkömmlich"><span class="vs-mark no"><svg viewBox="0 0 24 24"><path d="M6 6l12 12M18 6L6 18"/></svg></span></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="features">
+      <div class="featurecard">
+        <img src="https://hairhelp-haarverdichter.ch/wp-content/uploads/2025/11/hautfreundlich.webp" alt="">
+        <strong>Dermatologisch geprüft</strong>
+        <span>Sanft zur Kopfhaut, verstopft keine Poren.</span>
+      </div>
+      <div class="featurecard">
+        <img src="https://hairhelp-haarverdichter.ch/wp-content/uploads/2026/01/Neuste-Haarfasertechnologie-.webp" alt="">
+        <strong>Neuste AirLight™ Faser-Technologie</strong>
+        <span>Feiner als herkömmliche Fasern – Sie brauchen weniger Produkt.</span>
+      </div>
+      <div class="featurecard">
+        <img src="https://hairhelp-haarverdichter.ch/wp-content/uploads/2025/11/wetterregenfest.webp" alt="">
+        <strong>Sicherer Halt bei jedem Wetter</strong>
+        <span>Hält bei Wind, Regen, Schweiss und Sport.</span>
+      </div>
+      <div class="featurecard">
+        <img src="https://hairhelp-haarverdichter.ch/wp-content/uploads/2025/11/pflanzlichnatuerlich-1.webp" alt="">
+        <strong>Natürliche Keratin-Fasern</strong>
+        <span>Dasselbe Protein, aus dem Ihr eigenes Haar besteht.</span>
+      </div>
+      <div class="featurecard">
+        <img src="https://hairhelp-haarverdichter.ch/wp-content/uploads/2025/11/einfachauswaschbar-1.webp" alt="">
+        <strong>Einfach auswaschbar</strong>
+        <span>Rückstandslos mit mildem Shampoo.</span>
+      </div>
+      <div class="featurecard">
+        <img src="https://hairhelp-haarverdichter.ch/wp-content/uploads/2025/11/kein-abfaerben.webp" alt="">
+        <strong>Kein Abfärben</strong>
+        <span>Kein Abrieb auf Kragen, Kissen oder Händen.</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ====================== Garantie ====================== -->
+
+<section class="band band--ink">
+  <div class="spine guarantee">
+    <div>
+      <div class="sect-head" style="margin-bottom:0">
+        <p class="eyebrow">Ohne Risiko</p>
+        <h2><span class="lead">Ihre 30-Tage-</span>Sorglos-Garantie</h2>
+      </div>
+      <ul class="guarantee-list">
+        <li>
+          <svg viewBox="0 0 24 24"><path d="M4 7h16v13H4z"/><path d="M4 7l8-4 8 4"/></svg>
+          <span><strong>Testen:</strong> Sie dürfen (und sollen!) das Produkt öffnen und benutzen.</span>
+        </li>
+        <li>
+          <svg viewBox="0 0 24 24"><path d="M3 7h13v10H3z"/><path d="M16 10h4l1 3v4h-5z"/><circle cx="7" cy="18" r="1.6"/><circle cx="18" cy="18" r="1.6"/></svg>
+          <span><strong>Kostenloser Rückversand:</strong> Sie erhalten eine vorfrankierte Etikette für den kostenlosen Rückversand.</span>
+        </li>
+        <li>
+          <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M9 12h6M12 9v6"/></svg>
+          <span><strong>100 % Geld zurück:</strong> Wir erstatten den vollen Kaufpreis, auch bei angebrauchten Dosen.</span>
+        </li>
+        <li>
+          <svg viewBox="0 0 24 24"><path d="M12 20s-7-4.4-7-9.5A3.9 3.9 0 0 1 12 8a3.9 3.9 0 0 1 7 2.5C19 15.6 12 20 12 20z"/></svg>
+          <span><strong>Kein Risiko:</strong> Sie zahlen am Ende nur, wenn Sie die HairHelp Produkte wirklich behalten wollen.</span>
+        </li>
+      </ul>
+    </div>
+    <div class="guarantee-seal">
+      <img src="https://hairhelp-haarverdichter.ch/wp-content/uploads/2024/10/Shop-30Tage-Geld-zurueck-Siegel1.webp" alt="30 Tage Rückgabegarantie – Zufriedenheit oder Geld zurück">
+    </div>
+  </div>
+</section>
+
+<!-- ====================== Bewertungen ====================== -->
+
+<section class="band" id="bewertungen">
+  <div class="spine">
+    <div class="sect-head">
+      <p class="eyebrow">82 verifizierte Rezensionen</p>
+      <h2><span class="lead">Was Kundinnen</span> und Kunden sagen</h2>
+    </div>
+
+    <div class="reviews-top">
+      <div class="score">
+        <b>4.8</b>
+        <span class="stars" role="img" aria-label="4,8 von 5 Sternen">
+          <svg viewBox="0 0 24 24"><path d="M12 2l3 6.6 7 .9-5.1 4.8 1.3 7L12 18l-6.2 3.3 1.3-7L2 9.5l7-.9z"/></svg>
+          <svg viewBox="0 0 24 24"><path d="M12 2l3 6.6 7 .9-5.1 4.8 1.3 7L12 18l-6.2 3.3 1.3-7L2 9.5l7-.9z"/></svg>
+          <svg viewBox="0 0 24 24"><path d="M12 2l3 6.6 7 .9-5.1 4.8 1.3 7L12 18l-6.2 3.3 1.3-7L2 9.5l7-.9z"/></svg>
+          <svg viewBox="0 0 24 24"><path d="M12 2l3 6.6 7 .9-5.1 4.8 1.3 7L12 18l-6.2 3.3 1.3-7L2 9.5l7-.9z"/></svg>
+          <svg viewBox="0 0 24 24"><path d="M12 2l3 6.6 7 .9-5.1 4.8 1.3 7L12 18l-6.2 3.3 1.3-7L2 9.5l7-.9z"/></svg>
+        </span>
+        <span>Basierend auf 82 Bewertungen</span>
+      </div>
+      <div class="histogram">
+        <div class="histrow"><span class="lab">5 <svg viewBox="0 0 24 24"><path d="M12 2l3 6.6 7 .9-5.1 4.8 1.3 7L12 18l-6.2 3.3 1.3-7L2 9.5l7-.9z"/></svg></span><span class="histbar"><i style="width:79%"></i></span><span class="pct">79 %</span></div>
+        <div class="histrow"><span class="lab">4 <svg viewBox="0 0 24 24"><path d="M12 2l3 6.6 7 .9-5.1 4.8 1.3 7L12 18l-6.2 3.3 1.3-7L2 9.5l7-.9z"/></svg></span><span class="histbar"><i style="width:17%"></i></span><span class="pct">17 %</span></div>
+        <div class="histrow"><span class="lab">3 <svg viewBox="0 0 24 24"><path d="M12 2l3 6.6 7 .9-5.1 4.8 1.3 7L12 18l-6.2 3.3 1.3-7L2 9.5l7-.9z"/></svg></span><span class="histbar"><i style="width:3%"></i></span><span class="pct">3 %</span></div>
+        <div class="histrow"><span class="lab">2 <svg viewBox="0 0 24 24"><path d="M12 2l3 6.6 7 .9-5.1 4.8 1.3 7L12 18l-6.2 3.3 1.3-7L2 9.5l7-.9z"/></svg></span><span class="histbar"><i style="width:0%"></i></span><span class="pct">0 %</span></div>
+        <div class="histrow"><span class="lab">1 <svg viewBox="0 0 24 24"><path d="M12 2l3 6.6 7 .9-5.1 4.8 1.3 7L12 18l-6.2 3.3 1.3-7L2 9.5l7-.9z"/></svg></span><span class="histbar"><i style="width:0%"></i></span><span class="pct">0 %</span></div>
+      </div>
+    </div>
+
+    <div class="reviewlist">
+
+      <article class="review">
+        <div class="review-head">
+          <div class="review-who">
+            <strong>Roman Juncker</strong>
+            <span class="verified"><svg viewBox="0 0 24 24"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg> Verifizierter Käufer</span>
+          </div>
+          <span class="review-date">27. Mai 2026</span>
+        </div>
+        <p>Ich war ehrlich gesagt skeptisch. Haare zum Streuen klingt erstmal wie etwas aus einer schlechten Teleshopping-Werbung. Aber HairHelp hat mich überrascht. Die Anwendung ist super einfach, das Ergebnis sieht natürlich aus und vor allem: Es hält wirklich erstaunlich gut. Klare Empfehlung für alle, die morgens lieber Selbstvertrauen statt Kappe tragen möchten.</p>
+      </article>
+
+      <article class="review">
+        <div class="review-head">
+          <div class="review-who">
+            <strong>Carolyn Caiser</strong>
+            <span class="verified"><svg viewBox="0 0 24 24"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg> Verifizierter Käufer</span>
+          </div>
+          <span class="review-date">8. Juni 2026</span>
+        </div>
+        <p>Die Anwendung ist einfach, die Fasern halten den ganzen Tag und das Ergebnis wirkt mega natürlich. Besonders bei lichter werdenden Stellen sorgt das Streuhaar sofort für mehr Fülle und Selbstvertrauen. Klare Empfehlung für alle, die schnell und unkompliziert dichteres Haar möchten!</p>
+      </article>
+
+      <article class="review">
+        <div class="review-head">
+          <div class="review-who">
+            <strong>Senna K.</strong>
+            <span class="verified"><svg viewBox="0 0 24 24"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg> Verifizierter Käufer</span>
+          </div>
+          <span class="review-date">24. Mai 2026</span>
+        </div>
+        <p>Scho en mega Unterschiid!</p>
+        <div class="review-photos">
+          <img src="https://hairhelp-haarverdichter.ch/wp-content/uploads/2024/10/hf_20260424_132556_f269c378-94e7-4d26-b057-3554a1e1b933.jpg" alt="Kundenfoto vor der Anwendung">
+          <img src="https://hairhelp-haarverdichter.ch/wp-content/uploads/2024/10/vorher.jpg" alt="Kundenfoto nach der Anwendung">
+        </div>
+        <div class="review-reply">
+          <strong>Antwort von HairHelp</strong>
+          <p>Hey Senna, vielen Dank für die Fotos. Ein super Resultat.</p>
+        </div>
+      </article>
+
+      <article class="review">
+        <div class="review-head">
+          <div class="review-who">
+            <strong>Elena Bačić</strong>
+            <span class="verified"><svg viewBox="0 0 24 24"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg> Verifizierter Käufer</span>
+          </div>
+          <span class="review-date">7. Juli 2026</span>
+        </div>
+        <p>Han müeh, uf de Siite bide Haar druf z streue, wels abegheit und schwiirig für mich isch de Chopf z büüge. Gihts da nüt wa mr mache chan?</p>
+        <div class="review-reply">
+          <strong>Antwort von HairHelp</strong>
+          <p>Hallo Elena, am besten eignet sich der Präzisions-Applikator für deine Situation. Es braucht ein bisschen Übung, bis man den Dreh raus hat. Du kannst dich jederzeit via E-Mail oder Telefon an uns wenden.</p>
+        </div>
+      </article>
+
+    </div>
+
+    <div class="reviews-more">
+      <button class="cta cta--ghost" type="button">Alle 82 Bewertungen anzeigen</button>
+    </div>
+  </div>
+</section>
+
+<!-- ====================== Kundengeschichte ====================== -->
+
+<section class="band band--alt">
+  <div class="spine story">
+    <figure class="story-portrait" style="margin:0">
+      <img src="https://hairhelp-haarverdichter.ch/wp-content/uploads/2026/01/Barbara-Zollinger.webp" alt="Barbara Zollinger">
+      <figcaption>
+        <b>Barbara Zollinger, 53</b>
+        Pflegefachfrau, Luzern
+      </figcaption>
+    </figure>
+    <div class="story-body">
+      <p class="eyebrow">Kundengeschichte</p>
+      <h3>«Es war zum Verzweifeln»</h3>
+      <p class="pull">Mit den Jahren wurden meine Haare immer dünner. Ich verzweifelte mehr und mehr. Irgendwie habe ich mich geschämt und fühlte mich weniger weiblich.</p>
+      <p>Ich habe alles probiert: Shampoos, Priorin, Hirse, Kuren.</p>
+      <p>Lange habe ich gezögert, diesen Haarverdichter von HairHelp zu kaufen. Ich dachte: «Das nützt eh nichts.» Erst als ich mich einer Freundin öffnete, die dasselbe Problem hat, empfahl sie mir HairHelp.</p>
+      <p>Mein Rat: Redet darüber. Es tut gut. Auch wenn es oberflächlich klingen mag – es hat mich psychisch belastet. Ich wünschte, ich wäre früher darauf gestossen, statt mich durch Produkte zu kämpfen, die nichts genützt haben.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ====================== FAQ ====================== -->
+
+<section class="band" id="faq">
+  <div class="spine">
+    <div class="sect-head">
+      <p class="eyebrow">Antworten vor dem Kauf</p>
+      <h2><span class="lead">Häufige</span> Fragen</h2>
+    </div>
+
+    <div class="faq">
+
+      <details>
+        <summary>Funktioniert HairHelp auch bei Geheimratsecken?</summary>
+        <div class="faq-body">
+          <p><b>Ja</b> – aber nur, wenn dort noch feines Haar vorhanden ist. Die Fasern brauchen «Ankerhaar», an dem sie haften können.</p>
+          <p>Bei komplett kahlen Stellen ohne jegliches Resthaar funktioniert HairHelp leider nicht. Dafür wären ein Haarsystem oder eine Haartransplantation die besseren Lösungen.</p>
+        </div>
+      </details>
+
+      <details>
+        <summary>Sieht das nicht künstlich aus?</summary>
+        <div class="faq-body">
+          <p>Das ist genau der Grund, warum wir HairHelp entwickelt haben. Viele herkömmliche Haarfasern sehen tatsächlich «gepudert» aus: Sie verklumpen, liegen obenauf und reflektieren Licht unnatürlich.</p>
+          <p>HairHelp ist anders: Die ultrafeinen Fasern sind dank der AirLight™-Struktur leichter, verteilen sich gleichmässiger und bestehen aus pflanzlichem Keratin, das Licht wie echtes Haar reflektiert. Das Ergebnis wirkt natürlich, nicht aufgetragen.</p>
+        </div>
+      </details>
+
+      <details>
+        <summary>Verstopft das die Poren? Schadet es meinen Haaren?</summary>
+        <div class="faq-body">
+          <p><b>Nein.</b> HairHelp besteht aus pflanzlichem Keratin – demselben Protein, aus dem auch Ihr eigenes Haar besteht. Die Fasern sind dermatologisch getestet und verursachen weder Haarausfall noch verstopfen sie Poren.</p>
+          <p>Wichtig ist nur: Waschen Sie HairHelp abends mit einem milden Shampoo aus. Bei täglicher Anwendung ohne Reinigung können sich Rückstände bilden. Das ist aber ein Hygiene-Thema, kein Produkt-Problem.</p>
+        </div>
+      </details>
+
+      <details>
+        <summary>Hält das bei Regen und Schweiss?</summary>
+        <div class="faq-body">
+          <p><b>Ja, kein Problem.</b> Die Fasern sind durch die statische Aufladung fest mit Ihrem Haar verbunden.</p>
+        </div>
+      </details>
+
+      <details>
+        <summary>Wie lange hält eine Dose?</summary>
+        <div class="faq-body">
+          <p>Das hängt von der Grösse der Fläche ab, auf die Sie das Streuhaar anwenden. Bei täglicher Anwendung auf einer typischen lichten Stelle am Oberkopf hält eine Dose (12 g) etwa <b>6–8 Wochen</b>.</p>
+          <p>Mit dem Präzisions-Applikator in der Regel etwas länger, weil gezielteres Auftragen möglich ist. Unser HairHelp Streuhaar hat zudem den Vorteil, dass es feiner ist als herkömmliche Fasern – daher brauchen Sie weniger Produkt.</p>
+        </div>
+      </details>
+
+      <details>
+        <summary>Für wen ist HairHelp geeignet und für wen nicht?</summary>
+        <div class="faq-body">
+          <div class="fit">
+            <div class="fit-col fit-yes">
+              <h4>✓ Perfekt geeignet für</h4>
+              <ul>
+                <li>Diffuser Haarausfall / lichter Scheitel</li>
+                <li>Dünnes, feines Haar</li>
+                <li>Nachwachsenden Haaransatz kaschieren</li>
+                <li>Tonsur am Hinterkopf</li>
+                <li>Geheimratsecken mit Resthaar</li>
+                <li>Aufpeppen der Frisur / mehr Volumen</li>
+              </ul>
+            </div>
+            <div class="fit-col fit-no">
+              <h4>✗ Nicht geeignet für</h4>
+              <ul>
+                <li>Vollständig kahle Stellen ohne Resthaar</li>
+                <li>Komplette Glatze</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </details>
+
+      <details>
+        <summary>Sind Hair Fibers und Streuhaar dasselbe?</summary>
+        <div class="faq-body">
+          <p><b>Ja</b>, es handelt sich um dasselbe Produkt. Während in der Schweiz und in Deutschland meist von Streuhaar oder Haarfasern gesprochen wird, hat sich international der englische Begriff <b>Hair Fibers</b> etabliert.</p>
+          <p>Das Prinzip bleibt gleich: Winzige Fasern werden aufs Haar gestreut, laden sich statisch auf und legen sich um jedes einzelne Härchen. Der sichtbare Effekt tritt sofort ein.</p>
+        </div>
+      </details>
+
+    </div>
+  </div>
+</section>
+
+<!-- ====================== Schlussaufruf ====================== -->
+
+<section class="closer">
+  <div class="closer-media">
+    <img src="https://hairhelp-haarverdichter.ch/wp-content/uploads/2024/10/Tonsur-Hinterkopf-Andwendung-Streuhaar-von-HairHelp.jpg" alt="">
+  </div>
+  <div class="spine">
+    <div class="closer-inner">
+      <h2><span class="lead">Ab heute</span>Morgens Selbstvertrauen statt Kappe</h2>
+      <p>12 g HairHelp reichen für 4–6 Wochen. Sie riskieren nichts: 30 Tage testen, auch angebrauchte Dosen nehmen wir zurück.</p>
+      <button class="cta" type="button" id="closerCta">Jetzt bestellen · CHF 28.90</button>
+      <div class="closer-assure">
+        <span><svg viewBox="0 0 24 24"><path d="M3 7h13v10H3z"/><path d="M16 10h4l1 3v4h-5z"/><circle cx="7" cy="18" r="1.6"/><circle cx="18" cy="18" r="1.6"/></svg> Versand in 24 h</span>
+        <span><svg viewBox="0 0 24 24"><path d="M12 3l7 3v6c0 4-3 7-7 9-4-2-7-5-7-9V6z"/><path d="M9 12l2 2 4-4"/></svg> 30 Tage Rückgabe</span>
+        <span><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M9 12h6"/></svg> Sofort lieferbar</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+</main>
+
+<!-- ====================== Klebende Kaufleiste ====================== -->
+
+<div class="stickybuy" id="stickybuy">
+  <div class="spine">
+    <img id="stickyImg" src="https://hairhelp-haarverdichter.ch/wp-content/uploads/2024/10/Dark-Brown-HairHelp-Dose.webp" alt="">
+    <div class="sticky-info">
+      <strong>HairHelp™ Streuhaar · 12 g</strong>
+      <span id="stickyMeta">Dunkelbraun · 1 Dose</span>
+    </div>
+    <button class="cta" type="button" id="stickyCta">
+      In den Warenkorb <span class="amount"><i class="sep">·</i> CHF <span id="stickyPrice">28.90</span></span>
+    </button>
+  </div>
+</div>
+
+<!-- ====================== Fusszeile ====================== -->
+
+<footer class="sitefoot">
+  <div class="spine">
+    <div class="foot-grid">
+      <div class="foot-col">
+        <h4>Kontakt</h4>
+        <div class="foot-contact">
+          <div><svg viewBox="0 0 24 24"><path d="M5 4h4l2 5-3 2a12 12 0 0 0 5 5l2-3 5 2v4a1 1 0 0 1-1 1A16 16 0 0 1 4 5a1 1 0 0 1 1-1z"/></svg><a href="tel:+41774865526">(+41) 77 486 55 26</a></div>
+          <div><svg viewBox="0 0 24 24"><path d="M3 6h18v12H3z"/><path d="M3 7l9 6 9-6"/></svg><a href="mailto:info@hairhelp.ch">info@hairhelp.ch</a></div>
+          <div><svg viewBox="0 0 24 24"><path d="M12 21s-7-6-7-11a7 7 0 0 1 14 0c0 5-7 11-7 11z"/><circle cx="12" cy="10" r="2.5"/></svg><span>hairhelp GmbH<br>Schweiz</span></div>
+        </div>
+      </div>
+      <div class="foot-col">
+        <h4>Navigation</h4>
+        <ul>
+          <li><a href="#">Home</a></li>
+          <li><a href="#">Für Männer</a></li>
+          <li><a href="#">Für Frauen</a></li>
+          <li><a href="#">NextGen Haarverdichter</a></li>
+          <li><a href="#anwendung">Anwendung</a></li>
+          <li><a href="#bewertungen">Erfahrungen</a></li>
+        </ul>
+      </div>
+      <div class="foot-col">
+        <h4>Ratgeber</h4>
+        <ul>
+          <li><a href="#">Was ist Streuhaar?</a></li>
+          <li><a href="#">Haarverdichtung</a></li>
+          <li><a href="#">Haarpuder vs. Streuhaar</a></li>
+          <li><a href="#">Dünnes Haar verdichten</a></li>
+          <li><a href="#">Geheimratsecken kaschieren</a></li>
+          <li><a href="#">Hair Fibers</a></li>
+        </ul>
+      </div>
+      <div class="foot-col">
+        <h4>Informationen</h4>
+        <ul>
+          <li><a href="#">AGB</a></li>
+          <li><a href="#">Datenschutzerklärung</a></li>
+          <li><a href="#">Impressum</a></li>
+          <li><a href="#">Rückgabebedingungen</a></li>
+          <li><a href="#">Mein Konto</a></li>
+          <li><a href="#">Warenkorb</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="foot-base">
+      <span>hairhelp GmbH © 2026. Alle Rechte vorbehalten.</span>
+      <span class="foot-pay">Sicher bezahlen mit <img src="ASSET:payments" alt="TWINT, Apple Pay, PostFinance, Mastercard, VISA, PayPal"></span>
+    </div>
+  </div>
+</footer>
+
+<script>
+(function () {
+  "use strict";
+
+  var BASE = 28.90;
+  var state = { qty: 1, color: "Dunkelbraun" };
+
+  var chf = function (n) { return n.toFixed(2); };
+
+  /* Rabattregeln der Website:
+     ab 2 Dosen  → 5 % Rabatt + Gratis Versand
+     ab 3 Dosen  → zusätzlich 1 Dose oder der Präzisions-Applikator gratis */
+  function pricing(qty) {
+    var discount = qty >= 2 ? 0.05 : 0;
+    var gross = BASE * qty;
+    return {
+      total: gross * (1 - discount),
+      unit: BASE * (1 - discount),
+      discount: discount,
+      freeShipping: qty >= 2,
+      bonus: qty >= 3
+    };
+  }
+
+  var el = function (id) { return document.getElementById(id); };
+
+  var qtyOut = el("qtyOut"),
+      totalPrice = el("totalPrice"),
+      stickyPrice = el("stickyPrice"),
+      stickyMeta = el("stickyMeta"),
+      tierSummary = el("tierSummary"),
+      nudge = el("nudge"),
+      unitPrice = el("unitPrice");
+
+  function render() {
+    var p = pricing(state.qty);
+
+    qtyOut.textContent = state.qty;
+    totalPrice.textContent = chf(p.total);
+    stickyPrice.textContent = chf(p.total);
+    unitPrice.textContent = chf(BASE);
+    stickyMeta.textContent = state.color + " · " + state.qty + (state.qty === 1 ? " Dose" : " Dosen");
+
+    var parts = [];
+    if (p.discount) parts.push("5 % Rabatt");
+    if (p.freeShipping) parts.push("Gratis Versand");
+    if (p.bonus) parts.push("Gratis-Bonus");
+    tierSummary.textContent = parts.length ? parts.join(" · ") : "Basispreis";
+
+    // Mengenstufen spiegeln die aktuelle Menge
+    Array.prototype.forEach.call(document.querySelectorAll("#tiers .tier"), function (t) {
+      var q = +t.dataset.qty;
+      var active = state.qty >= 3 ? q === 3 : state.qty === q;
+      t.setAttribute("aria-checked", active ? "true" : "false");
+    });
+
+    // Hinweis auf die nächste Stufe
+    var msg = "";
+    if (state.qty === 1) msg = "Noch <b>1 Dose</b> für 5 % Rabatt und Gratis Versand.";
+    else if (state.qty === 2) msg = "Noch <b>1 Dose</b> für eine Gratis-Dose oder den Präzisions-Applikator.";
+    if (msg) {
+      nudge.querySelector("span").innerHTML = msg;
+      nudge.hidden = false;
+    } else {
+      nudge.hidden = true;
+    }
+  }
+
+  /* ---- Menge ---- */
+  el("qtyMinus").addEventListener("click", function () {
+    state.qty = Math.max(1, state.qty - 1);
+    render();
+  });
+  el("qtyPlus").addEventListener("click", function () {
+    state.qty = Math.min(20, state.qty + 1);
+    render();
+  });
+
+  /* ---- Mengenstufen ---- */
+  document.getElementById("tiers").addEventListener("click", function (e) {
+    var t = e.target.closest(".tier");
+    if (!t) return;
+    state.qty = +t.dataset.qty;
+    render();
+  });
+
+  /* ---- Farbe ---- */
+  var stageImg = el("stageImg"),
+      stageTag = el("stageTag"),
+      stickyImg = el("stickyImg"),
+      colorName = el("colorName"),
+      skuOut = el("skuOut"),
+      thumbs = el("thumbs");
+
+  document.getElementById("swatches").addEventListener("click", function (e) {
+    var s = e.target.closest(".swatch");
+    if (!s) return;
+
+    Array.prototype.forEach.call(this.querySelectorAll(".swatch"), function (x) {
+      x.setAttribute("aria-checked", x === s ? "true" : "false");
+    });
+
+    state.color = s.dataset.name;
+    colorName.textContent = state.color;
+    skuOut.textContent = s.dataset.sku;
+
+    var dose = s.dataset.dose;
+
+    // Galerie auf das Dosenbild der gewählten Farbe zurückstellen
+    var variantThumb = thumbs.querySelector('[data-variant="true"]');
+    if (variantThumb) {
+      variantThumb.dataset.full = dose;
+      variantThumb.dataset.tag = state.color;
+      variantThumb.querySelector("img").src = dose;
+    }
+    setStage(dose, state.color, variantThumb);
+    stickyImg.src = dose;
+
+    render();
+  });
+
+  /* ---- Galerie ---- */
+  function setStage(src, tag, pressedBtn) {
+    stageImg.classList.add("is-swapping");
+    window.setTimeout(function () {
+      stageImg.src = src;
+      stageTag.textContent = tag;
+      stageImg.classList.remove("is-swapping");
+    }, 160);
+    Array.prototype.forEach.call(thumbs.querySelectorAll(".thumb"), function (b) {
+      b.setAttribute("aria-pressed", b === pressedBtn ? "true" : "false");
+    });
+  }
+
+  thumbs.addEventListener("click", function (e) {
+    var b = e.target.closest(".thumb");
+    if (!b) return;
+    setStage(b.dataset.full, b.dataset.tag, b);
+  });
+
+  /* ---- Vorher/Nachher-Regler ---- */
+  Array.prototype.forEach.call(document.querySelectorAll("[data-cmp]"), function (box) {
+    var range = box.querySelector(".cmp-range");
+    var apply = function () { box.style.setProperty("--pos", range.value + "%"); };
+    range.addEventListener("input", apply);
+    apply();
+
+    // Ziehen irgendwo auf dem Bild, nicht nur auf dem Griff
+    var drag = function (e) {
+      var r = box.getBoundingClientRect();
+      var x = ((e.clientX - r.left) / r.width) * 100;
+      range.value = Math.max(0, Math.min(100, x));
+      apply();
+    };
+    box.addEventListener("pointerdown", function (e) {
+      if (e.pointerType === "mouse" && e.button !== 0) return;
+      box.setPointerCapture(e.pointerId);
+      drag(e);
+    });
+    box.addEventListener("pointermove", function (e) {
+      if (box.hasPointerCapture(e.pointerId)) drag(e);
+    });
+  });
+
+  /* ---- Klebende Kaufleiste ---- */
+  var bar = el("stickybuy");
+  var anchor = document.querySelector(".cartrow");
+  if ("IntersectionObserver" in window) {
+    new IntersectionObserver(function (entries) {
+      entries.forEach(function (entry) {
+        bar.classList.toggle("is-shown", !entry.isIntersecting && entry.boundingClientRect.top < 0);
+      });
+    }, { rootMargin: "0px" }).observe(anchor);
+  }
+
+  /* ---- Warenkorb (Demo) ---- */
+  function added() {
+    var p = pricing(state.qty);
+    var label = state.qty + (state.qty === 1 ? " Dose " : " Dosen ") + state.color +
+                " · CHF " + chf(p.total);
+    window.alert("In den Warenkorb gelegt:\n" + label);
+  }
+  el("addToCart").addEventListener("click", added);
+  el("stickyCta").addEventListener("click", added);
+  el("closerCta").addEventListener("click", function () {
+    document.querySelector(".buy").scrollIntoView({ behavior: "smooth", block: "start" });
+  });
+
+  render();
+})();
+</script>
