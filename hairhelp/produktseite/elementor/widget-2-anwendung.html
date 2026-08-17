@@ -1,0 +1,126 @@
+<!-- ==========================================================================
+     HairHelp – HTML-Widget 2: Anwendung in drei Schritten
+     Einsatz: Elementor → HTML-Widget, im Abschnitt „So funktionierts“
+              anstelle des einen Anleitungsbildes und der drei Textblöcke.
+
+     Die bestehende Anleitungsgrafik besteht bereits aus drei Feldern. Statt
+     drei neue Dateien hochzuladen, wird dasselbe Bild dreimal geladen und per
+     background-position auf je ein Feld beschnitten – der Browser lädt es nur
+     einmal. Wer lieber saubere Einzelbilder möchte, lädt die drei Dateien aus
+     `bilder/` hoch und ersetzt die Regeln .hh-steps__art--1/2/3.
+     ========================================================================== -->
+
+<div class="hh-steps">
+  <ol class="hh-steps__list">
+
+    <li class="hh-steps__item">
+      <div class="hh-steps__figure">
+        <span class="hh-steps__no">1</span>
+        <div class="hh-steps__art hh-steps__art--1" role="img"
+             aria-label="Geschlossene Dose kräftig schütteln"></div>
+      </div>
+      <h3>Schütteln</h3>
+      <p>Schütteln Sie die geschlossene Dose kräftig. Dadurch laden sich die Fasern
+         statisch auf und der «magnetische Halt» wird aktiviert.</p>
+    </li>
+
+    <li class="hh-steps__item">
+      <div class="hh-steps__figure">
+        <span class="hh-steps__no">2</span>
+        <div class="hh-steps__art hh-steps__art--2" role="img"
+             aria-label="Fasern aus 10 bis 15 cm Höhe über die lichte Stelle streuen"></div>
+      </div>
+      <h3>Streuen</h3>
+      <p>Dose 10–15 cm über die lichte Stelle halten und in kurzen, leichten
+         Schüttlern streuen.</p>
+    </li>
+
+    <li class="hh-steps__item">
+      <div class="hh-steps__figure">
+        <span class="hh-steps__no">3</span>
+        <div class="hh-steps__art hh-steps__art--3" role="img"
+             aria-label="Fasern mit den Fingerkuppen sanft einklopfen"></div>
+      </div>
+      <h3>Fixieren</h3>
+      <p>Mit den Fingerkuppen oder einer weichen Bürste sanft einklopfen, damit die
+         Fasern das Haar «umarmen» und gleichmässig wirken.</p>
+    </li>
+
+  </ol>
+</div>
+
+<style>
+.hh-steps{
+  --gold-lt:#D1BC92;
+  --ink:#1A1A18;
+  --text:#1A1A18;
+  --soft:#6E6959;
+  --line:#EBE6DB;
+  --radius:4px;
+  font-family:Jost,"Century Gothic",Futura,system-ui,sans-serif;
+}
+.hh-steps *,.hh-steps *::before,.hh-steps *::after{box-sizing:border-box}
+
+.hh-steps__list{
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  gap:32px;
+  margin:0;
+  padding:0;
+  list-style:none;
+  counter-reset:none;
+}
+.hh-steps__item{display:flex;flex-direction:column;gap:16px;margin:0}
+
+.hh-steps__figure{
+  position:relative;
+  border:1px solid var(--line);
+  border-radius:var(--radius);
+  background:#fff;
+  overflow:hidden;
+}
+
+.hh-steps__no{
+  position:absolute;
+  top:12px;left:12px;
+  z-index:1;
+  width:32px;height:32px;
+  display:grid;place-items:center;
+  border-radius:50%;
+  background:var(--ink);
+  color:var(--gold-lt);
+  font-size:13px;
+  font-weight:600;
+  font-variant-numeric:tabular-nums;
+}
+
+/* Ein Bild, drei Ausschnitte. Die Grafik ist 1500 × 560 mit drei Feldern. */
+.hh-steps__art{
+  aspect-ratio:470/548;
+  background-image:url("/wp-content/uploads/2025/11/Anleitung-HairHelp-Haarverdichter-Streuhaar.webp");
+  background-repeat:no-repeat;
+  background-size:324.7% auto;
+  background-color:#fff;
+}
+.hh-steps__art--1{background-position:1.16% top}
+.hh-steps__art--2{background-position:49.5% top}
+.hh-steps__art--3{background-position:98.5% top}
+
+.hh-steps h3{
+  margin:0;
+  font-size:19px;
+  font-weight:600;
+  letter-spacing:-.005em;
+  color:var(--text);
+}
+.hh-steps p{
+  margin:0;
+  font-size:15px;
+  line-height:1.6;
+  color:var(--soft);
+}
+
+@media (max-width:820px){
+  .hh-steps__list{grid-template-columns:1fr;gap:36px}
+}
+</style>

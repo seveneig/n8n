@@ -19,6 +19,16 @@ Bauen:
 python3 build.py
 ```
 
+## Einbau in Elementor und WooCommerce
+
+Der Ordner `elementor/` enthält die Umsetzung für die bestehende Website:
+einen CSS-Layer über den vorhandenen Aufbau und fünf HTML-Widgets für die
+Abschnitte, die es bisher nicht gibt. Einbauanleitung dort in `README.md`.
+
+Die eigenständige Seite in diesem Ordner bleibt als Entwurf und Referenz
+bestehen – sie zeigt das Ziel, `elementor/` bringt es auf die Website.
+
+
 ## Markensystem
 
 Übernommen aus der bestehenden Website, nicht neu erfunden.

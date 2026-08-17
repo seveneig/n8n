@@ -1,0 +1,995 @@
+/* ==========================================================================
+   HairHelp – Produktseite, Gestaltungs-Layer
+   ==========================================================================
+
+   Legt sich über den bestehenden Aufbau und ändert nur das Aussehen.
+   Nicht angefasst werden: WooCommerce-Formular, Variations-Logik, die
+   hhch-Rabattstufen, die Swatches, Customer Reviews.
+
+   Alles ist auf `body.single-product` begrenzt. Wird das Template auch
+   anderswo verwendet, diesen Scope austauschen.
+
+   Reihenfolge der Abschnitte:
+     0  Tokens
+     1  Grundlagen
+     2  Sektionsüberschriften   .premium-dual-header-*
+     3  Galerie                 .woocommerce-product-gallery
+     4  Preis                   .elementor-widget-woocommerce-product-price
+     5  Sterne                  .cr-reviews-rating
+     6  Farbwahl                .hhch-color-label, .cfvsw-*
+     7  Mengenrabatt            .hhch-vd-*
+     8  Menge und Warenkorb     .quantity, .single_add_to_cart_button
+     9  Kurzbeschreibung, Meta
+    10  Sticky-Buy-Bar          .hhch-sb-*
+    11  Vorher/Nachher          .premium-twentytwenty-*
+    12  FAQ                     .e-n-accordion
+    13  Bewertungen             .cr-*, .ivole-*
+    14  Responsiv
+   ========================================================================== */
+
+
+/* ==========================================================================
+   0  Tokens
+   ========================================================================== */
+
+body.single-product{
+  --hh-gold:#A39772;
+  --hh-gold-lt:#D1BC92;
+  --hh-gold-wash:#F4F0E6;
+
+  --hh-ink:#1A1A18;
+  --hh-ink-raise:#25241F;
+  --hh-ink-text:#F3F0E9;
+
+  --hh-ground:#FFFFFF;
+  --hh-cream:#FAF9F6;
+  --hh-sunk:#F6F4EE;
+
+  --hh-text:#1A1A18;
+  --hh-text-soft:#6E6959;
+  --hh-text-faint:#948E7E;
+
+  --hh-line:#EBE6DB;
+  --hh-line-firm:#D9D2C2;
+
+  --hh-ok:#3F7D5C;
+
+  --hh-radius:4px;
+  --hh-shadow:0 2px 6px rgba(26,26,24,.06), 0 18px 44px rgba(26,26,24,.09);
+
+  /* Uppercase-Label, an mehreren Stellen wiederverwendet */
+  --hh-label-size:11px;
+  --hh-label-track:.18em;
+}
+
+
+/* ==========================================================================
+   1  Grundlagen
+   ========================================================================== */
+
+body.single-product{
+  background:var(--hh-ground);
+  color:var(--hh-text);
+}
+
+body.single-product,
+body.single-product .elementor-widget-text-editor,
+body.single-product .elementor-widget-heading{
+  font-family:Jost,"Century Gothic",Futura,system-ui,sans-serif;
+}
+
+body.single-product .elementor-widget-text-editor{
+  font-size:16px;
+  line-height:1.7;
+  color:var(--hh-text-soft);
+}
+
+body.single-product :focus-visible{
+  outline:2px solid var(--hh-gold);
+  outline-offset:3px;
+  border-radius:2px;
+}
+
+@media (prefers-reduced-motion:reduce){
+  body.single-product *,
+  body.single-product *::before,
+  body.single-product *::after{
+    animation-duration:.001ms !important;
+    transition-duration:.001ms !important;
+  }
+}
+
+
+/* ==========================================================================
+   2  Sektionsüberschriften   (Premium Addons Dual Header)
+   --------------------------------------------------------------------------
+   Bestehendes Muster der Marke: goldenes erstes Wort, schwarzes zweites.
+   Neu kommt die Goldlinie darüber, die jeden Abschnitt gleich ankündigt.
+   ========================================================================== */
+
+body.single-product .premium-dual-header-wrapper{
+  padding-top:22px;
+  border-top:1px solid var(--hh-gold);
+}
+
+body.single-product .premium-dual-header-first-header{
+  margin:0;
+  font-size:clamp(28px,3.6vw,42px);
+  font-weight:700;
+  line-height:1.12;
+  letter-spacing:-.005em;
+  text-transform:uppercase;
+  text-wrap:balance;
+  color:var(--hh-text);
+}
+
+body.single-product .premium-dual-header-first-span{
+  color:var(--hh-gold);
+  font-weight:500;
+}
+
+/* Auf dunklem Grund (Garantie-, Ergebnis-Band) */
+body.single-product .hh-band-ink .premium-dual-header-first-header{color:var(--hh-ink-text)}
+
+
+/* ==========================================================================
+   3  Galerie
+   --------------------------------------------------------------------------
+   Bühne mit warmem Grund statt Weiß auf Weiß, Miniaturen als Raster mit
+   goldener Markierung des aktiven Bildes.
+   ========================================================================== */
+
+body.single-product .elementor-widget-woocommerce-product-images .woocommerce-product-gallery{
+  position:sticky;
+  top:96px;
+}
+
+body.single-product .woocommerce-product-gallery .flex-viewport,
+body.single-product .woocommerce-product-gallery__wrapper > .woocommerce-product-gallery__image:only-child{
+  background:var(--hh-sunk);
+  border:1px solid var(--hh-line);
+  border-radius:var(--hh-radius);
+  overflow:hidden;
+}
+
+body.single-product .woocommerce-product-gallery__image img{
+  border-radius:0;
+}
+
+/* Lupe */
+body.single-product .woocommerce-product-gallery__trigger{
+  top:16px;
+  right:16px;
+  left:auto;
+  width:40px;
+  height:40px;
+  display:grid;
+  place-items:center;
+  background:var(--hh-ground);
+  border:1px solid var(--hh-line);
+  border-radius:var(--hh-radius);
+  box-shadow:none;
+  font-size:15px;
+  z-index:9;
+}
+body.single-product .woocommerce-product-gallery__trigger:hover{
+  border-color:var(--hh-gold);
+}
+
+/* Miniaturen
+   FlexSlider schreibt Breite und Float per Inline-Style auf jedes li.
+   Ohne !important bleiben die Miniaturen daumennagelklein. */
+body.single-product .woocommerce-product-gallery .flex-control-thumbs{
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(72px,1fr));
+  gap:10px;
+  margin:10px 0 0;
+  padding:0;
+  list-style:none;
+}
+body.single-product .woocommerce-product-gallery .flex-control-thumbs li{
+  margin:0 !important;
+  width:auto !important;
+  float:none !important;
+}
+body.single-product .woocommerce-product-gallery .flex-control-thumbs img{
+  width:100%;
+  aspect-ratio:1/1;
+  object-fit:cover;
+  border:1px solid var(--hh-line);
+  border-radius:var(--hh-radius);
+  background:var(--hh-sunk);
+  opacity:1;
+  transition:border-color .2s;
+}
+body.single-product .woocommerce-product-gallery .flex-control-thumbs img:hover{
+  border-color:var(--hh-gold);
+}
+body.single-product .woocommerce-product-gallery .flex-control-thumbs img.flex-active{
+  border-color:var(--hh-gold);
+  border-width:2px;
+}
+
+
+/* ==========================================================================
+   4  Preis
+   ========================================================================== */
+
+body.single-product .elementor-widget-woocommerce-product-price .price{
+  display:flex;
+  align-items:baseline;
+  gap:6px;
+  margin:0;
+  font-size:38px;
+  font-weight:600;
+  letter-spacing:-.01em;
+  line-height:1;
+  color:var(--hh-text);
+  font-variant-numeric:tabular-nums;
+}
+
+body.single-product .elementor-widget-woocommerce-product-price .woocommerce-Price-currencySymbol{
+  font-size:19px;
+  font-weight:500;
+  color:var(--hh-text-soft);
+}
+
+body.single-product .elementor-widget-woocommerce-product-price del{
+  font-size:19px;
+  font-weight:400;
+  color:var(--hh-text-faint);
+}
+body.single-product .elementor-widget-woocommerce-product-price ins{
+  text-decoration:none;
+}
+
+
+/* ==========================================================================
+   5  Sterne   (Customer Reviews, Shortcode-Widget)
+   --------------------------------------------------------------------------
+   Das Plugin setzt #FFBC00 inline auf jedes SVG. Deshalb hier ausnahmsweise
+   !important – anders ist das Inline-Attribut nicht zu erreichen.
+   ========================================================================== */
+
+body.single-product .cr-reviews-rating .cr-rating-icon-bg,
+body.single-product .cr-reviews-rating .cr-rating-icon-frnt svg{
+  stroke:var(--hh-gold-lt) !important;
+  fill:var(--hh-gold-lt) !important;
+}
+
+body.single-product .cr-reviews-rating{
+  display:flex;
+  align-items:center;
+  gap:10px;
+  font-size:14px;
+}
+body.single-product .cr-reviews-rating .crstar-rating-svg svg{
+  width:15px;
+  height:15px;
+}
+
+
+/* ==========================================================================
+   6  Farbwahl
+   ========================================================================== */
+
+body.single-product .hhch-color-label{
+  display:flex;
+  align-items:baseline;
+  justify-content:space-between;
+  gap:14px;
+  margin-bottom:13px;
+}
+body.single-product .hhch-color-label__top{
+  font-size:var(--hh-label-size);
+  font-weight:600;
+  letter-spacing:var(--hh-label-track);
+  text-transform:uppercase;
+  color:var(--hh-text-faint);
+}
+body.single-product .hhch-color-label__value{
+  font-size:15px;
+  font-weight:500;
+  color:var(--hh-text);
+}
+
+/* Swatch-Plugin: eigene Variablen umsetzen statt Regeln überschreiben */
+body.single-product{
+  --cfvsw-swatches-border-color:var(--hh-line-firm);
+  --cfvsw-swatches-border-color-hover:var(--hh-gold);
+  --cfvsw-swatches-border-width:1px;
+}
+
+body.single-product .cfvsw-swatches-container{
+  display:flex;
+  gap:10px;
+  flex-wrap:wrap;
+}
+body.single-product .cfvsw-swatches-option{
+  width:66px !important;   /* Plugin setzt min-width inline */
+  height:52px !important;
+  border-radius:var(--hh-radius) !important;
+  overflow:hidden;
+  transition:box-shadow .18s, border-color .18s;
+}
+body.single-product .cfvsw-swatches-option.cfvsw-selected-swatch{
+  border-color:var(--hh-gold) !important;
+  box-shadow:0 0 0 2px var(--hh-ground), 0 0 0 3px var(--hh-gold);
+}
+/* Grösse nicht dem Plugin-Stylesheet überlassen – WP Rocket entfernt
+   ungenutztes CSS und hat die Regel schon einmal mitgenommen. */
+body.single-product .cfvsw-swatch-inner{
+  display:block;
+  width:100%;
+  height:100%;
+  border-radius:0;
+  background-size:cover;
+  background-position:center;
+}
+
+/* Tabellengerüst der Variations-Tabelle unsichtbar machen */
+body.single-product form.variations_form table.variations,
+body.single-product form.variations_form table.variations tbody,
+body.single-product form.variations_form table.variations tr,
+body.single-product form.variations_form table.variations td{
+  display:block;
+  width:100%;
+  margin:0;
+  padding:0;
+  border:0;
+  background:none;
+}
+
+
+/* ==========================================================================
+   7  Mengenrabatt   (hhch-vd)
+   --------------------------------------------------------------------------
+   Die Stufen sind bereits interaktiv und funktionieren. Der Layer arbeitet
+   deshalb mit der vorhandenen Geometrie, statt gegen sie:
+
+     · .chip bleibt das Grid mit drei Zeilen und zentriertem Text
+     · der aktive Zustand bleibt dunkel – das ist die stärkere Lesart und
+       spart einen Kaskadenkampf um drei !important-Farbregeln
+     · .hint bleibt absolut positioniert, damit die Gleitanimation läuft
+
+   Geändert werden Schrift, Rahmen, Goldtöne und die Unruhe: die zweite
+   Hausschrift Heebo weicht Jost, aus dem Goldverlauf wird flaches Gold,
+   der Hover-Sprung wird kleiner.
+   ========================================================================== */
+
+body.single-product .hhch-vd-wrap.hhch-vd-on-product{
+  margin:26px 0;
+}
+
+/* Eine Schrift statt zwei */
+body.single-product .hhch-vd-bar .chip-mid,
+body.single-product .hhch-vd-bar .chip-bot,
+body.single-product .hhch-vd-bar .m3-intro,
+body.single-product .hhch-vd-bar .hint-text,
+body.single-product .hhch-vd-tooltip{
+  font-family:Jost,"Century Gothic",Futura,system-ui,sans-serif;
+}
+
+/* Kopfzeile */
+body.single-product .hhch-vd-bar .hhch-vd-section-label{
+  font-size:var(--hh-label-size);
+  font-weight:600;
+  letter-spacing:var(--hh-label-track);
+  text-transform:uppercase;
+  color:var(--hh-text-faint);
+}
+
+body.single-product .hhch-vd-info-btn{
+  color:var(--hh-text-faint);
+  font-size:12px;
+  transition:color .18s;
+}
+body.single-product .hhch-vd-info-btn:hover{color:var(--hh-gold)}
+
+body.single-product .hhch-vd-tooltip{
+  border:1px solid var(--hh-line);
+  border-radius:var(--hh-radius);
+  background:var(--hh-ground);
+  box-shadow:var(--hh-shadow);
+  font-size:13.5px;
+  line-height:1.55;
+  color:var(--hh-text-soft);
+}
+body.single-product .hhch-vd-tooltip .hhch-vd-tt-title{
+  font-size:var(--hh-label-size);
+  font-weight:600;
+  letter-spacing:.14em;
+  text-transform:uppercase;
+  color:var(--hh-gold);
+}
+body.single-product .hhch-vd-tooltip strong{color:var(--hh-text);font-weight:600}
+
+/* Stufenkarten – Rahmen und Grund */
+body.single-product .hhch-vd-bar .chips{gap:10px}
+
+body.single-product .hhch-vd-bar .chip{
+  border-width:1px;
+  border-color:var(--hh-line-firm);
+  border-radius:var(--hh-radius);
+  background:var(--hh-ground);
+  padding:16px 12px 14px;
+  row-gap:8px;
+}
+body.single-product .hhch-vd-bar .chip.on{
+  background:var(--hh-ink);
+  border-color:var(--hh-ink);
+}
+
+/* Dritte Stufe: kein Farbverlauf, nur ein goldener Rahmen */
+body.single-product .hhch-vd-bar .chip[data-n="3"]:not(.on){
+  border-color:var(--hh-gold);
+  background:var(--hh-gold-wash);
+}
+
+/* Hover ruhiger */
+body.single-product .hhch-vd-on-product .hhch-vd-bar .chip:hover{
+  transform:none;
+}
+body.single-product .hhch-vd-on-product .hhch-vd-bar .chip:not(.on):hover{
+  border-color:var(--hh-gold);
+  box-shadow:none;
+}
+body.single-product .hhch-vd-on-product .hhch-vd-bar .chip.on:hover,
+body.single-product .hhch-vd-on-product .hhch-vd-bar .chip[data-n="3"]:not(.on):hover{
+  box-shadow:none;
+}
+
+/* Beschriftung */
+body.single-product .hhch-vd-bar .chip-n{
+  font-size:12px;
+  letter-spacing:.14em;
+  color:var(--hh-text);
+}
+body.single-product .hhch-vd-bar .chip.on .chip-n{color:var(--hh-ink-text)}
+
+body.single-product .hhch-vd-bar .chip-mid{color:var(--hh-text-soft)}
+body.single-product .hhch-vd-bar .chip[data-n="2"] .chip-mid{color:var(--hh-text-soft)}
+body.single-product .hhch-vd-bar .chip[data-n="2"] .chip-mid strong{color:var(--hh-gold)}
+body.single-product .hhch-vd-bar .chip-bot{color:var(--hh-text-faint)}
+
+/* Das Original setzt die aktive Karte per !important auf Weiss.
+   Nur deshalb steht hier ebenfalls !important. */
+body.single-product .hhch-vd-bar .chip.on .chip-mid{
+  color:rgba(243,240,233,.85) !important;
+}
+body.single-product .hhch-vd-bar .chip.on .chip-bot{color:rgba(243,240,233,.7)}
+
+/* „Aktiv“-Plakette ist neben der dunklen Karte doppelt gemoppelt.
+   Das Original blendet sie per Klasse ein, daher !important. */
+body.single-product .hhch-vd-bar .seal-mini,
+body.single-product .hhch-vd-bar .chip.on .seal-mini{display:none !important}
+
+body.single-product .hhch-vd-bar .hhch-vd-ribbon{
+  background:var(--hh-ink);
+  color:var(--hh-gold-lt);
+  font-size:9px;
+  font-weight:600;
+  letter-spacing:.16em;
+  text-transform:uppercase;
+  border-radius:2px;
+  box-shadow:none;
+}
+
+/* Gratis-Zeile der dritten Stufe */
+body.single-product .hhch-vd-bar .chip-mid-3::before{
+  color:var(--hh-gold);
+  opacity:.6;
+}
+body.single-product .hhch-vd-bar .m3-intro{color:var(--hh-text)}
+body.single-product .hhch-vd-bar .chip.on .m3-intro{color:var(--hh-ink-text)}
+body.single-product .hhch-vd-bar .m3-intro .m3-or{
+  color:var(--hh-text-faint);
+  font-style:normal;
+}
+
+/* Aus dem animierten Goldverlauf wird flaches Gold */
+body.single-product .hhch-vd-bar .m3-badge{
+  background:var(--hh-gold);
+  background-image:none;
+  animation:none;
+  border-radius:2px;
+  padding:5px 14px;
+  font-size:12px;
+  font-weight:600;
+  letter-spacing:.16em;
+  color:#FFFFFF;
+  box-shadow:none;
+}
+
+/* Fortschrittsstreifen */
+body.single-product .hhch-vd-bar .gstrip .seg{
+  height:3px;
+  border-radius:99px;
+  background:var(--hh-line);
+  box-shadow:none;
+}
+body.single-product .hhch-vd-bar .gstrip .seg.current{
+  background:var(--hh-gold);
+  background-image:none;
+  box-shadow:none;
+}
+
+/* Hinweis auf die nächste Stufe – Position und Animation bleiben unberührt */
+body.single-product .hhch-vd-bar .hint-chip{
+  background:var(--hh-ink);
+  border:0;
+  border-radius:2px;
+  color:var(--hh-gold-lt);
+  font-size:9.5px;
+  font-weight:600;
+  letter-spacing:.14em;
+  animation:none;
+}
+body.single-product .hhch-vd-bar .hint-text{
+  color:var(--hh-text-soft);
+  font-size:12.5px;
+  font-weight:400;
+}
+body.single-product .hhch-vd-bar .hint-text strong{
+  color:var(--hh-text);
+  font-weight:600;
+  font-size:13.5px;
+}
+
+
+/* ==========================================================================
+   8  Menge und Warenkorb
+   ========================================================================== */
+
+body.single-product .woocommerce-variation-add-to-cart,
+body.single-product .e-atc-qty-button-holder{
+  display:flex;
+  gap:12px;
+  align-items:stretch;
+}
+
+body.single-product div.product form.cart .quantity{
+  display:flex;
+  align-items:center;
+  margin:0;
+  border:1px solid var(--hh-line-firm);
+  border-radius:var(--hh-radius);
+  background:var(--hh-ground);
+  flex:0 0 auto;
+}
+
+body.single-product div.quantity .hhch-qty-btn,
+body.single-product div.product form.cart .quantity button.hhch-qty-btn{
+  width:46px;
+  min-height:58px;
+  border:0;
+  background:none;
+  color:var(--hh-text-soft);
+  font-size:19px;
+  line-height:1;
+  cursor:pointer;
+  transition:color .18s;
+}
+body.single-product div.quantity .hhch-qty-btn:hover{color:var(--hh-gold)}
+
+body.single-product div.product form.cart .quantity input.qty{
+  width:38px;
+  border:0;
+  background:none;
+  text-align:center;
+  font-size:16px;
+  font-weight:600;
+  font-variant-numeric:tabular-nums;
+  color:var(--hh-text);
+  -moz-appearance:textfield;
+}
+body.single-product div.product form.cart .quantity input.qty::-webkit-inner-spin-button,
+body.single-product div.product form.cart .quantity input.qty::-webkit-outer-spin-button{
+  appearance:none;
+  margin:0;
+}
+
+body.single-product .single_add_to_cart_button.button.alt{
+  flex:1;
+  min-height:58px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  padding:0 22px;
+  border:1px solid var(--hh-ink);
+  border-radius:var(--hh-radius);
+  background:var(--hh-ink);
+  color:var(--hh-ink-text);
+  font-size:14px;
+  font-weight:600;
+  letter-spacing:.14em;
+  text-transform:uppercase;
+  transition:background .2s, color .2s, border-color .2s;
+}
+body.single-product .single_add_to_cart_button.button.alt:hover{
+  background:var(--hh-gold);
+  border-color:var(--hh-gold);
+  color:var(--hh-ink);
+}
+body.single-product .single_add_to_cart_button.button.alt.disabled,
+body.single-product .single_add_to_cart_button.button.alt:disabled{
+  background:var(--hh-line);
+  border-color:var(--hh-line);
+  color:var(--hh-text-faint);
+}
+
+/* Variations-Preis und Verfügbarkeit sitzen doppelt zum Preis-Widget */
+body.single-product .woocommerce-variation-price{display:none}
+body.single-product .woocommerce-variation-availability p{
+  margin:0 0 12px;
+  font-size:14px;
+  color:var(--hh-ok);
+}
+
+
+/* ==========================================================================
+   9  Kurzbeschreibung und Meta
+   ========================================================================== */
+
+body.single-product .elementor-widget-woocommerce-product-short-description ul{
+  margin:0;
+  padding:0;
+  list-style:none;
+  display:flex;
+  flex-direction:column;
+  gap:11px;
+  font-size:15px;
+}
+body.single-product .elementor-widget-woocommerce-product-short-description li{
+  display:flex;
+  gap:11px;
+  align-items:flex-start;
+  line-height:1.5;
+  color:var(--hh-text);
+}
+body.single-product .elementor-widget-woocommerce-product-short-description li img{
+  width:17px;
+  height:17px;
+  margin-top:4px;
+  flex-shrink:0;
+}
+
+body.single-product .product_meta{
+  display:flex;
+  gap:34px;
+  flex-wrap:wrap;
+  padding-top:20px;
+  border-top:1px solid var(--hh-line);
+  font-size:13px;
+  color:var(--hh-text-faint);
+}
+body.single-product .product_meta > span{display:flex;gap:7px}
+body.single-product .product_meta .sku_wrapper,
+body.single-product .product_meta .posted_in{color:var(--hh-text-faint)}
+body.single-product .product_meta a{
+  color:var(--hh-text-soft);
+  text-decoration:none;
+}
+body.single-product .product_meta a:hover{color:var(--hh-gold)}
+
+
+/* ==========================================================================
+   10  Sticky-Buy-Bar   (hhch-sb)
+   ========================================================================== */
+
+body.single-product .hhch-sb-wrap{
+  background:color-mix(in srgb, var(--hh-ground) 95%, transparent);
+  backdrop-filter:blur(14px);
+  border-top:1px solid var(--hh-line);
+  box-shadow:none;
+}
+
+body.single-product .hhch-sb{
+  max-width:1200px;
+  margin:0 auto;
+  display:flex;
+  align-items:center;
+  gap:20px;
+  padding:12px 32px;
+}
+
+body.single-product .hhch-sb-img-wrap img,
+body.single-product .hhch-sb-img-wrap{
+  width:46px;
+  height:46px;
+  border-radius:2px;
+  background:var(--hh-sunk);
+  object-fit:cover;
+}
+
+body.single-product .hhch-sb-wrap .hhch-sb-cta{
+  margin-left:auto;
+  min-height:48px;
+  padding:0 24px;
+  border:1px solid var(--hh-ink);
+  border-radius:var(--hh-radius);
+  background:var(--hh-ink);
+  color:var(--hh-ink-text);
+  font-size:13px;
+  font-weight:600;
+  letter-spacing:.13em;
+  text-transform:uppercase;
+  transition:background .2s, border-color .2s, color .2s;
+}
+body.single-product .hhch-sb-wrap .hhch-sb-cta:hover{
+  background:var(--hh-gold);
+  border-color:var(--hh-gold);
+  color:var(--hh-ink);
+}
+
+body.single-product .hhch-sb-wrap .hhch-sb-qty-btn{
+  border:1px solid var(--hh-line-firm);
+  border-radius:var(--hh-radius);
+  background:var(--hh-ground);
+  color:var(--hh-text-soft);
+}
+body.single-product .hhch-sb-wrap .hhch-sb-qty-btn:hover{
+  border-color:var(--hh-gold);
+  color:var(--hh-gold);
+}
+body.single-product .hhch-sb-wrap .hhch-sb-qty-input{
+  border:0;
+  background:none;
+  font-weight:600;
+  font-variant-numeric:tabular-nums;
+  color:var(--hh-text);
+}
+
+
+/* ==========================================================================
+   11  Vorher/Nachher   (Premium Addons Image Comparison)
+   ========================================================================== */
+
+body.single-product .premium-twentytwenty-container{
+  border-radius:var(--hh-radius);
+  overflow:hidden;
+  background:var(--hh-ink-raise);
+}
+
+body.single-product .premium-twentytwenty-handle{
+  width:46px;
+  height:46px;
+  border:2px solid var(--hh-gold);
+  background:rgba(26,26,24,.55);
+  backdrop-filter:blur(3px);
+  box-shadow:none;
+}
+body.single-product .premium-twentytwenty-handle::before,
+body.single-product .premium-twentytwenty-handle::after{
+  background:var(--hh-gold);
+  width:2px;
+  box-shadow:none;
+}
+body.single-product .premium-twentytwenty-left-arrow{border-right-color:var(--hh-gold)}
+body.single-product .premium-twentytwenty-right-arrow{border-left-color:var(--hh-gold)}
+
+body.single-product .premium-twentytwenty-before-label span,
+body.single-product .premium-twentytwenty-after-label span{
+  padding:5px 10px;
+  border-radius:2px;
+  background:rgba(15,14,12,.72);
+  color:var(--hh-ink-text);
+  font-size:10px;
+  font-weight:600;
+  letter-spacing:.2em;
+  text-transform:uppercase;
+}
+body.single-product .premium-twentytwenty-after-label span{color:var(--hh-gold-lt)}
+
+
+/* ==========================================================================
+   12  FAQ   (Elementor Nested Accordion)
+   ========================================================================== */
+
+body.single-product .e-n-accordion{
+  border-top:1px solid var(--hh-line);
+}
+
+body.single-product .e-n-accordion-item{
+  border-bottom:1px solid var(--hh-line);
+}
+
+body.single-product .e-n-accordion-item-title{
+  padding:22px 4px;
+  background:none;
+  border:0;
+  border-radius:0;
+  cursor:pointer;
+  transition:color .18s;
+}
+body.single-product .e-n-accordion-item-title:hover{color:var(--hh-gold)}
+
+body.single-product .e-n-accordion-item-title-text{
+  font-size:17.5px;
+  font-weight:500;
+  line-height:1.35;
+  color:inherit;
+}
+
+body.single-product .e-n-accordion-item-title-icon{color:var(--hh-gold)}
+body.single-product .e-n-accordion-item-title-icon svg{width:13px;height:13px}
+
+body.single-product .e-n-accordion-item > .e-con{
+  padding:0 4px 26px;
+}
+body.single-product .e-n-accordion-item p{
+  max-width:72ch;
+  font-size:15.5px;
+  color:var(--hh-text-soft);
+}
+body.single-product .e-n-accordion-item p strong{color:var(--hh-text);font-weight:600}
+
+
+/* ==========================================================================
+   13  Bewertungen   (Customer Reviews / ivole)
+   ========================================================================== */
+
+body.single-product #reviews .cr-summaryBox-wrap{
+  display:grid;
+  grid-template-columns:250px minmax(0,1fr);
+  gap:56px;
+  align-items:center;
+  padding:32px 34px;
+  border:1px solid var(--hh-line);
+  border-radius:var(--hh-radius);
+  background:var(--hh-ground);
+  margin-bottom:44px;
+}
+
+body.single-product #reviews .cr-average-rating{
+  font-size:52px;
+  font-weight:600;
+  line-height:1;
+  color:var(--hh-text);
+  font-variant-numeric:tabular-nums;
+}
+body.single-product #reviews .cr-total-rating-count{
+  font-size:13px;
+  color:var(--hh-text-soft);
+}
+
+/* Histogramm */
+body.single-product .cr-histogramTable .ivole-histogramRow{
+  display:grid;
+  grid-template-columns:52px minmax(0,1fr) 46px;
+  align-items:center;
+  gap:14px;
+  font-size:13px;
+}
+body.single-product .cr-histogramTable .ivole-histogramCell2 .cr-histogram-bar,
+body.single-product .cr-histogramTable .ivole-histogramCell2 > div{
+  height:7px;
+  border-radius:99px;
+  background:var(--hh-sunk);
+  overflow:hidden;
+}
+body.single-product .cr-histogramTable .ivole-histogramCell2 .cr-histogram-bar-fill,
+body.single-product .cr-histogramTable .ivole-histogramCell2 > div > div{
+  height:100%;
+  border-radius:99px;
+  background:var(--hh-gold);
+}
+body.single-product .cr-histogramTable .ivole-histogramCell3{
+  text-align:right;
+  color:var(--hh-text-soft);
+  font-variant-numeric:tabular-nums;
+}
+body.single-product .cr-histogram-a{color:var(--hh-text-soft) !important}
+body.single-product .cr-histogram-a:hover{color:var(--hh-gold) !important}
+
+/* Einzelne Rezension */
+body.single-product .cr-ajax-reviews-list .cr-comment-text{
+  padding:26px;
+  border:1px solid var(--hh-line);
+  border-radius:var(--hh-radius);
+  background:var(--hh-ground);
+}
+body.single-product .cr-ajax-reviews-list .woocommerce-review__author{
+  font-size:15px;
+  font-weight:600;
+  color:var(--hh-text) !important;
+}
+body.single-product .cr-ajax-reviews-list .woocommerce-review__published-date{
+  font-size:12.5px;
+  color:var(--hh-text-faint);
+}
+body.single-product .cr-verified-badge,
+body.single-product .ivole-verified-badge{
+  color:var(--hh-ok);
+  font-size:12px;
+}
+body.single-product .cr-ajax-reviews-list .description,
+body.single-product .cr-ajax-reviews-list .cr-review-text{
+  font-size:15px;
+  line-height:1.62;
+  color:var(--hh-text-soft);
+}
+
+/* Antwort des Shops */
+body.single-product .cr-review-reply,
+body.single-product .ivole-review-reply{
+  margin-top:12px;
+  padding:14px 16px;
+  border-left:2px solid var(--hh-gold);
+  border-radius:0 2px 2px 0;
+  background:var(--hh-sunk);
+}
+
+/* Kundenfotos */
+body.single-product .cr-review-images img,
+body.single-product .ivole-review-image img{
+  width:74px;
+  height:74px;
+  object-fit:cover;
+  border-radius:2px;
+}
+
+/* Buttons im Bewertungsblock */
+body.single-product .cr-ajax-reviews-add-review,
+body.single-product .cr-ajax-reviews-load-more{
+  min-height:52px;
+  padding:0 26px;
+  border:1px solid var(--hh-line-firm);
+  border-radius:var(--hh-radius);
+  background:none;
+  color:var(--hh-text);
+  font-size:13px;
+  font-weight:600;
+  letter-spacing:.13em;
+  text-transform:uppercase;
+  cursor:pointer;
+  transition:border-color .18s, color .18s;
+}
+body.single-product .cr-ajax-reviews-add-review:hover,
+body.single-product .cr-ajax-reviews-load-more:hover{
+  border-color:var(--hh-gold);
+  color:var(--hh-gold);
+}
+
+body.single-product #reviews .cr-count-row{
+  background:var(--hh-sunk);
+  color:var(--hh-text-soft);
+  border-radius:var(--hh-radius);
+}
+
+
+/* ==========================================================================
+   14  Responsiv
+   ========================================================================== */
+
+@media (max-width:1024px){
+  body.single-product .elementor-widget-woocommerce-product-images .woocommerce-product-gallery{
+    position:static;
+  }
+}
+
+@media (max-width:767px){
+  /* Die Stufenkarten haben eigene Regeln für schmale Geräte – nicht anfassen,
+     sonst kippt das dreispaltige Raster. */
+
+  body.single-product .elementor-widget-woocommerce-product-price .price{font-size:32px}
+
+  body.single-product .single_add_to_cart_button.button.alt{
+    font-size:12.5px;
+    letter-spacing:.08em;
+    padding:0 14px;
+  }
+  body.single-product div.quantity .hhch-qty-btn{width:40px}
+  body.single-product div.product form.cart .quantity input.qty{width:32px}
+
+  body.single-product #reviews .cr-summaryBox-wrap{
+    grid-template-columns:1fr;
+    gap:28px;
+    padding:26px;
+  }
+
+  body.single-product .hhch-sb{padding:12px 20px}
+  body.single-product .hhch-sb-img-wrap{display:none}
+
+  body.single-product .woocommerce-product-gallery .flex-control-thumbs{gap:7px}
+}

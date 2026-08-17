@@ -1,0 +1,84 @@
+<!-- ==========================================================================
+     HairHelp – HTML-Widget 1: Leistungsband
+     Einsatz: Elementor → HTML-Widget, direkt unter dem Kaufmodul.
+     Ersetzt die vier einzelnen Bild- plus Text-Widgets.
+     Bildpfade sind root-relativ und funktionieren auf Staging wie Live.
+     ========================================================================== -->
+
+<div class="hh-trust">
+  <div class="hh-trust__inner">
+
+    <div class="hh-trust__item">
+      <img src="/wp-content/uploads/2026/01/30-Tage-testen.webp" alt="" width="38" height="38" loading="lazy">
+      <div>
+        <strong>30 Tage risikofrei testen</strong>
+        <span>Auch angebrauchte Dosen</span>
+      </div>
+    </div>
+
+    <div class="hh-trust__item">
+      <img src="/wp-content/uploads/2026/01/ab-40CHF-kostenlose-Lieferung.webp" alt="" width="38" height="38" loading="lazy">
+      <div>
+        <strong>Kostenloser Versand</strong>
+        <span>Ab CHF 35.– Bestellwert</span>
+      </div>
+    </div>
+
+    <div class="hh-trust__item">
+      <img src="/wp-content/uploads/2026/01/geldzurueck.webp" alt="" width="38" height="38" loading="lazy">
+      <div>
+        <strong>Geld-zurück-Garantie</strong>
+        <span>Voller Kaufpreis zurück</span>
+      </div>
+    </div>
+
+    <div class="hh-trust__item">
+      <svg class="hh-trust__swiss" viewBox="0 0 38 38" aria-hidden="true" focusable="false">
+        <rect x="1" y="1" width="36" height="36" rx="2" fill="none" stroke="currentColor" stroke-width="1.4"></rect>
+        <path d="M16 10h6v6h6v6h-6v6h-6v-6h-6v-6h6z" fill="currentColor"></path>
+      </svg>
+      <div>
+        <strong>Schweizer Shop</strong>
+        <span>Versand aus der Schweiz</span>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<style>
+.hh-trust{
+  --gold:#A39772;
+  --text:#1A1A18;
+  --soft:#6E6959;
+  --line:#EBE6DB;
+  --cream:#FAF9F6;
+  font-family:Jost,"Century Gothic",Futura,system-ui,sans-serif;
+  background:var(--cream);
+  border-top:1px solid var(--line);
+  border-bottom:1px solid var(--line);
+  margin:0 calc(50% - 50vw);
+  padding:30px calc(50vw - 50%);
+}
+.hh-trust *,.hh-trust *::before,.hh-trust *::after{box-sizing:border-box}
+.hh-trust__inner{
+  max-width:1200px;
+  margin:0 auto;
+  display:grid;
+  grid-template-columns:repeat(4,1fr);
+  gap:20px;
+}
+.hh-trust__item{display:flex;align-items:center;gap:13px}
+.hh-trust__item img{width:38px;height:38px;object-fit:contain;flex-shrink:0;display:block}
+.hh-trust__swiss{width:38px;height:38px;flex-shrink:0;color:var(--gold)}
+.hh-trust__item div{display:flex;flex-direction:column;line-height:1.35;min-width:0}
+.hh-trust__item strong{font-size:13.5px;font-weight:600;color:var(--text)}
+.hh-trust__item span{font-size:12.5px;color:var(--soft)}
+
+@media (max-width:860px){
+  .hh-trust__inner{grid-template-columns:repeat(2,1fr);gap:24px}
+}
+@media (max-width:420px){
+  .hh-trust__inner{grid-template-columns:1fr}
+}
+</style>

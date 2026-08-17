@@ -1,0 +1,161 @@
+<!-- ==========================================================================
+     HairHelp – HTML-Widget 5: Schlussaufruf
+     Einsatz: Elementor → HTML-Widget, ganz unten vor der Fusszeile.
+              Diesen Abschnitt gibt es bisher nicht.
+
+     Der Link springt zurück zum Kaufmodul. Trägt das Kaufmodul-Widget in
+     Elementor eine andere CSS-ID als `kaufen`, hier im href anpassen.
+     ========================================================================== -->
+
+<section class="hh-closer" aria-labelledby="hh-closer-title">
+  <div class="hh-closer__media" aria-hidden="true">
+    <img src="/wp-content/uploads/2024/10/Tonsur-Hinterkopf-Andwendung-Streuhaar-von-HairHelp.jpg"
+         alt="" loading="lazy" decoding="async">
+  </div>
+
+  <div class="hh-closer__inner">
+    <h2 id="hh-closer-title">
+      <span class="hh-closer__lead">Ab heute</span>
+      Morgens Selbstvertrauen statt Kappe
+    </h2>
+    <p>12 g HairHelp reichen für 4–6 Wochen. Sie riskieren nichts: 30 Tage testen,
+       auch angebrauchte Dosen nehmen wir zurück.</p>
+
+    <a class="hh-closer__cta" href="#kaufen">Jetzt bestellen</a>
+
+    <div class="hh-closer__assure">
+      <span>
+        <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M3 7h13v10H3z"></path><path d="M16 10h4l1 3v4h-5z"></path><circle cx="7" cy="18" r="1.6"></circle><circle cx="18" cy="18" r="1.6"></circle></svg>
+        Versand in 24 h
+      </span>
+      <span>
+        <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M12 3l7 3v6c0 4-3 7-7 9-4-2-7-5-7-9V6z"></path><path d="M9 12l2 2 4-4"></path></svg>
+        30 Tage Rückgabe
+      </span>
+      <span>
+        <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><circle cx="12" cy="12" r="9"></circle><path d="M9 12h6"></path></svg>
+        Sofort lieferbar
+      </span>
+    </div>
+  </div>
+</section>
+
+<style>
+.hh-closer{
+  --gold:#A39772;
+  --ink:#1A1A18;
+  --ink-text:#F3F0E9;
+  --ink-soft:#B0AB98;
+  --radius:4px;
+  font-family:Jost,"Century Gothic",Futura,system-ui,sans-serif;
+  position:relative;
+  display:grid;
+  align-items:center;
+  min-height:520px;
+  overflow:hidden;
+  background:var(--ink);
+  color:var(--ink-text);
+  margin:0 calc(50% - 50vw);
+}
+.hh-closer *,.hh-closer *::before,.hh-closer *::after{box-sizing:border-box}
+
+.hh-closer__media{position:absolute;inset:0}
+.hh-closer__media img{width:100%;height:100%;object-fit:cover;object-position:60% center;display:block}
+.hh-closer__media::after{
+  content:"";
+  position:absolute;
+  inset:0;
+  background:linear-gradient(100deg,
+    rgba(20,19,16,.97) 0%,
+    rgba(20,19,16,.93) 42%,
+    rgba(20,19,16,.55) 72%,
+    rgba(20,19,16,.2) 100%);
+}
+
+.hh-closer__inner{
+  position:relative;
+  z-index:1;
+  width:100%;
+  max-width:1200px;
+  margin:0 auto;
+  padding:72px 32px;
+  display:flex;
+  flex-direction:column;
+  align-items:flex-start;
+  gap:22px;
+}
+.hh-closer__inner > *{max-width:480px}
+
+.hh-closer h2{
+  margin:0;
+  font-size:clamp(30px,4vw,46px);
+  font-weight:700;
+  line-height:1.1;
+  letter-spacing:-.01em;
+  text-transform:uppercase;
+  text-wrap:balance;
+  color:var(--ink-text);
+}
+.hh-closer__lead{
+  display:block;
+  margin-bottom:12px;
+  font-size:.55em;
+  font-weight:500;
+  letter-spacing:.16em;
+  color:var(--gold);
+}
+
+.hh-closer p{margin:0;font-size:16.5px;line-height:1.65;color:var(--ink-soft)}
+
+.hh-closer__cta{
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  min-height:58px;
+  padding:0 34px;
+  border:1px solid var(--gold);
+  border-radius:var(--radius);
+  background:var(--gold);
+  color:var(--ink);
+  font-size:14px;
+  font-weight:600;
+  letter-spacing:.14em;
+  text-transform:uppercase;
+  text-decoration:none;
+  transition:background .2s, border-color .2s;
+}
+.hh-closer__cta:hover,
+.hh-closer__cta:focus-visible{
+  background:var(--ink-text);
+  border-color:var(--ink-text);
+  color:var(--ink);
+}
+.hh-closer__cta:focus-visible{outline:2px solid var(--gold);outline-offset:3px}
+
+.hh-closer__assure{
+  display:flex;
+  gap:26px;
+  flex-wrap:wrap;
+  padding-top:6px;
+  font-size:13px;
+  color:var(--ink-soft);
+}
+.hh-closer__assure span{display:flex;align-items:center;gap:8px}
+.hh-closer__assure svg{
+  width:15px;height:15px;
+  flex-shrink:0;
+  stroke:var(--gold);
+  fill:none;
+  stroke-width:1.8;
+}
+
+@media (max-width:720px){
+  .hh-closer{min-height:0}
+  .hh-closer__inner{padding:56px 20px}
+  .hh-closer__media img{object-position:70% center}
+}
+
+@media (prefers-reduced-motion:reduce){
+  .hh-closer__cta{transition:none}
+}
+</style>

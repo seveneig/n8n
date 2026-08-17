@@ -1,0 +1,77 @@
+<!-- ==========================================================================
+     HairHelp – HTML-Widget 4: Merkmalraster
+     Einsatz: Elementor → HTML-Widget, unter dem Technologievergleich.
+     Ersetzt die sechs einzelnen Bild- plus Text-Widgets durch ein Raster.
+     ========================================================================== -->
+
+<div class="hh-features">
+
+  <div class="hh-features__card">
+    <img src="/wp-content/uploads/2025/11/hautfreundlich.webp" alt="" width="44" height="44" loading="lazy">
+    <strong>Dermatologisch geprüft</strong>
+    <span>Sanft zur Kopfhaut, verstopft keine Poren.</span>
+  </div>
+
+  <div class="hh-features__card">
+    <img src="/wp-content/uploads/2026/01/Neuste-Haarfasertechnologie-.webp" alt="" width="44" height="44" loading="lazy">
+    <strong>Neuste AirLight™ Faser-Technologie</strong>
+    <span>Feiner als herkömmliche Fasern – Sie brauchen weniger Produkt.</span>
+  </div>
+
+  <div class="hh-features__card">
+    <img src="/wp-content/uploads/2025/11/wetterregenfest.webp" alt="" width="44" height="44" loading="lazy">
+    <strong>Sicherer Halt bei jedem Wetter</strong>
+    <span>Hält bei Wind, Regen, Schweiss und Sport.</span>
+  </div>
+
+  <div class="hh-features__card">
+    <img src="/wp-content/uploads/2025/11/pflanzlichnatuerlich-1.webp" alt="" width="44" height="44" loading="lazy">
+    <strong>Natürliche Keratin-Fasern</strong>
+    <span>Dasselbe Protein, aus dem Ihr eigenes Haar besteht.</span>
+  </div>
+
+  <div class="hh-features__card">
+    <img src="/wp-content/uploads/2025/11/einfachauswaschbar-1.webp" alt="" width="44" height="44" loading="lazy">
+    <strong>Einfach auswaschbar</strong>
+    <span>Rückstandslos mit mildem Shampoo.</span>
+  </div>
+
+  <div class="hh-features__card">
+    <img src="/wp-content/uploads/2025/11/kein-abfaerben.webp" alt="" width="44" height="44" loading="lazy">
+    <strong>Kein Abfärben</strong>
+    <span>Kein Abrieb auf Kragen, Kissen oder Händen.</span>
+  </div>
+
+</div>
+
+<style>
+.hh-features{
+  --text:#1A1A18;
+  --soft:#6E6959;
+  --line:#EBE6DB;
+  --radius:4px;
+  font-family:Jost,"Century Gothic",Futura,system-ui,sans-serif;
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  gap:1px;
+  background:var(--line);
+  border:1px solid var(--line);
+  border-radius:var(--radius);
+  overflow:hidden;
+}
+.hh-features *,.hh-features *::before,.hh-features *::after{box-sizing:border-box}
+
+.hh-features__card{
+  display:flex;
+  flex-direction:column;
+  gap:13px;
+  padding:28px 24px;
+  background:#fff;
+}
+.hh-features__card img{width:44px;height:44px;object-fit:contain;display:block}
+.hh-features__card strong{font-size:15.5px;font-weight:600;line-height:1.35;color:var(--text)}
+.hh-features__card span{font-size:13.5px;line-height:1.55;color:var(--soft)}
+
+@media (max-width:860px){.hh-features{grid-template-columns:repeat(2,1fr)}}
+@media (max-width:520px){.hh-features{grid-template-columns:1fr}}
+</style>
