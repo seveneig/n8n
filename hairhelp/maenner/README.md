@@ -76,7 +76,19 @@ stehen in `assets.json`.
   „Tonsur am Hinterkopf“, Hinterkopf von hinten zu „Dünnes Haar gesamt“.
 * **Ein Grammatikfehler im Original** ist stillschweigend korrigiert: „Es muss
   noch feines Resthaar vorhanden sind“ heisst jetzt „… vorhanden sein“.
-* **Die Kopfzeile blendet die Navigation unter 1080 px aus**, wie auf den
-  übrigen Entwurfsseiten. Ein Menü für schmale Geräte gehört in die
-  Elementor-Umsetzung, nicht in diesen Entwurf.
+* **Die Kopfzeile klappt die Navigation unter 1080 px in ein Menü**, wie auf
+  allen Entwurfsseiten – mit Tastaturbedienung und Escape zum Schliessen.
 * Die Umsetzung für Elementor steht noch aus.
+
+## Barrierefreiheit
+
+Auf allen Seiten dieser Reihe geprüft und behoben: goldener Text erreichte auf
+hellem Grund nur 2.91:1 – dafür gibt es jetzt das Token `--gold-text`
+(#7D6F45, 4.96:1), während das helle Gold auf dunklen Bändern bleibt, wo es
+6.0:1 trägt. `--text-faint` lag bei 3.27:1 und trug Datumsangaben und
+Feldbeschriftungen, neu 5.23:1. Dazu: Dokumentsprache, Menü für schmale
+Geräte, Artikelzahl im Namen des Warenkorb-Knopfs, dekorative Symbole aus dem
+Accessibility-Tree genommen, sanftes Scrollen nur ohne Bewegungsreduzierung.
+
+Ein Messskript prüft jeden Textknoten jeder Seite gegen den tatsächlich
+gerenderten Hintergrund; alle neun Seiten sind ohne Befund.

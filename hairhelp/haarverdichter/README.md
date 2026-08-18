@@ -84,3 +84,16 @@ möchte, ersetzt die drei `<svg class="gicon">` wieder durch `<img>`.
   sinnvolle Vereinheitlichung.
 * Die Elementor-Umsetzung (CSS-Layer plus HTML-Widgets, wie in
   `../produktseite/elementor/`) ist noch nicht gebaut.
+
+## Barrierefreiheit
+
+Auf allen Seiten dieser Reihe geprüft und behoben: goldener Text erreichte auf
+hellem Grund nur 2.91:1 – dafür gibt es jetzt das Token `--gold-text`
+(#7D6F45, 4.96:1), während das helle Gold auf dunklen Bändern bleibt, wo es
+6.0:1 trägt. `--text-faint` lag bei 3.27:1 und trug Datumsangaben und
+Feldbeschriftungen, neu 5.23:1. Dazu: Dokumentsprache, Menü für schmale
+Geräte, Artikelzahl im Namen des Warenkorb-Knopfs, dekorative Symbole aus dem
+Accessibility-Tree genommen, sanftes Scrollen nur ohne Bewegungsreduzierung.
+
+Ein Messskript prüft jeden Textknoten jeder Seite gegen den tatsächlich
+gerenderten Hintergrund; alle neun Seiten sind ohne Befund.

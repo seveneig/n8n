@@ -1,0 +1,657 @@
+<meta charset="utf-8">
+<title>Streuhaar Anwendung</title>
+<meta name="description" content="Streuhaar richtig anwenden: HairHelp Hair Fibers in drei Schritten auftragen, Do’s und Don’ts, Anleitung für den Präzisions-Applikator.">
+
+<style>
+/* ==========================================================================
+   HairHelp – Streuhaar Anwendung
+   Gleiches Markensystem wie die übrigen neuen Seiten:
+   Gold #A39772 · Textgold #7D6F45 · warmes Schwarz #1A1A18 ·
+   Creme #FAF9F6 · Hausschrift Jost.
+   ========================================================================== */
+
+/* FONT-FACE-JOST */
+
+:root{
+  --ground:#FFFFFF; --ground-alt:#FAF9F6; --surface:#FFFFFF; --surface-sunk:#F6F4EE;
+  --text:#1A1A18; --text-soft:#6E6959; --text-faint:#726C5C;
+  --gold:#A39772; --gold-lt:#D1BC92; --gold-wash:#F4F0E6;
+  --gold-text:#7D6F45;   /* Gold für Text auf hellem Grund: 4.96:1 statt 2.91:1 */
+  --line:#EBE6DB; --line-firm:#D9D2C2;
+  --ink:#1A1A18; --ink-raise:#25241F; --ink-text:#F3F0E9; --ink-text-soft:#B0AB98; --ink-line:#332F26;
+  --cta-bg:#1A1A18; --cta-text:#F3F0E9; --cta-hover-bg:#A39772; --cta-hover-text:#1A1A18;
+  --ok:#39704F; --alert:#8C5A2B;
+  --spine:1200px; --radius:4px;
+}
+
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --ground:#141310; --ground-alt:#1B1A15; --surface:#1D1C17; --surface-sunk:#232118;
+    --text:#F2EFE7; --text-soft:#A8A294; --text-faint:#9A9182;
+    --gold:#C2B58A; --gold-lt:#DACA9F; --gold-wash:#262316;
+    --gold-text:#C2B58A;
+    --ok:#6FA98A; --alert:#C79157;
+    --line:#332F26; --line-firm:#443E31;
+    --ink:#0E0D0B; --ink-raise:#1B1A15; --ink-text:#F3F0E9; --ink-text-soft:#ABA593; --ink-line:#2B2820;
+    --cta-bg:#C2B58A; --cta-text:#141310; --cta-hover-bg:#F2EFE7; --cta-hover-text:#141310;
+  }
+}
+:root[data-theme="dark"]{
+  --ground:#141310; --ground-alt:#1B1A15; --surface:#1D1C17; --surface-sunk:#232118;
+  --text:#F2EFE7; --text-soft:#A8A294; --text-faint:#9A9182;
+  --gold:#C2B58A; --gold-lt:#DACA9F; --gold-wash:#262316;
+  --gold-text:#C2B58A;
+  --ok:#6FA98A; --alert:#C79157;
+  --line:#332F26; --line-firm:#443E31;
+  --ink:#0E0D0B; --ink-raise:#1B1A15; --ink-text:#F3F0E9; --ink-text-soft:#ABA593; --ink-line:#2B2820;
+  --cta-bg:#C2B58A; --cta-text:#141310; --cta-hover-bg:#F2EFE7; --cta-hover-text:#141310;
+}
+
+*,*::before,*::after{box-sizing:border-box}
+[hidden]{display:none !important}
+
+body{margin:0;background:var(--ground);color:var(--text);
+  font-family:Jost,"Century Gothic",Futura,system-ui,sans-serif;
+  font-size:17px;line-height:1.7;-webkit-font-smoothing:antialiased}
+img{max-width:100%;display:block}
+a{color:inherit}
+button{font:inherit;color:inherit}
+html{scroll-behavior:smooth}
+:focus-visible{outline:2px solid var(--gold);outline-offset:3px;border-radius:2px}
+@media (prefers-reduced-motion: reduce){
+  *,*::before,*::after{animation-duration:.001ms!important;transition-duration:.001ms!important;scroll-behavior:auto!important}
+}
+
+.skiplink{position:absolute;left:16px;top:-60px;z-index:100;padding:11px 18px;border-radius:var(--radius);
+  background:var(--cta-bg);color:var(--cta-text);font-size:13px;font-weight:600;
+  letter-spacing:.1em;text-transform:uppercase;text-decoration:none;transition:top .2s ease}
+.skiplink:focus{top:16px}
+
+.spine{max-width:var(--spine);margin:0 auto;padding:0 32px}
+.band{padding:88px 0}
+.band--alt{background:var(--ground-alt)}
+.band--ink{background:var(--ink);color:var(--ink-text)}
+
+.eyebrow{font-size:12px;font-weight:500;letter-spacing:.18em;text-transform:uppercase;color:var(--gold-text);margin:0}
+/* Auf dunklem Grund trägt das helle Gold 6:1 – dort bleibt es die Textfarbe. */
+.band--ink .eyebrow,.hero .eyebrow,.sitefoot .eyebrow,
+.band--ink .sect-head h2 .lead,.band--ink .row-body .sub{color:var(--gold)}
+
+.sect-head{display:flex;flex-direction:column;gap:14px;padding-top:22px;
+  border-top:1px solid var(--gold);margin-bottom:44px}
+.sect-head h2{font-size:clamp(28px,3.6vw,42px);font-weight:700;letter-spacing:-.005em;
+  line-height:1.12;text-transform:uppercase;margin:0;text-wrap:balance}
+.sect-head h2 .lead{color:var(--gold-text);font-weight:500}
+.sect-head p{margin:0;max-width:62ch;color:var(--text-soft)}
+.band--ink .sect-head p{color:var(--ink-text-soft)}
+
+.cta{display:inline-flex;align-items:center;justify-content:center;gap:10px;
+  min-height:56px;padding:0 30px;background:var(--cta-bg);color:var(--cta-text);
+  border:1px solid var(--cta-bg);border-radius:var(--radius);
+  font-size:14px;font-weight:600;letter-spacing:.13em;text-transform:uppercase;
+  text-decoration:none;cursor:pointer;transition:background .2s,color .2s,border-color .2s}
+.cta:hover{background:var(--cta-hover-bg);border-color:var(--cta-hover-bg);color:var(--cta-hover-text)}
+/* Auf dunklem Grund wird der Knopf gold – der Auftakt gehört dazu. */
+.band--ink .cta,.hero .cta{background:var(--gold);border-color:var(--gold);color:#1A1A18}
+.band--ink .cta:hover,.hero .cta:hover{background:var(--ink-text);border-color:var(--ink-text);color:#1A1A18}
+
+/* --------------------------------------------------------------------------
+   Bildfassungen. Jede Fassung trägt die gemessene Eigenhintergrundfarbe
+   ihres Bildes als Matte – so gibt es keinen sichtbaren Sprung zwischen
+   Bildrand und Fassung. Die Matten bleiben auch im dunklen Erscheinungsbild
+   hell, weil die Bilder selbst helle Hintergründe mitbringen.
+   -------------------------------------------------------------------------- */
+.media{border:1px solid var(--line);border-radius:var(--radius);overflow:hidden;
+  background:#F6F4EE;aspect-ratio:3/2}
+.media img{width:100%;height:100%;object-fit:contain}
+.media--white{background:#FDFDFD}
+.media--soft{background:#FAFAF8}
+.media--photo{aspect-ratio:4/5}
+.media--photo img{object-fit:cover}
+.band--ink .media{border-color:var(--ink-line)}
+
+/* Vorher/Nachher-Duo: zwei Panels, eine Fassung */
+.duo{display:grid;grid-template-columns:1fr 1fr;gap:2px;background:var(--line);
+  border:1px solid var(--line);border-radius:var(--radius);overflow:hidden;margin:0}
+.pnl{position:relative;min-width:0}
+.pnl img{width:100%;height:100%;object-fit:cover;aspect-ratio:3/4}
+.pv{position:absolute;bottom:12px;font-size:10px;font-weight:600;letter-spacing:.2em;
+  text-transform:uppercase;padding:4px 9px;border-radius:2px;
+  background:rgba(15,14,12,.72);color:#F3F0E9;pointer-events:none}
+.pnl:first-child .pv{left:12px}
+.pnl:last-child .pv{right:12px;color:var(--gold-lt)}
+.duo figcaption{display:none}
+
+.deflist{margin:22px 0 0;padding:0;list-style:none;display:flex;flex-direction:column;gap:14px}
+.deflist li{padding-left:20px;position:relative;color:var(--text-soft)}
+.deflist li::before{content:"";position:absolute;left:0;top:12px;width:8px;height:1px;background:var(--gold)}
+.deflist strong{display:block;color:var(--text);font-weight:600;margin-bottom:2px}
+
+.notice{display:flex;gap:13px;align-items:flex-start;margin:22px 0 0;padding:14px 16px;
+  background:var(--gold-wash);border-left:2px solid var(--gold);border-radius:2px;
+  font-size:15px;color:var(--text-soft)}
+.notice svg{width:18px;height:18px;flex-shrink:0;margin-top:3px;stroke:var(--gold);fill:none;stroke-width:1.8}
+.notice strong{color:var(--text);font-weight:600}
+
+
+/* ==========================================================================
+   Kopfzeile
+   ========================================================================== */
+
+.topbar{background:var(--ink);color:var(--ink-text-soft);font-size:12px;
+  letter-spacing:.14em;text-transform:uppercase;font-weight:500}
+.topbar .spine{display:flex;justify-content:center;gap:38px;flex-wrap:wrap;padding-top:9px;padding-bottom:9px}
+.topbar span{display:flex;align-items:center;gap:8px}
+.topbar svg{width:14px;height:14px;stroke:var(--gold);fill:none;stroke-width:1.8}
+
+.masthead{position:sticky;top:0;z-index:60;
+  background:color-mix(in srgb, var(--ground) 92%, transparent);
+  backdrop-filter:blur(12px);border-bottom:1px solid var(--line)}
+.masthead .spine{display:flex;align-items:center;justify-content:space-between;gap:28px;height:74px}
+.brand{display:flex;align-items:center;text-decoration:none;flex-shrink:0}
+.brand img{height:34px;width:auto}
+:root[data-theme="dark"] .brand img{filter:invert(1)}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]) .brand img{filter:invert(1)}}
+.mainnav{display:flex;gap:30px;list-style:none;margin:0;padding:0;
+  font-size:13px;font-weight:500;letter-spacing:.11em;text-transform:uppercase}
+.mainnav a{text-decoration:none;padding:6px 0;border-bottom:1px solid transparent;transition:border-color .2s,color .2s}
+.mainnav a:hover{border-bottom-color:var(--gold-text);color:var(--gold)}
+.mainnav a[aria-current]{color:var(--gold-text);border-bottom-color:var(--gold)}
+.mast-actions{display:flex;align-items:center;gap:14px}
+.icon-btn{width:42px;height:42px;display:grid;place-items:center;position:relative;
+  border:1px solid var(--line);border-radius:var(--radius);background:var(--surface);
+  cursor:pointer;transition:border-color .2s,color .2s}
+.icon-btn:hover{border-color:var(--gold-text);color:var(--gold)}
+.icon-btn svg{width:19px;height:19px;stroke:currentColor;fill:none;stroke-width:1.6}
+.icon-btn .badge{position:absolute;top:-7px;right:-7px;min-width:20px;height:20px;padding:0 5px;
+  display:grid;place-items:center;border-radius:99px;background:var(--gold);color:#1A1A18;
+  font-size:11px;font-weight:600;font-variant-numeric:tabular-nums}
+@media (max-width:430px){
+  .mast-actions{gap:8px}
+  .icon-btn{width:38px;height:38px}
+  .icon-btn svg{width:17px;height:17px}
+}
+
+/* Menü für schmale Geräte. Unter 1080 px ersetzt der Knopf die Navigationsleiste. */
+.navtoggle{display:none}
+.mainnav{transition:none}
+@media (max-width:1080px){
+  .navtoggle{display:grid}
+  .masthead .spine{position:relative}
+  .mainnav{position:absolute;left:0;right:0;top:100%;z-index:59;
+    flex-direction:column;gap:0;padding:8px 32px 18px;
+    background:var(--ground);border-bottom:1px solid var(--line);
+    box-shadow:0 18px 30px -22px rgba(26,26,24,.5)}
+  .mainnav[hidden]{display:none}
+  .mainnav li{border-top:1px solid var(--line)}
+  .mainnav li:first-child{border-top:0}
+  .mainnav a{display:block;padding:15px 0;border-bottom:0}
+  .mainnav a:hover{border-bottom:0}
+}
+@media (max-width:720px){.mainnav{padding-left:20px;padding-right:20px}}
+
+/* ==========================================================================
+   Fusszeile
+   ========================================================================== */
+
+.sitefoot{background:var(--ink);color:var(--ink-text-soft);font-size:14px}
+.sitefoot .spine{padding-top:64px;padding-bottom:34px}
+.foot-grid{display:grid;grid-template-columns:1.25fr 1fr 1fr 1fr;gap:44px}
+.foot-col h4{margin:0 0 18px;font-size:11px;font-weight:600;letter-spacing:.2em;
+  text-transform:uppercase;color:var(--gold)}
+.foot-col ul{margin:0;padding:0;list-style:none;display:flex;flex-direction:column;gap:9px}
+.foot-col a{text-decoration:none;transition:color .18s}
+.foot-col a:hover{color:var(--gold)}
+.foot-contact{display:flex;flex-direction:column;gap:12px}
+.foot-contact div{display:flex;gap:11px;align-items:flex-start;line-height:1.5}
+.foot-contact svg{width:16px;height:16px;margin-top:4px;stroke:var(--gold);fill:none;stroke-width:1.6;flex-shrink:0}
+.foot-base{margin-top:48px;padding-top:22px;border-top:1px solid var(--ink-line);
+  display:flex;align-items:center;justify-content:space-between;gap:22px;flex-wrap:wrap;font-size:12.5px}
+.foot-pay{display:flex;flex-wrap:wrap;align-items:center;gap:12px;font-size:11px;letter-spacing:.14em;text-transform:uppercase}
+.foot-pay img{height:20px;max-width:100%}
+@media (max-width:900px){.foot-grid{grid-template-columns:repeat(2,1fr);gap:34px}}
+@media (max-width:520px){.foot-grid{grid-template-columns:1fr}}
+
+@media (max-width:720px){
+  body{font-size:16px}
+  .spine{padding:0 20px}
+  .band{padding:64px 0}
+  .topbar .spine{gap:18px}
+}
+
+/* ==========================================================================
+   Auftakt
+   ========================================================================== */
+
+.hero{background:var(--ink);color:var(--ink-text);padding:84px 0}
+.hero .spine{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,.9fr);gap:60px;align-items:center}
+.hero .spine > *{min-width:0}
+.hero h1{margin:16px 0 0;font-size:clamp(30px,3.6vw,44px);font-weight:700;
+  line-height:1.08;letter-spacing:-.015em;text-transform:uppercase;text-wrap:balance;
+  overflow-wrap:break-word;hyphens:auto}
+.hero .lede{margin:18px 0 0;font-size:18px;color:var(--gold-lt);max-width:46ch}
+.hero .cta{margin-top:28px}
+.hero-trust{display:flex;gap:22px;flex-wrap:wrap;align-items:center;margin:22px 0 0;
+  font-size:13.5px;color:var(--ink-text-soft)}
+.hero-trust span{display:flex;align-items:center;gap:8px}
+.hero-trust svg{width:15px;height:15px;stroke:var(--gold);fill:none;stroke-width:1.8}
+/* Das Auftaktfoto ist dunkel und randlos – es setzt das schwarze Band fort. */
+.hero-media{border-radius:var(--radius);overflow:hidden;background:var(--ink-raise)}
+.hero-media img{width:100%;aspect-ratio:3/2;object-fit:cover}
+@media (max-width:940px){
+  .hero{padding:56px 0}
+  .hero .spine{grid-template-columns:1fr;gap:36px}
+  .hero-media{order:-1}
+}
+
+/* ==========================================================================
+   Die drei Schritte
+   ========================================================================== */
+
+.steps{display:grid;grid-template-columns:repeat(3,1fr);gap:34px;counter-reset:schritt}
+.step{display:flex;flex-direction:column;gap:16px;margin:0;min-width:0}
+.step__fig{position:relative;border:1px solid var(--line);border-radius:var(--radius);
+  overflow:hidden;background:#FFFFFF;aspect-ratio:481/554}
+.step__fig img{width:100%;height:100%;object-fit:contain}
+.step__no{position:absolute;top:14px;left:14px;z-index:1;width:34px;height:34px;
+  display:grid;place-items:center;border-radius:50%;background:var(--ink);color:var(--gold-lt);
+  font-size:13px;font-weight:600;font-variant-numeric:tabular-nums}
+.step h3{margin:0;font-size:20px;font-weight:600;letter-spacing:-.005em}
+.step p{margin:0;color:var(--text-soft);font-size:15.5px;line-height:1.65}
+.step p + p{margin-top:10px}
+@media (max-width:860px){.steps{grid-template-columns:1fr;gap:40px;max-width:460px;margin:0 auto}}
+
+/* ==========================================================================
+   Do's und Don'ts
+   ========================================================================== */
+
+.rules{display:grid;grid-template-columns:1fr 1fr;gap:26px}
+.rules > *{min-width:0}
+.rulebox{border:1px solid var(--line);border-radius:var(--radius);background:var(--surface);
+  padding:30px 28px;display:flex;flex-direction:column;gap:18px}
+.rulebox--no{background:var(--ground-alt)}
+.rulebox h3{margin:0;display:flex;align-items:center;gap:11px;
+  font-size:12px;font-weight:600;letter-spacing:.18em;text-transform:uppercase}
+.rulebox--yes h3{color:var(--ok)}
+.rulebox--no h3{color:var(--alert)}
+.rulebox h3 svg{width:20px;height:20px;stroke:currentColor;fill:none;stroke-width:2;flex-shrink:0}
+.rulebox ul{margin:0;padding:0;list-style:none;display:flex;flex-direction:column;gap:15px}
+.rulebox li{position:relative;padding-left:26px;color:var(--text-soft);font-size:15.5px;line-height:1.6}
+.rulebox li::before{position:absolute;left:0;top:0;font-weight:700;font-size:15px}
+.rulebox--yes li::before{content:"+";color:var(--ok)}
+.rulebox--no li::before{content:"–";color:var(--alert)}
+.rulebox strong{color:var(--text);font-weight:600}
+@media (max-width:820px){.rules{grid-template-columns:1fr}}
+
+/* ==========================================================================
+   Applikator
+   ========================================================================== */
+
+.applik{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,.95fr);gap:56px;align-items:start}
+.applik > *{min-width:0}
+.applik-body h3{margin:14px 0 0;font-size:clamp(23px,2.7vw,32px);font-weight:600;
+  line-height:1.18;letter-spacing:-.01em;text-wrap:balance}
+.applik-body p{margin:16px 0 0;color:var(--text-soft)}
+/* Standbild statt Video: die Datei war im Seitenabzug nicht enthalten. */
+.videofig{margin:0;border:1px solid var(--line);border-radius:var(--radius);overflow:hidden;
+  background:#FFFFFF;position:relative}
+.videofig img{width:100%;aspect-ratio:16/9;object-fit:contain}
+.videofig .play{position:absolute;inset:0;display:grid;place-items:center;border:0;
+  background:none;cursor:pointer;color:var(--ink)}
+.videofig .play span{width:74px;height:74px;display:grid;place-items:center;border-radius:50%;
+  background:rgba(255,255,255,.9);border:1px solid var(--line-firm);
+  box-shadow:0 10px 26px -14px rgba(26,26,24,.6);transition:transform .2s}
+.videofig .play:hover span{transform:scale(1.06)}
+.videofig .play svg{width:26px;height:26px;fill:var(--ink);stroke:none;margin-left:3px}
+.videofig figcaption{padding:14px 18px;font-size:13.5px;color:var(--text-faint);
+  border-top:1px solid var(--line);background:var(--surface)}
+
+.applik-steps{display:grid;grid-template-columns:repeat(5,1fr);gap:2px;margin-top:36px;
+  background:var(--line);border:1px solid var(--line);border-radius:var(--radius);overflow:hidden}
+.astep{background:var(--surface);display:flex;flex-direction:column;margin:0}
+/* Die Fotos tragen ihre Nummer bereits im Bild und einen hellgrauen
+   Eigenhintergrund – die Fassung nimmt genau diesen Ton auf. */
+.astep img{width:100%;aspect-ratio:669/419;object-fit:cover;background:#E1E4E6}
+.astep figcaption{padding:15px 16px 18px;font-size:14px;line-height:1.5;color:var(--text-soft)}
+@media (max-width:1000px){.applik-steps{grid-template-columns:repeat(2,1fr)}}
+@media (max-width:940px){
+  .applik{grid-template-columns:1fr;gap:36px}
+  .applik-media{order:-1}
+}
+@media (max-width:560px){.applik-steps{grid-template-columns:1fr}}
+
+/* ==========================================================================
+   Garantie
+   ========================================================================== */
+
+.guarantee{display:grid;grid-template-columns:minmax(0,1fr) 250px;gap:56px;align-items:center}
+.gcards{display:grid;grid-template-columns:repeat(3,1fr);gap:2px;margin-top:32px;
+  background:var(--ink-line);border:1px solid var(--ink-line);border-radius:var(--radius);overflow:hidden}
+.gcard{background:var(--ink-raise);padding:24px 20px;display:flex;flex-direction:column;gap:11px}
+/* Die Symbolgrafiken bringen einen weissen Hintergrund mit; die Scheibe
+   nimmt ihn auf, damit auf dem dunklen Band kein harter Rand entsteht. */
+.gcard img{width:62px;height:62px;object-fit:contain;background:#FFFFFF;border-radius:50%;padding:9px}
+.gcard strong{font-size:15px;font-weight:600;line-height:1.35;color:var(--ink-text)}
+.gcard span{font-size:13.5px;color:var(--ink-text-soft);line-height:1.55}
+.guarantee-seal img{width:100%;max-width:230px;margin:0 auto}
+@media (max-width:900px){
+  .guarantee{grid-template-columns:1fr;gap:34px}
+  .guarantee-seal{max-width:180px}
+  .gcards{grid-template-columns:1fr}
+}
+</style>
+
+<a class="skiplink" href="#hauptinhalt">Zum Inhalt springen</a>
+
+<div class="topbar">
+  <div class="spine">
+    <span><svg aria-hidden="true" focusable="false" viewBox="0 0 24 24"><path d="M3 7h13v10H3z"/><path d="M16 10h4l1 3v4h-5z"/><circle cx="7" cy="18" r="1.6"/><circle cx="18" cy="18" r="1.6"/></svg>Versand in 24 Stunden</span>
+    <span><svg aria-hidden="true" focusable="false" viewBox="0 0 24 24"><path d="M12 3l7 3v6c0 4-3 7-7 9-4-2-7-5-7-9V6z"/><path d="M9 12l2 2 4-4"/></svg>30 Tage Rückgabe</span>
+    <span><svg aria-hidden="true" focusable="false" viewBox="0 0 24 24"><path d="M4 6h16v12H4z"/><path d="M12 8v8M8 12h8"/></svg>Schweizer Shop</span>
+  </div>
+</div>
+
+<header class="masthead">
+  <div class="spine">
+    <a class="brand" href="#" aria-label="HairHelp Startseite"><img src="ASSET:logo" alt="HairHelp" width="300" height="247"></a>
+    <nav aria-label="Hauptnavigation">
+      <ul class="mainnav" id="hauptmenu">
+        <li><a href="#">Für Männer</a></li>
+        <li><a href="#" >Für Frauen</a></li>
+        <li><a href="#">Produkt</a></li>
+        <li><a href="#" aria-current="page">Ratgeber</a></li>
+        <li><a href="#">Erfahrungen</a></li>
+        <li><a href="#garantie">Shop</a></li>
+      </ul>
+    </nav>
+    <div class="mast-actions">
+      <button class="icon-btn navtoggle" type="button" aria-expanded="false" aria-controls="hauptmenu" aria-label="Menü"><svg aria-hidden="true" focusable="false" viewBox="0 0 24 24"><path d="M4 7h16M4 12h16M4 17h16"/></svg></button>
+      <button class="icon-btn" type="button" aria-label="Suchen"><svg aria-hidden="true" focusable="false" viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"/><path d="M20 20l-3.5-3.5"/></svg></button>
+      <button class="icon-btn" type="button" aria-label="Konto"><svg aria-hidden="true" focusable="false" viewBox="0 0 24 24"><circle cx="12" cy="8" r="4"/><path d="M4 21c0-4.4 3.6-7 8-7s8 2.6 8 7"/></svg></button>
+      <button class="icon-btn" type="button" aria-label="Warenkorb, 7 Artikel"><svg aria-hidden="true" focusable="false" viewBox="0 0 24 24"><path d="M6 8h12l-1 12H7z"/><path d="M9 8V6a3 3 0 0 1 6 0v2"/></svg><span class="badge" aria-hidden="true">7</span></button>
+    </div>
+  </div>
+</header>
+
+<main id="hauptinhalt">
+
+<!-- ====================== Auftakt ====================== -->
+
+<section class="hero">
+  <div class="spine">
+    <div>
+      <p class="eyebrow">Anwendung Haarfasern</p>
+      <h1>HairHelp Hair Fibers richtig anwenden</h1>
+      <p class="lede">So tragen Sie die HairHelp Hair Fibers in drei einfachen Schritten richtig auf. Mit etwas Routine dauert die Anwendung weniger als 30&nbsp;Sekunden.</p>
+      <a class="cta" href="#garantie">Jetzt Streuhaar ausprobieren</a>
+      <div class="hero-trust">
+        <span><svg aria-hidden="true" focusable="false" viewBox="0 0 24 24"><path d="M12 6v6l4 2"/><circle cx="12" cy="12" r="9"/></svg>Unter 30 Sekunden</span>
+        <span><svg aria-hidden="true" focusable="false" viewBox="0 0 24 24"><path d="M12 3l7 3v6c0 4-3 7-7 9-4-2-7-5-7-9V6z"/><path d="M9 12l2 2 4-4"/></svg>30 Tage Rückgabe</span>
+      </div>
+    </div>
+    <figure class="hero-media" style="margin:0">
+      <img src="ASSET:hero" alt="Liegende HairHelp Dose, daneben ausgestreute Haarfasern">
+    </figure>
+  </div>
+</section>
+
+<!-- ====================== Die drei Schritte ====================== -->
+
+<section class="band" id="schritte">
+  <div class="spine">
+    <div class="sect-head">
+      <p class="eyebrow">Schritt für Schritt</p>
+      <h2><span class="lead">In drei Schritten</span> zum Ergebnis</h2>
+    </div>
+
+    <ol class="steps" style="list-style:none;padding:0;margin:0">
+      <li class="step">
+        <div class="step__fig">
+          <span class="step__no">1</span>
+          <img src="ASSET:schritt-1" alt="Hand schüttelt die geschlossene HairHelp Dose">
+        </div>
+        <h3>Dose laden für Statik</h3>
+        <p>Dose geschlossen 3–5 Sekunden kräftig schütteln.</p>
+        <p>Durch Reibung beim Schütteln laden sich die Mikrofasern elektrostatisch auf, so haften sie am Haar.</p>
+      </li>
+      <li class="step">
+        <div class="step__fig">
+          <span class="step__no">2</span>
+          <img src="ASSET:schritt-2" alt="Fasern werden aus 10 bis 15 cm Höhe auf den Scheitel gestreut">
+        </div>
+        <h3>Auftragen</h3>
+        <p>Deckel öffnen, Dose 10–15 cm über die gewünschte Stelle halten und in kurzen, leichten Schüttlern streuen.</p>
+        <ul class="deflist">
+          <li><strong>Scheitel</strong>Entlang der Linie, leicht zickzack statt Lineal.</li>
+          <li><strong>Vertex und Krone</strong>Kreisförmig von aussen nach innen.</li>
+          <li><strong>Konturen und Spots</strong>Punktuell; optional mit Applikator für Millimeter-Genauigkeit.</li>
+        </ul>
+      </li>
+      <li class="step">
+        <div class="step__fig">
+          <span class="step__no">3</span>
+          <img src="ASSET:schritt-3" alt="Fasern werden mit den Fingerkuppen sanft eingeklopft">
+        </div>
+        <h3>Sanft einklopfen</h3>
+        <p>Mit den Fingerkuppen oder einer weichen Bürste sanft einklopfen, damit die Fasern das Haar «umarmen» und gleichmässig wirken.</p>
+        <p>Wenden Sie nicht zu viel auf einmal an, sondern tragen Sie 2–3 dünne Schichten auf, bis Sie mit dem Resultat zufrieden sind. Nach jedem Durchgang kurz einklopfen.</p>
+      </li>
+    </ol>
+  </div>
+</section>
+
+<!-- ====================== Do's und Don'ts ====================== -->
+
+<section class="band band--alt" id="regeln">
+  <div class="spine">
+    <div class="sect-head">
+      <p class="eyebrow">Do&rsquo;s &amp; Don&rsquo;ts</p>
+      <h2><span class="lead">Was hilft</span> und was nicht</h2>
+    </div>
+
+    <div class="rules">
+      <div class="rulebox rulebox--yes">
+        <h3><svg aria-hidden="true" focusable="false" viewBox="0 0 24 24"><path d="M5 13l4 4 10-10"/></svg>So wird es gut</h3>
+        <ul>
+          <li>Nur auf <strong>trockenem Haar</strong> anwenden – Feuchtigkeit nimmt die Ladung.</li>
+          <li>Styling wie Gel oder Wachs <strong>vorher</strong> verwenden, nicht nach den Fasern.</li>
+          <li><strong>Streuen statt giessen</strong>; Ränder soft lassen für ein natürliches Finish.</li>
+          <li><strong>Farben lassen sich mischen</strong> – so treffen Sie Nuancen noch genauer.</li>
+          <li>Bei der Farbwahl gilt: <strong>im Zweifel eine Nuance dunkler.</strong> Wenig Fasern wirken heller, mehr Fasern dunkler.</li>
+        </ul>
+      </div>
+      <div class="rulebox rulebox--no">
+        <h3><svg aria-hidden="true" focusable="false" viewBox="0 0 24 24"><path d="M6 6l12 12M18 6L6 18"/></svg>Das lieber nicht</h3>
+        <ul>
+          <li>Nicht auf <strong>komplett kahlen Flächen</strong> – die Haarfasern brauchen Ankerhaare.</li>
+          <li>Nicht auf feuchtes Haar auftragen.</li>
+          <li>Nicht «giessen» und nicht mit harten Rändern arbeiten.</li>
+          <li>Styling-Produkte nicht nach den Fasern auftragen.</li>
+        </ul>
+      </div>
+    </div>
+
+    <p class="notice" style="max-width:76ch">
+      <svg aria-hidden="true" focusable="false" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 8v5M12 16h.01"/></svg>
+      <span><strong>Zur Farbwahl:</strong> Viele unserer Kunden entscheiden sich für Braun oder Hellbraun und sind dann überrascht, dass sich Dunkelbraun als passendster Farbton herausstellt.</span>
+    </p>
+  </div>
+</section>
+
+<!-- ====================== Applikator ====================== -->
+
+<section class="band" id="applikator">
+  <div class="spine">
+    <div class="sect-head">
+      <p class="eyebrow">Anleitung Präzisions-Applikator</p>
+      <h2><span class="lead">So bringen Sie</span> den Applikator an</h2>
+    </div>
+
+    <div class="applik">
+      <div class="applik-body">
+        <h3>In fünf Handgriffen aufgesetzt</h3>
+        <p>Der Präzisions-Applikator ersetzt den Siebeinsatz der Dose. Er gibt die Fasern über ein feines Röhrchen punktgenau ab – ideal für Haarlinie, Schläfen und kleine Stellen.</p>
+        <p>Für den Wechsel brauchen Sie kein Werkzeug. Der Siebeinsatz lässt sich an der Kante herauslösen; danach wird der Applikator einfach auf das Gewinde der Dose geschraubt.</p>
+      </div>
+      <figure class="videofig applik-media">
+        <img src="ASSET:video" alt="Präzisions-Applikator über der geöffneten HairHelp Dose">
+        <button class="play" type="button" aria-label="Video zur Montage abspielen">
+          <span><svg aria-hidden="true" focusable="false" viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></span>
+        </button>
+        <figcaption>Video: Applikator aufsetzen</figcaption>
+      </figure>
+    </div>
+
+    <div class="applik-steps">
+      <figure class="astep"><img src="ASSET:app-1" alt="Schritt 1: Schraubdeckel der Dose wird abgedreht"><figcaption>Den Schraubdeckel der HairHelp-Dose abdrehen.</figcaption></figure>
+      <figure class="astep"><img src="ASSET:app-2" alt="Schritt 2: Sicherheitskleber auf dem Siebeinsatz"><figcaption>Der Sicherheitskleber auf dem Siebeinsatz kommt zum Vorschein.</figcaption></figure>
+      <figure class="astep"><img src="ASSET:app-3" alt="Schritt 3: Siebeinsatz wird an der Kante gelöst"><figcaption>Siebeinsatz vorsichtig an der Kante herauslösen.</figcaption></figure>
+      <figure class="astep"><img src="ASSET:app-4" alt="Schritt 4: Siebeinsatz wird aus der Dose genommen"><figcaption>Siebeinsatz entfernen.</figcaption></figure>
+      <figure class="astep"><img src="ASSET:app-5" alt="Schritt 5: Applikator wird auf die Dose geschraubt"><figcaption>Präzisions-Applikator auf die Dose setzen und festschrauben.</figcaption></figure>
+    </div>
+  </div>
+</section>
+
+<!-- ====================== Garantie ====================== -->
+
+<section class="band band--ink" id="garantie">
+  <div class="spine guarantee">
+    <div>
+      <div class="sect-head" style="margin-bottom:0">
+        <p class="eyebrow">Unser Angebot an Sie</p>
+        <h2><span class="lead">Jetzt</span> risikofrei testen</h2>
+        <p>Wir sind überzeugt, dass der HairHelp Haarverdichter auch Ihnen helfen kann. Wenn Sie nicht zufrieden sind, erhalten Sie Ihr Geld zurück, inklusive Kosten für die Rücksendung.</p>
+      </div>
+
+      <div class="gcards">
+        <div class="gcard">
+          <img src="ASSET:ic-geld" alt="">
+          <strong>100&nbsp;% Geld-zurück-Garantie</strong>
+          <span>Sie erhalten den kompletten Kaufpreis zurückerstattet.</span>
+        </div>
+        <div class="gcard">
+          <img src="ASSET:ic-30tage" alt="">
+          <strong>30 Tage testen</strong>
+          <span>Probieren Sie unsere Streuhaarfasern in Ruhe zu Hause aus.</span>
+        </div>
+        <div class="gcard">
+          <img src="ASSET:ic-versand" alt="">
+          <strong>Kostenlose Rücksendung</strong>
+          <span>Eine vorfrankierte Rücksende-Etikette erhalten Sie per E-Mail.</span>
+        </div>
+      </div>
+
+      <div style="margin-top:32px"><a class="cta" href="#">Jetzt Streuhaar ausprobieren</a></div>
+    </div>
+    <div class="guarantee-seal">
+      <img src="ASSET:siegel" alt="Siegel: 30 Tage Rückgabe-Garantie – Zufriedenheit oder Geld zurück">
+    </div>
+  </div>
+</section>
+</main>
+
+<footer class="sitefoot">
+  <div class="spine">
+    <div class="foot-grid">
+      <div class="foot-col">
+        <h4>Kontakt</h4>
+        <div class="foot-contact">
+          <div><svg aria-hidden="true" focusable="false" viewBox="0 0 24 24"><path d="M5 4h4l2 5-3 2a12 12 0 0 0 5 5l2-3 5 2v4a1 1 0 0 1-1 1A16 16 0 0 1 4 5a1 1 0 0 1 1-1z"/></svg><a href="tel:+41774865526">(+41) 77 486 55 26</a></div>
+          <div><svg aria-hidden="true" focusable="false" viewBox="0 0 24 24"><path d="M3 6h18v12H3z"/><path d="M3 7l9 6 9-6"/></svg><a href="mailto:info@hairhelp.ch">info@hairhelp.ch</a></div>
+          <div><svg aria-hidden="true" focusable="false" viewBox="0 0 24 24"><path d="M12 21s-7-6-7-11a7 7 0 0 1 14 0c0 5-7 11-7 11z"/><circle cx="12" cy="10" r="2.5"/></svg><span>hairhelp GmbH<br>Schweiz</span></div>
+        </div>
+      </div>
+      <div class="foot-col">
+        <h4>Navigation</h4>
+        <ul>
+          <li><a href="#">Home</a></li><li><a href="#">Für Männer</a></li><li><a href="#">Für Frauen</a></li>
+          <li><a href="#">NextGen Haarverdichter</a></li><li><a href="#schritte">Anwendung</a></li><li><a href="#">Erfahrungen</a></li>
+        </ul>
+      </div>
+      <div class="foot-col">
+        <h4>Ratgeber</h4>
+        <ul>
+          <li><a href="#">Was ist Streuhaar?</a></li><li><a href="#">Haarverdichtung</a></li>
+          <li><a href="#">Haarpuder vs. Streuhaar</a></li><li><a href="#">Dünnes Haar verdichten</a></li>
+          <li><a href="#">Geheimratsecken kaschieren</a></li><li><a href="#">Hair Fibers</a></li>
+        </ul>
+      </div>
+      <div class="foot-col">
+        <h4>Informationen</h4>
+        <ul>
+          <li><a href="#">AGB</a></li><li><a href="#">Datenschutzerklärung</a></li><li><a href="#">Impressum</a></li>
+          <li><a href="#">Rückgabebedingungen</a></li><li><a href="#">Mein Konto</a></li><li><a href="#">Warenkorb</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="foot-base">
+      <span>hairhelp GmbH © 2026. Alle Rechte vorbehalten.</span>
+      <span class="foot-pay">Sicher bezahlen mit <img src="ASSET:zahlarten" alt="TWINT, Apple Pay, PostFinance, Mastercard, VISA, PayPal"></span>
+    </div>
+  </div>
+</footer>
+
+<script>
+(function () {
+  "use strict";
+
+  // Das Video lag nicht im Seitenabzug – der Knopf sagt das offen.
+  var abspielen = document.querySelector(".videofig .play");
+  if (abspielen) {
+    abspielen.addEventListener("click", function () {
+      window.alert("Entwurf: Das Video ist beim Einbau in WordPress einzusetzen.");
+    });
+  }
+
+
+  // Menü für schmale Geräte: derselbe Knopf öffnet und schliesst die Liste.
+  var navKnopf = document.querySelector(".navtoggle");
+  var navListe = document.querySelector(".mainnav");
+  if (navKnopf && navListe) {
+    var schmal = window.matchMedia("(max-width:1080px)");
+    var anpassen = function () {
+      if (schmal.matches) {
+        navListe.hidden = navKnopf.getAttribute("aria-expanded") !== "true";
+      } else {
+        navListe.hidden = false;
+        navKnopf.setAttribute("aria-expanded", "false");
+      }
+    };
+    navKnopf.addEventListener("click", function () {
+      navKnopf.setAttribute("aria-expanded", navKnopf.getAttribute("aria-expanded") === "true" ? "false" : "true");
+      anpassen();
+    });
+    document.addEventListener("keydown", function (e) {
+      if (e.key === "Escape" && navKnopf.getAttribute("aria-expanded") === "true") {
+        navKnopf.setAttribute("aria-expanded", "false"); anpassen(); navKnopf.focus();
+      }
+    });
+    schmal.addEventListener("change", anpassen);
+    anpassen();
+  }
+
+  // Sanftes Scrollen nur, wenn keine Bewegungsreduzierung gewünscht ist.
+  var sanft = window.matchMedia("(prefers-reduced-motion: reduce)").matches ? "auto" : "smooth";
+  var strip = document.querySelector(".strip");
+  if (!strip) return;
+  var step = function () {
+    var first = strip.querySelector(".shot");
+    return first ? first.getBoundingClientRect().width + 26 : 420;
+  };
+  Array.prototype.forEach.call(document.querySelectorAll("[data-strip]"), function (btn) {
+    btn.addEventListener("click", function () {
+      strip.scrollBy({ left: step() * Number(btn.getAttribute("data-strip")), behavior: sanft });
+    });
+  });
+  strip.addEventListener("keydown", function (e) {
+    if (e.key === "ArrowRight") { strip.scrollBy({ left: step(), behavior: sanft }); e.preventDefault(); }
+    if (e.key === "ArrowLeft")  { strip.scrollBy({ left: -step(), behavior: sanft }); e.preventDefault(); }
+  });
+})();
+</script>
+
+<script>
+// Die Datei trägt kein <html>-Element (sie wird eingebettet ausgeliefert) –
+// die Dokumentsprache wird darum hier gesetzt.
+document.documentElement.lang = "de";
+</script>

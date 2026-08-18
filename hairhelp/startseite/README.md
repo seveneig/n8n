@@ -66,3 +66,16 @@ sichtbaren Bereichs, nie nachgeladen).
 * **Bewertungstexte** sind wörtlich übernommen, einschliesslich Mundart. Ein
   Tippfehler im Original („Sternter-Set“) ist zu „Starter-Set“ korrigiert.
 * Die Umsetzung für Elementor steht noch aus.
+
+## Barrierefreiheit
+
+Auf allen Seiten dieser Reihe geprüft und behoben: goldener Text erreichte auf
+hellem Grund nur 2.91:1 – dafür gibt es jetzt das Token `--gold-text`
+(#7D6F45, 4.96:1), während das helle Gold auf dunklen Bändern bleibt, wo es
+6.0:1 trägt. `--text-faint` lag bei 3.27:1 und trug Datumsangaben und
+Feldbeschriftungen, neu 5.23:1. Dazu: Dokumentsprache, Menü für schmale
+Geräte, Artikelzahl im Namen des Warenkorb-Knopfs, dekorative Symbole aus dem
+Accessibility-Tree genommen, sanftes Scrollen nur ohne Bewegungsreduzierung.
+
+Ein Messskript prüft jeden Textknoten jeder Seite gegen den tatsächlich
+gerenderten Hintergrund; alle neun Seiten sind ohne Befund.
