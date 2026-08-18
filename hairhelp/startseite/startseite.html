@@ -1,0 +1,1043 @@
+<meta charset="utf-8">
+<title>HairHelp Startseite</title>
+<meta name="description" content="NextGen Streuhaar von HairHelp – Haarverdichtung aus pflanzlichem Keratin, exklusiv für die Schweiz. 6 Farbtöne, 30 Tage Rückgabe.">
+
+<style>
+/* ==========================================================================
+   HairHelp – Startseite
+   Gleiches Markensystem wie Produktseite, Haarverdichter, Warenkorb und
+   Checkout: Gold #A39772 · warmes Schwarz #1A1A18 · Creme #FAF9F6 · Jost.
+   ========================================================================== */
+
+/* FONT-FACE-JOST */
+
+:root{
+  --ground:#FFFFFF;
+  --ground-alt:#FAF9F6;
+  --surface:#FFFFFF;
+  --surface-sunk:#F6F4EE;
+
+  --text:#1A1A18;
+  --text-soft:#6E6959;
+  --text-faint:#948E7E;
+
+  --gold:#A39772;
+  --gold-lt:#D1BC92;
+  --gold-wash:#F4F0E6;
+
+  --line:#EBE6DB;
+  --line-firm:#D9D2C2;
+
+  --ink:#1A1A18;
+  --ink-raise:#25241F;
+  --ink-text:#F3F0E9;
+  --ink-text-soft:#B0AB98;
+  --ink-line:#332F26;
+
+  --cta-bg:#1A1A18;
+  --cta-text:#F3F0E9;
+  --cta-hover-bg:#A39772;
+  --cta-hover-text:#1A1A18;
+  --chip-bg:#1A1A18;
+  --chip-text:#D1BC92;
+
+  --ok:#3F7D5C;
+
+  --shadow-m:0 2px 6px rgba(26,26,24,.06), 0 18px 44px rgba(26,26,24,.09);
+  --spine:1200px;
+  --radius:4px;
+}
+
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --ground:#141310; --ground-alt:#1B1A15; --surface:#1D1C17; --surface-sunk:#232118;
+    --text:#F2EFE7; --text-soft:#A8A294; --text-faint:#877F6E;
+    --gold:#C2B58A; --gold-lt:#DACA9F; --gold-wash:#262316;
+    --line:#332F26; --line-firm:#443E31;
+    --ink:#0E0D0B; --ink-raise:#1B1A15; --ink-text:#F3F0E9; --ink-text-soft:#ABA593; --ink-line:#2B2820;
+    --cta-bg:#C2B58A; --cta-text:#141310; --cta-hover-bg:#F2EFE7; --cta-hover-text:#141310;
+    --chip-bg:#2E2B21; --chip-text:#DACA9F;
+    --ok:#6FA98A;
+    --shadow-m:0 2px 6px rgba(0,0,0,.45), 0 18px 44px rgba(0,0,0,.4);
+  }
+}
+:root[data-theme="dark"]{
+  --ground:#141310; --ground-alt:#1B1A15; --surface:#1D1C17; --surface-sunk:#232118;
+  --text:#F2EFE7; --text-soft:#A8A294; --text-faint:#877F6E;
+  --gold:#C2B58A; --gold-lt:#DACA9F; --gold-wash:#262316;
+  --line:#332F26; --line-firm:#443E31;
+  --ink:#0E0D0B; --ink-raise:#1B1A15; --ink-text:#F3F0E9; --ink-text-soft:#ABA593; --ink-line:#2B2820;
+  --cta-bg:#C2B58A; --cta-text:#141310; --cta-hover-bg:#F2EFE7; --cta-hover-text:#141310;
+  --chip-bg:#2E2B21; --chip-text:#DACA9F;
+  --ok:#6FA98A;
+  --shadow-m:0 2px 6px rgba(0,0,0,.45), 0 18px 44px rgba(0,0,0,.4);
+}
+
+*,*::before,*::after{box-sizing:border-box}
+[hidden]{display:none !important}
+
+body{
+  margin:0;background:var(--ground);color:var(--text);
+  font-family:Jost,"Century Gothic",Futura,system-ui,sans-serif;
+  font-size:17px;line-height:1.7;-webkit-font-smoothing:antialiased;
+}
+img{max-width:100%;display:block}
+a{color:inherit}
+button{font:inherit;color:inherit}
+html{scroll-behavior:smooth}
+:focus-visible{outline:2px solid var(--gold);outline-offset:3px;border-radius:2px}
+@media (prefers-reduced-motion: reduce){
+  *,*::before,*::after{animation-duration:.001ms!important;transition-duration:.001ms!important;scroll-behavior:auto!important}
+}
+
+.skiplink{
+  position:absolute;left:16px;top:-60px;z-index:100;padding:11px 18px;border-radius:var(--radius);
+  background:var(--cta-bg);color:var(--cta-text);font-size:13px;font-weight:600;
+  letter-spacing:.1em;text-transform:uppercase;text-decoration:none;transition:top .2s ease;
+}
+.skiplink:focus{top:16px}
+
+.spine{max-width:var(--spine);margin:0 auto;padding:0 32px}
+.band{padding:88px 0}
+.band--alt{background:var(--ground-alt)}
+.band--ink{background:var(--ink);color:var(--ink-text)}
+
+.eyebrow{font-size:12px;font-weight:500;letter-spacing:.18em;text-transform:uppercase;color:var(--gold);margin:0}
+
+/* Eine Überschriftenform für die ganze Seite: Goldlinie, Vorspann,
+   zweifarbiger Titel. Ersetzt die bisherigen Trennstrich-Kapitälchen. */
+.sect-head{
+  display:flex;flex-direction:column;gap:14px;
+  padding-top:22px;border-top:1px solid var(--gold);margin-bottom:44px;
+}
+.sect-head h2{
+  font-size:clamp(28px,3.6vw,42px);font-weight:700;letter-spacing:-.005em;
+  line-height:1.12;text-transform:uppercase;margin:0;text-wrap:balance;
+}
+.sect-head h2 .lead{color:var(--gold);font-weight:500}
+.sect-head p{margin:0;max-width:62ch;color:var(--text-soft)}
+.sect-head p a{color:var(--gold);text-decoration:none;border-bottom:1px solid var(--line-firm)}
+.sect-head p a:hover{border-bottom-color:var(--gold)}
+.band--ink .sect-head p{color:var(--ink-text-soft)}
+
+.cta{
+  display:inline-flex;align-items:center;justify-content:center;gap:10px;
+  min-height:56px;padding:0 30px;
+  background:var(--cta-bg);color:var(--cta-text);
+  border:1px solid var(--cta-bg);border-radius:var(--radius);
+  font-size:14px;font-weight:600;letter-spacing:.13em;text-transform:uppercase;
+  text-decoration:none;cursor:pointer;transition:background .2s,color .2s,border-color .2s;
+}
+.cta:hover{background:var(--cta-hover-bg);border-color:var(--cta-hover-bg);color:var(--cta-hover-text)}
+.cta--ghost{background:none;color:var(--text);border-color:var(--line-firm)}
+.cta--ghost:hover{background:none;border-color:var(--gold);color:var(--gold)}
+/* Auf dunklem Grund wird der Knopf gold – der Auftakt gehört dazu,
+   sonst steht Schwarz auf Schwarz. */
+.band--ink .cta,
+.hero .cta{background:var(--gold);border-color:var(--gold);color:#1A1A18}
+.band--ink .cta:hover,
+.hero .cta:hover{background:var(--ink-text);border-color:var(--ink-text);color:#1A1A18}
+
+/* Eine Bildfassung für die ganze Seite */
+.media{
+  border:1px solid var(--line);border-radius:var(--radius);overflow:hidden;
+  background:#F6F4EE;   /* bleibt hell: viele Bilder sind Strichgrafik auf Weiss */
+}
+.media img{width:100%;height:100%;object-fit:contain;padding:22px}
+.media--photo img{object-fit:cover;padding:0}
+
+/* ==========================================================================
+   Kopfzeile
+   ========================================================================== */
+
+.topbar{background:var(--ink);color:var(--ink-text-soft);font-size:12px;
+  letter-spacing:.14em;text-transform:uppercase;font-weight:500}
+.topbar .spine{display:flex;justify-content:center;gap:38px;flex-wrap:wrap;padding-top:9px;padding-bottom:9px}
+.topbar span{display:flex;align-items:center;gap:8px}
+.topbar svg{width:14px;height:14px;stroke:var(--gold);fill:none;stroke-width:1.8}
+
+.masthead{position:sticky;top:0;z-index:60;
+  background:color-mix(in srgb, var(--ground) 92%, transparent);
+  backdrop-filter:blur(12px);border-bottom:1px solid var(--line)}
+.masthead .spine{display:flex;align-items:center;justify-content:space-between;gap:28px;height:74px}
+.brand{display:flex;align-items:center;text-decoration:none;flex-shrink:0}
+.brand img{height:34px;width:auto}
+:root[data-theme="dark"] .brand img{filter:invert(1)}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]) .brand img{filter:invert(1)}}
+.mainnav{display:flex;gap:30px;list-style:none;margin:0;padding:0;
+  font-size:13px;font-weight:500;letter-spacing:.11em;text-transform:uppercase}
+.mainnav a{text-decoration:none;padding:6px 0;border-bottom:1px solid transparent;transition:border-color .2s,color .2s}
+.mainnav a:hover{border-bottom-color:var(--gold);color:var(--gold)}
+.mast-actions{display:flex;align-items:center;gap:14px}
+.icon-btn{width:42px;height:42px;display:grid;place-items:center;position:relative;
+  border:1px solid var(--line);border-radius:var(--radius);background:var(--surface);
+  cursor:pointer;transition:border-color .2s,color .2s}
+.icon-btn:hover{border-color:var(--gold);color:var(--gold)}
+.icon-btn svg{width:19px;height:19px;stroke:currentColor;fill:none;stroke-width:1.6}
+.icon-btn .badge{position:absolute;top:-7px;right:-7px;min-width:20px;height:20px;padding:0 5px;
+  display:grid;place-items:center;border-radius:99px;background:var(--gold);color:#1A1A18;
+  font-size:11px;font-weight:600;font-variant-numeric:tabular-nums}
+@media (max-width:1080px){.mainnav{display:none}}
+
+/* ==========================================================================
+   Auftakt
+   ========================================================================== */
+
+.hero{background:var(--ink);color:var(--ink-text);padding:84px 0}
+.hero .spine{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,.95fr);gap:60px;align-items:center}
+.hero .spine > *{min-width:0}
+.hero h1{
+  margin:16px 0 0;font-size:clamp(34px,4.6vw,54px);font-weight:700;
+  line-height:1.06;letter-spacing:-.015em;text-transform:uppercase;text-wrap:balance;
+  overflow-wrap:break-word;hyphens:auto;
+}
+.hero h1 .lead{display:block;color:var(--gold);font-weight:500;font-size:.6em;letter-spacing:.01em;margin-bottom:6px}
+.hero p.lede{margin:20px 0 0;font-size:18px;color:var(--ink-text-soft);max-width:46ch}
+.hero .cta{margin-top:28px}
+.hero-trust{
+  display:flex;gap:22px;flex-wrap:wrap;align-items:center;
+  margin:24px 0 0;font-size:13.5px;color:var(--ink-text-soft);
+}
+.hero-trust span{display:flex;align-items:center;gap:8px}
+.hero-stars{display:inline-flex;gap:2px}
+.hero-stars svg{width:14px;height:14px;fill:var(--gold-lt)}
+
+.hero-media{position:relative;border-radius:var(--radius);overflow:hidden;background:var(--ink-raise)}
+.hero-media img{width:100%;aspect-ratio:4/3;object-fit:cover}
+.hero-play{
+  position:absolute;inset:0;margin:auto;
+  width:78px;height:78px;border-radius:50%;
+  border:2px solid rgba(243,240,233,.9);background:rgba(26,26,24,.42);
+  backdrop-filter:blur(3px);cursor:pointer;
+  display:grid;place-items:center;transition:background .2s,transform .2s;
+}
+.hero-play:hover{background:rgba(26,26,24,.62);transform:scale(1.05)}
+.hero-play svg{width:24px;height:24px;fill:#F3F0E9;margin-left:4px}
+.hero-play span{position:absolute;left:-9999px}
+
+@media (max-width:940px){
+  .hero{padding:56px 0}
+  .hero .spine{grid-template-columns:1fr;gap:36px}
+  .hero-media{order:-1}
+}
+
+/* ==========================================================================
+   Ergebnisse
+   ========================================================================== */
+
+.compare-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:26px}
+.compare{display:flex;flex-direction:column;gap:14px;margin:0}
+.cmp{position:relative;aspect-ratio:1/1;overflow:hidden;border-radius:var(--radius);
+  background:var(--ink-raise);--pos:50%;touch-action:pan-y}
+.cmp img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;user-select:none;-webkit-user-drag:none}
+.cmp .after{clip-path:inset(0 0 0 var(--pos))}
+.cmp-label{position:absolute;bottom:14px;font-size:10px;font-weight:600;letter-spacing:.2em;
+  text-transform:uppercase;padding:5px 10px;border-radius:2px;
+  background:rgba(15,14,12,.72);color:#F3F0E9;pointer-events:none}
+.cmp-label.is-before{left:14px}
+.cmp-label.is-after{right:14px;color:var(--gold-lt)}
+.cmp-handle{position:absolute;top:0;bottom:0;left:var(--pos);width:2px;background:var(--gold);
+  transform:translateX(-1px);pointer-events:none}
+.cmp-handle::after{content:"";position:absolute;top:50%;left:50%;width:46px;height:46px;
+  transform:translate(-50%,-50%);border:2px solid var(--gold);border-radius:50%;
+  background:rgba(26,26,24,.55);backdrop-filter:blur(3px)}
+.cmp-handle::before{content:"";position:absolute;top:50%;left:50%;width:17px;height:9px;
+  transform:translate(-50%,-50%);background:var(--gold);z-index:1;
+  clip-path:polygon(0 50%,36% 0,36% 100%,64% 0,64% 100%,100% 50%)}
+.cmp-range{position:absolute;inset:0;width:100%;margin:0;opacity:0;cursor:ew-resize;appearance:none;background:none}
+.cmp-range::-webkit-slider-thumb{appearance:none;width:56px;height:100%}
+.cmp-range:focus-visible + .cmp-handle::after{box-shadow:0 0 0 4px rgba(163,151,114,.45)}
+.compare figcaption{display:flex;flex-direction:column;gap:3px}
+.compare .who{font-size:15px;font-weight:600}
+.compare .what{font-size:13.5px;color:var(--ink-text-soft)}
+.cmp-hint{display:flex;align-items:center;gap:9px;margin:34px 0 0;font-size:13px;color:var(--ink-text-soft)}
+.cmp-hint svg{width:17px;height:17px;stroke:var(--gold);fill:none;stroke-width:1.7}
+@media (max-width:900px){.compare-grid{grid-template-columns:1fr;max-width:440px;margin:0 auto}}
+
+/* ==========================================================================
+   Bewertungen
+   ========================================================================== */
+
+.reviews{display:grid;grid-template-columns:repeat(3,1fr);gap:2px;
+  background:var(--line);border:1px solid var(--line);border-radius:var(--radius);overflow:hidden}
+.review{background:var(--surface);padding:24px;display:flex;flex-direction:column;gap:11px}
+.review-top{display:flex;align-items:center;gap:11px}
+.avatar{width:38px;height:38px;flex-shrink:0;display:grid;place-items:center;border-radius:50%;
+  background:var(--gold-wash);color:var(--gold);font-size:13px;font-weight:600;letter-spacing:.04em}
+.review-who{display:flex;flex-direction:column;line-height:1.3;min-width:0;flex:1}
+.review-who strong{font-size:14.5px;font-weight:600}
+.review-who span{font-size:12.5px;color:var(--text-faint)}
+.verified{display:flex;align-items:center;gap:5px;font-size:11.5px;color:var(--ok);white-space:nowrap}
+.verified svg{width:11px;height:11px;stroke:currentColor;fill:none;stroke-width:2.6}
+.stars{display:inline-flex;gap:2px}
+.stars svg{width:13px;height:13px;fill:var(--gold-lt)}
+.review p{margin:0;font-size:14.5px;line-height:1.6;color:var(--text-soft)}
+.reviews-more{display:flex;justify-content:center;margin-top:34px}
+@media (max-width:900px){.reviews{grid-template-columns:1fr}}
+
+/* ==========================================================================
+   Produkte
+   ========================================================================== */
+
+.products{display:grid;grid-template-columns:repeat(3,1fr);gap:26px}
+.product{display:flex;flex-direction:column;gap:0;
+  border:1px solid var(--line);border-radius:var(--radius);background:var(--surface);overflow:hidden}
+.product__media{background:#F6F4EE;aspect-ratio:1/1;position:relative}
+.product__media img{width:100%;height:100%;object-fit:contain;padding:24px}
+.product__flag{position:absolute;top:12px;left:12px;padding:4px 9px;border-radius:2px;
+  background:var(--chip-bg);color:var(--chip-text);
+  font-size:9.5px;font-weight:600;letter-spacing:.16em;text-transform:uppercase}
+.product__body{padding:20px 20px 22px;display:flex;flex-direction:column;gap:9px;flex:1}
+.product__name{font-size:16px;font-weight:600;line-height:1.35;text-decoration:none}
+.product__name:hover{color:var(--gold)}
+.product__rating{display:flex;align-items:center;gap:8px;font-size:13px;color:var(--text-soft)}
+.product__price{display:flex;align-items:baseline;gap:9px;font-variant-numeric:tabular-nums;margin-top:auto;padding-top:6px}
+.product__price b{font-size:19px;font-weight:600}
+.product__price s{font-size:14px;color:var(--text-faint)}
+.product__price .save{font-size:10px;font-weight:600;letter-spacing:.12em;text-transform:uppercase;
+  color:var(--gold);border:1px solid var(--gold);padding:2px 7px;border-radius:2px}
+.product .cta{width:100%;min-height:48px;margin-top:12px;font-size:12.5px}
+@media (max-width:900px){.products{grid-template-columns:1fr;max-width:420px;margin:0 auto}}
+
+/* ==========================================================================
+   Text-Bild-Reihe
+   ========================================================================== */
+
+.row{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:60px;align-items:center}
+.row > *{min-width:0}
+.row--flip .row-media{order:-1}
+.row-body h2{margin:14px 0 0;font-size:clamp(24px,2.9vw,34px);font-weight:600;
+  line-height:1.18;letter-spacing:-.01em;text-wrap:balance}
+.row-body .sub{margin:12px 0 0;font-size:17px;color:var(--gold);font-weight:500}
+.row-body p{margin:16px 0 0;color:var(--text-soft)}
+.row-body .cta{margin-top:26px}
+@media (max-width:940px){
+  .row{grid-template-columns:1fr;gap:32px}
+  .row--flip .row-media{order:0}
+  .row-media{order:-1}
+}
+
+/* ==========================================================================
+   Karten mit Bild (Für wen / Qualität)
+   ========================================================================== */
+
+.cards{display:grid;grid-template-columns:repeat(3,1fr);gap:2px;
+  background:var(--line);border:1px solid var(--line);border-radius:var(--radius);overflow:hidden}
+.card{background:var(--surface);padding:28px 24px;display:flex;flex-direction:column;gap:14px}
+.card__icon{
+  width:74px;height:74px;border-radius:50%;overflow:hidden;flex-shrink:0;
+  background:#F6F4EE;border:1px solid var(--line);
+}
+.card__icon img{width:100%;height:100%;object-fit:contain}
+.card__icon--plain{border:0;background:none;border-radius:0;width:54px;height:54px}
+.card__icon--plain img{object-fit:contain}
+.card strong{font-size:16px;font-weight:600;line-height:1.35}
+.card span{font-size:14px;color:var(--text-soft);line-height:1.6}
+@media (max-width:860px){.cards{grid-template-columns:repeat(2,1fr)}}
+@media (max-width:560px){.cards{grid-template-columns:1fr}}
+
+/* ==========================================================================
+   Garantie
+   ========================================================================== */
+
+.guarantee{display:grid;grid-template-columns:minmax(0,1fr) 280px;gap:56px;align-items:center}
+.guarantee-list{margin:30px 0 0;padding:0;list-style:none;display:flex;flex-direction:column;gap:16px}
+.guarantee-list li{display:flex;gap:14px;align-items:flex-start;color:var(--ink-text-soft)}
+.guarantee-list svg{width:19px;height:19px;flex-shrink:0;margin-top:4px;stroke:var(--gold);fill:none;stroke-width:1.7}
+.guarantee-list strong{color:var(--ink-text);font-weight:600}
+.guarantee-note{margin:22px 0 0;font-size:13.5px;color:var(--ink-text-soft);font-style:italic}
+.guarantee-seal img{width:100%;max-width:260px;margin:0 auto}
+@media (max-width:900px){
+  .guarantee{grid-template-columns:1fr;gap:34px}
+  .guarantee-seal{max-width:200px}
+}
+
+/* ==========================================================================
+   Meinungen
+   ========================================================================== */
+
+.voices{display:grid;grid-template-columns:repeat(2,1fr);gap:26px}
+.voice{border:1px solid var(--line);border-radius:var(--radius);background:var(--surface);
+  padding:30px 28px;display:flex;flex-direction:column;gap:16px}
+.voice__quote{margin:0;font-size:18px;line-height:1.6;color:var(--text)}
+.voice__mark{width:26px;height:26px;fill:var(--gold-lt)}
+.voice__who{display:flex;flex-direction:column;line-height:1.4}
+.voice__who strong{font-size:14.5px;font-weight:600}
+.voice__who span{font-size:13px;color:var(--text-faint)}
+@media (max-width:760px){.voices{grid-template-columns:1fr}}
+
+/* ==========================================================================
+   Farbtöne und Aufsatz
+   ========================================================================== */
+
+.duo{display:grid;grid-template-columns:repeat(2,1fr);gap:26px}
+.duo__card{border:1px solid var(--line);border-radius:var(--radius);background:var(--surface);
+  overflow:hidden;display:flex;flex-direction:column}
+.duo__media{background:#F6F4EE;padding:30px;display:grid;place-items:center;min-height:220px}
+.duo__body{padding:26px 26px 28px;display:flex;flex-direction:column;gap:12px;flex:1}
+.duo__body h3{margin:0;font-size:21px;font-weight:600;letter-spacing:-.005em}
+.duo__body p{margin:0;font-size:15px;color:var(--text-soft)}
+.duo__body .cta{align-self:flex-start;margin-top:6px;min-height:48px;font-size:12.5px}
+.colorstrip{display:grid;grid-template-columns:repeat(6,1fr);gap:10px;width:100%}
+.colorstrip figure{margin:0;display:flex;flex-direction:column;align-items:center;gap:7px}
+.colorstrip img{width:100%;aspect-ratio:1/1;border-radius:50%;border:1px solid var(--line)}
+.colorstrip figcaption{font-size:11px;color:var(--text-soft);text-align:center;line-height:1.3}
+.duo__media img.single{max-width:230px}
+@media (max-width:760px){.duo{grid-template-columns:1fr}}
+
+/* ==========================================================================
+   Prüfsiegel und Sicher bestellen
+   ========================================================================== */
+
+.seals{display:grid;grid-template-columns:repeat(6,1fr);gap:2px;
+  background:var(--line);border:1px solid var(--line);border-radius:var(--radius);overflow:hidden}
+.seal{background:var(--surface);padding:24px 14px;display:flex;flex-direction:column;
+  align-items:center;gap:11px;text-align:center}
+.seal svg{width:36px;height:36px;stroke:var(--gold);fill:none;stroke-width:1.5;
+  stroke-linecap:round;stroke-linejoin:round}
+.seal span{font-size:12px;font-weight:500;line-height:1.35;color:var(--text-soft)}
+@media (max-width:900px){.seals{grid-template-columns:repeat(3,1fr)}}
+@media (max-width:480px){.seals{grid-template-columns:repeat(2,1fr)}}
+
+.order-safe{display:grid;grid-template-columns:repeat(3,1fr);gap:26px}
+.osafe{display:flex;flex-direction:column;align-items:center;text-align:center;gap:13px;
+  padding:30px 24px;border:1px solid var(--line);border-radius:var(--radius);background:var(--surface)}
+.osafe img{height:52px;width:auto}
+.osafe svg{width:40px;height:40px;stroke:var(--gold);fill:none;stroke-width:1.5;
+  stroke-linecap:round;stroke-linejoin:round}
+.osafe strong{font-size:16px;font-weight:600}
+.osafe span{font-size:14px;color:var(--text-soft);line-height:1.55}
+@media (max-width:760px){.order-safe{grid-template-columns:1fr}}
+
+/* ==========================================================================
+   Fusszeile
+   ========================================================================== */
+
+.sitefoot{background:var(--ink);color:var(--ink-text-soft);font-size:14px}
+.sitefoot .spine{padding-top:64px;padding-bottom:34px}
+.foot-grid{display:grid;grid-template-columns:1.25fr 1fr 1fr 1fr;gap:44px}
+.foot-col h4{margin:0 0 18px;font-size:11px;font-weight:600;letter-spacing:.2em;
+  text-transform:uppercase;color:var(--gold)}
+.foot-col ul{margin:0;padding:0;list-style:none;display:flex;flex-direction:column;gap:9px}
+.foot-col a{text-decoration:none;transition:color .18s}
+.foot-col a:hover{color:var(--gold)}
+.foot-contact{display:flex;flex-direction:column;gap:12px}
+.foot-contact div{display:flex;gap:11px;align-items:flex-start;line-height:1.5}
+.foot-contact svg{width:16px;height:16px;margin-top:4px;stroke:var(--gold);fill:none;stroke-width:1.6;flex-shrink:0}
+.foot-base{margin-top:48px;padding-top:22px;border-top:1px solid var(--ink-line);
+  display:flex;align-items:center;justify-content:space-between;gap:22px;flex-wrap:wrap;font-size:12.5px}
+.foot-pay{display:flex;align-items:center;gap:12px;font-size:11px;letter-spacing:.14em;text-transform:uppercase}
+.foot-pay img{height:20px}
+@media (max-width:900px){.foot-grid{grid-template-columns:repeat(2,1fr);gap:34px}}
+@media (max-width:520px){.foot-grid{grid-template-columns:1fr}}
+
+@media (max-width:720px){
+  body{font-size:16px}
+  .spine{padding:0 20px}
+  .band{padding:64px 0}
+  .topbar .spine{gap:18px}
+  .colorstrip{grid-template-columns:repeat(3,1fr)}
+}
+</style>
+
+<a class="skiplink" href="#hauptinhalt">Zum Inhalt springen</a>
+
+<div class="topbar">
+  <div class="spine">
+    <span><svg viewBox="0 0 24 24"><path d="M3 7h13v10H3z"/><path d="M16 10h4l1 3v4h-5z"/><circle cx="7" cy="18" r="1.6"/><circle cx="18" cy="18" r="1.6"/></svg>Versand in 24 Stunden</span>
+    <span><svg viewBox="0 0 24 24"><path d="M12 3l7 3v6c0 4-3 7-7 9-4-2-7-5-7-9V6z"/><path d="M9 12l2 2 4-4"/></svg>30 Tage Rückgabe</span>
+    <span><svg viewBox="0 0 24 24"><path d="M4 6h16v12H4z"/><path d="M12 8v8M8 12h8"/></svg>Schweizer Shop</span>
+  </div>
+</div>
+
+<header class="masthead">
+  <div class="spine">
+    <a class="brand" href="#" aria-label="HairHelp Startseite"><img src="ASSET:logo" alt="HairHelp" width="300" height="247"></a>
+    <nav aria-label="Hauptnavigation">
+      <ul class="mainnav">
+        <li><a href="#">Für Männer</a></li>
+        <li><a href="#">Für Frauen</a></li>
+        <li><a href="#">Produkt</a></li>
+        <li><a href="#">Ratgeber</a></li>
+        <li><a href="#erfahrungen">Erfahrungen</a></li>
+        <li><a href="#shop">Shop</a></li>
+      </ul>
+    </nav>
+    <div class="mast-actions">
+      <button class="icon-btn" type="button" aria-label="Suchen"><svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"/><path d="M20 20l-3.5-3.5"/></svg></button>
+      <button class="icon-btn" type="button" aria-label="Konto"><svg viewBox="0 0 24 24"><circle cx="12" cy="8" r="4"/><path d="M4 21c0-4.4 3.6-7 8-7s8 2.6 8 7"/></svg></button>
+      <button class="icon-btn" type="button" aria-label="Warenkorb"><svg viewBox="0 0 24 24"><path d="M6 8h12l-1 12H7z"/><path d="M9 8V6a3 3 0 0 1 6 0v2"/></svg><span class="badge">2</span></button>
+    </div>
+  </div>
+</header>
+
+<main id="hauptinhalt">
+
+<!-- ====================== Auftakt ====================== -->
+
+<section class="hero">
+  <div class="spine">
+    <div>
+      <p class="eyebrow">Volles Haar in 30 Sekunden</p>
+      <h1><span class="lead">Die neue Generation</span>Streuhaar &amp; Hair Fibers</h1>
+      <p class="lede">NextGen Haarverdichtung aus pflanzlichem Keratin für Frauen und Männer – exklusiv für die Schweiz.</p>
+      <a class="cta" href="#shop">Jetzt risikofrei testen</a>
+      <div class="hero-trust">
+        <span>🇨🇭 Schweizer Shop</span>
+        <span>
+          <span class="hero-stars" role="img" aria-label="4,8 von 5 Sternen">
+            <svg viewBox="0 0 24 24"><path d="M12 2l3 6.6 7 .9-5.1 4.8 1.3 7L12 18l-6.2 3.3 1.3-7L2 9.5l7-.9z"/></svg>
+            <svg viewBox="0 0 24 24"><path d="M12 2l3 6.6 7 .9-5.1 4.8 1.3 7L12 18l-6.2 3.3 1.3-7L2 9.5l7-.9z"/></svg>
+            <svg viewBox="0 0 24 24"><path d="M12 2l3 6.6 7 .9-5.1 4.8 1.3 7L12 18l-6.2 3.3 1.3-7L2 9.5l7-.9z"/></svg>
+            <svg viewBox="0 0 24 24"><path d="M12 2l3 6.6 7 .9-5.1 4.8 1.3 7L12 18l-6.2 3.3 1.3-7L2 9.5l7-.9z"/></svg>
+            <svg viewBox="0 0 24 24"><path d="M12 2l3 6.6 7 .9-5.1 4.8 1.3 7L12 18l-6.2 3.3 1.3-7L2 9.5l7-.9z"/></svg>
+          </span>
+          4.8 / 5 Sterne
+        </span>
+      </div>
+    </div>
+    <div class="hero-media">
+      <img src="ASSET:frau-dose" alt="Frau hält die HairHelp Dose in die Kamera">
+      <button class="hero-play" type="button"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg><span>Video abspielen</span></button>
+    </div>
+  </div>
+</section>
+
+<!-- ====================== Ergebnisse ====================== -->
+
+<section class="band band--ink" id="resultate">
+  <div class="spine">
+    <div class="sect-head">
+      <p class="eyebrow">Resultate</p>
+      <h2><span class="lead">Haarverdichtung</span> mit Streuhaar</h2>
+      <p>Der HairHelp Haarverdichter ist ein Schweizer Premium-Produkt aus pflanzlichem Keratin. Feine Fasern des Streuhaars, oft auch als Hair Fibers oder Schütthaar bekannt, haften durch statische Aufladung am Eigenhaar und schaffen ein dichtes, natürliches Gesamtbild für den ganzen Tag. Ob zum <a href="#">Kaschieren von Geheimratsecken</a>, bei <a href="#">dünner werdendem Scheitel</a> oder fürs Styling – unser Haarverdichter deckt alle Anwendungen ab.</p>
+    </div>
+
+    <div class="compare-grid">
+      <figure class="compare">
+        <div class="cmp" data-cmp>
+          <img class="before" src="ASSET:priska-vorher" alt="Vor der Anwendung">
+          <img class="after" src="ASSET:priska-nachher" alt="Nach der Anwendung">
+          <span class="cmp-label is-before">Vorher</span><span class="cmp-label is-after">Nachher</span>
+          <input class="cmp-range" type="range" min="0" max="100" value="50" aria-label="Vorher-Nachher-Regler 1">
+          <span class="cmp-handle" aria-hidden="true"></span>
+        </div>
+        <figcaption><span class="who">Lichter Scheitel</span><span class="what">Farbe Dunkelbraun</span></figcaption>
+      </figure>
+
+      <figure class="compare">
+        <div class="cmp" data-cmp>
+          <img class="before" src="ASSET:oliver-vorher" alt="Vor der Anwendung">
+          <img class="after" src="ASSET:oliver-nachher" alt="Nach der Anwendung">
+          <span class="cmp-label is-before">Vorher</span><span class="cmp-label is-after">Nachher</span>
+          <input class="cmp-range" type="range" min="0" max="100" value="50" aria-label="Vorher-Nachher-Regler 2">
+          <span class="cmp-handle" aria-hidden="true"></span>
+        </div>
+        <figcaption><span class="who">Geheimratsecken</span><span class="what">Farbe Braun</span></figcaption>
+      </figure>
+
+      <figure class="compare">
+        <div class="cmp" data-cmp>
+          <img class="before" src="ASSET:mariana-vorher" alt="Vor der Anwendung">
+          <img class="after" src="ASSET:mariana-nachher" alt="Nach der Anwendung">
+          <span class="cmp-label is-before">Vorher</span><span class="cmp-label is-after">Nachher</span>
+          <input class="cmp-range" type="range" min="0" max="100" value="50" aria-label="Vorher-Nachher-Regler 3">
+          <span class="cmp-handle" aria-hidden="true"></span>
+        </div>
+        <figcaption><span class="who">Dünner Ansatz</span><span class="what">Farbe Dunkelbraun</span></figcaption>
+      </figure>
+    </div>
+
+    <p class="cmp-hint">
+      <svg viewBox="0 0 24 24"><path d="M8 8L4 12l4 4M16 8l4 4-4 4M12 4v16"/></svg>
+      Regler ziehen oder mit den Pfeiltasten steuern
+    </p>
+  </div>
+</section>
+
+<!-- ====================== Kundenstimmen ====================== -->
+
+<section class="band" id="erfahrungen">
+  <div class="spine">
+    <div class="sect-head">
+      <p class="eyebrow">Verifizierte Bewertungen</p>
+      <h2><span class="lead">Das sagen</span> unsere Kunden</h2>
+    </div>
+
+    <div class="reviews">
+      <article class="review">
+        <div class="review-top">
+          <span class="avatar" aria-hidden="true">CK</span>
+          <span class="review-who"><strong>Charly Kress</strong><span>vor 1 Woche</span></span>
+          <span class="verified"><svg viewBox="0 0 24 24"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg>Verifiziert</span>
+        </div>
+        <span class="stars" role="img" aria-label="5 von 5 Sternen"><svg viewBox="0 0 24 24"><path d="M12 2l3 6.6 7 .9-5.1 4.8 1.3 7L12 18l-6.2 3.3 1.3-7L2 9.5l7-.9z"/></svg><svg viewBox="0 0 24 24"><path d="M12 2l3 6.6 7 .9-5.1 4.8 1.3 7L12 18l-6.2 3.3 1.3-7L2 9.5l7-.9z"/></svg><svg viewBox="0 0 24 24"><path d="M12 2l3 6.6 7 .9-5.1 4.8 1.3 7L12 18l-6.2 3.3 1.3-7L2 9.5l7-.9z"/></svg><svg viewBox="0 0 24 24"><path d="M12 2l3 6.6 7 .9-5.1 4.8 1.3 7L12 18l-6.2 3.3 1.3-7L2 9.5l7-.9z"/></svg><svg viewBox="0 0 24 24"><path d="M12 2l3 6.6 7 .9-5.1 4.8 1.3 7L12 18l-6.2 3.3 1.3-7L2 9.5l7-.9z"/></svg></span>
+        <p>«Megaa liebi lüütlis bi hairhelp, Farb ustuschä het bländnd funktionaglät»</p>
+      </article>
+
+      <article class="review">
+        <div class="review-top">
+          <span class="avatar" aria-hidden="true">DB</span>
+          <span class="review-who"><strong>Dana Bercoli</strong><span>vor 1 Woche</span></span>
+          <span class="verified"><svg viewBox="0 0 24 24"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg>Verifiziert</span>
+        </div>
+        <span class="stars" role="img" aria-label="5 von 5 Sternen"><svg viewBox="0 0 24 24"><path d="M12 2l3 6.6 7 .9-5.1 4.8 1.3 7L12 18l-6.2 3.3 1.3-7L2 9.5l7-.9z"/></svg><svg viewBox="0 0 24 24"><path d="M12 2l3 6.6 7 .9-5.1 4.8 1.3 7L12 18l-6.2 3.3 1.3-7L2 9.5l7-.9z"/></svg><svg viewBox="0 0 24 24"><path d="M12 2l3 6.6 7 .9-5.1 4.8 1.3 7L12 18l-6.2 3.3 1.3-7L2 9.5l7-.9z"/></svg><svg viewBox="0 0 24 24"><path d="M12 2l3 6.6 7 .9-5.1 4.8 1.3 7L12 18l-6.2 3.3 1.3-7L2 9.5l7-.9z"/></svg><svg viewBox="0 0 24 24"><path d="M12 2l3 6.6 7 .9-5.1 4.8 1.3 7L12 18l-6.2 3.3 1.3-7L2 9.5l7-.9z"/></svg></span>
+        <p>«Mein Lebensretter :)»</p>
+      </article>
+
+      <article class="review">
+        <div class="review-top">
+          <span class="avatar" aria-hidden="true">CH</span>
+          <span class="review-who"><strong>Cyril Heeb</strong><span>vor 3 Wochen</span></span>
+          <span class="verified"><svg viewBox="0 0 24 24"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg>Verifiziert</span>
+        </div>
+        <span class="stars" role="img" aria-label="5 von 5 Sternen"><svg viewBox="0 0 24 24"><path d="M12 2l3 6.6 7 .9-5.1 4.8 1.3 7L12 18l-6.2 3.3 1.3-7L2 9.5l7-.9z"/></svg><svg viewBox="0 0 24 24"><path d="M12 2l3 6.6 7 .9-5.1 4.8 1.3 7L12 18l-6.2 3.3 1.3-7L2 9.5l7-.9z"/></svg><svg viewBox="0 0 24 24"><path d="M12 2l3 6.6 7 .9-5.1 4.8 1.3 7L12 18l-6.2 3.3 1.3-7L2 9.5l7-.9z"/></svg><svg viewBox="0 0 24 24"><path d="M12 2l3 6.6 7 .9-5.1 4.8 1.3 7L12 18l-6.2 3.3 1.3-7L2 9.5l7-.9z"/></svg><svg viewBox="0 0 24 24"><path d="M12 2l3 6.6 7 .9-5.1 4.8 1.3 7L12 18l-6.2 3.3 1.3-7L2 9.5l7-.9z"/></svg></span>
+        <p>«Frühner hani amel Toppik us dä Staatä bestellt. Eueres gefällt mir aber besser und gebt au besser und länger, Grüessli Cyril»</p>
+      </article>
+
+      <article class="review">
+        <div class="review-top">
+          <span class="avatar" aria-hidden="true">NZ</span>
+          <span class="review-who"><strong>Nadine Zeller</strong><span>vor 3 Wochen</span></span>
+          <span class="verified"><svg viewBox="0 0 24 24"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg>Verifiziert</span>
+        </div>
+        <span class="stars" role="img" aria-label="5 von 5 Sternen"><svg viewBox="0 0 24 24"><path d="M12 2l3 6.6 7 .9-5.1 4.8 1.3 7L12 18l-6.2 3.3 1.3-7L2 9.5l7-.9z"/></svg><svg viewBox="0 0 24 24"><path d="M12 2l3 6.6 7 .9-5.1 4.8 1.3 7L12 18l-6.2 3.3 1.3-7L2 9.5l7-.9z"/></svg><svg viewBox="0 0 24 24"><path d="M12 2l3 6.6 7 .9-5.1 4.8 1.3 7L12 18l-6.2 3.3 1.3-7L2 9.5l7-.9z"/></svg><svg viewBox="0 0 24 24"><path d="M12 2l3 6.6 7 .9-5.1 4.8 1.3 7L12 18l-6.2 3.3 1.3-7L2 9.5l7-.9z"/></svg><svg viewBox="0 0 24 24"><path d="M12 2l3 6.6 7 .9-5.1 4.8 1.3 7L12 18l-6.2 3.3 1.3-7L2 9.5l7-.9z"/></svg></span>
+        <p>«Unglaublich, wie viel Unterschied ein paar Sekunden machen können. Mein Scheitel wirkt wieder dicht, mein Gesamtlook viel frischer. Für mich als tägliche Lösung perfekt – vor allem, weil es so natürlich aussieht.»</p>
+      </article>
+
+      <article class="review">
+        <div class="review-top">
+          <span class="avatar" aria-hidden="true">MR</span>
+          <span class="review-who"><strong>Marla Rieder</strong><span>vor 3 Wochen</span></span>
+          <span class="verified"><svg viewBox="0 0 24 24"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg>Verifiziert</span>
+        </div>
+        <span class="stars" role="img" aria-label="4 von 5 Sternen"><svg viewBox="0 0 24 24"><path d="M12 2l3 6.6 7 .9-5.1 4.8 1.3 7L12 18l-6.2 3.3 1.3-7L2 9.5l7-.9z"/></svg><svg viewBox="0 0 24 24"><path d="M12 2l3 6.6 7 .9-5.1 4.8 1.3 7L12 18l-6.2 3.3 1.3-7L2 9.5l7-.9z"/></svg><svg viewBox="0 0 24 24"><path d="M12 2l3 6.6 7 .9-5.1 4.8 1.3 7L12 18l-6.2 3.3 1.3-7L2 9.5l7-.9z"/></svg><svg viewBox="0 0 24 24"><path d="M12 2l3 6.6 7 .9-5.1 4.8 1.3 7L12 18l-6.2 3.3 1.3-7L2 9.5l7-.9z"/></svg></span>
+        <p>«Tolles Produkt»</p>
+      </article>
+
+      <article class="review">
+        <div class="review-top">
+          <span class="avatar" aria-hidden="true">R</span>
+          <span class="review-who"><strong>Roman</strong><span>vor 3 Wochen</span></span>
+          <span class="verified"><svg viewBox="0 0 24 24"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg>Verifiziert</span>
+        </div>
+        <span class="stars" role="img" aria-label="5 von 5 Sternen"><svg viewBox="0 0 24 24"><path d="M12 2l3 6.6 7 .9-5.1 4.8 1.3 7L12 18l-6.2 3.3 1.3-7L2 9.5l7-.9z"/></svg><svg viewBox="0 0 24 24"><path d="M12 2l3 6.6 7 .9-5.1 4.8 1.3 7L12 18l-6.2 3.3 1.3-7L2 9.5l7-.9z"/></svg><svg viewBox="0 0 24 24"><path d="M12 2l3 6.6 7 .9-5.1 4.8 1.3 7L12 18l-6.2 3.3 1.3-7L2 9.5l7-.9z"/></svg><svg viewBox="0 0 24 24"><path d="M12 2l3 6.6 7 .9-5.1 4.8 1.3 7L12 18l-6.2 3.3 1.3-7L2 9.5l7-.9z"/></svg><svg viewBox="0 0 24 24"><path d="M12 2l3 6.6 7 .9-5.1 4.8 1.3 7L12 18l-6.2 3.3 1.3-7L2 9.5l7-.9z"/></svg></span>
+        <p>«Danke Euch! Fühle mich mit dem Streuhaar viel besser im office!»</p>
+      </article>
+
+      <article class="review">
+        <div class="review-top">
+          <span class="avatar" aria-hidden="true">SR</span>
+          <span class="review-who"><strong>Sandra Reimond</strong><span>vor 3 Wochen</span></span>
+          <span class="verified"><svg viewBox="0 0 24 24"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg>Verifiziert</span>
+        </div>
+        <span class="stars" role="img" aria-label="5 von 5 Sternen"><svg viewBox="0 0 24 24"><path d="M12 2l3 6.6 7 .9-5.1 4.8 1.3 7L12 18l-6.2 3.3 1.3-7L2 9.5l7-.9z"/></svg><svg viewBox="0 0 24 24"><path d="M12 2l3 6.6 7 .9-5.1 4.8 1.3 7L12 18l-6.2 3.3 1.3-7L2 9.5l7-.9z"/></svg><svg viewBox="0 0 24 24"><path d="M12 2l3 6.6 7 .9-5.1 4.8 1.3 7L12 18l-6.2 3.3 1.3-7L2 9.5l7-.9z"/></svg><svg viewBox="0 0 24 24"><path d="M12 2l3 6.6 7 .9-5.1 4.8 1.3 7L12 18l-6.2 3.3 1.3-7L2 9.5l7-.9z"/></svg><svg viewBox="0 0 24 24"><path d="M12 2l3 6.6 7 .9-5.1 4.8 1.3 7L12 18l-6.2 3.3 1.3-7L2 9.5l7-.9z"/></svg></span>
+        <p>«Mehr als ich erwartet habe. Ich kann schwarz bei dunklem Haar empfehlen!»</p>
+      </article>
+
+      <article class="review">
+        <div class="review-top">
+          <span class="avatar" aria-hidden="true">DH</span>
+          <span class="review-who"><strong>Dani H.</strong><span>vor 4 Wochen</span></span>
+          <span class="verified"><svg viewBox="0 0 24 24"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg>Verifiziert</span>
+        </div>
+        <span class="stars" role="img" aria-label="5 von 5 Sternen"><svg viewBox="0 0 24 24"><path d="M12 2l3 6.6 7 .9-5.1 4.8 1.3 7L12 18l-6.2 3.3 1.3-7L2 9.5l7-.9z"/></svg><svg viewBox="0 0 24 24"><path d="M12 2l3 6.6 7 .9-5.1 4.8 1.3 7L12 18l-6.2 3.3 1.3-7L2 9.5l7-.9z"/></svg><svg viewBox="0 0 24 24"><path d="M12 2l3 6.6 7 .9-5.1 4.8 1.3 7L12 18l-6.2 3.3 1.3-7L2 9.5l7-.9z"/></svg><svg viewBox="0 0 24 24"><path d="M12 2l3 6.6 7 .9-5.1 4.8 1.3 7L12 18l-6.2 3.3 1.3-7L2 9.5l7-.9z"/></svg><svg viewBox="0 0 24 24"><path d="M12 2l3 6.6 7 .9-5.1 4.8 1.3 7L12 18l-6.2 3.3 1.3-7L2 9.5l7-.9z"/></svg></span>
+        <p>«Bestellt, zwei Tage später da und direkt ausprobiert. Ich hatte schon andere Streuhaare getestet, aber HairHelp ist mit Abstand das Beste. Sehr feine Fasern, deckt lichte Stellen sauber ab und hält auch beim Sport. Werde definitiv nachbestellen.»</p>
+      </article>
+
+      <article class="review">
+        <div class="review-top">
+          <span class="avatar" aria-hidden="true">MH</span>
+          <span class="review-who"><strong>Markus Hafner</strong><span>vor 1 Monat</span></span>
+          <span class="verified"><svg viewBox="0 0 24 24"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg>Verifiziert</span>
+        </div>
+        <span class="stars" role="img" aria-label="5 von 5 Sternen"><svg viewBox="0 0 24 24"><path d="M12 2l3 6.6 7 .9-5.1 4.8 1.3 7L12 18l-6.2 3.3 1.3-7L2 9.5l7-.9z"/></svg><svg viewBox="0 0 24 24"><path d="M12 2l3 6.6 7 .9-5.1 4.8 1.3 7L12 18l-6.2 3.3 1.3-7L2 9.5l7-.9z"/></svg><svg viewBox="0 0 24 24"><path d="M12 2l3 6.6 7 .9-5.1 4.8 1.3 7L12 18l-6.2 3.3 1.3-7L2 9.5l7-.9z"/></svg><svg viewBox="0 0 24 24"><path d="M12 2l3 6.6 7 .9-5.1 4.8 1.3 7L12 18l-6.2 3.3 1.3-7L2 9.5l7-.9z"/></svg><svg viewBox="0 0 24 24"><path d="M12 2l3 6.6 7 .9-5.1 4.8 1.3 7L12 18l-6.2 3.3 1.3-7L2 9.5l7-.9z"/></svg></span>
+        <p>«Sehr netté Service, und danke fürd Geduld :)»</p>
+      </article>
+    </div>
+
+    <div class="reviews-more"><a class="cta cta--ghost" href="#">Weitere 9 Bewertungen anzeigen</a></div>
+  </div>
+</section>
+
+<!-- ====================== Produkte ====================== -->
+
+<section class="band band--alt" id="shop">
+  <div class="spine">
+    <div class="sect-head">
+      <p class="eyebrow">Schweizer Shop</p>
+      <h2><span class="lead">Unsere</span> Produkte</h2>
+    </div>
+
+    <div class="products">
+      <article class="product">
+        <div class="product__media"><img src="ASSET:dose" alt="HairHelp Streuhaar Dose"></div>
+        <div class="product__body">
+          <a class="product__name" href="#">Streuhaar (Hair Fibers) – HairHelp™ Haarverdichter</a>
+          <span class="product__rating">
+            <span class="stars" role="img" aria-label="4,76 von 5 Sternen"><svg viewBox="0 0 24 24"><path d="M12 2l3 6.6 7 .9-5.1 4.8 1.3 7L12 18l-6.2 3.3 1.3-7L2 9.5l7-.9z"/></svg><svg viewBox="0 0 24 24"><path d="M12 2l3 6.6 7 .9-5.1 4.8 1.3 7L12 18l-6.2 3.3 1.3-7L2 9.5l7-.9z"/></svg><svg viewBox="0 0 24 24"><path d="M12 2l3 6.6 7 .9-5.1 4.8 1.3 7L12 18l-6.2 3.3 1.3-7L2 9.5l7-.9z"/></svg><svg viewBox="0 0 24 24"><path d="M12 2l3 6.6 7 .9-5.1 4.8 1.3 7L12 18l-6.2 3.3 1.3-7L2 9.5l7-.9z"/></svg><svg viewBox="0 0 24 24"><path d="M12 2l3 6.6 7 .9-5.1 4.8 1.3 7L12 18l-6.2 3.3 1.3-7L2 9.5l7-.9z"/></svg></span>
+            4.76
+          </span>
+          <div class="product__price"><b>CHF 28.90</b></div>
+          <a class="cta" href="#">Ausführung wählen</a>
+        </div>
+      </article>
+
+      <article class="product">
+        <div class="product__media">
+          <span class="product__flag">15 % sparen</span>
+          <img src="ASSET:starterset" alt="HairHelp Starter-Set: Hair Fibers und Applikator">
+        </div>
+        <div class="product__body">
+          <a class="product__name" href="#">HairHelp™ Streuhaar-Starter-Set: Hair Fibers + Applikator</a>
+          <span class="product__rating">
+            <span class="stars" role="img" aria-label="4,9 von 5 Sternen"><svg viewBox="0 0 24 24"><path d="M12 2l3 6.6 7 .9-5.1 4.8 1.3 7L12 18l-6.2 3.3 1.3-7L2 9.5l7-.9z"/></svg><svg viewBox="0 0 24 24"><path d="M12 2l3 6.6 7 .9-5.1 4.8 1.3 7L12 18l-6.2 3.3 1.3-7L2 9.5l7-.9z"/></svg><svg viewBox="0 0 24 24"><path d="M12 2l3 6.6 7 .9-5.1 4.8 1.3 7L12 18l-6.2 3.3 1.3-7L2 9.5l7-.9z"/></svg><svg viewBox="0 0 24 24"><path d="M12 2l3 6.6 7 .9-5.1 4.8 1.3 7L12 18l-6.2 3.3 1.3-7L2 9.5l7-.9z"/></svg><svg viewBox="0 0 24 24"><path d="M12 2l3 6.6 7 .9-5.1 4.8 1.3 7L12 18l-6.2 3.3 1.3-7L2 9.5l7-.9z"/></svg></span>
+            4.90
+          </span>
+          <div class="product__price"><s>CHF 58.80</s><b>CHF 49.90</b></div>
+          <a class="cta" href="#">Ausführung wählen</a>
+        </div>
+      </article>
+
+      <article class="product">
+        <div class="product__media"><img src="ASSET:applikator" alt="HairHelp Präzisions-Applikator"></div>
+        <div class="product__body">
+          <a class="product__name" href="#">HairHelp™ Präzisions-Applikator</a>
+          <span class="product__rating">
+            <span class="stars" role="img" aria-label="5 von 5 Sternen"><svg viewBox="0 0 24 24"><path d="M12 2l3 6.6 7 .9-5.1 4.8 1.3 7L12 18l-6.2 3.3 1.3-7L2 9.5l7-.9z"/></svg><svg viewBox="0 0 24 24"><path d="M12 2l3 6.6 7 .9-5.1 4.8 1.3 7L12 18l-6.2 3.3 1.3-7L2 9.5l7-.9z"/></svg><svg viewBox="0 0 24 24"><path d="M12 2l3 6.6 7 .9-5.1 4.8 1.3 7L12 18l-6.2 3.3 1.3-7L2 9.5l7-.9z"/></svg><svg viewBox="0 0 24 24"><path d="M12 2l3 6.6 7 .9-5.1 4.8 1.3 7L12 18l-6.2 3.3 1.3-7L2 9.5l7-.9z"/></svg><svg viewBox="0 0 24 24"><path d="M12 2l3 6.6 7 .9-5.1 4.8 1.3 7L12 18l-6.2 3.3 1.3-7L2 9.5l7-.9z"/></svg></span>
+            5.00
+          </span>
+          <div class="product__price"><b>CHF 29.90</b></div>
+          <a class="cta" href="#">In den Warenkorb</a>
+        </div>
+      </article>
+    </div>
+  </div>
+</section>
+
+<!-- ====================== So wirkt es ====================== -->
+
+<section class="band">
+  <div class="spine">
+    <div class="row">
+      <div class="row-body">
+        <p class="eyebrow">HairHelp Streuhaar</p>
+        <h2>Volleres Haar in Sekunden</h2>
+        <p class="sub">Haare verdichten in wenigen Sekunden</p>
+        <p>Die HairHelp Haarfasern bestehen aus natürlichen Keratin-Mikrofasern. Beim Aufstreuen verbinden sich die Streuhaarfasern dank statischer Aufladung mit Ihrem vorhandenen Haar und auch mit feinen Härchen. So entsteht in Sekunden der Eindruck deutlich dichterer Haare.</p>
+        <p>Die Fasern sind farbecht, färben nicht ab und bleiben auch bei leichtem Regen oder Schweiss zuverlässig an Ort und Stelle.</p>
+        <a class="cta" href="#">So funktioniert Streuhaar</a>
+      </div>
+      <figure class="row-media media" style="margin:0">
+        <img src="ASSET:dose-fasern" alt="Mikroskopische Darstellung der HairHelp Keratin-Haarverdichtungsfasern mit liegender Dose">
+      </figure>
+    </div>
+  </div>
+</section>
+
+<!-- ====================== Für wen ====================== -->
+
+<section class="band band--alt">
+  <div class="spine">
+    <div class="sect-head">
+      <p class="eyebrow">Haarverdichtungsfasern</p>
+      <h2><span class="lead">Für wen eignet sich</span> Streuhaar?</h2>
+      <p>HairHelp Streuhaar bietet eine flexible und effektive Lösung für Frauen und Männer in den verschiedensten Situationen.</p>
+    </div>
+
+    <div class="cards">
+      <div class="card">
+        <div class="card__icon"><img src="ASSET:fuer-duennes" alt=""></div>
+        <strong>Bei dünnem &amp; feinem Haar</strong>
+        <span>HairHelp Streuhaar verleiht dünnem Haar optisch sofort mehr Fülle. Der Haarverdichter kaschiert die durchschimmernde Kopfhaut und erleichtert das Frisieren.</span>
+      </div>
+      <div class="card">
+        <div class="card__icon"><img src="ASSET:fuer-frauen" alt=""></div>
+        <strong>Haarausfall Frauen</strong>
+        <span>Typischer Haarausfall bei Frauen, wie ein sich ausdünnender Scheitel, wird zuverlässig abgedeckt. Der Haarverdichter hilft bei genetisch bedingtem Haarausfall, der meist von der Kopfmitte ausgeht.</span>
+      </div>
+      <div class="card">
+        <div class="card__icon"><img src="ASSET:fuer-maenner" alt=""></div>
+        <strong>Haarausfall Männer</strong>
+        <span>Egal ob eine Tonsur am Hinterkopf, Geheimratsecken oder diffuser Haarausfall – mit unseren Haarverdichtungsfasern decken Sie kahle Stellen effektiv ab und sorgen für ein jugendlicheres Aussehen.</span>
+      </div>
+      <div class="card">
+        <div class="card__icon"><img src="ASSET:fuer-ansatz" alt=""></div>
+        <strong>Zum Kaschieren des Haaransatzes</strong>
+        <span>Der HairHelp Haarverdichter gleicht die Naturfarbe der nachwachsenden Haare an die gefärbten Haare an. Das schont das Haar, da häufiges Nachfärben entfällt.</span>
+      </div>
+      <div class="card">
+        <div class="card__icon"><img src="ASSET:fuer-styling" alt=""></div>
+        <strong>Aufpeppen der Frisur</strong>
+        <span>Das Schütthaar von HairHelp verleiht dem Haar mehr Fülle und eröffnet neue Styling-Möglichkeiten. Dank der Haarverdichtung gelingen Wunschfrisuren im Handumdrehen.</span>
+      </div>
+      <div class="card">
+        <div class="card__icon"><img src="ASSET:fuer-extensions" alt=""></div>
+        <strong>Übergänge bei Extensions und Haarersatz</strong>
+        <span>Das Streuhaar von HairHelp kaschiert zuverlässig die Verbindungs- und Befestigungsstellen von Extensions oder Haarersatzlösungen, damit diese unsichtbar bleiben.</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ====================== Garantie ====================== -->
+
+<section class="band band--ink">
+  <div class="spine guarantee">
+    <div>
+      <div class="sect-head" style="margin-bottom:0">
+        <p class="eyebrow">Ohne Risiko</p>
+        <h2><span class="lead">Jetzt risikofrei</span> in der Schweiz testen</h2>
+        <p>Sie sind nicht zufrieden? Kein Problem. Sie können die benutzte Dose zurückschicken und erhalten Ihr Geld zurück.</p>
+      </div>
+      <ul class="guarantee-list">
+        <li><svg viewBox="0 0 24 24"><rect x="4" y="6" width="16" height="14" rx="2"/><path d="M4 11h16M9 4v4M15 4v4"/></svg>
+          <span><strong>30 Tage testen:</strong> Probieren Sie unsere Streuhaarfasern in Ruhe zu Hause aus.</span></li>
+        <li><svg viewBox="0 0 24 24"><path d="M3 7h13v10H3z"/><path d="M16 10h4l1 3v4h-5z"/><circle cx="7" cy="18" r="1.6"/><circle cx="18" cy="18" r="1.6"/></svg>
+          <span><strong>Kostenlose Rücksendung:</strong> Eine vorfrankierte Rücksende-Etikette erhalten Sie per E-Mail.</span></li>
+        <li><svg viewBox="0 0 24 24"><path d="M4 7h16v13H4z"/><path d="M4 7l8-4 8 4"/></svg>
+          <span><strong>Unkomplizierte Abwicklung:</strong> Schicken Sie die Dose einfach zurück, auch wenn sie bereits benutzt ist. Eine Begründung ist nicht nötig.</span></li>
+        <li><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M9 12h6M12 9v6"/></svg>
+          <span><strong>Volle Rückerstattung:</strong> Sie erhalten den kompletten Kaufpreis zurückerstattet.</span></li>
+      </ul>
+      <p class="guarantee-note">Diese Garantie gilt nur für Bestellungen innerhalb der Schweiz und Liechtenstein, 1 Dose oder 1 Starter-Set pro Person.</p>
+      <div style="margin-top:28px"><a class="cta" href="#shop">Jetzt Streuhaar bestellen</a></div>
+    </div>
+    <div class="guarantee-seal">
+      <img src="ASSET:siegel" alt="30 Tage Geld-zurück-Garantie in der Schweiz">
+    </div>
+  </div>
+</section>
+
+<!-- ====================== Qualität ====================== -->
+
+<section class="band">
+  <div class="spine">
+    <div class="sect-head">
+      <p class="eyebrow">Haarverdichter</p>
+      <h2><span class="lead">Qualitativ hochwertigste</span> Streuhaarfasern</h2>
+    </div>
+
+    <div class="cards">
+      <div class="card">
+        <div class="card__icon card__icon--plain"><img src="ASSET:q-keratin" alt=""></div>
+        <strong>Natürliche Keratin-Fasern</strong>
+        <span>Unsere Streuhaarfasern bestehen aus hochwertigem, pflanzlichem Keratin, dem gleichen Protein wie Ihr Eigenhaar. Dadurch wirken sie besonders natürlich, ohne das Haar zu beschweren.</span>
+      </div>
+      <div class="card">
+        <div class="card__icon card__icon--plain"><img src="ASSET:q-wetter" alt=""></div>
+        <strong>Sicherer Halt bei jedem Wetter</strong>
+        <span>Die HairHelp Streuhaarfasern halten zuverlässig bei Wind, leichtem Regen und auch beim Sport. Sie können Ihren Alltag unbeschwert geniessen.</span>
+      </div>
+      <div class="card">
+        <div class="card__icon card__icon--plain"><img src="ASSET:q-farben" alt=""></div>
+        <strong>In 6 Farbtönen</strong>
+        <span>HairHelp ist in sechs Farbtönen erhältlich. So finden Sie leicht die Nuance, die zu Ihrer natürlichen Haarfarbe oder zur Coloration passt.</span>
+      </div>
+      <div class="card">
+        <div class="card__icon card__icon--plain"><img src="ASSET:q-derma" alt=""></div>
+        <strong>Dermatologisch geprüft &amp; sanft zur Kopfhaut</strong>
+        <span>Die Verträglichkeit des HairHelp Haarverdichters ist dermatologisch geprüft. Die Fasern sind sanft zur Kopfhaut und eignen sich auch für die tägliche Anwendung.</span>
+      </div>
+      <div class="card">
+        <div class="card__icon card__icon--plain"><img src="ASSET:q-auswaschbar" alt=""></div>
+        <strong>Einfach auswaschbar mit Shampoo</strong>
+        <span>Die Streuhaarfasern lassen sich bei der nächsten Haarwäsche mühelos und rückstandslos mit herkömmlichem Shampoo ausspülen.</span>
+      </div>
+      <div class="card">
+        <div class="card__icon card__icon--plain"><img src="ASSET:q-abfaerben" alt=""></div>
+        <strong>Kein Abfärben</strong>
+        <span>Die Keratin-Fasern sind farbecht: Sie färben weder auf Kleidung noch auf Bettwäsche ab und hinterlassen keine sichtbaren Rückstände auf der Kopfhaut.</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ====================== Farbtöne und Aufsatz ====================== -->
+
+<section class="band band--alt">
+  <div class="spine">
+    <div class="sect-head">
+      <p class="eyebrow">Passend zu Ihrem Haar</p>
+      <h2><span class="lead">Farbtöne</span> und Zubehör</h2>
+    </div>
+
+    <div class="duo">
+      <div class="duo__card">
+        <div class="duo__media">
+          <div class="colorstrip">
+            <figure><img src="ASSET:farbe-schwarz" alt="Farbton Schwarz"><figcaption>Schwarz</figcaption></figure>
+            <figure><img src="ASSET:farbe-dunkelbraun" alt="Farbton Dunkelbraun"><figcaption>Dunkel&shy;braun</figcaption></figure>
+            <figure><img src="ASSET:farbe-braun" alt="Farbton Braun"><figcaption>Braun</figcaption></figure>
+            <figure><img src="ASSET:farbe-hellbraun" alt="Farbton Hellbraun"><figcaption>Hellbraun</figcaption></figure>
+            <figure><img src="ASSET:farbe-mittelblond" alt="Farbton Mittelblond"><figcaption>Mittel&shy;blond</figcaption></figure>
+            <figure><img src="ASSET:farbe-hellgrau" alt="Farbton Hellgrau"><figcaption>Hellgrau</figcaption></figure>
+          </div>
+        </div>
+        <div class="duo__body">
+          <h3>6 verschiedene Farbtöne</h3>
+          <p>Von Schwarz bis Hellgrau. Farben lassen sich mischen, um Zwischentöne genau zu treffen.</p>
+          <a class="cta cta--ghost" href="#">Mehr erfahren</a>
+        </div>
+      </div>
+
+      <div class="duo__card">
+        <div class="duo__media"><img class="single" src="ASSET:starterset" alt="HairHelp Dose mit Präzisions-Applikator"></div>
+        <div class="duo__body">
+          <h3>Kombination mit Aufsatz</h3>
+          <p>Mit dem Präzisions-Applikator tragen Sie die Fasern gezielt an Scheitel und Geheimratsecken auf – und brauchen weniger Produkt.</p>
+          <a class="cta cta--ghost" href="#">Starter-Set kaufen</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ====================== Meinungen ====================== -->
+
+<section class="band">
+  <div class="spine">
+    <div class="sect-head">
+      <p class="eyebrow">Meinungen</p>
+      <h2><span class="lead">Stimmen</span> aus der Schweiz</h2>
+    </div>
+
+    <div class="voices">
+      <blockquote class="voice">
+        <svg class="voice__mark" viewBox="0 0 24 24" aria-hidden="true"><path d="M9 7H5a3 3 0 0 0-3 3v7h7v-7H6a3 3 0 0 1 3-3zm12 0h-4a3 3 0 0 0-3 3v7h7v-7h-3a3 3 0 0 1 3-3z"/></svg>
+        <p class="voice__quote">Meine Coiffeuse hat mir den HairHelp Haarverdichter empfohlen. Ich habe es ausprobiert und seither möchte ich nicht mehr ohne!</p>
+        <footer class="voice__who"><strong>Stephanie Pretz</strong><span>Winterthur</span></footer>
+      </blockquote>
+
+      <blockquote class="voice">
+        <svg class="voice__mark" viewBox="0 0 24 24" aria-hidden="true"><path d="M9 7H5a3 3 0 0 0-3 3v7h7v-7H6a3 3 0 0 1 3-3zm12 0h-4a3 3 0 0 0-3 3v7h7v-7h-3a3 3 0 0 1 3-3z"/></svg>
+        <p class="voice__quote">Die immer weniger werdenden Haare am Hinterkopf haben mich massiv gestört und ich hatte immer die Sorge, dass jemand von oben auf meinen Kopf starrt. Dieses Problem bin ich nun los.</p>
+        <footer class="voice__who"><strong>Marko Salic</strong><span>Biel</span></footer>
+      </blockquote>
+    </div>
+  </div>
+</section>
+
+<!-- ====================== Prüfsiegel ====================== -->
+
+<section class="band band--alt">
+  <div class="spine">
+    <div class="sect-head">
+      <p class="eyebrow">Geprüft und dokumentiert</p>
+      <h2><span class="lead">Sicher</span> bestellen</h2>
+    </div>
+
+    <div class="seals">
+      <div class="seal">
+        <svg viewBox="0 0 32 32"><path d="M16 4l10 4v8c0 6-4 10-10 12C10 26 6 22 6 16V8z"/><path d="M12 16.5l3 3 6-6"/></svg>
+        <span>Unabhängig geprüft (Intertek)</span>
+      </div>
+      <div class="seal">
+        <svg viewBox="0 0 32 32"><circle cx="16" cy="16" r="11"/><circle cx="16" cy="7.5" r="1.2"/><circle cx="16" cy="24.5" r="1.2"/><circle cx="7.5" cy="16" r="1.2"/><circle cx="24.5" cy="16" r="1.2"/><circle cx="10" cy="10" r="1.2"/><circle cx="22" cy="22" r="1.2"/><circle cx="22" cy="10" r="1.2"/><circle cx="10" cy="22" r="1.2"/></svg>
+        <span>EU-Verordnung 1223/2009 konform</span>
+      </div>
+      <div class="seal">
+        <svg viewBox="0 0 32 32"><path d="M25 7c0 9-6 15-13 15-2 0-4-.6-4-.6S9 9 25 7z"/><path d="M7 26c2-6 5-10 11-13"/></svg>
+        <span>100 % vegan</span>
+      </div>
+      <div class="seal">
+        <svg viewBox="0 0 32 32"><path d="M6 20c0-6 4-11 10-11s10 5 10 11"/><path d="M11 20c0-3 2-6 5-6s5 3 5 6"/><path d="M4 24h24"/></svg>
+        <span>Kopfhautschonend</span>
+      </div>
+      <div class="seal">
+        <svg viewBox="0 0 32 32"><circle cx="16" cy="16" r="11"/><path d="M11.5 16.5l3 3 6.5-6.5"/></svg>
+        <span>30 Tage Geld-zurück-Garantie</span>
+      </div>
+      <div class="seal">
+        <svg viewBox="0 0 32 32"><circle cx="13" cy="13" r="7"/><path d="M18 18l8 8"/><circle cx="13" cy="13" r="2.5"/></svg>
+        <span>Mikrobiologisch geprüft</span>
+      </div>
+    </div>
+
+    <div class="order-safe" style="margin-top:34px">
+      <div class="osafe">
+        <img src="ASSET:zahlarten" alt="TWINT, Apple Pay, PostFinance, Mastercard, VISA, PayPal">
+        <strong>Sicher bezahlen</strong>
+        <span>Mit PostCard, TWINT, Kreditkarte oder PayPal – SSL-verschlüsselt.</span>
+      </div>
+      <div class="osafe">
+        <svg viewBox="0 0 32 32"><path d="M16 4l10 4v8c0 6-4 10-10 12C10 26 6 22 6 16V8z"/><path d="M12 16.5l3 3 6-6"/></svg>
+        <strong>Geld-zurück-Garantie</strong>
+        <span>30 Tage Geld-zurück-Garantie mit kostenlosem Rückversand.</span>
+      </div>
+      <div class="osafe">
+        <svg viewBox="0 0 32 32"><path d="M4 9h17v13H4z"/><path d="M21 13h4.5l2.5 4v5h-7z"/><circle cx="9" cy="24.5" r="2.2"/><circle cx="23" cy="24.5" r="2.2"/></svg>
+        <strong>Kostenloser Versand</strong>
+        <span>Ab CHF 35.– Bestellwert mit A-Post.</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+</main>
+
+<footer class="sitefoot">
+  <div class="spine">
+    <div class="foot-grid">
+      <div class="foot-col">
+        <h4>Kontakt</h4>
+        <div class="foot-contact">
+          <div><svg viewBox="0 0 24 24"><path d="M5 4h4l2 5-3 2a12 12 0 0 0 5 5l2-3 5 2v4a1 1 0 0 1-1 1A16 16 0 0 1 4 5a1 1 0 0 1 1-1z"/></svg><a href="tel:+41774865526">(+41) 77 486 55 26</a></div>
+          <div><svg viewBox="0 0 24 24"><path d="M3 6h18v12H3z"/><path d="M3 7l9 6 9-6"/></svg><a href="mailto:info@hairhelp.ch">info@hairhelp.ch</a></div>
+          <div><svg viewBox="0 0 24 24"><path d="M12 21s-7-6-7-11a7 7 0 0 1 14 0c0 5-7 11-7 11z"/><circle cx="12" cy="10" r="2.5"/></svg><span>hairhelp GmbH<br>Schweiz</span></div>
+        </div>
+      </div>
+      <div class="foot-col">
+        <h4>Navigation</h4>
+        <ul>
+          <li><a href="#">Home</a></li><li><a href="#">Für Männer</a></li><li><a href="#">Für Frauen</a></li>
+          <li><a href="#">NextGen Haarverdichter</a></li><li><a href="#">Anwendung</a></li><li><a href="#erfahrungen">Erfahrungen</a></li>
+        </ul>
+      </div>
+      <div class="foot-col">
+        <h4>Ratgeber</h4>
+        <ul>
+          <li><a href="#">Was ist Streuhaar?</a></li><li><a href="#">Haarverdichtung</a></li>
+          <li><a href="#">Haarpuder vs. Streuhaar</a></li><li><a href="#">Dünnes Haar verdichten</a></li>
+          <li><a href="#">Geheimratsecken kaschieren</a></li><li><a href="#">Hair Fibers</a></li>
+        </ul>
+      </div>
+      <div class="foot-col">
+        <h4>Informationen</h4>
+        <ul>
+          <li><a href="#">AGB</a></li><li><a href="#">Datenschutzerklärung</a></li><li><a href="#">Impressum</a></li>
+          <li><a href="#">Rückgabebedingungen</a></li><li><a href="#">Mein Konto</a></li><li><a href="#">Warenkorb</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="foot-base">
+      <span>hairhelp GmbH © 2026. Alle Rechte vorbehalten.</span>
+      <span class="foot-pay">Sicher bezahlen mit <img src="ASSET:zahlarten" alt="TWINT, Apple Pay, PostFinance, Mastercard, VISA, PayPal"></span>
+    </div>
+  </div>
+</footer>
+
+<script>
+(function () {
+  "use strict";
+  Array.prototype.forEach.call(document.querySelectorAll("[data-cmp]"), function (box) {
+    var range = box.querySelector(".cmp-range");
+    var apply = function () { box.style.setProperty("--pos", range.value + "%"); };
+    range.addEventListener("input", apply);
+    apply();
+    var drag = function (e) {
+      var r = box.getBoundingClientRect();
+      range.value = Math.max(0, Math.min(100, ((e.clientX - r.left) / r.width) * 100));
+      apply();
+    };
+    box.addEventListener("pointerdown", function (e) {
+      if (e.pointerType === "mouse" && e.button !== 0) return;
+      box.setPointerCapture(e.pointerId);
+      drag(e);
+    });
+    box.addEventListener("pointermove", function (e) {
+      if (box.hasPointerCapture(e.pointerId)) drag(e);
+    });
+  });
+})();
+</script>
