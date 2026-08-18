@@ -27,9 +27,10 @@
 
   --text:#1A1A18;
   --text-soft:#6E6959;
-  --text-faint:#948E7E;
+  --text-faint:#726C5C;
 
   --gold:#A39772;
+  --gold-text:#7D6F45;   /* Gold für Text auf hellem Grund: 4.96:1 statt 2.91:1 */
   --gold-lt:#D1BC92;
   --gold-wash:#F4F0E6;
 
@@ -43,7 +44,7 @@
   --field-line:#CFC7B5;
   --field-line-hover:#A39772;
 
-  --ok:#3F7D5C;
+  --ok:#39704F;
   --error:#9B3F3F;
 
   --radius:8px;
@@ -54,8 +55,9 @@
 @media (prefers-color-scheme: dark){
   :root:not([data-theme="light"]){
     --ground:#141310; --ground-alt:#1B1A15; --surface:#1D1C17; --surface-sunk:#232118;
-    --text:#F2EFE7; --text-soft:#A8A294; --text-faint:#877F6E;
+    --text:#F2EFE7; --text-soft:#A8A294; --text-faint:#9A9182;
     --gold:#C2B58A; --gold-lt:#DACA9F; --gold-wash:#262316;
+    --gold-text:#C2B58A;
     --line:#332F26; --line-firm:#443E31;
     --ink:#C2B58A; --ink-text:#141310;
     --field-bg:#1A1914; --field-line:#443E31; --field-line-hover:#C2B58A;
@@ -64,8 +66,9 @@
 }
 :root[data-theme="dark"]{
   --ground:#141310; --ground-alt:#1B1A15; --surface:#1D1C17; --surface-sunk:#232118;
-  --text:#F2EFE7; --text-soft:#A8A294; --text-faint:#877F6E;
+  --text:#F2EFE7; --text-soft:#A8A294; --text-faint:#9A9182;
   --gold:#C2B58A; --gold-lt:#DACA9F; --gold-wash:#262316;
+  --gold-text:#C2B58A;
   --line:#332F26; --line-firm:#443E31;
   --ink:#C2B58A; --ink-text:#141310;
   --field-bg:#1A1914; --field-line:#443E31; --field-line-hover:#C2B58A;
@@ -112,7 +115,7 @@ button{font:inherit;color:inherit}
   border:1px solid var(--line);border-radius:var(--radius-sm);background:none;cursor:pointer;
   transition:border-color .2s,color .2s;
 }
-.co-head__cart:hover{border-color:var(--gold);color:var(--gold)}
+.co-head__cart:hover{border-color:var(--gold-text);color:var(--gold)}
 .co-head__cart svg{width:19px;height:19px;stroke:currentColor;fill:none;stroke-width:1.6}
 .co-head__cart .badge{
   position:absolute;top:-7px;right:-7px;min-width:20px;height:20px;padding:0 5px;
@@ -153,7 +156,7 @@ button{font:inherit;color:inherit}
 .sect:first-child{margin-top:0}
 .sect__head{display:flex;align-items:baseline;justify-content:space-between;gap:16px;margin-bottom:14px}
 .sect__head h2{margin:0;font-size:19px;font-weight:600;letter-spacing:-.005em}
-.sect__head a{font-size:14px;color:var(--gold);text-decoration:none}
+.sect__head a{font-size:14px;color:var(--gold-text);text-decoration:none}
 .sect__head a:hover{text-decoration:underline}
 .sect__note{margin:-6px 0 14px;font-size:13.5px;color:var(--text-soft)}
 
@@ -223,7 +226,7 @@ button{font:inherit;color:inherit}
   content:"";width:10px;height:6px;border:2px solid #fff;border-top:0;border-right:0;
   transform:rotate(-45deg) translate(1px,-1px);
 }
-.check a{color:var(--gold)}
+.check a{color:var(--gold-text)}
 
 /* Auswahlliste für Versand und Zahlung */
 .choices{border:1px solid var(--field-line);border-radius:var(--radius);overflow:hidden}
@@ -268,7 +271,7 @@ button{font:inherit;color:inherit}
   margin-top:26px;padding-top:22px;border-top:1px solid var(--line);
   display:flex;gap:20px;flex-wrap:wrap;font-size:13.5px;
 }
-.co__legal a{color:var(--gold);text-decoration:none}
+.co__legal a{color:var(--gold-text);text-decoration:none}
 .co__legal a:hover{text-decoration:underline}
 
 /* Express-Bezahlung */
@@ -309,7 +312,7 @@ button{font:inherit;color:inherit}
   padding:16px 0;background:none;border:0;cursor:pointer;
   font-size:15px;
 }
-.sum-toggle .lbl{display:flex;align-items:center;gap:9px;color:var(--gold)}
+.sum-toggle .lbl{display:flex;align-items:center;gap:9px;color:var(--gold-text)}
 .sum-toggle svg{width:16px;height:16px;stroke:currentColor;fill:none;stroke-width:2;transition:transform .2s}
 .sum-toggle[aria-expanded="true"] svg.chev{transform:rotate(180deg)}
 .sum-toggle .amt{font-size:18px;font-weight:600;font-variant-numeric:tabular-nums}
@@ -354,14 +357,14 @@ button{font:inherit;color:inherit}
   background:var(--surface-sunk);color:var(--text);
   font-size:14px;font-weight:500;cursor:pointer;transition:border-color .18s,color .18s;
 }
-.coupon button:hover{border-color:var(--gold);color:var(--gold)}
+.coupon button:hover{border-color:var(--gold-text);color:var(--gold)}
 
 .totals{display:flex;flex-direction:column;gap:11px;padding-top:20px;border-top:1px solid var(--line)}
 .totals__row{display:flex;align-items:baseline;justify-content:space-between;gap:16px;font-size:14.5px}
 .totals__row dt{margin:0;color:var(--text-soft)}
 .totals__row dd{margin:0;font-variant-numeric:tabular-nums}
 .totals__row--free dd{color:var(--ok);font-weight:600}
-.totals__row--save dd{color:var(--gold);font-weight:600}
+.totals__row--save dd{color:var(--gold-text);font-weight:600}
 .totals__grand{
   display:flex;align-items:baseline;justify-content:space-between;gap:16px;
   margin-top:16px;padding-top:16px;border-top:1px solid var(--line);
@@ -386,7 +389,7 @@ button{font:inherit;color:inherit}
   <div class="co-head__inner">
     <a href="#" aria-label="HairHelp Startseite"><img src="ASSET:logo" alt="HairHelp" width="300" height="247"></a>
     <button class="co-head__cart" type="button" aria-label="Warenkorb ansehen">
-      <svg viewBox="0 0 24 24"><path d="M6 8h12l-1 12H7z"/><path d="M9 8V6a3 3 0 0 1 6 0v2"/></svg>
+      <svg aria-hidden="true" focusable="false" viewBox="0 0 24 24"><path d="M6 8h12l-1 12H7z"/><path d="M9 8V6a3 3 0 0 1 6 0v2"/></svg>
       <span class="badge">3</span>
     </button>
   </div>
@@ -406,7 +409,7 @@ button{font:inherit;color:inherit}
           <button class="express__btn express__btn--paypal" type="button" aria-label="Mit PayPal bezahlen"><span>PayPal</span></button>
           <button class="express__btn express__btn--apple" type="button" aria-label="Mit Apple Pay bezahlen">
             <span>
-              <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M17.05 12.54c-.03-2.5 2.04-3.7 2.13-3.76-1.16-1.7-2.97-1.93-3.61-1.96-1.54-.16-3 .9-3.78.9-.78 0-1.98-.88-3.26-.86-1.68.03-3.23.98-4.09 2.48-1.74 3.02-.45 7.5 1.25 9.95.83 1.2 1.82 2.55 3.12 2.5 1.25-.05 1.72-.81 3.24-.81 1.51 0 1.94.81 3.26.78 1.35-.02 2.2-1.22 3.03-2.43.95-1.39 1.34-2.74 1.36-2.81-.03-.01-2.61-1-2.65-3.98zM14.6 4.99c.69-.83 1.15-1.99 1.02-3.14-.99.04-2.19.66-2.9 1.49-.63.73-1.19 1.91-1.04 3.04 1.1.08 2.23-.56 2.92-1.39z"/></svg>
+              <svg aria-hidden="true" focusable="false" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M17.05 12.54c-.03-2.5 2.04-3.7 2.13-3.76-1.16-1.7-2.97-1.93-3.61-1.96-1.54-.16-3 .9-3.78.9-.78 0-1.98-.88-3.26-.86-1.68.03-3.23.98-4.09 2.48-1.74 3.02-.45 7.5 1.25 9.95.83 1.2 1.82 2.55 3.12 2.5 1.25-.05 1.72-.81 3.24-.81 1.51 0 1.94.81 3.26.78 1.35-.02 2.2-1.22 3.03-2.43.95-1.39 1.34-2.74 1.36-2.81-.03-.01-2.61-1-2.65-3.98zM14.6 4.99c.69-.83 1.15-1.99 1.02-3.14-.99.04-2.19.66-2.9 1.49-.63.73-1.19 1.91-1.04 3.04 1.1.08 2.23-.56 2.92-1.39z"/></svg>
               Pay
             </span>
           </button>
@@ -443,7 +446,7 @@ button{font:inherit;color:inherit}
               <option value="LI">Liechtenstein</option>
             </select>
             <label for="country">Land / Region</label>
-            <svg class="field__chevron" viewBox="0 0 24 24" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg>
+            <svg aria-hidden="true" focusable="false" class="field__chevron" viewBox="0 0 24 24" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg>
           </div>
 
           <div class="grid2">
@@ -495,13 +498,13 @@ button{font:inherit;color:inherit}
               <option selected>Zürich</option>
             </select>
             <label for="state">Kanton (optional)</label>
-            <svg class="field__chevron" viewBox="0 0 24 24" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg>
+            <svg aria-hidden="true" focusable="false" class="field__chevron" viewBox="0 0 24 24" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg>
           </div>
 
           <div class="field">
             <input type="tel" id="phone" name="billing_phone" placeholder=" " autocomplete="tel">
             <label for="phone">Telefon (optional)</label>
-            <svg class="field__hint" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M12 16v-4M12 8.5h.01"/></svg>
+            <svg aria-hidden="true" focusable="false" class="field__hint" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M12 16v-4M12 8.5h.01"/></svg>
           </div>
 
           <label class="check">
@@ -564,7 +567,7 @@ button{font:inherit;color:inherit}
                 <div class="field">
                   <input type="text" id="cardno" placeholder=" " inputmode="numeric" autocomplete="cc-number">
                   <label for="cardno">Kartennummer</label>
-                  <svg class="field__hint" viewBox="0 0 24 24" aria-hidden="true"><rect x="5" y="11" width="14" height="9" rx="1.5"/><path d="M8.5 11V8a3.5 3.5 0 0 1 7 0v3"/></svg>
+                  <svg aria-hidden="true" focusable="false" class="field__hint" viewBox="0 0 24 24" aria-hidden="true"><rect x="5" y="11" width="14" height="9" rx="1.5"/><path d="M8.5 11V8a3.5 3.5 0 0 1 7 0v3"/></svg>
                 </div>
                 <div class="grid2">
                   <div class="field">
@@ -574,7 +577,7 @@ button{font:inherit;color:inherit}
                   <div class="field">
                     <input type="text" id="cardcvc" placeholder=" " inputmode="numeric" autocomplete="cc-csc">
                     <label for="cardcvc">Sicherheitscode</label>
-                    <svg class="field__hint" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M12 16v-4M12 8.5h.01"/></svg>
+                    <svg aria-hidden="true" focusable="false" class="field__hint" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M12 16v-4M12 8.5h.01"/></svg>
                   </div>
                 </div>
                 <div class="field">
@@ -632,12 +635,12 @@ button{font:inherit;color:inherit}
           <span>Ich habe die <a href="#">Allgemeinen Geschäftsbedingungen</a> gelesen und akzeptiere sie.</span>
         </label>
         <p class="field__msg" id="termsMsg" hidden>
-          <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 8v5M12 16h.01"/></svg>
+          <svg aria-hidden="true" focusable="false" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 8v5M12 16h.01"/></svg>
           Bitte bestätigen Sie die Allgemeinen Geschäftsbedingungen.
         </p>
 
         <button class="submit" type="submit">
-          <svg viewBox="0 0 24 24"><rect x="5" y="11" width="14" height="9" rx="1.5"/><path d="M8.5 11V8a3.5 3.5 0 0 1 7 0v3"/></svg>
+          <svg aria-hidden="true" focusable="false" viewBox="0 0 24 24"><rect x="5" y="11" width="14" height="9" rx="1.5"/><path d="M8.5 11V8a3.5 3.5 0 0 1 7 0v3"/></svg>
           Zahlungspflichtig bestellen
         </button>
 
@@ -658,9 +661,9 @@ button{font:inherit;color:inherit}
 
       <button class="sum-toggle" type="button" id="sumToggle" aria-expanded="false" aria-controls="sumBody">
         <span class="lbl">
-          <svg viewBox="0 0 24 24"><path d="M6 8h12l-1 12H7z"/><path d="M9 8V6a3 3 0 0 1 6 0v2"/></svg>
+          <svg aria-hidden="true" focusable="false" viewBox="0 0 24 24"><path d="M6 8h12l-1 12H7z"/><path d="M9 8V6a3 3 0 0 1 6 0v2"/></svg>
           Bestellübersicht anzeigen
-          <svg class="chev" viewBox="0 0 24 24"><path d="M6 9l6 6 6-6"/></svg>
+          <svg aria-hidden="true" focusable="false" class="chev" viewBox="0 0 24 24"><path d="M6 9l6 6 6-6"/></svg>
         </span>
         <span class="amt">CHF 84.81</span>
       </button>
@@ -721,15 +724,15 @@ button{font:inherit;color:inherit}
 
         <ul class="sum-assure">
           <li>
-            <svg viewBox="0 0 24 24"><rect x="5" y="11" width="14" height="9" rx="1.5"/><path d="M8.5 11V8a3.5 3.5 0 0 1 7 0v3"/></svg>
+            <svg aria-hidden="true" focusable="false" viewBox="0 0 24 24"><rect x="5" y="11" width="14" height="9" rx="1.5"/><path d="M8.5 11V8a3.5 3.5 0 0 1 7 0v3"/></svg>
             <div><strong>SSL-verschlüsselte Übertragung</strong><br>Kartendaten liegen beim Zahlungsanbieter, nicht bei uns.</div>
           </li>
           <li>
-            <svg viewBox="0 0 24 24"><path d="M12 3l7 3v6c0 4-3 7-7 9-4-2-7-5-7-9V6z"/><path d="M9 12l2 2 4-4"/></svg>
+            <svg aria-hidden="true" focusable="false" viewBox="0 0 24 24"><path d="M12 3l7 3v6c0 4-3 7-7 9-4-2-7-5-7-9V6z"/><path d="M9 12l2 2 4-4"/></svg>
             <div><strong>30 Tage Rückgaberecht</strong><br>Auch angebrauchte Dosen, Rückversand kostenlos.</div>
           </li>
           <li>
-            <svg viewBox="0 0 24 24"><path d="M3 7h13v10H3z"/><path d="M16 10h4l1 3v4h-5z"/><circle cx="7" cy="18" r="1.6"/><circle cx="18" cy="18" r="1.6"/></svg>
+            <svg aria-hidden="true" focusable="false" viewBox="0 0 24 24"><path d="M3 7h13v10H3z"/><path d="M16 10h4l1 3v4h-5z"/><circle cx="7" cy="18" r="1.6"/><circle cx="18" cy="18" r="1.6"/></svg>
             <div><strong>Versand in 24 Stunden</strong><br>Aus der Schweiz, hairhelp GmbH.</div>
           </li>
         </ul>
@@ -806,4 +809,10 @@ button{font:inherit;color:inherit}
     document.getElementById("termsMsg").hidden = this.checked;
   });
 })();
+</script>
+
+<script>
+// Die Datei trägt kein <html>-Element (sie wird eingebettet ausgeliefert) –
+// die Dokumentsprache wird darum hier gesetzt.
+document.documentElement.lang = "de";
 </script>

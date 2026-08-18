@@ -22,10 +22,11 @@
   /* Schrift */
   --text:#1A1A18;
   --text-soft:#6E6959;
-  --text-faint:#948E7E;
+  --text-faint:#726C5C;
 
   /* Marke */
   --gold:#A39772;
+  --gold-text:#7D6F45;   /* Gold für Text auf hellem Grund: 4.96:1 statt 2.91:1 */
   --gold-lt:#D1BC92;
   --gold-wash:#F4F0E6;
 
@@ -49,7 +50,7 @@
   --chip-text:#D1BC92;
 
   /* Semantik */
-  --ok:#3F7D5C;
+  --ok:#39704F;
   --alert:#8C5A2B;
 
   --shadow-s:0 1px 2px rgba(26,26,24,.05), 0 4px 14px rgba(26,26,24,.05);
@@ -67,8 +68,9 @@
     --surface-sunk:#232118;
     --text:#F2EFE7;
     --text-soft:#A8A294;
-    --text-faint:#877F6E;
+    --text-faint:#9A9182;
     --gold:#C2B58A;
+    --gold-text:#C2B58A;
     --gold-lt:#DACA9F;
     --gold-wash:#262316;
     --line:#332F26;
@@ -97,8 +99,9 @@
   --surface-sunk:#232118;
   --text:#F2EFE7;
   --text-soft:#A8A294;
-  --text-faint:#877F6E;
+  --text-faint:#9A9182;
   --gold:#C2B58A;
+  --gold-text:#C2B58A;
   --gold-lt:#DACA9F;
   --gold-wash:#262316;
   --line:#332F26;
@@ -121,6 +124,7 @@
 }
 
 *,*::before,*::after{box-sizing:border-box}
+[hidden]{display:none !important}
 
 body{
   margin:0;
@@ -172,9 +176,12 @@ html{scroll-behavior:smooth}
   font-weight:500;
   letter-spacing:.18em;
   text-transform:uppercase;
-  color:var(--gold);
+  color:var(--gold-text);
   margin:0;
 }
+/* Auf dunklem Grund trägt das helle Gold 6:1 – dort bleibt es die Textfarbe. */
+.band--ink .eyebrow,.hero .eyebrow,.sitefoot .eyebrow,
+.band--ink .sect-head h2 .lead,.band--ink .row-body .sub{color:var(--gold)}
 
 /* Markentypische zweifarbige Sektionsüberschrift */
 .sect-head{
@@ -194,7 +201,7 @@ html{scroll-behavior:smooth}
   margin:0;
   text-wrap:balance;
 }
-.sect-head h2 .lead{color:var(--gold);font-weight:500}
+.sect-head h2 .lead{color:var(--gold-text);font-weight:500}
 .sect-head p{
   margin:0;
   max-width:58ch;
@@ -274,8 +281,8 @@ html{scroll-behavior:smooth}
   text-transform:uppercase;
 }
 .mainnav a{text-decoration:none;color:var(--text);padding:6px 0;border-bottom:1px solid transparent;transition:border-color .2s,color .2s}
-.mainnav a:hover{border-bottom-color:var(--gold);color:var(--gold)}
-.mainnav a[aria-current]{color:var(--gold);border-bottom-color:var(--gold)}
+.mainnav a:hover{border-bottom-color:var(--gold-text);color:var(--gold)}
+.mainnav a[aria-current]{color:var(--gold-text);border-bottom-color:var(--gold)}
 
 .mast-actions{display:flex;align-items:center;gap:14px}
 .icon-btn{
@@ -287,10 +294,26 @@ html{scroll-behavior:smooth}
   cursor:pointer;
   transition:border-color .2s,color .2s;
 }
-.icon-btn:hover{border-color:var(--gold);color:var(--gold)}
+.icon-btn:hover{border-color:var(--gold-text);color:var(--gold)}
 .icon-btn svg{width:19px;height:19px;stroke:currentColor;fill:none;stroke-width:1.6}
 
-@media (max-width:1080px){ .mainnav{display:none} }
+/* Menü für schmale Geräte. Unter 1080 px ersetzt der Knopf die Navigationsleiste. */
+.navtoggle{display:none}
+.mainnav{transition:none}
+@media (max-width:1080px){
+  .navtoggle{display:grid}
+  .masthead .spine{position:relative}
+  .mainnav{position:absolute;left:0;right:0;top:100%;z-index:59;
+    flex-direction:column;gap:0;padding:8px 32px 18px;
+    background:var(--ground);border-bottom:1px solid var(--line);
+    box-shadow:0 18px 30px -22px rgba(26,26,24,.5)}
+  .mainnav[hidden]{display:none}
+  .mainnav li{border-top:1px solid var(--line)}
+  .mainnav li:first-child{border-top:0}
+  .mainnav a{display:block;padding:15px 0;border-bottom:0}
+  .mainnav a:hover{border-bottom:0}
+}
+@media (max-width:720px){.mainnav{padding-left:20px;padding-right:20px}}
 
 /* ==========================================================================
    Kaufmodul
@@ -379,7 +402,7 @@ html{scroll-behavior:smooth}
 .stars{display:inline-flex;gap:2px}
 .stars svg{width:15px;height:15px;fill:var(--gold-lt)}
 .ratingline a{color:var(--text-soft);text-decoration:underline;text-underline-offset:3px;text-decoration-color:var(--line-firm)}
-.ratingline a:hover{color:var(--gold)}
+.ratingline a:hover{color:var(--gold-text)}
 
 .pricebox{
   display:flex;
@@ -472,7 +495,7 @@ html{scroll-behavior:smooth}
 }
 .tier-qty{font-size:15px;font-weight:600;font-variant-numeric:tabular-nums}
 .tier-perk{font-size:12.5px;line-height:1.45;color:var(--text-soft);flex:1}
-.tier-perk b{color:var(--gold);font-weight:600}
+.tier-perk b{color:var(--gold-text);font-weight:600}
 .tier-unit{
   margin-top:auto;
   padding-top:6px;
@@ -515,7 +538,7 @@ html{scroll-behavior:smooth}
   color:var(--text-soft);
   transition:color .18s;
 }
-.stepper button:hover{color:var(--gold)}
+.stepper button:hover{color:var(--gold-text)}
 .stepper output{
   width:38px;
   text-align:center;
@@ -551,7 +574,7 @@ html{scroll-behavior:smooth}
   color:var(--text);
   border-color:var(--line-firm);
 }
-.cta--ghost:hover{background:none;border-color:var(--gold);color:var(--gold)}
+.cta--ghost:hover{background:none;border-color:var(--gold-text);color:var(--gold)}
 
 /* Zusicherungen */
 .assure{display:flex;flex-direction:column;gap:9px;margin:0;padding:0;list-style:none;font-size:14px}
@@ -612,7 +635,7 @@ html{scroll-behavior:smooth}
 .upsell-price b{font-size:17px;font-weight:600}
 .upsell-price .save{
   font-size:10px;font-weight:600;letter-spacing:.12em;text-transform:uppercase;
-  color:var(--gold);border:1px solid var(--gold);padding:2px 7px;border-radius:2px;
+  color:var(--gold-text);border:1px solid var(--gold);padding:2px 7px;border-radius:2px;
 }
 
 /* ==========================================================================
@@ -1026,7 +1049,7 @@ html{scroll-behavior:smooth}
   border-radius:0 2px 2px 0;
   display:flex;flex-direction:column;gap:6px;
 }
-.review-reply strong{font-size:12px;letter-spacing:.12em;text-transform:uppercase;color:var(--gold)}
+.review-reply strong{font-size:12px;letter-spacing:.12em;text-transform:uppercase;color:var(--gold-text)}
 .review-reply p{font-size:14px;line-height:1.55}
 
 @media (max-width:760px){ .reviewlist{grid-template-columns:1fr} }
@@ -1249,9 +1272,9 @@ html{scroll-behavior:smooth}
 
 <div class="topbar">
   <div class="spine">
-    <span><svg viewBox="0 0 24 24"><path d="M3 7h13v10H3z"/><path d="M16 10h4l1 3v4h-5z"/><circle cx="7" cy="18" r="1.6"/><circle cx="18" cy="18" r="1.6"/></svg>Versand in 24 Stunden</span>
-    <span><svg viewBox="0 0 24 24"><path d="M12 3l7 3v6c0 4-3 7-7 9-4-2-7-5-7-9V6z"/><path d="M9 12l2 2 4-4"/></svg>30 Tage Rückgabe</span>
-    <span><svg viewBox="0 0 24 24"><path d="M4 6h16v12H4z"/><path d="M12 8v8M8 12h8"/></svg>Schweizer Shop</span>
+    <span><svg aria-hidden="true" focusable="false" viewBox="0 0 24 24"><path d="M3 7h13v10H3z"/><path d="M16 10h4l1 3v4h-5z"/><circle cx="7" cy="18" r="1.6"/><circle cx="18" cy="18" r="1.6"/></svg>Versand in 24 Stunden</span>
+    <span><svg aria-hidden="true" focusable="false" viewBox="0 0 24 24"><path d="M12 3l7 3v6c0 4-3 7-7 9-4-2-7-5-7-9V6z"/><path d="M9 12l2 2 4-4"/></svg>30 Tage Rückgabe</span>
+    <span><svg aria-hidden="true" focusable="false" viewBox="0 0 24 24"><path d="M4 6h16v12H4z"/><path d="M12 8v8M8 12h8"/></svg>Schweizer Shop</span>
   </div>
 </div>
 
@@ -1261,7 +1284,7 @@ html{scroll-behavior:smooth}
       <img src="ASSET:logo" alt="HairHelp" width="300" height="247">
     </a>
     <nav aria-label="Hauptnavigation">
-      <ul class="mainnav">
+      <ul class="mainnav" id="hauptmenu">
         <li><a href="#">Für Männer</a></li>
         <li><a href="#">Für Frauen</a></li>
         <li><a href="#anwendung">Anwendung</a></li>
@@ -1271,14 +1294,15 @@ html{scroll-behavior:smooth}
       </ul>
     </nav>
     <div class="mast-actions">
+      <button class="icon-btn navtoggle" type="button" aria-expanded="false" aria-controls="hauptmenu" aria-label="Menü"><svg aria-hidden="true" focusable="false" viewBox="0 0 24 24"><path d="M4 7h16M4 12h16M4 17h16"/></svg></button>
       <button class="icon-btn" type="button" aria-label="Suchen">
-        <svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"/><path d="M20 20l-3.5-3.5"/></svg>
+        <svg aria-hidden="true" focusable="false" viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"/><path d="M20 20l-3.5-3.5"/></svg>
       </button>
       <button class="icon-btn" type="button" aria-label="Konto">
-        <svg viewBox="0 0 24 24"><circle cx="12" cy="8" r="4"/><path d="M4 21c0-4.4 3.6-7 8-7s8 2.6 8 7"/></svg>
+        <svg aria-hidden="true" focusable="false" viewBox="0 0 24 24"><circle cx="12" cy="8" r="4"/><path d="M4 21c0-4.4 3.6-7 8-7s8 2.6 8 7"/></svg>
       </button>
       <button class="icon-btn" type="button" aria-label="Warenkorb">
-        <svg viewBox="0 0 24 24"><path d="M6 8h12l-1 12H7z"/><path d="M9 8V6a3 3 0 0 1 6 0v2"/></svg>
+        <svg aria-hidden="true" focusable="false" viewBox="0 0 24 24"><path d="M6 8h12l-1 12H7z"/><path d="M9 8V6a3 3 0 0 1 6 0v2"/></svg>
       </button>
     </div>
   </div>
@@ -1339,11 +1363,11 @@ html{scroll-behavior:smooth}
 
       <div class="ratingline">
         <span class="stars" role="img" aria-label="4,8 von 5 Sternen">
-          <svg viewBox="0 0 24 24"><path d="M12 2l3 6.6 7 .9-5.1 4.8 1.3 7L12 18l-6.2 3.3 1.3-7L2 9.5l7-.9z"/></svg>
-          <svg viewBox="0 0 24 24"><path d="M12 2l3 6.6 7 .9-5.1 4.8 1.3 7L12 18l-6.2 3.3 1.3-7L2 9.5l7-.9z"/></svg>
-          <svg viewBox="0 0 24 24"><path d="M12 2l3 6.6 7 .9-5.1 4.8 1.3 7L12 18l-6.2 3.3 1.3-7L2 9.5l7-.9z"/></svg>
-          <svg viewBox="0 0 24 24"><path d="M12 2l3 6.6 7 .9-5.1 4.8 1.3 7L12 18l-6.2 3.3 1.3-7L2 9.5l7-.9z"/></svg>
-          <svg viewBox="0 0 24 24"><path d="M12 2l3 6.6 7 .9-5.1 4.8 1.3 7L12 18l-6.2 3.3 1.3-7L2 9.5l7-.9z"/></svg>
+          <svg aria-hidden="true" focusable="false" viewBox="0 0 24 24"><path d="M12 2l3 6.6 7 .9-5.1 4.8 1.3 7L12 18l-6.2 3.3 1.3-7L2 9.5l7-.9z"/></svg>
+          <svg aria-hidden="true" focusable="false" viewBox="0 0 24 24"><path d="M12 2l3 6.6 7 .9-5.1 4.8 1.3 7L12 18l-6.2 3.3 1.3-7L2 9.5l7-.9z"/></svg>
+          <svg aria-hidden="true" focusable="false" viewBox="0 0 24 24"><path d="M12 2l3 6.6 7 .9-5.1 4.8 1.3 7L12 18l-6.2 3.3 1.3-7L2 9.5l7-.9z"/></svg>
+          <svg aria-hidden="true" focusable="false" viewBox="0 0 24 24"><path d="M12 2l3 6.6 7 .9-5.1 4.8 1.3 7L12 18l-6.2 3.3 1.3-7L2 9.5l7-.9z"/></svg>
+          <svg aria-hidden="true" focusable="false" viewBox="0 0 24 24"><path d="M12 2l3 6.6 7 .9-5.1 4.8 1.3 7L12 18l-6.2 3.3 1.3-7L2 9.5l7-.9z"/></svg>
         </span>
         <strong>4.8</strong>
         <a href="#bewertungen">82 Bewertungen</a>
@@ -1407,7 +1431,7 @@ html{scroll-behavior:smooth}
           </button>
         </div>
         <p class="nudge" id="nudge" hidden>
-          <svg viewBox="0 0 24 24"><path d="M12 5v14M5 12l7-7 7 7"/></svg>
+          <svg aria-hidden="true" focusable="false" viewBox="0 0 24 24"><path d="M12 5v14M5 12l7-7 7 7"/></svg>
           <span></span>
         </p>
       </div>
@@ -1426,8 +1450,8 @@ html{scroll-behavior:smooth}
 
       <ul class="assure">
         <li><span class="dot" aria-hidden="true"></span> Sofort lieferbar · Versand innerhalb von 24 Stunden</li>
-        <li><svg viewBox="0 0 24 24"><path d="M12 3l7 3v6c0 4-3 7-7 9-4-2-7-5-7-9V6z"/><path d="M9 12l2 2 4-4"/></svg> 30-Tage-Rückgabe-Garantie in der Schweiz und Liechtenstein</li>
-        <li><svg viewBox="0 0 24 24"><path d="M3 7h13v10H3z"/><path d="M16 10h4l1 3v4h-5z"/><circle cx="7" cy="18" r="1.6"/><circle cx="18" cy="18" r="1.6"/></svg> Kostenloser Versand ab CHF 35.–</li>
+        <li><svg aria-hidden="true" focusable="false" viewBox="0 0 24 24"><path d="M12 3l7 3v6c0 4-3 7-7 9-4-2-7-5-7-9V6z"/><path d="M9 12l2 2 4-4"/></svg> 30-Tage-Rückgabe-Garantie in der Schweiz und Liechtenstein</li>
+        <li><svg aria-hidden="true" focusable="false" viewBox="0 0 24 24"><path d="M3 7h13v10H3z"/><path d="M16 10h4l1 3v4h-5z"/><circle cx="7" cy="18" r="1.6"/><circle cx="18" cy="18" r="1.6"/></svg> Kostenloser Versand ab CHF 35.–</li>
       </ul>
 
       <div class="paystrip">
@@ -1484,7 +1508,7 @@ html{scroll-behavior:smooth}
       <div><strong>Geld-zurück-Garantie</strong><span>Voller Kaufpreis zurück</span></div>
     </div>
     <div class="trust">
-      <svg class="trust-swiss" viewBox="0 0 38 38" aria-hidden="true" focusable="false">
+      <svg aria-hidden="true" focusable="false" class="trust-swiss" viewBox="0 0 38 38" aria-hidden="true" focusable="false">
         <rect x="1" y="1" width="36" height="36" rx="2" fill="none" stroke="currentColor" stroke-width="1.4"/>
         <path d="M16 10h6v6h6v6h-6v6h-6v-6h-6v-6h6z" fill="currentColor"/>
       </svg>
@@ -1553,7 +1577,7 @@ html{scroll-behavior:smooth}
     </div>
 
     <p class="cmp-hint">
-      <svg viewBox="0 0 24 24"><path d="M8 8L4 12l4 4M16 8l4 4-4 4M12 4v16"/></svg>
+      <svg aria-hidden="true" focusable="false" viewBox="0 0 24 24"><path d="M8 8L4 12l4 4M16 8l4 4-4 4M12 4v16"/></svg>
       Regler ziehen oder mit den Pfeiltasten steuern
     </p>
   </div>
@@ -1620,8 +1644,8 @@ html{scroll-behavior:smooth}
             <strong>AirLight™-Faserstruktur</strong>
             <span>Mehr Volumen, weniger Gewicht. Haftet am Haar, nicht an der Kopfhaut.</span>
           </div>
-          <div class="vs-cell is-us" data-label="NextGen HairHelp"><span class="vs-mark yes"><svg viewBox="0 0 24 24"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg></span></div>
-          <div class="vs-cell is-them" data-label="Herkömmlich"><span class="vs-mark no"><svg viewBox="0 0 24 24"><path d="M6 6l12 12M18 6L6 18"/></svg></span></div>
+          <div class="vs-cell is-us" data-label="NextGen HairHelp"><span class="vs-mark yes"><svg aria-hidden="true" focusable="false" viewBox="0 0 24 24"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg></span></div>
+          <div class="vs-cell is-them" data-label="Herkömmlich"><span class="vs-mark no"><svg aria-hidden="true" focusable="false" viewBox="0 0 24 24"><path d="M6 6l12 12M18 6L6 18"/></svg></span></div>
         </div>
 
         <div class="vs-row">
@@ -1629,8 +1653,8 @@ html{scroll-behavior:smooth}
             <strong>Elektrostatische Aufladung mit Anti-Static-Agent</strong>
             <span>Mikrofeine Verteilung ohne Verklumpung.</span>
           </div>
-          <div class="vs-cell is-us" data-label="NextGen HairHelp"><span class="vs-mark yes"><svg viewBox="0 0 24 24"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg></span></div>
-          <div class="vs-cell is-them" data-label="Herkömmlich"><span class="vs-mark no"><svg viewBox="0 0 24 24"><path d="M6 6l12 12M18 6L6 18"/></svg></span></div>
+          <div class="vs-cell is-us" data-label="NextGen HairHelp"><span class="vs-mark yes"><svg aria-hidden="true" focusable="false" viewBox="0 0 24 24"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg></span></div>
+          <div class="vs-cell is-them" data-label="Herkömmlich"><span class="vs-mark no"><svg aria-hidden="true" focusable="false" viewBox="0 0 24 24"><path d="M6 6l12 12M18 6L6 18"/></svg></span></div>
         </div>
 
         <div class="vs-row">
@@ -1638,8 +1662,8 @@ html{scroll-behavior:smooth}
             <strong>Vegan und pflanzliches Keratin</strong>
             <span>Menschlichem Haar nachempfunden, natürliche Lichtreflexion.</span>
           </div>
-          <div class="vs-cell is-us" data-label="NextGen HairHelp"><span class="vs-mark yes"><svg viewBox="0 0 24 24"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg></span></div>
-          <div class="vs-cell is-them" data-label="Herkömmlich"><span class="vs-mark no"><svg viewBox="0 0 24 24"><path d="M6 6l12 12M18 6L6 18"/></svg></span></div>
+          <div class="vs-cell is-us" data-label="NextGen HairHelp"><span class="vs-mark yes"><svg aria-hidden="true" focusable="false" viewBox="0 0 24 24"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg></span></div>
+          <div class="vs-cell is-them" data-label="Herkömmlich"><span class="vs-mark no"><svg aria-hidden="true" focusable="false" viewBox="0 0 24 24"><path d="M6 6l12 12M18 6L6 18"/></svg></span></div>
         </div>
 
         <div class="vs-row">
@@ -1647,8 +1671,8 @@ html{scroll-behavior:smooth}
             <strong>Dynamische Transluzenz</strong>
             <span>Passt sich farblich besser ans Haar an, wirkt nicht wie aufgemalt, kein Pudereffekt.</span>
           </div>
-          <div class="vs-cell is-us" data-label="NextGen HairHelp"><span class="vs-mark yes"><svg viewBox="0 0 24 24"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg></span></div>
-          <div class="vs-cell is-them" data-label="Herkömmlich"><span class="vs-mark no"><svg viewBox="0 0 24 24"><path d="M6 6l12 12M18 6L6 18"/></svg></span></div>
+          <div class="vs-cell is-us" data-label="NextGen HairHelp"><span class="vs-mark yes"><svg aria-hidden="true" focusable="false" viewBox="0 0 24 24"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg></span></div>
+          <div class="vs-cell is-them" data-label="Herkömmlich"><span class="vs-mark no"><svg aria-hidden="true" focusable="false" viewBox="0 0 24 24"><path d="M6 6l12 12M18 6L6 18"/></svg></span></div>
         </div>
       </div>
     </div>
@@ -1699,19 +1723,19 @@ html{scroll-behavior:smooth}
       </div>
       <ul class="guarantee-list">
         <li>
-          <svg viewBox="0 0 24 24"><path d="M4 7h16v13H4z"/><path d="M4 7l8-4 8 4"/></svg>
+          <svg aria-hidden="true" focusable="false" viewBox="0 0 24 24"><path d="M4 7h16v13H4z"/><path d="M4 7l8-4 8 4"/></svg>
           <span><strong>Testen:</strong> Sie dürfen (und sollen!) das Produkt öffnen und benutzen.</span>
         </li>
         <li>
-          <svg viewBox="0 0 24 24"><path d="M3 7h13v10H3z"/><path d="M16 10h4l1 3v4h-5z"/><circle cx="7" cy="18" r="1.6"/><circle cx="18" cy="18" r="1.6"/></svg>
+          <svg aria-hidden="true" focusable="false" viewBox="0 0 24 24"><path d="M3 7h13v10H3z"/><path d="M16 10h4l1 3v4h-5z"/><circle cx="7" cy="18" r="1.6"/><circle cx="18" cy="18" r="1.6"/></svg>
           <span><strong>Kostenloser Rückversand:</strong> Sie erhalten eine vorfrankierte Etikette für den kostenlosen Rückversand.</span>
         </li>
         <li>
-          <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M9 12h6M12 9v6"/></svg>
+          <svg aria-hidden="true" focusable="false" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M9 12h6M12 9v6"/></svg>
           <span><strong>100 % Geld zurück:</strong> Wir erstatten den vollen Kaufpreis, auch bei angebrauchten Dosen.</span>
         </li>
         <li>
-          <svg viewBox="0 0 24 24"><path d="M12 20s-7-4.4-7-9.5A3.9 3.9 0 0 1 12 8a3.9 3.9 0 0 1 7 2.5C19 15.6 12 20 12 20z"/></svg>
+          <svg aria-hidden="true" focusable="false" viewBox="0 0 24 24"><path d="M12 20s-7-4.4-7-9.5A3.9 3.9 0 0 1 12 8a3.9 3.9 0 0 1 7 2.5C19 15.6 12 20 12 20z"/></svg>
           <span><strong>Kein Risiko:</strong> Sie zahlen am Ende nur, wenn Sie die HairHelp Produkte wirklich behalten wollen.</span>
         </li>
       </ul>
@@ -1735,20 +1759,20 @@ html{scroll-behavior:smooth}
       <div class="score">
         <b>4.8</b>
         <span class="stars" role="img" aria-label="4,8 von 5 Sternen">
-          <svg viewBox="0 0 24 24"><path d="M12 2l3 6.6 7 .9-5.1 4.8 1.3 7L12 18l-6.2 3.3 1.3-7L2 9.5l7-.9z"/></svg>
-          <svg viewBox="0 0 24 24"><path d="M12 2l3 6.6 7 .9-5.1 4.8 1.3 7L12 18l-6.2 3.3 1.3-7L2 9.5l7-.9z"/></svg>
-          <svg viewBox="0 0 24 24"><path d="M12 2l3 6.6 7 .9-5.1 4.8 1.3 7L12 18l-6.2 3.3 1.3-7L2 9.5l7-.9z"/></svg>
-          <svg viewBox="0 0 24 24"><path d="M12 2l3 6.6 7 .9-5.1 4.8 1.3 7L12 18l-6.2 3.3 1.3-7L2 9.5l7-.9z"/></svg>
-          <svg viewBox="0 0 24 24"><path d="M12 2l3 6.6 7 .9-5.1 4.8 1.3 7L12 18l-6.2 3.3 1.3-7L2 9.5l7-.9z"/></svg>
+          <svg aria-hidden="true" focusable="false" viewBox="0 0 24 24"><path d="M12 2l3 6.6 7 .9-5.1 4.8 1.3 7L12 18l-6.2 3.3 1.3-7L2 9.5l7-.9z"/></svg>
+          <svg aria-hidden="true" focusable="false" viewBox="0 0 24 24"><path d="M12 2l3 6.6 7 .9-5.1 4.8 1.3 7L12 18l-6.2 3.3 1.3-7L2 9.5l7-.9z"/></svg>
+          <svg aria-hidden="true" focusable="false" viewBox="0 0 24 24"><path d="M12 2l3 6.6 7 .9-5.1 4.8 1.3 7L12 18l-6.2 3.3 1.3-7L2 9.5l7-.9z"/></svg>
+          <svg aria-hidden="true" focusable="false" viewBox="0 0 24 24"><path d="M12 2l3 6.6 7 .9-5.1 4.8 1.3 7L12 18l-6.2 3.3 1.3-7L2 9.5l7-.9z"/></svg>
+          <svg aria-hidden="true" focusable="false" viewBox="0 0 24 24"><path d="M12 2l3 6.6 7 .9-5.1 4.8 1.3 7L12 18l-6.2 3.3 1.3-7L2 9.5l7-.9z"/></svg>
         </span>
         <span>Basierend auf 82 Bewertungen</span>
       </div>
       <div class="histogram">
-        <div class="histrow"><span class="lab">5 <svg viewBox="0 0 24 24"><path d="M12 2l3 6.6 7 .9-5.1 4.8 1.3 7L12 18l-6.2 3.3 1.3-7L2 9.5l7-.9z"/></svg></span><span class="histbar"><i style="width:79%"></i></span><span class="pct">79 %</span></div>
-        <div class="histrow"><span class="lab">4 <svg viewBox="0 0 24 24"><path d="M12 2l3 6.6 7 .9-5.1 4.8 1.3 7L12 18l-6.2 3.3 1.3-7L2 9.5l7-.9z"/></svg></span><span class="histbar"><i style="width:17%"></i></span><span class="pct">17 %</span></div>
-        <div class="histrow"><span class="lab">3 <svg viewBox="0 0 24 24"><path d="M12 2l3 6.6 7 .9-5.1 4.8 1.3 7L12 18l-6.2 3.3 1.3-7L2 9.5l7-.9z"/></svg></span><span class="histbar"><i style="width:3%"></i></span><span class="pct">3 %</span></div>
-        <div class="histrow"><span class="lab">2 <svg viewBox="0 0 24 24"><path d="M12 2l3 6.6 7 .9-5.1 4.8 1.3 7L12 18l-6.2 3.3 1.3-7L2 9.5l7-.9z"/></svg></span><span class="histbar"><i style="width:0%"></i></span><span class="pct">0 %</span></div>
-        <div class="histrow"><span class="lab">1 <svg viewBox="0 0 24 24"><path d="M12 2l3 6.6 7 .9-5.1 4.8 1.3 7L12 18l-6.2 3.3 1.3-7L2 9.5l7-.9z"/></svg></span><span class="histbar"><i style="width:0%"></i></span><span class="pct">0 %</span></div>
+        <div class="histrow"><span class="lab">5 <svg aria-hidden="true" focusable="false" viewBox="0 0 24 24"><path d="M12 2l3 6.6 7 .9-5.1 4.8 1.3 7L12 18l-6.2 3.3 1.3-7L2 9.5l7-.9z"/></svg></span><span class="histbar"><i style="width:79%"></i></span><span class="pct">79 %</span></div>
+        <div class="histrow"><span class="lab">4 <svg aria-hidden="true" focusable="false" viewBox="0 0 24 24"><path d="M12 2l3 6.6 7 .9-5.1 4.8 1.3 7L12 18l-6.2 3.3 1.3-7L2 9.5l7-.9z"/></svg></span><span class="histbar"><i style="width:17%"></i></span><span class="pct">17 %</span></div>
+        <div class="histrow"><span class="lab">3 <svg aria-hidden="true" focusable="false" viewBox="0 0 24 24"><path d="M12 2l3 6.6 7 .9-5.1 4.8 1.3 7L12 18l-6.2 3.3 1.3-7L2 9.5l7-.9z"/></svg></span><span class="histbar"><i style="width:3%"></i></span><span class="pct">3 %</span></div>
+        <div class="histrow"><span class="lab">2 <svg aria-hidden="true" focusable="false" viewBox="0 0 24 24"><path d="M12 2l3 6.6 7 .9-5.1 4.8 1.3 7L12 18l-6.2 3.3 1.3-7L2 9.5l7-.9z"/></svg></span><span class="histbar"><i style="width:0%"></i></span><span class="pct">0 %</span></div>
+        <div class="histrow"><span class="lab">1 <svg aria-hidden="true" focusable="false" viewBox="0 0 24 24"><path d="M12 2l3 6.6 7 .9-5.1 4.8 1.3 7L12 18l-6.2 3.3 1.3-7L2 9.5l7-.9z"/></svg></span><span class="histbar"><i style="width:0%"></i></span><span class="pct">0 %</span></div>
       </div>
     </div>
 
@@ -1758,7 +1782,7 @@ html{scroll-behavior:smooth}
         <div class="review-head">
           <div class="review-who">
             <strong>Roman Juncker</strong>
-            <span class="verified"><svg viewBox="0 0 24 24"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg> Verifizierter Käufer</span>
+            <span class="verified"><svg aria-hidden="true" focusable="false" viewBox="0 0 24 24"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg> Verifizierter Käufer</span>
           </div>
           <span class="review-date">27. Mai 2026</span>
         </div>
@@ -1769,7 +1793,7 @@ html{scroll-behavior:smooth}
         <div class="review-head">
           <div class="review-who">
             <strong>Carolyn Caiser</strong>
-            <span class="verified"><svg viewBox="0 0 24 24"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg> Verifizierter Käufer</span>
+            <span class="verified"><svg aria-hidden="true" focusable="false" viewBox="0 0 24 24"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg> Verifizierter Käufer</span>
           </div>
           <span class="review-date">8. Juni 2026</span>
         </div>
@@ -1780,7 +1804,7 @@ html{scroll-behavior:smooth}
         <div class="review-head">
           <div class="review-who">
             <strong>Senna K.</strong>
-            <span class="verified"><svg viewBox="0 0 24 24"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg> Verifizierter Käufer</span>
+            <span class="verified"><svg aria-hidden="true" focusable="false" viewBox="0 0 24 24"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg> Verifizierter Käufer</span>
           </div>
           <span class="review-date">24. Mai 2026</span>
         </div>
@@ -1799,7 +1823,7 @@ html{scroll-behavior:smooth}
         <div class="review-head">
           <div class="review-who">
             <strong>Elena Bačić</strong>
-            <span class="verified"><svg viewBox="0 0 24 24"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg> Verifizierter Käufer</span>
+            <span class="verified"><svg aria-hidden="true" focusable="false" viewBox="0 0 24 24"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg> Verifizierter Käufer</span>
           </div>
           <span class="review-date">7. Juli 2026</span>
         </div>
@@ -1940,9 +1964,9 @@ html{scroll-behavior:smooth}
       <p>12 g HairHelp reichen für 4–6 Wochen. Sie riskieren nichts: 30 Tage testen, auch angebrauchte Dosen nehmen wir zurück.</p>
       <button class="cta" type="button" id="closerCta">Jetzt bestellen · CHF 28.90</button>
       <div class="closer-assure">
-        <span><svg viewBox="0 0 24 24"><path d="M3 7h13v10H3z"/><path d="M16 10h4l1 3v4h-5z"/><circle cx="7" cy="18" r="1.6"/><circle cx="18" cy="18" r="1.6"/></svg> Versand in 24 h</span>
-        <span><svg viewBox="0 0 24 24"><path d="M12 3l7 3v6c0 4-3 7-7 9-4-2-7-5-7-9V6z"/><path d="M9 12l2 2 4-4"/></svg> 30 Tage Rückgabe</span>
-        <span><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M9 12h6"/></svg> Sofort lieferbar</span>
+        <span><svg aria-hidden="true" focusable="false" viewBox="0 0 24 24"><path d="M3 7h13v10H3z"/><path d="M16 10h4l1 3v4h-5z"/><circle cx="7" cy="18" r="1.6"/><circle cx="18" cy="18" r="1.6"/></svg> Versand in 24 h</span>
+        <span><svg aria-hidden="true" focusable="false" viewBox="0 0 24 24"><path d="M12 3l7 3v6c0 4-3 7-7 9-4-2-7-5-7-9V6z"/><path d="M9 12l2 2 4-4"/></svg> 30 Tage Rückgabe</span>
+        <span><svg aria-hidden="true" focusable="false" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M9 12h6"/></svg> Sofort lieferbar</span>
       </div>
     </div>
   </div>
@@ -1973,9 +1997,9 @@ html{scroll-behavior:smooth}
       <div class="foot-col">
         <h4>Kontakt</h4>
         <div class="foot-contact">
-          <div><svg viewBox="0 0 24 24"><path d="M5 4h4l2 5-3 2a12 12 0 0 0 5 5l2-3 5 2v4a1 1 0 0 1-1 1A16 16 0 0 1 4 5a1 1 0 0 1 1-1z"/></svg><a href="tel:+41774865526">(+41) 77 486 55 26</a></div>
-          <div><svg viewBox="0 0 24 24"><path d="M3 6h18v12H3z"/><path d="M3 7l9 6 9-6"/></svg><a href="mailto:info@hairhelp.ch">info@hairhelp.ch</a></div>
-          <div><svg viewBox="0 0 24 24"><path d="M12 21s-7-6-7-11a7 7 0 0 1 14 0c0 5-7 11-7 11z"/><circle cx="12" cy="10" r="2.5"/></svg><span>hairhelp GmbH<br>Schweiz</span></div>
+          <div><svg aria-hidden="true" focusable="false" viewBox="0 0 24 24"><path d="M5 4h4l2 5-3 2a12 12 0 0 0 5 5l2-3 5 2v4a1 1 0 0 1-1 1A16 16 0 0 1 4 5a1 1 0 0 1 1-1z"/></svg><a href="tel:+41774865526">(+41) 77 486 55 26</a></div>
+          <div><svg aria-hidden="true" focusable="false" viewBox="0 0 24 24"><path d="M3 6h18v12H3z"/><path d="M3 7l9 6 9-6"/></svg><a href="mailto:info@hairhelp.ch">info@hairhelp.ch</a></div>
+          <div><svg aria-hidden="true" focusable="false" viewBox="0 0 24 24"><path d="M12 21s-7-6-7-11a7 7 0 0 1 14 0c0 5-7 11-7 11z"/><circle cx="12" cy="10" r="2.5"/></svg><span>hairhelp GmbH<br>Schweiz</span></div>
         </div>
       </div>
       <div class="foot-col">
@@ -2022,6 +2046,35 @@ html{scroll-behavior:smooth}
 <script>
 (function () {
   "use strict";
+
+  // Menü für schmale Geräte: derselbe Knopf öffnet und schliesst die Liste.
+  var navKnopf = document.querySelector(".navtoggle");
+  var navListe = document.querySelector(".mainnav");
+  if (navKnopf && navListe) {
+    var schmal = window.matchMedia("(max-width:1080px)");
+    var anpassen = function () {
+      if (schmal.matches) {
+        navListe.hidden = navKnopf.getAttribute("aria-expanded") !== "true";
+      } else {
+        navListe.hidden = false;
+        navKnopf.setAttribute("aria-expanded", "false");
+      }
+    };
+    navKnopf.addEventListener("click", function () {
+      navKnopf.setAttribute("aria-expanded", navKnopf.getAttribute("aria-expanded") === "true" ? "false" : "true");
+      anpassen();
+    });
+    document.addEventListener("keydown", function (e) {
+      if (e.key === "Escape" && navKnopf.getAttribute("aria-expanded") === "true") {
+        navKnopf.setAttribute("aria-expanded", "false"); anpassen(); navKnopf.focus();
+      }
+    });
+    schmal.addEventListener("change", anpassen);
+    anpassen();
+  }
+
+  // Sanftes Scrollen nur, wenn keine Bewegungsreduzierung gewünscht ist.
+  var sanft = window.matchMedia("(prefers-reduced-motion: reduce)").matches ? "auto" : "smooth";
 
   var BASE = 28.90;
   var state = { qty: 1, color: "Dunkelbraun" };
@@ -2204,9 +2257,15 @@ html{scroll-behavior:smooth}
   el("addToCart").addEventListener("click", added);
   el("stickyCta").addEventListener("click", added);
   el("closerCta").addEventListener("click", function () {
-    document.querySelector(".buy").scrollIntoView({ behavior: "smooth", block: "start" });
+    document.querySelector(".buy").scrollIntoView({ behavior: sanft, block: "start" });
   });
 
   render();
 })();
+</script>
+
+<script>
+// Die Datei trägt kein <html>-Element (sie wird eingebettet ausgeliefert) –
+// die Dokumentsprache wird darum hier gesetzt.
+document.documentElement.lang = "de";
 </script>
