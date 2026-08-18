@@ -561,6 +561,7 @@ html{scroll-behavior:smooth}
 
 .paystrip{
   display:flex;
+  flex-wrap:wrap;
   align-items:center;
   gap:14px;
   padding-top:22px;
@@ -570,7 +571,7 @@ html{scroll-behavior:smooth}
   text-transform:uppercase;
   color:var(--text-faint);
 }
-.paystrip img{height:22px;width:auto}
+.paystrip img{height:22px;width:auto;max-width:100%}
 
 /* Merkmalliste */
 .speclist{
@@ -1208,8 +1209,8 @@ html{scroll-behavior:smooth}
   flex-wrap:wrap;
   font-size:12.5px;
 }
-.foot-pay{display:flex;align-items:center;gap:12px;font-size:11px;letter-spacing:.14em;text-transform:uppercase}
-.foot-pay img{height:20px}
+.foot-pay{display:flex;flex-wrap:wrap;align-items:center;gap:12px;font-size:11px;letter-spacing:.14em;text-transform:uppercase}
+.foot-pay img{height:20px;max-width:100%}
 
 @media (max-width:900px){ .foot-grid{grid-template-columns:repeat(2,1fr);gap:34px} }
 @media (max-width:520px){ .foot-grid{grid-template-columns:1fr} }
