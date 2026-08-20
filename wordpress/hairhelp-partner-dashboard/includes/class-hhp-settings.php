@@ -14,6 +14,7 @@ class HHP_Settings {
 
 	const OPTION_SETTINGS = 'hhp_settings';
 	const OPTION_PARTNERS = 'hhp_partners';
+	const OPTION_VERSION  = 'hhp_version';
 
 	/**
 	 * Zwischenspeicher der Einstellungen.
@@ -80,6 +81,9 @@ class HHP_Settings {
 			'use_site_logo'    => 1,
 			'dashboard_title'  => '',
 			'poster_name'      => '',
+
+			// Beim Loeschen des Plugins bleiben die Daten standardmaessig erhalten.
+			'purge_on_delete'  => 0,
 		);
 	}
 
@@ -113,20 +117,87 @@ class HHP_Settings {
 						'username'        => 'loopx13',
 						'password_hash'   => '',
 
-						// Erscheinungsbild von loopx13.ch: fast schwarzer Grund,
-						// Cyan als Leitfarbe, Magenta als Zweitfarbe.
-						'brand_name'      => 'LoopX13',
-						'brand_theme'     => 'dunkel',
-						'brand_primary'   => '#00e5ff',
-						'brand_accent'    => '#ff007a',
-						'brand_grund'     => '#030712',
-						'brand_font'      => 'Inter, "Helvetica Neue", Helvetica, Arial, sans-serif',
+						// Erscheinungsbild von loopx13.ch.
+						'brand_name'      => self::loopx13_marke()['brand_name'],
+						'brand_theme'     => self::loopx13_marke()['brand_theme'],
+						'brand_primary'   => self::loopx13_marke()['brand_primary'],
+						'brand_accent'    => self::loopx13_marke()['brand_accent'],
+						'brand_grund'     => self::loopx13_marke()['brand_grund'],
+						'brand_font'      => self::loopx13_marke()['brand_font'],
 						'active'          => 1,
 						'note'            => '',
 					),
 				)
 			);
 		}
+	}
+
+	/**
+	 * Erscheinungsbild des Vermittlers LoopX13.
+	 *
+	 * Entnommen der Website des Vermittlers: fast schwarzer Grund, Cyan als
+	 * Leitfarbe, Magenta als Zweitfarbe.
+	 *
+	 * @return array
+	 */
+	public static function loopx13_marke() {
+		return array(
+			'brand_name'    => 'LoopX13',
+			'brand_theme'   => 'dunkel',
+			'brand_primary' => '#00e5ff',
+			'brand_accent'  => '#ff007a',
+			'brand_grund'   => '#030712',
+			'brand_font'    => 'Inter, "Helvetica Neue", Helvetica, Arial, sans-serif',
+		);
+	}
+
+	/**
+	 * Ergaenzt bestehende Daten nach einer Aktualisierung des Plugins.
+	 *
+	 * Neue Felder legt install_defaults() nur bei einer Neuinstallation an.
+	 * Bei einem Update bliebe ein bestehender Vermittler sonst ohne
+	 * Benutzernamen und ohne Markenwerte zurueck, und die neuen Funktionen
+	 * saehen aus, als haetten sie nicht gegriffen.
+	 *
+	 * @return void
+	 */
+	public static function maybe_upgrade() {
+		$installiert = (string) get_option( self::OPTION_VERSION, '' );
+
+		if ( HHP_VERSION === $installiert ) {
+			return;
+		}
+
+		$partners  = self::partners();
+		$geaendert = false;
+
+		foreach ( $partners as $index => $partner ) {
+			// Ohne Benutzernamen ist keine Anmeldung moeglich; die Kennung ist
+			// der naheliegende Vorgabewert.
+			if ( '' === $partner['username'] ) {
+				$partners[ $index ]['username'] = $partner['id'];
+				$geaendert                      = true;
+			}
+
+			// Der bereits vereinbarte Vermittler bekommt sein Erscheinungsbild,
+			// sofern noch keines hinterlegt wurde.
+			if ( 'loopx13' === $partner['id'] && 'shop' === $partner['brand_theme'] && '' === $partner['brand_primary'] ) {
+				// Auf den bereits angepassten Stand aufsetzen, nicht auf den
+				// urspruenglichen: sonst geht der eben gesetzte Benutzername verloren.
+				$partners[ $index ] = array_merge( $partners[ $index ], self::loopx13_marke() );
+				$geaendert          = true;
+			}
+		}
+
+		if ( $geaendert ) {
+			self::save_partners( $partners );
+		}
+
+		update_option( self::OPTION_VERSION, HHP_VERSION, false );
+
+		// Die Permalink-Regeln koennen sich zwischen Versionen aendern.
+		HHP_Tracker::register_rewrite_rules();
+		flush_rewrite_rules();
 	}
 
 	/**

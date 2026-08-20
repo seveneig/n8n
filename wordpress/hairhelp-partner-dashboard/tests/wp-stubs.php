@@ -9,6 +9,7 @@
  */
 define( 'ABSPATH', __DIR__ );
 define( 'DAY_IN_SECONDS', 86400 );
+define( 'HHP_VERSION', '1.1.0' );
 define( 'MINUTE_IN_SECONDS', 60 );
 define( 'HOUR_IN_SECONDS', 3600 );
 define( 'YEAR_IN_SECONDS', 31536000 );
@@ -42,6 +43,8 @@ function add_query_arg( $args, $url = '' ) {
     return $url . $sep . http_build_query( $args );
 }
 function is_ssl() { return true; }
+function flush_rewrite_rules( ...$a ) {}
+function add_rewrite_rule( ...$a ) {}
 function __( $t, $d = null ) { return $t; }
 function esc_html__( $t, $d = null ) { return $t; }
 function number_format_i18n( $n, $d = 0 ) { return number_format( $n, $d ); }

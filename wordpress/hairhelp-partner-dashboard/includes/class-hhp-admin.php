@@ -321,6 +321,16 @@ class HHP_Admin {
 					<td><input name="dashboard_title" id="hhp-title" type="text" class="regular-text" value="<?php echo esc_attr( $s['dashboard_title'] ); ?>" placeholder="<?php esc_attr_e( 'Deine vermittelten Verkäufe', 'hairhelp-partner' ); ?>" /></td>
 				</tr>
 				<tr>
+					<th scope="row"><?php esc_html_e( 'Beim Löschen des Plugins', 'hairhelp-partner' ); ?></th>
+					<td>
+						<label>
+							<input type="checkbox" name="purge_on_delete" value="1" <?php checked( $s['purge_on_delete'], 1 ); ?> />
+							<?php esc_html_e( 'Alle Daten entfernen (Vermittler, Passwörter, Einstellungen)', 'hairhelp-partner' ); ?>
+						</label>
+						<p class="description"><?php esc_html_e( 'Standardmässig bleibt alles erhalten. Wer das Plugin zum Aktualisieren kurz löscht, verliert sonst die gesamte Einrichtung.', 'hairhelp-partner' ); ?></p>
+					</td>
+				</tr>
+				<tr>
 					<th scope="row"><label for="hhp-poster"><?php esc_html_e( 'Name auf der Druckvorlage', 'hairhelp-partner' ); ?></label></th>
 					<td>
 						<input name="poster_name" id="hhp-poster" type="text" class="regular-text" value="<?php echo esc_attr( $s['poster_name'] ); ?>" placeholder="<?php echo esc_attr( self::brand_name() ); ?>" />
@@ -364,6 +374,7 @@ class HHP_Admin {
 			'use_site_logo'   => isset( $_POST['use_site_logo'] ) ? 1 : 0,
 			'dashboard_title' => isset( $_POST['dashboard_title'] ) ? sanitize_text_field( wp_unslash( $_POST['dashboard_title'] ) ) : '',
 			'poster_name'     => isset( $_POST['poster_name'] ) ? sanitize_text_field( wp_unslash( $_POST['poster_name'] ) ) : '',
+			'purge_on_delete' => isset( $_POST['purge_on_delete'] ) ? 1 : 0,
 		);
 
 		if ( empty( $values['statuses'] ) ) {

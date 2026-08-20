@@ -156,5 +156,48 @@ pruefe( 'zu dunkle Farbe wird auf dunklem Grund aufgehellt', kontrast( $dunkelbl
 
 pruefe( 'unsinniger Farbwert wird unverändert zurückgegeben', HHP_Dashboard::readable( 'kaputt', '#ffffff' ), 'kaputt' );
 
+echo "\nAktualisierung eines bestehenden Datensatzes\n";
+
+// Zustand nachstellen, wie ihn die erste Fassung hinterlassen hat:
+// ohne Benutzername, ohne Passwort, ohne Markenwerte.
+$GLOBALS['optionen']['hhp_partners'] = array(
+	array(
+		'id'         => 'loopx13',
+		'name'       => 'Loop X',
+		'codes'      => array( 'loopx13' ),
+		'coupons'    => array( 'loopx13' ),
+		'commission' => 10.0,
+		'token'      => str_repeat( 'd', 48 ),
+		'active'     => 1,
+	),
+);
+unset( $GLOBALS['optionen']['hhp_version'] );
+
+$vorher = HHP_Settings::get_partner( 'loopx13' );
+pruefe( 'alter Datensatz hat keinen Benutzernamen', $vorher['username'], '' );
+pruefe( 'alter Datensatz hat kein Erscheinungsbild', $vorher['brand_theme'], 'shop' );
+
+HHP_Settings::maybe_upgrade();
+
+$nachher = HHP_Settings::get_partner( 'loopx13' );
+pruefe( 'Benutzername wird nachgetragen', $nachher['username'], 'loopx13' );
+pruefe( 'LoopX13 erhält sein Erscheinungsbild', $nachher['brand_theme'], 'dunkel' );
+pruefe( 'Leitfarbe wird nachgetragen', $nachher['brand_primary'], '#00e5ff' );
+pruefe( 'Token bleibt unverändert', $nachher['token'], str_repeat( 'd', 48 ) );
+pruefe( 'Provision bleibt unverändert', $nachher['commission'], 10.0 );
+pruefe( 'Version wird vermerkt', get_option( 'hhp_version' ), HHP_VERSION );
+
+// Ein zweiter Durchlauf darf nichts mehr anfassen.
+$GLOBALS['optionen']['hhp_partners'][0]['brand_primary'] = '#123456';
+HHP_Settings::maybe_upgrade();
+pruefe( 'zweiter Durchlauf ändert nichts', HHP_Settings::get_partner( 'loopx13' )['brand_primary'], '#123456' );
+
+// Eine eigene Farbwahl darf nicht überschrieben werden.
+$GLOBALS['optionen']['hhp_partners'][0]['brand_theme']   = 'hell';
+$GLOBALS['optionen']['hhp_partners'][0]['brand_primary'] = '#abcdef';
+unset( $GLOBALS['optionen']['hhp_version'] );
+HHP_Settings::maybe_upgrade();
+pruefe( 'eigene Farbwahl bleibt erhalten', HHP_Settings::get_partner( 'loopx13' )['brand_primary'], '#abcdef' );
+
 printf( "\n=== %d bestanden, %d fehlgeschlagen ===\n", $ok, $fehl );
 exit( $fehl > 0 ? 1 : 0 );

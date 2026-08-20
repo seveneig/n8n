@@ -72,6 +72,26 @@ Alternativ den Ordner `hairhelp-partner-dashboard` direkt nach
 `wp-content/plugins/` hochladen. Das Paket lässt sich nach Änderungen mit
 `./build-zip.sh` neu erzeugen.
 
+### Auf eine neuere Fassung aktualisieren
+
+Ist das Plugin bereits installiert, erkennt WordPress das beim Hochladen und
+bietet **„Plugin ersetzen und mit Hochgeladenem aktualisieren"** an. Diesen
+Weg nehmen – Einstellungen und Vermittler bleiben erhalten.
+
+> **Das Plugin nicht zum Aktualisieren löschen.** Beim Löschen läuft
+> `uninstall.php`. Ab Fassung 1.1.0 bleiben die Daten dabei standardmässig
+> erhalten; entfernt wird nur, wenn das unter *Einstellungen → Beim Löschen
+> des Plugins* ausdrücklich erlaubt ist.
+
+Nach dem Ersetzen ergänzt das Plugin fehlende Felder in bestehenden Daten
+selbst: Vermittler ohne Benutzernamen bekommen ihre Kennung als
+Benutzernamen, und LoopX13 erhält sein Erscheinungsbild, sofern noch keines
+hinterlegt wurde. Eigene Einstellungen werden dabei nie überschrieben.
+
+**Prüfen, ob die neue Fassung wirklich läuft:** Unter *Plugins* muss bei
+*HairHelp Vermittler-Dashboard* die Version **1.1.0** stehen. Steht dort
+noch 1.0.0, wurde das Paket nicht übernommen.
+
 Voraussetzungen: WordPress 6.0+, WooCommerce 7.0+, PHP 7.4+.
 Die Bestelltabellen-Speicherung (HPOS) wird unterstützt, ebenso der
 Block-Checkout.
