@@ -73,6 +73,10 @@ function hhp_bootstrap() {
 	HHP_Dashboard::init();
 	HHP_Export::init();
 
+	// Bewusst ausserhalb der Backend-Pruefung: Seiten werden im Block-Editor
+	// ueber die REST-Schnittstelle gespeichert, wo is_admin() nicht greift.
+	add_action( 'save_post_page', array( 'HHP_Admin', 'flush_page_cache' ) );
+
 	if ( is_admin() ) {
 		HHP_Admin::init();
 	}

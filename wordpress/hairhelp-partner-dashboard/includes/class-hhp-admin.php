@@ -854,6 +854,19 @@ class HHP_Admin {
 	}
 
 	/**
+	 * Verwirft die zwischengespeicherte Adresse der Dashboard-Seite.
+	 *
+	 * Wird beim Speichern einer Seite aufgerufen, damit eine geaenderte
+	 * Seitenadresse sofort im Zugangslink erscheint und nicht bis zu einer
+	 * Stunde der alte, ins Leere fuehrende Link angezeigt wird.
+	 *
+	 * @return void
+	 */
+	public static function flush_page_cache() {
+		delete_transient( 'hhp_dashboard_page' );
+	}
+
+	/**
 	 * Sucht die Seite, auf der der Dashboard-Shortcode eingebunden ist.
 	 *
 	 * @return string
