@@ -179,7 +179,7 @@ class HHP_Tracker {
 		// Damit die Zuordnung auch innerhalb der laufenden Sitzung greift.
 		$_COOKIE[ $name ] = $code;
 
-		if ( function_exists( 'WC' ) && WC()->session ) {
+		if ( function_exists( 'WC' ) && WC() && WC()->session ) {
 			WC()->session->set( 'hhp_ref', $code );
 			WC()->session->set( 'hhp_ref_time', time() );
 		}
@@ -220,7 +220,8 @@ class HHP_Tracker {
 			}
 		}
 
-		if ( function_exists( 'WC' ) && WC()->session ) {
+		// WC() liefert null, solange WooCommerce nicht vollstaendig geladen ist.
+		if ( function_exists( 'WC' ) && WC() && WC()->session ) {
 			return self::sanitize_code( (string) WC()->session->get( 'hhp_ref', '' ) );
 		}
 

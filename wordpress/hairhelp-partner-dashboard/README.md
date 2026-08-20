@@ -36,10 +36,17 @@ der alte Link wird damit sofort ungültig.
 
 ## 2. Installation
 
-1. Den Ordner `hairhelp-partner-dashboard` nach `wp-content/plugins/` hochladen
-2. Im Backend unter **Plugins** aktivieren
+Am einfachsten über das fertige Paket `hairhelp-partner-dashboard.zip`
+(liegt eine Ebene höher):
+
+1. Backend → **Plugins → Installieren → Plugin hochladen** → ZIP auswählen
+2. **Aktivieren**
 3. Unter **Einstellungen → Permalinks** einmal auf *Speichern* klicken
    (damit die kurze Adresse `/qr/loopx13` greift)
+
+Alternativ den Ordner `hairhelp-partner-dashboard` direkt nach
+`wp-content/plugins/` hochladen. Das Paket lässt sich nach Änderungen mit
+`./build-zip.sh` neu erzeugen.
 
 Voraussetzungen: WordPress 6.0+, WooCommerce 7.0+, PHP 7.4+.
 Die Bestelltabellen-Speicherung (HPOS) wird unterstützt, ebenso der
@@ -295,7 +302,45 @@ sind dort jederzeit änderbar; die neutralen Grautöne liegen im Stylesheet.
 
 ---
 
-## 10. Ordner `snippets/`
+## 10. Unterlage für den Vermittler
+
+Im Ordner `handout/` liegt ein einseitiges Merkblatt, das dem Vermittler
+zusammen mit dem Zugangslink übergeben wird:
+
+| Datei | Zweck |
+|---|---|
+| `vermittler-anleitung.pdf` | druckfertig, eine A4-Seite |
+| `vermittler-anleitung.html` | Quelle, falls der Text angepasst werden soll |
+
+Es erklärt den Zugangslink, beide Wege einer Vermittlung, was zur Provision
+zählt und was nicht, enthält den QR-Code samt Druckgrössen und einen kurzen
+Datenschutzhinweis. **Vor dem Versand den Platzhalter im Feld
+„Dein persönlicher Link" durch den echten Zugangslink ersetzen** – er steht
+im Backend unter *Vermittler*.
+
+Nach einer Textänderung wird das PDF neu erzeugt mit:
+
+```bash
+chromium --headless --no-pdf-header-footer \
+  --print-to-pdf=handout/vermittler-anleitung.pdf \
+  handout/vermittler-anleitung.html
+```
+
+---
+
+## 11. Sprachen
+
+Der Ordner `languages/` enthält die Übersetzungsvorlage
+`hairhelp-partner.pot` mit allen 145 Oberflächentexten. Die Ausgangssprache
+ist Deutsch; das Plugin läuft ohne weitere Datei.
+
+Für eine zusätzliche Sprache – etwa die französische oder italienische
+Schweiz – die Vorlage kopieren, als `hairhelp-partner-fr_CH.po` übersetzen
+und die daraus erzeugte `.mo`-Datei daneben ablegen.
+
+---
+
+## 12. Ordner `snippets/`
 
 Nur für den Fall, dass das Tracking **ohne** dieses Plugin laufen soll:
 
@@ -307,7 +352,7 @@ Provisionsrechnung. Bei aktivem Plugin werden sie **nicht** gebraucht.
 
 ---
 
-## 11. Tests
+## 13. Tests
 
 Zwei Prüfungen lassen sich ohne WordPress-Installation direkt ausführen:
 

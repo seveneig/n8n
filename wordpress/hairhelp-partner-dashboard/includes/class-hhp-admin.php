@@ -256,7 +256,7 @@ class HHP_Admin {
 
 			<h3><?php esc_html_e( 'Erscheinungsbild', 'hairhelp-partner' ); ?></h3>
 			<p class="description" style="max-width:44em">
-				<?php esc_html_e( 'Schriften und Grundlayout übernimmt das Dashboard automatisch vom aktiven Theme. Hier werden nur die Markenfarben und das Logo festgelegt.', 'hairhelp-partner' ); ?>
+				<?php esc_html_e( 'Die Schriften bezieht das Dashboard aus dem Elementor-Kit der Website und fällt auf Jost und Heebo zurück; das Logo kommt aus dem Customizer. Hier werden nur die Markenfarben festgelegt.', 'hairhelp-partner' ); ?>
 			</p>
 			<table class="form-table" role="presentation">
 				<tr>

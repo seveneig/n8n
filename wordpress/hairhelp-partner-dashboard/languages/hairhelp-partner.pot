@@ -1,0 +1,606 @@
+# Uebersetzungsvorlage fuer das HairHelp Vermittler-Dashboard.
+# Die Ausgangssprache ist Deutsch. Fuer eine weitere Sprache diese Datei
+# kopieren, als hairhelp-partner-<sprache>.po ablegen und uebersetzen,
+# zum Beispiel hairhelp-partner-fr_CH.po fuer die franzoesische Schweiz.
+msgid ""
+msgstr ""
+"Project-Id-Version: HairHelp Vermittler-Dashboard 1.0.0\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2026-08-20 12:00+0000\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: de_CH\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"X-Domain: hairhelp-partner\n"
+
+#. translators: 1: offene Bestellungen, 2: stornierte Bestellungen
+#: templates/dashboard.php:157
+msgid "%1$d offen, %2$d storniert"
+msgstr ""
+
+#. translators: 1: Anzahl über QR-Code, 2: Anzahl über Gutschein, 3: Anzahl über beides
+#: templates/dashboard.php:115
+msgid "%1$d über QR-Code, %2$d über Gutschein, %3$d über beides"
+msgstr ""
+
+#. translators: 1: Zeitpunkt, 2: Umsatz, 3: Anzahl Bestellungen
+#: includes/class-hhp-dashboard.php:447
+msgid "%1$s: %2$s aus %3$d Bestellungen"
+msgstr ""
+
+#. translators: %s: Provisionssatz
+#: templates/dashboard.php:143
+msgid "%s Prozent der Umsatzbasis"
+msgstr ""
+
+#. translators: %s: Beispieladresse
+#: includes/class-hhp-admin.php:218
+msgid "%s verwenden (ergibt einen kleineren, besser scannbaren Code)"
+msgstr ""
+
+#: includes/class-hhp-admin.php:792
+msgid "Abgleich starten"
+msgstr ""
+
+#: includes/class-hhp-admin.php:278
+msgid "Abweichende Logo-Adresse (optional)"
+msgstr ""
+
+#: includes/class-hhp-admin.php:171
+msgid "Adressparameter"
+msgstr ""
+
+#: includes/class-hhp-admin.php:818
+msgid "Aktuell gesetztes Cookie in diesem Browser:"
+msgstr ""
+
+#: includes/class-hhp-admin.php:267
+msgid "Akzentfarbe"
+msgstr ""
+
+#: templates/dashboard.php:92
+msgid "Als Tabelle herunterladen"
+msgstr ""
+
+#: includes/class-hhp-admin.php:230
+msgid "Als Umsatz zählen"
+msgstr ""
+
+#: templates/token-form.php:32
+msgid "Anmelden"
+msgstr ""
+
+#: templates/dashboard.php:88
+msgid "Anzeigen"
+msgstr ""
+
+#: includes/class-hhp-export.php:117
+msgid "Artikel"
+msgstr ""
+
+#: includes/class-hhp-admin.php:253
+msgid "Artikelnamen in der Bestellliste anzeigen"
+msgstr ""
+
+#: includes/class-hhp-admin.php:227
+msgid "Auswertung"
+msgstr ""
+
+#. translators: %s: Beispieladresse
+#: includes/class-hhp-admin.php:178
+msgid "Beispiel: %s"
+msgstr ""
+
+#: includes/class-hhp-admin.php:419
+msgid "Berechnungsgrundlage"
+msgstr ""
+
+#: includes/class-hhp-admin.php:785
+msgid "Bestehende Bestellungen zuordnen"
+msgstr ""
+
+#: includes/class-hhp-export.php:112
+msgid "Bestellnummer"
+msgstr ""
+
+#: includes/class-hhp-admin.php:422 templates/dashboard.php:130
+msgid "Bestellsumme gesamt"
+msgstr ""
+
+#: includes/class-hhp-admin.php:252
+msgid "Bestellte Artikel zeigen"
+msgstr ""
+
+#: templates/dashboard.php:185 templates/dashboard.php:198
+msgid "Bestellung"
+msgstr ""
+
+#: includes/class-hhp-admin.php:790
+msgid "Bestellungen ab"
+msgstr ""
+
+#: includes/class-hhp-admin.php:69
+msgid "Bestellungen werden geprüft ..."
+msgstr ""
+
+#: includes/class-hhp-admin.php:787
+msgid "Bestellungen, die vor der Installation eingegangen sind, tragen noch keine Zuordnung. Der Abgleich prüft die vorhandenen Bestellungen auf die hinterlegten Gutschein- und Kampagnencodes und trägt die Herkunft nach. Der Vorgang kann jederzeit wiederholt werden."
+msgstr ""
+
+#: templates/token-form.php:18
+msgid "Bitte den persönlichen Zugangscode eingeben."
+msgstr ""
+
+#: hairhelp-partner-dashboard.php:61
+msgid "Das HairHelp Vermittler-Dashboard benötigt WooCommerce. Bitte WooCommerce aktivieren."
+msgstr ""
+
+#: includes/class-hhp-admin.php:798
+msgid "Dashboard-Seite"
+msgstr ""
+
+#: includes/class-hhp-export.php:111 templates/dashboard.php:184 templates/dashboard.php:195
+msgid "Datum"
+msgstr ""
+
+#: templates/dashboard.php:137
+msgid "Deine Provision"
+msgstr ""
+
+#: includes/class-hhp-admin.php:283 templates/dashboard.php:25
+msgid "Deine vermittelten Verkäufe"
+msgstr ""
+
+#: templates/token-form.php:36
+msgid "Den Code erhältst du direkt vom Shop. Am einfachsten ist der zugesandte Link: Er enthält den Code bereits und kann als Lesezeichen gespeichert werden."
+msgstr ""
+
+#: includes/class-hhp-admin.php:636
+msgid "Der QR-Code konnte nicht erzeugt werden."
+msgstr ""
+
+#: includes/class-hhp-admin.php:248
+msgid "Der Vermittler braucht für die Abrechnung keine Kundendaten. Initialen genügen, um Rückfragen zuzuordnen."
+msgstr ""
+
+#: includes/class-hhp-admin.php:544
+msgid "Die Codes werden direkt auf diesem Server erzeugt. Es wird kein externer Dienst aufgerufen, die Kampagnenadresse verlässt den Shop also nicht. SVG eignet sich für den Druck, PNG für Bildschirm und Social Media."
+msgstr ""
+
+#: includes/class-hhp-admin.php:259
+msgid "Die Schriften bezieht das Dashboard aus dem Elementor-Kit der Website und fällt auf Jost und Heebo zurück; das Logo kommt aus dem Customizer. Hier werden nur die Markenfarben festgelegt."
+msgstr ""
+
+#: includes/class-hhp-admin.php:452
+msgid "Diesen Vermittler entfernen"
+msgstr ""
+
+#: templates/dashboard.php:30
+msgid "Dieser Monat"
+msgstr ""
+
+#: includes/class-hhp-dashboard.php:144
+msgid "Dieser Zugangslink ist ungültig oder wurde zurückgezogen."
+msgstr ""
+
+#: templates/dashboard.php:32
+msgid "Dieses Jahr"
+msgstr ""
+
+#: includes/class-hhp-admin.php:586
+msgid "Druckvorlage (SVG)"
+msgstr ""
+
+#: includes/class-hhp-admin.php:271
+msgid "Dunkle Textfarbe"
+msgstr ""
+
+#: templates/dashboard.php:151
+msgid "Durchschnittlicher Bestellwert"
+msgstr ""
+
+#: templates/dashboard.php:34
+msgid "Eigener Zeitraum"
+msgstr ""
+
+#: includes/class-hhp-admin.php:102
+msgid "Einstellungen"
+msgstr ""
+
+#: templates/dashboard.php:175
+msgid "Einzelne Bestellungen"
+msgstr ""
+
+#: includes/class-hhp-admin.php:257
+msgid "Erscheinungsbild"
+msgstr ""
+
+#: includes/class-hhp-admin.php:200
+msgid "Erster Kontakt zählt"
+msgstr ""
+
+#: includes/class-hhp-admin.php:71
+msgid "Es ist ein Fehler aufgetreten."
+msgstr ""
+
+#: includes/class-hhp-admin.php:548
+msgid "Es ist noch kein Vermittler angelegt."
+msgstr ""
+
+#: includes/class-hhp-admin.php:306 includes/class-hhp-admin.php:466 includes/class-hhp-admin.php:622 includes/class-hhp-admin.php:833 includes/class-hhp-admin.php:97
+msgid "Fehlende Berechtigung."
+msgstr ""
+
+#: includes/class-hhp-admin.php:70
+msgid "Fertig."
+msgstr ""
+
+#: includes/class-hhp-admin.php:245
+msgid "Gar nicht anzeigen"
+msgstr ""
+
+#: includes/class-hhp-admin.php:801
+msgid "Gefundene Seite:"
+msgstr ""
+
+#: templates/dashboard.php:33
+msgid "Gesamter Zeitraum"
+msgstr ""
+
+#: includes/class-hhp-admin.php:115
+msgid "Gespeichert."
+msgstr ""
+
+#: includes/class-hhp-export.php:121
+msgid "Gezählt"
+msgstr ""
+
+#: templates/dashboard.php:238
+msgid "Gezählt werden Bestellungen, die über deinen QR-Code oder deinen Gutscheincode eingegangen sind. Der QR-Code wirkt 30 Tage nach dem Scan."
+msgstr ""
+
+#: includes/class-hhp-export.php:187
+msgid "Gutscheincode"
+msgstr ""
+
+#: includes/class-hhp-admin.php:411
+msgid "Gutscheincodes"
+msgstr ""
+
+#: includes/class-hhp-export.php:116
+msgid "Gutscheine"
+msgstr ""
+
+#: includes/class-hhp-admin.php:190
+msgid "Gültigkeit in Tagen"
+msgstr ""
+
+#: includes/class-hhp-admin.php:263
+msgid "Hauptfarbe"
+msgstr ""
+
+#: includes/class-hhp-export.php:114 templates/dashboard.php:186 templates/dashboard.php:207
+msgid "Herkunft"
+msgstr ""
+
+#: includes/class-hhp-dashboard.php:414
+msgid "Im gewählten Zeitraum wurden keine Umsätze erfasst."
+msgstr ""
+
+#: templates/dashboard.php:178
+msgid "In diesem Zeitraum sind noch keine vermittelten Bestellungen eingegangen."
+msgstr ""
+
+#: templates/dashboard.php:58
+msgid "Interne Ansicht als Shop-Verantwortliche."
+msgstr ""
+
+#: includes/class-hhp-admin.php:764
+msgid "JETZT SCANNEN"
+msgstr ""
+
+#: includes/class-hhp-admin.php:361
+msgid "Jeder Vermittler erhält einen geheimen Zugangslink. Wer den Link kennt, sieht ausschliesslich seine eigenen vermittelten Verkäufe: keine Kundenadressen, keine anderen Bestellungen, kein WordPress-Konto."
+msgstr ""
+
+#: includes/class-hhp-admin.php:708
+msgid "Jetzt scannen"
+msgstr ""
+
+#: includes/class-hhp-export.php:115
+msgid "Kampagnencode"
+msgstr ""
+
+#: includes/class-hhp-export.php:74
+msgid "Kein Zugriff auf diesen Export."
+msgstr ""
+
+#: includes/class-hhp-admin.php:399
+msgid "Kennung"
+msgstr ""
+
+#: includes/class-hhp-admin.php:440
+msgid "Kopieren"
+msgstr ""
+
+#: includes/class-hhp-admin.php:243
+msgid "Kundendaten im Dashboard"
+msgstr ""
+
+#: includes/class-hhp-admin.php:211
+msgid "Kurze QR-Adresse"
+msgstr ""
+
+#: includes/class-hhp-admin.php:207
+msgid "Leer lassen für die Startseite."
+msgstr ""
+
+#: includes/class-hhp-admin.php:289
+msgid "Leer lassen, dann wird der Website-Titel verwendet und bei Bedarf gekürzt."
+msgstr ""
+
+#. translators: %s: Shortcode
+#: includes/class-hhp-admin.php:809
+msgid "Lege eine Seite an und setze dort den Shortcode %s ein. Danach erscheinen die fertigen Zugangslinks im Reiter Vermittler."
+msgstr ""
+
+#: templates/dashboard.php:28
+msgid "Letzte 30 Tage"
+msgstr ""
+
+#: templates/dashboard.php:27
+msgid "Letzte 7 Tage"
+msgstr ""
+
+#: templates/dashboard.php:29
+msgid "Letzte 90 Tage"
+msgstr ""
+
+#: includes/class-hhp-admin.php:199
+msgid "Letzter Kontakt zählt"
+msgstr ""
+
+#: templates/dashboard.php:31
+msgid "Letzter Monat"
+msgstr ""
+
+#: includes/class-hhp-admin.php:72
+msgid "Link kopiert."
+msgstr ""
+
+#: includes/class-hhp-admin.php:275
+msgid "Logo"
+msgstr ""
+
+#: includes/class-hhp-admin.php:403
+msgid "Name"
+msgstr ""
+
+#: includes/class-hhp-admin.php:286
+msgid "Name auf der Druckvorlage"
+msgstr ""
+
+#: includes/class-hhp-admin.php:186
+msgid "Name des Cookies"
+msgstr ""
+
+#: includes/class-hhp-admin.php:447
+msgid "Neues Token erzeugen (alter Link wird ungültig)"
+msgstr ""
+
+#: includes/class-hhp-admin.php:239
+msgid "Nicht angehakte Status erscheinen im Dashboard als offen oder storniert, fliessen aber nicht in Umsatz und Provision ein."
+msgstr ""
+
+#: includes/class-hhp-admin.php:246
+msgid "Nur Initialen (empfohlen)"
+msgstr ""
+
+#: includes/class-hhp-admin.php:585
+msgid "PNG herunterladen"
+msgstr ""
+
+#: includes/class-hhp-export.php:119 templates/dashboard.php:189 templates/dashboard.php:218
+msgid "Provision"
+msgstr ""
+
+#: includes/class-hhp-admin.php:415
+msgid "Provision in Prozent"
+msgstr ""
+
+#: includes/class-hhp-admin.php:816
+msgid "Prüfung des Trackings"
+msgstr ""
+
+#: includes/class-hhp-export.php:189
+msgid "QR-Code"
+msgstr ""
+
+#: includes/class-hhp-export.php:185
+msgid "QR-Code und Gutschein"
+msgstr ""
+
+#: includes/class-hhp-admin.php:104 includes/class-hhp-admin.php:407
+msgid "QR-Codes"
+msgstr ""
+
+#: includes/class-hhp-admin.php:584
+msgid "SVG herunterladen"
+msgstr ""
+
+#: includes/class-hhp-admin.php:442
+msgid "Sobald eine Seite mit dem Shortcode [hhp_partner_dashboard] veröffentlicht ist, erscheint hier der fertige Zugangslink."
+msgstr ""
+
+#: includes/class-hhp-export.php:113 templates/dashboard.php:187 templates/dashboard.php:212
+msgid "Status"
+msgstr ""
+
+#: templates/dashboard.php:239
+msgid "Stornierte und zurückerstattete Bestellungen sind ausgewiesen, zählen aber nicht zur Provision."
+msgstr ""
+
+#: includes/class-hhp-export.php:154
+msgid "Summe"
+msgstr ""
+
+#: templates/dashboard.php:226
+msgid "Summe der gezählten Bestellungen"
+msgstr ""
+
+#: includes/class-hhp-admin.php:168
+msgid "Tracking"
+msgstr ""
+
+#: templates/dashboard.php:188 templates/dashboard.php:215
+msgid "Umsatz"
+msgstr ""
+
+#: includes/class-hhp-export.php:118
+msgid "Umsatzbasis"
+msgstr ""
+
+#: templates/dashboard.php:167
+msgid "Umsatzverlauf"
+msgstr ""
+
+#: includes/class-hhp-dashboard.php:469
+msgid "Umsatzverlauf im gewählten Zeitraum"
+msgstr ""
+
+#: includes/class-hhp-admin.php:630
+msgid "Unbekannter Kampagnencode."
+msgstr ""
+
+#: includes/class-hhp-admin.php:193
+msgid "Vereinbart sind 30 Tage."
+msgstr ""
+
+#: templates/dashboard.php:109
+msgid "Vermittelte Bestellungen"
+msgstr ""
+
+#: templates/dashboard.php:125
+msgid "Vermittelter Umsatz"
+msgstr ""
+
+#: includes/class-hhp-admin.php:103
+msgid "Vermittler"
+msgstr ""
+
+#: includes/class-hhp-admin.php:371
+msgid "Vermittler hinzufügen"
+msgstr ""
+
+#: includes/class-hhp-admin.php:109 includes/class-hhp-admin.php:40 includes/class-hhp-admin.php:41
+msgid "Vermittler-Dashboard"
+msgstr ""
+
+#: templates/token-form.php:17
+msgid "Vermittler-Zugang"
+msgstr ""
+
+#. translators: 1: Version, 2: Kantenlaenge in Modulen
+#: includes/class-hhp-admin.php:577
+msgid "Version %1$d, %2$d x %2$d Module, Fehlerkorrektur Q (30 Prozent wiederherstellbar)."
+msgstr ""
+
+#: includes/class-hhp-admin.php:247
+msgid "Vollständiger Name"
+msgstr ""
+
+#: includes/class-hhp-admin.php:421 templates/dashboard.php:131
+msgid "Warenwert ohne Versand und Steuer"
+msgstr ""
+
+#: includes/class-hhp-admin.php:277
+msgid "Website-Logo aus WordPress verwenden"
+msgstr ""
+
+#: includes/class-hhp-admin.php:105
+msgid "Werkzeuge"
+msgstr ""
+
+#: includes/class-hhp-export.php:120
+msgid "Währung"
+msgstr ""
+
+#: templates/dashboard.php:71
+msgid "Zeitraum"
+msgstr ""
+
+#. translators: 1: Startdatum, 2: Enddatum
+#: templates/dashboard.php:100
+msgid "Zeitraum %1$s bis %2$s"
+msgstr ""
+
+#: includes/class-hhp-admin.php:572
+msgid "Zieladresse:"
+msgstr ""
+
+#: includes/class-hhp-admin.php:204
+msgid "Zielseite nach dem Scan"
+msgstr ""
+
+#: includes/class-hhp-dashboard.php:130
+msgid "Zu viele Versuche. Bitte in einer Minute erneut versuchen."
+msgstr ""
+
+#: templates/token-form.php:29
+msgid "Zugangscode"
+msgstr ""
+
+#: includes/class-hhp-admin.php:437
+msgid "Zugangslink für den Vermittler"
+msgstr ""
+
+#: includes/class-hhp-export.php:75
+msgid "Zugriff verweigert"
+msgstr ""
+
+#: includes/class-hhp-admin.php:197
+msgid "Zuordnung bei mehreren Besuchen"
+msgstr ""
+
+#: includes/class-hhp-admin.php:430
+msgid "aktiv"
+msgstr ""
+
+#: templates/dashboard.php:85
+msgid "bis"
+msgstr ""
+
+#: includes/class-hhp-export.php:142
+msgid "ja"
+msgstr ""
+
+#: includes/class-hhp-admin.php:819
+msgid "keines"
+msgstr ""
+
+#: includes/class-hhp-export.php:142
+msgid "nein"
+msgstr ""
+
+#: includes/class-hhp-admin.php:766
+msgid "oder an der Kasse eingeben:"
+msgstr ""
+
+#: includes/class-hhp-export.php:191
+msgid "unbekannt"
+msgstr ""
+
+#: templates/dashboard.php:81
+msgid "von"
+msgstr ""
+
+#: includes/class-hhp-admin.php:282
+msgid "Überschrift im Dashboard"
+msgstr ""
+
+#. translators: %s: Name des Vermittlers
+#: templates/dashboard.php:48
+msgid "Übersicht für %s"
+msgstr ""
+
