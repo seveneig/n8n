@@ -101,13 +101,13 @@
 							zugeordnet += ergebnis.data.zugeordnet;
 
 							setzeStatus(
-								( texte.laeuft || '' ) + ' ' + geprueft + ' geprueft, ' + zugeordnet + ' zugeordnet.',
+								( texte.laeuft || '' ) + ' ' + geprueft + ' geprüft, ' + zugeordnet + ' zugeordnet.',
 								'laeuft'
 							);
 
 							if ( ergebnis.data.fertig ) {
 								setzeStatus(
-									( texte.fertig || 'Fertig.' ) + ' ' + geprueft + ' Bestellungen geprueft, ' + zugeordnet + ' zugeordnet.',
+									( texte.fertig || 'Fertig.' ) + ' ' + geprueft + ' Bestellungen geprüft, ' + zugeordnet + ' zugeordnet.',
 									'fertig'
 								);
 								reindex.disabled = false;

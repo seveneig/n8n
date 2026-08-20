@@ -1,19 +1,34 @@
 /**
  * Vermittler-Dashboard im Frontend.
  *
- * Schriftart und Textfarbe werden bewusst vom Theme geerbt, damit sich das
- * Dashboard ohne Anpassung in das bestehende Erscheinungsbild einfuegt.
- * Farbig gesetzt wird nur, was die Marke ausmacht.
+ * Gestaltet nach dem Erscheinungsbild von www.hairhelp-haarverdichter.ch:
+ * Gold als einziger Farbakzent, dunkles Anthrazit fuer Text, warmes Off-White
+ * als Flaeche, durchgehend eckige Kanten und Haarlinien statt Rahmen.
+ *
+ * Schriften werden ueber die globalen Elementor-Variablen bezogen und fallen
+ * auf die Hausschriften Jost und Heebo zurueck. Aendert ihr die Schriften im
+ * Elementor-Kit, zieht das Dashboard automatisch mit.
  */
 
 .hhp-dashboard {
-	--hhp-flaeche: #ffffff;
-	--hhp-linie: rgba(28, 43, 40, 0.12);
-	--hhp-gedaempft: rgba(28, 43, 40, 0.62);
-	--hhp-radius: 14px;
+	/* Markenwerte, ueberschrieben durch die Einstellungen im Backend. */
+	--hhp-primary: #a39772;
+	--hhp-accent: #d1bc92;
+	--hhp-dark: #292929;
 
-	font-family: inherit;
-	color: var(--hhp-dark);
+	/* Feste Werte aus dem Erscheinungsbild der Website. */
+	--hhp-tief: #1a1a1a;
+	--hhp-flaeche: #ffffff;
+	--hhp-flaeche-warm: #faf9f6;
+	--hhp-linie: #eaeaea;
+	--hhp-gedaempft: #7a7a7a;
+
+	--hhp-schrift-titel: var( --e-global-typography-primary-font-family, "Jost" ), "Jost", sans-serif;
+	--hhp-schrift-text: var( --e-global-typography-text-font-family, "Heebo" ), "Heebo", sans-serif;
+
+	font-family: var( --hhp-schrift-text );
+	font-weight: 300;
+	color: var( --hhp-dark );
 	max-width: 1180px;
 	margin: 0 auto;
 }
@@ -23,7 +38,7 @@
 }
 
 .hhp-dashboard-schmal {
-	max-width: 520px;
+	max-width: 540px;
 }
 
 /* Kopfbereich ---------------------------------------------------------- */
@@ -34,42 +49,51 @@
 	align-items: center;
 	justify-content: space-between;
 	gap: 16px;
-	padding-bottom: 20px;
-	border-bottom: 2px solid var(--hhp-primary);
-	margin-bottom: 24px;
+	padding-bottom: 22px;
+	border-bottom: 1px solid var( --hhp-linie );
+	margin-bottom: 30px;
 }
 
 .hhp-header-brand {
 	display: flex;
 	align-items: center;
-	gap: 18px;
+	gap: 20px;
 }
 
 .hhp-logo {
-	max-height: 56px;
+	max-height: 54px;
 	width: auto;
 	display: block;
 }
 
 .hhp-title {
+	font-family: var( --hhp-schrift-titel );
+	font-weight: 500;
 	margin: 0;
-	font-size: 1.6em;
+	font-size: 1.7em;
 	line-height: 1.25;
-	color: inherit;
+	color: var( --hhp-dark );
 }
 
 .hhp-subtitle {
-	margin: 4px 0 0;
-	color: var(--hhp-gedaempft);
-	font-size: 0.95em;
+	margin: 6px 0 0;
+	color: var( --hhp-gedaempft );
+	font-size: 0.92em;
+}
+
+.hhp-subtitle strong {
+	color: var( --hhp-dark );
+	font-weight: 500;
 }
 
 .hhp-adminhinweis {
 	margin: 0;
-	font-size: 0.82em;
-	color: var(--hhp-gedaempft);
-	background: rgba(200, 160, 74, 0.14);
-	border-radius: 999px;
+	font-family: var( --hhp-schrift-titel );
+	font-size: 0.74em;
+	text-transform: uppercase;
+	letter-spacing: 0.12em;
+	color: var( --hhp-primary );
+	border: 1px solid var( --hhp-primary );
 	padding: 6px 14px;
 }
 
@@ -79,117 +103,130 @@
 	display: flex;
 	flex-wrap: wrap;
 	align-items: flex-end;
-	gap: 12px;
-	margin-bottom: 8px;
+	gap: 16px;
+	margin-bottom: 10px;
 }
 
 .hhp-field {
 	display: flex;
 	flex-direction: column;
-	gap: 4px;
-	font-size: 0.85em;
+	gap: 6px;
 }
 
 .hhp-field > span {
-	color: var(--hhp-gedaempft);
-	font-weight: 600;
-	letter-spacing: 0.02em;
+	font-family: var( --hhp-schrift-titel );
+	font-size: 0.72em;
+	font-weight: 500;
+	text-transform: uppercase;
+	letter-spacing: 0.12em;
+	color: var( --hhp-gedaempft );
 }
 
+/* Eingabefelder folgen dem Kit: nur eine Linie unten, keine Rundung. */
 .hhp-field select,
 .hhp-field input {
-	font: inherit;
+	font-family: var( --hhp-schrift-text );
+	font-weight: 300;
 	font-size: 0.95em;
-	padding: 9px 12px;
-	border: 1px solid var(--hhp-linie);
-	border-radius: 8px;
-	background: var(--hhp-flaeche);
-	color: inherit;
-	min-width: 170px;
+	color: var( --hhp-dark );
+	padding: 8px 2px;
+	border: 0;
+	border-bottom: 1px solid var( --hhp-linie );
+	border-radius: 0;
+	background: transparent;
+	min-width: 180px;
 }
 
 .hhp-field select:focus,
 .hhp-field input:focus {
-	outline: 2px solid var(--hhp-primary);
-	outline-offset: 1px;
+	outline: 0;
+	border-bottom-color: var( --hhp-primary );
 }
 
 .hhp-button {
 	display: inline-block;
-	font: inherit;
-	font-size: 0.9em;
-	font-weight: 600;
-	padding: 10px 18px;
-	border-radius: 8px;
-	border: 1px solid var(--hhp-primary);
-	background: var(--hhp-primary);
-	color: #ffffff;
+	font-family: var( --hhp-schrift-titel );
+	font-size: 0.76em;
+	font-weight: 500;
+	text-transform: uppercase;
+	letter-spacing: 0.12em;
+	padding: 12px 24px;
+	border: 1px solid var( --hhp-dark );
+	border-radius: 0;
+	background: var( --hhp-flaeche );
+	color: var( --hhp-dark );
 	cursor: pointer;
 	text-decoration: none;
-	transition: opacity 0.15s ease;
+	transition: background-color 0.2s ease, color 0.2s ease;
 }
 
 .hhp-button:hover,
 .hhp-button:focus {
-	opacity: 0.88;
+	background: var( --hhp-dark );
 	color: #ffffff;
 }
 
 .hhp-button-ghost {
-	background: transparent;
-	color: var(--hhp-primary);
 	margin-left: auto;
+	border-color: var( --hhp-primary );
+	color: var( --hhp-primary );
 }
 
 .hhp-button-ghost:hover,
 .hhp-button-ghost:focus {
-	background: var(--hhp-primary);
+	background: var( --hhp-primary );
 	color: #ffffff;
 }
 
 .hhp-zeitraum-hinweis {
-	margin: 0 0 22px;
-	font-size: 0.85em;
-	color: var(--hhp-gedaempft);
+	margin: 0 0 26px;
+	font-size: 0.84em;
+	color: var( --hhp-gedaempft );
 }
 
 /* Kennzahlen ----------------------------------------------------------- */
 
 .hhp-kacheln {
 	display: grid;
-	grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-	gap: 16px;
-	margin-bottom: 32px;
+	grid-template-columns: repeat( auto-fit, minmax( 220px, 1fr ) );
+	gap: 1px;
+	background: var( --hhp-linie );
+	border: 1px solid var( --hhp-linie );
+	margin-bottom: 40px;
 }
 
+/* Die Kacheln liegen auf einem Haarlinienraster: die Fugen sind die Linien. */
 .hhp-kachel {
-	background: var(--hhp-flaeche);
-	border: 1px solid var(--hhp-linie);
-	border-top: 3px solid var(--hhp-primary);
-	border-radius: var(--hhp-radius);
-	padding: 20px;
+	background: var( --hhp-flaeche );
+	padding: 24px 22px;
 	display: flex;
 	flex-direction: column;
-	gap: 6px;
+	gap: 8px;
 }
 
 .hhp-kachel-akzent {
-	border-top-color: var(--hhp-accent);
-	background: linear-gradient(180deg, rgba(200, 160, 74, 0.08), transparent 60%);
+	background: var( --hhp-flaeche-warm );
 }
 
 .hhp-kachel-label {
-	font-size: 0.8em;
-	font-weight: 600;
+	font-family: var( --hhp-schrift-titel );
+	font-size: 0.7em;
+	font-weight: 500;
 	text-transform: uppercase;
-	letter-spacing: 0.06em;
-	color: var(--hhp-gedaempft);
+	letter-spacing: 0.14em;
+	color: var( --hhp-gedaempft );
 }
 
 .hhp-kachel-wert {
-	font-size: 1.9em;
-	line-height: 1.15;
-	font-weight: 700;
+	font-family: var( --hhp-schrift-titel );
+	font-size: 2em;
+	line-height: 1.1;
+	font-weight: 500;
+	color: var( --hhp-dark );
+}
+
+.hhp-kachel-akzent .hhp-kachel-wert {
+	color: var( --hhp-primary );
 }
 
 .hhp-kachel-wert .woocommerce-Price-amount {
@@ -198,52 +235,59 @@
 }
 
 .hhp-kachel-fuss {
-	font-size: 0.8em;
-	color: var(--hhp-gedaempft);
+	font-size: 0.78em;
+	color: var( --hhp-gedaempft );
+	line-height: 1.5;
 }
 
 /* Bloecke -------------------------------------------------------------- */
 
 .hhp-block {
-	margin-bottom: 34px;
+	margin-bottom: 42px;
 }
 
 .hhp-block-titel {
-	margin: 0 0 14px;
-	font-size: 1.05em;
-	font-weight: 700;
-	color: inherit;
+	font-family: var( --hhp-schrift-titel );
+	font-size: 0.78em;
+	font-weight: 500;
+	text-transform: uppercase;
+	letter-spacing: 0.14em;
+	color: var( --hhp-dark );
+	margin: 0 0 18px;
+	padding-bottom: 10px;
+	border-bottom: 1px solid var( --hhp-linie );
 }
 
 .hhp-chart {
 	width: 100%;
-	height: 240px;
+	height: auto;
+	max-height: 300px;
 	display: block;
 }
 
 .hhp-bar {
-	fill: var(--hhp-primary);
+	fill: var( --hhp-primary );
+	transition: fill 0.2s ease;
 }
 
 .hhp-bar:hover {
-	fill: var(--hhp-accent);
+	fill: var( --hhp-tief );
 }
 
 .hhp-axis {
 	font-size: 15px;
-	fill: rgba(28, 43, 40, 0.55);
-	font-family: inherit;
+	fill: #7a7a7a;
+	font-family: var( --hhp-schrift-text );
 }
 
 .hhp-axis-line {
-	stroke: rgba(28, 43, 40, 0.18);
+	stroke: #eaeaea;
 	stroke-width: 1;
 }
 
 .hhp-empty {
-	color: var(--hhp-gedaempft);
-	font-style: italic;
-	padding: 18px 0;
+	color: var( --hhp-gedaempft );
+	padding: 20px 0;
 	margin: 0;
 }
 
@@ -251,43 +295,49 @@
 
 .hhp-tabelle-wrapper {
 	overflow-x: auto;
-	border: 1px solid var(--hhp-linie);
-	border-radius: var(--hhp-radius);
+	border: 1px solid var( --hhp-linie );
 }
 
 .hhp-tabelle {
 	width: 100%;
 	border-collapse: collapse;
 	font-size: 0.9em;
-	background: var(--hhp-flaeche);
+	background: var( --hhp-flaeche );
 	margin: 0;
 }
 
 .hhp-tabelle th,
 .hhp-tabelle td {
-	padding: 12px 14px;
+	padding: 14px 16px;
 	text-align: left;
-	border-bottom: 1px solid var(--hhp-linie);
+	border-bottom: 1px solid var( --hhp-linie );
 	vertical-align: top;
 }
 
 .hhp-tabelle thead th {
-	font-size: 0.78em;
+	font-family: var( --hhp-schrift-titel );
+	font-size: 0.72em;
+	font-weight: 500;
 	text-transform: uppercase;
-	letter-spacing: 0.05em;
-	color: var(--hhp-gedaempft);
-	background: rgba(47, 111, 98, 0.05);
+	letter-spacing: 0.12em;
+	color: var( --hhp-gedaempft );
+	background: var( --hhp-flaeche-warm );
 	white-space: nowrap;
 }
 
 .hhp-tabelle tfoot th {
-	background: rgba(47, 111, 98, 0.05);
+	font-family: var( --hhp-schrift-titel );
+	font-weight: 500;
+	background: var( --hhp-flaeche-warm );
 	border-bottom: none;
-	font-weight: 700;
 }
 
 .hhp-tabelle tbody tr:last-child td {
 	border-bottom: none;
+}
+
+.hhp-tabelle tbody tr:hover {
+	background: var( --hhp-flaeche-warm );
 }
 
 .hhp-rechts {
@@ -296,11 +346,12 @@
 }
 
 .hhp-nicht-gezaehlt {
-	opacity: 0.55;
+	color: var( --hhp-gedaempft );
 }
 
 .hhp-nummer {
-	font-weight: 700;
+	font-family: var( --hhp-schrift-titel );
+	font-weight: 500;
 	display: block;
 }
 
@@ -308,27 +359,39 @@
 .hhp-artikel {
 	display: block;
 	font-size: 0.86em;
-	color: var(--hhp-gedaempft);
+	color: var( --hhp-gedaempft );
+	margin-top: 2px;
 }
 
+/* Herkunftskennzeichnung: eckig und in der Markenfarbe. */
 .hhp-tag {
 	display: inline-block;
-	font-size: 0.78em;
-	font-weight: 600;
-	padding: 3px 10px;
-	border-radius: 999px;
-	background: rgba(47, 111, 98, 0.12);
-	color: var(--hhp-primary);
+	font-family: var( --hhp-schrift-titel );
+	font-size: 0.7em;
+	font-weight: 500;
+	text-transform: uppercase;
+	letter-spacing: 0.1em;
+	padding: 4px 10px;
+	border: 1px solid var( --hhp-linie );
+	color: var( --hhp-gedaempft );
 	white-space: nowrap;
 }
 
+.hhp-tag-qr {
+	border-color: var( --hhp-primary );
+	color: var( --hhp-primary );
+}
+
 .hhp-tag-coupon {
-	background: rgba(200, 160, 74, 0.18);
-	color: #8a6a1f;
+	border-color: var( --hhp-accent );
+	background: var( --hhp-flaeche-warm );
+	color: #8a7c50;
 }
 
 .hhp-tag-qr-coupon {
-	background: rgba(47, 111, 98, 0.2);
+	border-color: var( --hhp-primary );
+	background: var( --hhp-primary );
+	color: #ffffff;
 }
 
 /* Zugangsformular ------------------------------------------------------ */
@@ -336,9 +399,9 @@
 .hhp-tokenform {
 	display: flex;
 	flex-wrap: wrap;
-	gap: 12px;
+	gap: 16px;
 	align-items: flex-end;
-	margin-bottom: 16px;
+	margin-bottom: 20px;
 }
 
 .hhp-tokenform .hhp-field {
@@ -350,28 +413,28 @@
 }
 
 .hhp-fehler {
-	background: rgba(190, 60, 60, 0.1);
-	border-left: 3px solid #be3c3c;
-	padding: 12px 16px;
-	border-radius: 6px;
-	margin-bottom: 18px;
+	background: var( --hhp-flaeche-warm );
+	border-left: 2px solid #b3261e;
+	padding: 14px 18px;
+	margin-bottom: 20px;
+	font-size: 0.9em;
 }
 
 .hhp-hinweis,
 .hhp-fuss {
-	font-size: 0.85em;
-	color: var(--hhp-gedaempft);
-	line-height: 1.6;
+	font-size: 0.84em;
+	color: var( --hhp-gedaempft );
+	line-height: 1.7;
 }
 
 .hhp-fuss {
-	border-top: 1px solid var(--hhp-linie);
-	padding-top: 16px;
+	border-top: 1px solid var( --hhp-linie );
+	padding-top: 18px;
 }
 
 /* Kleine Bildschirme --------------------------------------------------- */
 
-@media (max-width: 640px) {
+@media ( max-width: 640px ) {
 	.hhp-button-ghost {
 		margin-left: 0;
 	}
@@ -389,25 +452,26 @@
 	}
 
 	.hhp-tabelle tr {
-		border-bottom: 1px solid var(--hhp-linie);
-		padding: 6px 0;
+		border-bottom: 1px solid var( --hhp-linie );
+		padding: 8px 0;
 	}
 
 	.hhp-tabelle td {
 		border-bottom: none;
 		display: flex;
 		justify-content: space-between;
-		gap: 14px;
-		padding: 6px 14px;
+		gap: 16px;
+		padding: 7px 16px;
 		text-align: right;
 	}
 
 	.hhp-tabelle td::before {
-		content: attr(data-label);
-		font-size: 0.78em;
+		content: attr( data-label );
+		font-family: var( --hhp-schrift-titel );
+		font-size: 0.72em;
 		text-transform: uppercase;
-		letter-spacing: 0.05em;
-		color: var(--hhp-gedaempft);
+		letter-spacing: 0.1em;
+		color: var( --hhp-gedaempft );
 		text-align: left;
 		flex: 0 0 auto;
 	}

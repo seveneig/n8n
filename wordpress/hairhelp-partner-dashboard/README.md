@@ -193,6 +193,8 @@ bis zu 30 % der Fläche dürfen beschädigt oder überdeckt sein.
 
 Faustregel: **Kantenlänge ≈ Scanabstand ÷ 10**.
 
+Die Druckvorlage wurde gerendert und wieder eingelesen: Der Code bleibt bis zu einer Kantenlänge von rund 83 Pixeln maschinenlesbar – deutlich unter jeder realistischen Druckgrösse.
+
 Wichtig für die Druckerei:
 
 * Die weisse Ruhezone rundherum **nicht** wegschneiden (mindestens 4 Module)
@@ -259,10 +261,37 @@ durchsuchen. Auswertungen werden zusätzlich fünf Minuten zwischengespeichert.
 
 ### Erscheinungsbild
 
-Das Dashboard **erbt Schriftart und Textfarbe vom aktiven Theme** und
-übernimmt das in WordPress hinterlegte Website-Logo. Es fügt sich damit von
-selbst in den bestehenden Auftritt ein. Nur die drei Markenfarben sind unter
-**Einstellungen → Erscheinungsbild** gesetzt und dort jederzeit änderbar.
+Das Dashboard ist auf das Erscheinungsbild von
+www.hairhelp-haarverdichter.ch abgestimmt. Die Werte stammen aus dem
+Elementor-Kit der Website und dem dort verwendeten eigenen Token
+`--hhch-gold`:
+
+| Rolle | Wert | Verwendung im Dashboard |
+|---|---|---|
+| Markengold | `#A39772` | Diagramm, Provisionswert, Herkunftsmarken, Linienakzente |
+| Champagner | `#D1BC92` | Rahmen der Gutschein-Kennzeichnung |
+| Anthrazit | `#292929` | Überschriften, Zahlen, Buttons |
+| Tiefschwarz | `#1A1A1A` | QR-Module im Druck |
+| Grau | `#7A7A7A` | Nebentexte |
+| Linien | `#EAEAEA` | Tabellen- und Kachelraster |
+| Warmes Off-White | `#FAF9F6` | Tabellenkopf, Provisionskachel |
+
+Übernommen wird ausserdem die Formsprache der Website: durchgehend eckige
+Kanten, Haarlinien statt Rahmen, Eingabefelder nur mit Unterstrich, Buttons
+weiss mit dunkler Kontur, Beschriftungen in Grossbuchstaben mit weiter
+Laufweite.
+
+Die Schriften bezieht das Dashboard über die globalen Elementor-Variablen und
+fällt auf die Hausschriften **Jost** (Überschriften) und **Heebo**
+(Fliesstext) zurück. Ändert ihr die Schriften im Elementor-Kit, zieht das
+Dashboard automatisch mit. Das Logo kommt aus dem WordPress-Customizer.
+
+Die drei Hauptfarben stehen unter **Einstellungen → Erscheinungsbild** und
+sind dort jederzeit änderbar; die neutralen Grautöne liegen im Stylesheet.
+
+> Hinweis zum Kontrast: Das Markengold erreicht auf Weiss nur ein
+> Kontrastverhältnis von rund 2,6:1. Es wird deshalb für Flächen, Linien und
+> grosse Zahlen eingesetzt, nie für Fliesstext – dort steht Anthrazit.
 
 ---
 

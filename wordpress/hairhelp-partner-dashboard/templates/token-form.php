@@ -15,7 +15,7 @@ defined( 'ABSPATH' ) || exit;
 			<?php echo wp_kses_post( HHP_Dashboard::brand_logo() ); ?>
 			<div>
 				<h2 class="hhp-title"><?php esc_html_e( 'Vermittler-Zugang', 'hairhelp-partner' ); ?></h2>
-				<p class="hhp-subtitle"><?php esc_html_e( 'Bitte den persoenlichen Zugangscode eingeben.', 'hairhelp-partner' ); ?></p>
+				<p class="hhp-subtitle"><?php esc_html_e( 'Bitte den persönlichen Zugangscode eingeben.', 'hairhelp-partner' ); ?></p>
 			</div>
 		</div>
 	</header>
@@ -33,6 +33,6 @@ defined( 'ABSPATH' ) || exit;
 	</form>
 
 	<p class="hhp-hinweis">
-		<?php esc_html_e( 'Den Code erhaeltst du direkt vom Shop. Am einfachsten ist der zugesandte Link: Er enthaelt den Code bereits und kann als Lesezeichen gespeichert werden.', 'hairhelp-partner' ); ?>
+		<?php esc_html_e( 'Den Code erhältst du direkt vom Shop. Am einfachsten ist der zugesandte Link: Er enthält den Code bereits und kann als Lesezeichen gespeichert werden.', 'hairhelp-partner' ); ?>
 	</p>
 </div>

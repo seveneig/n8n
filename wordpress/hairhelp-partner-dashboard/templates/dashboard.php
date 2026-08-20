@@ -22,7 +22,7 @@ $hhp_preis    = static function ( $betrag ) use ( $hhp_waehrung ) {
 };
 $hhp_schnitt  = $hhp_summen['orders'] > 0 ? $hhp_summen['revenue'] / $hhp_summen['orders'] : 0;
 $hhp_titel    = HHP_Settings::get( 'dashboard_title' );
-$hhp_titel    = $hhp_titel ? $hhp_titel : __( 'Deine vermittelten Verkaeufe', 'hairhelp-partner' );
+$hhp_titel    = $hhp_titel ? $hhp_titel : __( 'Deine vermittelten Verkäufe', 'hairhelp-partner' );
 $hhp_zeitraeume = array(
 	'7'        => __( 'Letzte 7 Tage', 'hairhelp-partner' ),
 	'30'       => __( 'Letzte 30 Tage', 'hairhelp-partner' ),
@@ -45,7 +45,7 @@ $hhp_zeitraeume = array(
 					<?php
 					printf(
 						/* translators: %s: Name des Vermittlers */
-						esc_html__( 'Uebersicht fuer %s', 'hairhelp-partner' ),
+						esc_html__( 'Übersicht für %s', 'hairhelp-partner' ),
 						'<strong>' . esc_html( $partner['name'] ? $partner['name'] : $partner['id'] ) . '</strong>'
 					);
 					?>
@@ -111,8 +111,8 @@ $hhp_zeitraeume = array(
 			<span class="hhp-kachel-fuss">
 				<?php
 				printf(
-					/* translators: 1: Anzahl ueber QR-Code, 2: Anzahl ueber Gutschein, 3: Anzahl ueber beides */
-					esc_html__( '%1$d ueber QR-Code, %2$d ueber Gutschein, %3$d ueber beides', 'hairhelp-partner' ),
+					/* translators: 1: Anzahl über QR-Code, 2: Anzahl über Gutschein, 3: Anzahl über beides */
+					esc_html__( '%1$d über QR-Code, %2$d über Gutschein, %3$d über beides', 'hairhelp-partner' ),
 					(int) $hhp_summen['qr'],
 					(int) $hhp_summen['coupon'],
 					(int) $hhp_summen['both']
@@ -223,7 +223,7 @@ $hhp_zeitraeume = array(
 					</tbody>
 					<tfoot>
 						<tr>
-							<th colspan="4"><?php esc_html_e( 'Summe der gezaehlten Bestellungen', 'hairhelp-partner' ); ?></th>
+							<th colspan="4"><?php esc_html_e( 'Summe der gezählten Bestellungen', 'hairhelp-partner' ); ?></th>
 							<th class="hhp-rechts"><?php echo wp_kses_post( $hhp_preis( $hhp_summen['revenue'] ) ); ?></th>
 							<th class="hhp-rechts"><?php echo wp_kses_post( $hhp_preis( $hhp_summen['commission'] ) ); ?></th>
 						</tr>
@@ -235,8 +235,8 @@ $hhp_zeitraeume = array(
 
 	<footer class="hhp-fuss">
 		<p>
-			<?php esc_html_e( 'Gezaehlt werden Bestellungen, die ueber deinen QR-Code oder deinen Gutscheincode eingegangen sind. Der QR-Code wirkt 30 Tage nach dem Scan.', 'hairhelp-partner' ); ?>
-			<?php esc_html_e( 'Stornierte und zurueckerstattete Bestellungen sind ausgewiesen, zaehlen aber nicht zur Provision.', 'hairhelp-partner' ); ?>
+			<?php esc_html_e( 'Gezählt werden Bestellungen, die über deinen QR-Code oder deinen Gutscheincode eingegangen sind. Der QR-Code wirkt 30 Tage nach dem Scan.', 'hairhelp-partner' ); ?>
+			<?php esc_html_e( 'Stornierte und zurückerstattete Bestellungen sind ausgewiesen, zählen aber nicht zur Provision.', 'hairhelp-partner' ); ?>
 		</p>
 	</footer>
 </div>

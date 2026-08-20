@@ -141,7 +141,7 @@ class HHP_Dashboard {
 			}
 
 			self::register_failed_attempt();
-			self::$auth_error = __( 'Dieser Zugangslink ist ungueltig oder wurde zurueckgezogen.', 'hairhelp-partner' );
+			self::$auth_error = __( 'Dieser Zugangslink ist ungültig oder wurde zurückgezogen.', 'hairhelp-partner' );
 
 			return null;
 		}
@@ -340,9 +340,9 @@ class HHP_Dashboard {
 
 		return sprintf(
 			'--hhp-primary:%s;--hhp-accent:%s;--hhp-dark:%s;',
-			$primary ? $primary : '#2f6f62',
-			$accent ? $accent : '#c8a04a',
-			$dark ? $dark : '#1c2b28'
+			$primary ? $primary : '#a39772',
+			$accent ? $accent : '#d1bc92',
+			$dark ? $dark : '#292929'
 		);
 	}
 
@@ -411,7 +411,7 @@ class HHP_Dashboard {
 		}
 
 		if ( $max <= 0 ) {
-			return '<p class="hhp-empty">' . esc_html__( 'Im gewaehlten Zeitraum wurden keine Umsaetze erfasst.', 'hairhelp-partner' ) . '</p>';
+			return '<p class="hhp-empty">' . esc_html__( 'Im gewählten Zeitraum wurden keine Umsätze erfasst.', 'hairhelp-partner' ) . '</p>';
 		}
 
 		$count   = count( $series );
@@ -419,7 +419,11 @@ class HHP_Dashboard {
 		$height  = 260;
 		$pad_b   = 34;
 		$pad_t   = 12;
-		$slot    = $width / $count;
+		// Seitlicher Rand, damit die erste und die letzte Beschriftung nicht
+		// am Rand des Diagramms abgeschnitten werden.
+		$pad_x   = 46;
+		$nutz    = $width - ( 2 * $pad_x );
+		$slot    = $nutz / $count;
 		$bar_w   = min( 46, max( 3, $slot * 0.62 ) );
 		$bars    = '';
 		$labels  = '';
@@ -428,7 +432,7 @@ class HHP_Dashboard {
 		foreach ( $series as $index => $point ) {
 			$value  = (float) $point['umsatz'];
 			$bar_h  = $max > 0 ? ( $value / $max ) * ( $height - $pad_b - $pad_t ) : 0;
-			$x      = ( $index * $slot ) + ( ( $slot - $bar_w ) / 2 );
+			$x      = $pad_x + ( $index * $slot ) + ( ( $slot - $bar_w ) / 2 );
 			$y      = $height - $pad_b - $bar_h;
 
 			$bars .= sprintf(
@@ -451,7 +455,7 @@ class HHP_Dashboard {
 			if ( 0 === $index % $every || $index === $count - 1 ) {
 				$labels .= sprintf(
 					'<text x="%.2f" y="%d" text-anchor="middle" class="hhp-axis">%s</text>',
-					( $index * $slot ) + ( $slot / 2 ),
+					$pad_x + ( $index * $slot ) + ( $slot / 2 ),
 					$height - 12,
 					esc_html( $point['label'] )
 				);
@@ -459,10 +463,10 @@ class HHP_Dashboard {
 		}
 
 		return sprintf(
-			'<svg class="hhp-chart" viewBox="0 0 %d %d" preserveAspectRatio="none" role="img" aria-label="%s"><line x1="0" y1="%d" x2="%d" y2="%d" class="hhp-axis-line"/>%s%s</svg>',
+			'<svg class="hhp-chart" viewBox="0 0 %d %d" role="img" aria-label="%s"><line x1="0" y1="%d" x2="%d" y2="%d" class="hhp-axis-line"/>%s%s</svg>',
 			$width,
 			$height,
-			esc_attr__( 'Umsatzverlauf im gewaehlten Zeitraum', 'hairhelp-partner' ),
+			esc_attr__( 'Umsatzverlauf im gewählten Zeitraum', 'hairhelp-partner' ),
 			$height - $pad_b,
 			$width,
 			$height - $pad_b,

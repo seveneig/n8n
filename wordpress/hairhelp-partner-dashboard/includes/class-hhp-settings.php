@@ -63,12 +63,16 @@ class HHP_Settings {
 			'currency_note'    => '',
 
 			// Darstellung.
-			'brand_primary'    => '#2f6f62',
-			'brand_accent'     => '#c8a04a',
-			'brand_dark'       => '#1c2b28',
+			// Markenwerte von www.hairhelp-haarverdichter.ch: das Gold aus dem
+			// eigenen Token --hhch-gold, der Champagnerton des Elementor-Kits
+			// und die dunkle Ueberschriftenfarbe.
+			'brand_primary'    => '#a39772',
+			'brand_accent'     => '#d1bc92',
+			'brand_dark'       => '#292929',
 			'brand_logo'       => '',
 			'use_site_logo'    => 1,
 			'dashboard_title'  => '',
+			'poster_name'      => '',
 		);
 	}
 

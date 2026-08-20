@@ -66,7 +66,7 @@ class HHP_Admin {
 				'ajaxUrl' => admin_url( 'admin-ajax.php' ),
 				'nonce'   => wp_create_nonce( 'hhp_reindex' ),
 				'texte'   => array(
-					'laeuft'   => __( 'Bestellungen werden geprueft ...', 'hairhelp-partner' ),
+					'laeuft'   => __( 'Bestellungen werden geprüft ...', 'hairhelp-partner' ),
 					'fertig'   => __( 'Fertig.', 'hairhelp-partner' ),
 					'fehler'   => __( 'Es ist ein Fehler aufgetreten.', 'hairhelp-partner' ),
 					'kopiert'  => __( 'Link kopiert.', 'hairhelp-partner' ),
@@ -187,7 +187,7 @@ class HHP_Admin {
 					<td><input name="cookie_name" id="hhp-cookie" type="text" class="regular-text" value="<?php echo esc_attr( $s['cookie_name'] ); ?>" /></td>
 				</tr>
 				<tr>
-					<th scope="row"><label for="hhp-days"><?php esc_html_e( 'Gueltigkeit in Tagen', 'hairhelp-partner' ); ?></label></th>
+					<th scope="row"><label for="hhp-days"><?php esc_html_e( 'Gültigkeit in Tagen', 'hairhelp-partner' ); ?></label></th>
 					<td>
 						<input name="cookie_days" id="hhp-days" type="number" min="1" max="730" value="<?php echo esc_attr( $s['cookie_days'] ); ?>" />
 						<p class="description"><?php esc_html_e( 'Vereinbart sind 30 Tage.', 'hairhelp-partner' ); ?></p>
@@ -196,15 +196,15 @@ class HHP_Admin {
 				<tr>
 					<th scope="row"><?php esc_html_e( 'Zuordnung bei mehreren Besuchen', 'hairhelp-partner' ); ?></th>
 					<td>
-						<label><input type="radio" name="attribution" value="last" <?php checked( $s['attribution'], 'last' ); ?> /> <?php esc_html_e( 'Letzter Kontakt zaehlt', 'hairhelp-partner' ); ?></label><br />
-						<label><input type="radio" name="attribution" value="first" <?php checked( $s['attribution'], 'first' ); ?> /> <?php esc_html_e( 'Erster Kontakt zaehlt', 'hairhelp-partner' ); ?></label>
+						<label><input type="radio" name="attribution" value="last" <?php checked( $s['attribution'], 'last' ); ?> /> <?php esc_html_e( 'Letzter Kontakt zählt', 'hairhelp-partner' ); ?></label><br />
+						<label><input type="radio" name="attribution" value="first" <?php checked( $s['attribution'], 'first' ); ?> /> <?php esc_html_e( 'Erster Kontakt zählt', 'hairhelp-partner' ); ?></label>
 					</td>
 				</tr>
 				<tr>
 					<th scope="row"><label for="hhp-landing"><?php esc_html_e( 'Zielseite nach dem Scan', 'hairhelp-partner' ); ?></label></th>
 					<td>
 						<input name="landing_url" id="hhp-landing" type="url" class="regular-text code" value="<?php echo esc_attr( $s['landing_url'] ); ?>" placeholder="<?php echo esc_attr( home_url( '/' ) ); ?>" />
-						<p class="description"><?php esc_html_e( 'Leer lassen fuer die Startseite.', 'hairhelp-partner' ); ?></p>
+						<p class="description"><?php esc_html_e( 'Leer lassen für die Startseite.', 'hairhelp-partner' ); ?></p>
 					</td>
 				</tr>
 				<tr>
@@ -227,7 +227,7 @@ class HHP_Admin {
 			<h3><?php esc_html_e( 'Auswertung', 'hairhelp-partner' ); ?></h3>
 			<table class="form-table" role="presentation">
 				<tr>
-					<th scope="row"><?php esc_html_e( 'Als Umsatz zaehlen', 'hairhelp-partner' ); ?></th>
+					<th scope="row"><?php esc_html_e( 'Als Umsatz zählen', 'hairhelp-partner' ); ?></th>
 					<td>
 						<?php foreach ( $statuses as $key => $label ) : ?>
 							<?php $clean = str_replace( 'wc-', '', $key ); ?>
@@ -244,8 +244,8 @@ class HHP_Admin {
 					<td>
 						<label><input type="radio" name="customer_data" value="none" <?php checked( $s['customer_data'], 'none' ); ?> /> <?php esc_html_e( 'Gar nicht anzeigen', 'hairhelp-partner' ); ?></label><br />
 						<label><input type="radio" name="customer_data" value="initials" <?php checked( $s['customer_data'], 'initials' ); ?> /> <?php esc_html_e( 'Nur Initialen (empfohlen)', 'hairhelp-partner' ); ?></label><br />
-						<label><input type="radio" name="customer_data" value="full" <?php checked( $s['customer_data'], 'full' ); ?> /> <?php esc_html_e( 'Vollstaendiger Name', 'hairhelp-partner' ); ?></label>
-						<p class="description"><?php esc_html_e( 'Der Vermittler braucht fuer die Abrechnung keine Kundendaten. Initialen genuegen, um Rueckfragen zuzuordnen.', 'hairhelp-partner' ); ?></p>
+						<label><input type="radio" name="customer_data" value="full" <?php checked( $s['customer_data'], 'full' ); ?> /> <?php esc_html_e( 'Vollständiger Name', 'hairhelp-partner' ); ?></label>
+						<p class="description"><?php esc_html_e( 'Der Vermittler braucht für die Abrechnung keine Kundendaten. Initialen genügen, um Rückfragen zuzuordnen.', 'hairhelp-partner' ); ?></p>
 					</td>
 				</tr>
 				<tr>
@@ -256,7 +256,7 @@ class HHP_Admin {
 
 			<h3><?php esc_html_e( 'Erscheinungsbild', 'hairhelp-partner' ); ?></h3>
 			<p class="description" style="max-width:44em">
-				<?php esc_html_e( 'Schriften und Grundlayout uebernimmt das Dashboard automatisch vom aktiven Theme. Hier werden nur die Markenfarben und das Logo festgelegt.', 'hairhelp-partner' ); ?>
+				<?php esc_html_e( 'Schriften und Grundlayout übernimmt das Dashboard automatisch vom aktiven Theme. Hier werden nur die Markenfarben und das Logo festgelegt.', 'hairhelp-partner' ); ?>
 			</p>
 			<table class="form-table" role="presentation">
 				<tr>
@@ -279,8 +279,15 @@ class HHP_Admin {
 					</td>
 				</tr>
 				<tr>
-					<th scope="row"><label for="hhp-title"><?php esc_html_e( 'Ueberschrift im Dashboard', 'hairhelp-partner' ); ?></label></th>
-					<td><input name="dashboard_title" id="hhp-title" type="text" class="regular-text" value="<?php echo esc_attr( $s['dashboard_title'] ); ?>" placeholder="<?php esc_attr_e( 'Deine vermittelten Verkaeufe', 'hairhelp-partner' ); ?>" /></td>
+					<th scope="row"><label for="hhp-title"><?php esc_html_e( 'Überschrift im Dashboard', 'hairhelp-partner' ); ?></label></th>
+					<td><input name="dashboard_title" id="hhp-title" type="text" class="regular-text" value="<?php echo esc_attr( $s['dashboard_title'] ); ?>" placeholder="<?php esc_attr_e( 'Deine vermittelten Verkäufe', 'hairhelp-partner' ); ?>" /></td>
+				</tr>
+				<tr>
+					<th scope="row"><label for="hhp-poster"><?php esc_html_e( 'Name auf der Druckvorlage', 'hairhelp-partner' ); ?></label></th>
+					<td>
+						<input name="poster_name" id="hhp-poster" type="text" class="regular-text" value="<?php echo esc_attr( $s['poster_name'] ); ?>" placeholder="<?php echo esc_attr( self::brand_name() ); ?>" />
+						<p class="description"><?php esc_html_e( 'Leer lassen, dann wird der Website-Titel verwendet und bei Bedarf gekürzt.', 'hairhelp-partner' ); ?></p>
+					</td>
 				</tr>
 			</table>
 
@@ -315,6 +322,7 @@ class HHP_Admin {
 			'brand_logo'      => isset( $_POST['brand_logo'] ) ? esc_url_raw( wp_unslash( $_POST['brand_logo'] ) ) : '',
 			'use_site_logo'   => isset( $_POST['use_site_logo'] ) ? 1 : 0,
 			'dashboard_title' => isset( $_POST['dashboard_title'] ) ? sanitize_text_field( wp_unslash( $_POST['dashboard_title'] ) ) : '',
+			'poster_name'     => isset( $_POST['poster_name'] ) ? sanitize_text_field( wp_unslash( $_POST['poster_name'] ) ) : '',
 		);
 
 		if ( empty( $values['statuses'] ) ) {
@@ -350,7 +358,7 @@ class HHP_Admin {
 			<?php wp_nonce_field( 'hhp_save_partners' ); ?>
 
 			<p class="description" style="max-width:48em">
-				<?php esc_html_e( 'Jeder Vermittler erhaelt einen geheimen Zugangslink. Wer den Link kennt, sieht ausschliesslich seine eigenen vermittelten Verkaeufe: keine Kundenadressen, keine anderen Bestellungen, kein WordPress-Konto.', 'hairhelp-partner' ); ?>
+				<?php esc_html_e( 'Jeder Vermittler erhält einen geheimen Zugangslink. Wer den Link kennt, sieht ausschliesslich seine eigenen vermittelten Verkäufe: keine Kundenadressen, keine anderen Bestellungen, kein WordPress-Konto.', 'hairhelp-partner' ); ?>
 			</p>
 
 			<div id="hhp-partners">
@@ -360,7 +368,7 @@ class HHP_Admin {
 			</div>
 
 			<p>
-				<button type="button" class="button" id="hhp-add-partner"><?php esc_html_e( 'Vermittler hinzufuegen', 'hairhelp-partner' ); ?></button>
+				<button type="button" class="button" id="hhp-add-partner"><?php esc_html_e( 'Vermittler hinzufügen', 'hairhelp-partner' ); ?></button>
 			</p>
 
 			<?php submit_button(); ?>
@@ -426,17 +434,17 @@ class HHP_Admin {
 
 				<?php if ( $link ) : ?>
 					<label class="hhp-linkfield">
-						<span><?php esc_html_e( 'Zugangslink fuer den Vermittler', 'hairhelp-partner' ); ?></span>
+						<span><?php esc_html_e( 'Zugangslink für den Vermittler', 'hairhelp-partner' ); ?></span>
 						<input type="text" readonly value="<?php echo esc_attr( $link ); ?>" onfocus="this.select()" class="hhp-copy-input" />
 					</label>
 					<button type="button" class="button hhp-copy" data-link="<?php echo esc_attr( $link ); ?>"><?php esc_html_e( 'Kopieren', 'hairhelp-partner' ); ?></button>
 				<?php elseif ( ! $page ) : ?>
-					<p class="description"><?php esc_html_e( 'Sobald eine Seite mit dem Shortcode [hhp_partner_dashboard] veroeffentlicht ist, erscheint hier der fertige Zugangslink.', 'hairhelp-partner' ); ?></p>
+					<p class="description"><?php esc_html_e( 'Sobald eine Seite mit dem Shortcode [hhp_partner_dashboard] veröffentlicht ist, erscheint hier der fertige Zugangslink.', 'hairhelp-partner' ); ?></p>
 				<?php endif; ?>
 
 				<label class="hhp-inline">
 					<input type="checkbox" name="partners[<?php echo esc_attr( $index ); ?>][neues_token]" value="1" />
-					<?php esc_html_e( 'Neues Token erzeugen (alter Link wird ungueltig)', 'hairhelp-partner' ); ?>
+					<?php esc_html_e( 'Neues Token erzeugen (alter Link wird ungültig)', 'hairhelp-partner' ); ?>
 				</label>
 
 				<label class="hhp-inline">
@@ -533,7 +541,7 @@ class HHP_Admin {
 		$partners = HHP_Settings::partners();
 
 		echo '<p class="description" style="max-width:48em">';
-		esc_html_e( 'Die Codes werden direkt auf diesem Server erzeugt. Es wird kein externer Dienst aufgerufen, die Kampagnenadresse verlaesst den Shop also nicht. SVG eignet sich fuer den Druck, PNG fuer Bildschirm und Social Media.', 'hairhelp-partner' );
+		esc_html_e( 'Die Codes werden direkt auf diesem Server erzeugt. Es wird kein externer Dienst aufgerufen, die Kampagnenadresse verlässt den Shop also nicht. SVG eignet sich für den Druck, PNG für Bildschirm und Social Media.', 'hairhelp-partner' );
 		echo '</p>';
 
 		if ( empty( $partners ) ) {
@@ -659,18 +667,59 @@ class HHP_Admin {
 	 *
 	 * @return string
 	 */
+	/**
+	 * Liefert einen kurzen Markennamen fuer die Druckvorlage.
+	 *
+	 * Website-Titel sind haeufig fuer Suchmaschinen ausgeschrieben und damit zu
+	 * lang fuer ein Plakat. Genommen wird deshalb das erste Segment vor einem
+	 * Trennzeichen, notfalls hart gekuerzt.
+	 *
+	 * @return string
+	 */
+	protected static function brand_name() {
+		$eigener = trim( (string) HHP_Settings::get( 'poster_name' ) );
+
+		if ( '' !== $eigener ) {
+			return $eigener;
+		}
+
+		$name = trim( (string) get_bloginfo( 'name' ) );
+
+		// Website-Titel sind haeufig fuer Suchmaschinen ausgeschrieben. Der Teil
+		// vor dem ersten Trennzeichen ist in aller Regel der Markenname.
+		foreach ( array( '|', ':', ' - ', ' – ', ' — ' ) as $trenner ) {
+			$position = mb_strpos( $name, $trenner );
+
+			if ( false !== $position && $position > 2 ) {
+				$name = trim( mb_substr( $name, 0, $position ) );
+			}
+		}
+
+		// Bleibt es zu lang, an der letzten Wortgrenze trennen statt mitten im Wort.
+		if ( mb_strlen( $name ) > 28 ) {
+			$gekuerzt = mb_substr( $name, 0, 28 );
+			$luecke   = mb_strrpos( $gekuerzt, ' ' );
+
+			$name = ( false !== $luecke && $luecke > 8 )
+				? trim( mb_substr( $gekuerzt, 0, $luecke ) )
+				: trim( $gekuerzt );
+		}
+
+		return '' !== $name ? $name : __( 'Jetzt scannen', 'hairhelp-partner' );
+	}
+
 	protected static function poster_svg( $qr, $code, $url ) {
 		$primary = sanitize_hex_color( HHP_Settings::get( 'brand_primary' ) );
-		$primary = $primary ? $primary : '#2f6f62';
+		$primary = $primary ? $primary : '#a39772';
 		$dark    = sanitize_hex_color( HHP_Settings::get( 'brand_dark' ) );
-		$dark    = $dark ? $dark : '#1c2b28';
-		$name    = get_bloginfo( 'name' );
+		$dark    = $dark ? $dark : '#292929';
+		$name    = self::brand_name();
 
 		$inner = $qr->to_svg(
 			array(
 				'scale'      => 1,
 				'quiet_zone' => 0,
-				'dark'       => $dark,
+				'dark'       => '#1a1a1a',
 				'light'      => 'none',
 			)
 		);
@@ -683,32 +732,39 @@ class HHP_Admin {
 		}
 
 		$modules = $qr->get_size();
-		$target  = 420;
+		$target  = 380;
 		$scale   = $target / $modules;
 
+		// Schriftstapel wie auf der Website; faellt sauber zurueck, falls die
+		// Hausschriften auf dem Rechner der Druckerei fehlen.
+		$titel = 'Jost, Futura, Helvetica, Arial, sans-serif';
+		$text  = 'Heebo, Helvetica, Arial, sans-serif';
+
+		// Zurueckhaltend gehalten wie der Auftritt der Website: viel Weissraum,
+		// Haarlinien statt Flaechen, Gold ausschliesslich als Akzent. Text bleibt
+		// dunkel, weil Gold auf Weiss fuer Fliesstext zu wenig Kontrast hat.
 		return sprintf(
 			'<svg xmlns="http://www.w3.org/2000/svg" width="600" height="800" viewBox="0 0 600 800">'
 			. '<rect width="600" height="800" fill="#ffffff"/>'
-			. '<rect x="0" y="0" width="600" height="120" fill="%1$s"/>'
-			. '<text x="300" y="72" text-anchor="middle" font-family="Helvetica,Arial,sans-serif" font-size="34" font-weight="700" fill="#ffffff">%2$s</text>'
-			. '<g transform="translate(90 190) scale(%3$F)"><path d="%4$s" fill="%5$s"/></g>'
-			. '<text x="300" y="680" text-anchor="middle" font-family="Helvetica,Arial,sans-serif" font-size="30" font-weight="700" fill="%5$s">%6$s</text>'
-			. '<text x="300" y="722" text-anchor="middle" font-family="Helvetica,Arial,sans-serif" font-size="19" fill="%5$s">%7$s</text>'
-			. '<text x="300" y="762" text-anchor="middle" font-family="Helvetica,Arial,sans-serif" font-size="15" fill="%1$s">%8$s</text>'
+			. '<text x="300" y="86" text-anchor="middle" font-family="%1$s" font-size="30" font-weight="500" letter-spacing="1.5" fill="%2$s">%3$s</text>'
+			. '<line x1="240" y1="116" x2="360" y2="116" stroke="%4$s" stroke-width="2"/>'
+			. '<g transform="translate(110 176) scale(%5$F)"><path d="%6$s" fill="#1a1a1a"/></g>'
+			. '<text x="300" y="638" text-anchor="middle" font-family="%1$s" font-size="27" font-weight="500" letter-spacing="3" fill="%2$s">%7$s</text>'
+			. '<text x="300" y="676" text-anchor="middle" font-family="%8$s" font-size="17" fill="#7a7a7a">%9$s</text>'
+			. '<rect x="205" y="700" width="190" height="46" fill="#faf9f6" stroke="%4$s" stroke-width="1"/>'
+			. '<text x="300" y="731" text-anchor="middle" font-family="%1$s" font-size="24" font-weight="500" letter-spacing="4" fill="%2$s">%10$s</text>'
+			. '<text x="300" y="775" text-anchor="middle" font-family="%8$s" font-size="13" letter-spacing="1" fill="#7a7a7a">%11$s</text>'
 			. '</svg>',
-			esc_attr( $primary ),
+			esc_attr( $titel ),
+			esc_attr( $dark ),
 			esc_html( $name ),
+			esc_attr( $primary ),
 			$scale,
 			esc_attr( $path ),
-			esc_attr( $dark ),
-			esc_html__( 'Jetzt scannen', 'hairhelp-partner' ),
-			esc_html(
-				sprintf(
-					/* translators: %s: Gutscheincode */
-					__( 'oder Code %s an der Kasse eingeben', 'hairhelp-partner' ),
-					strtoupper( $code )
-				)
-			),
+			esc_html__( 'JETZT SCANNEN', 'hairhelp-partner' ),
+			esc_attr( $text ),
+			esc_html__( 'oder an der Kasse eingeben:', 'hairhelp-partner' ),
+			esc_html( strtoupper( $code ) ),
 			esc_html( preg_replace( '#^https?://#', '', $url ) )
 		);
 	}
@@ -728,7 +784,7 @@ class HHP_Admin {
 		?>
 		<h3><?php esc_html_e( 'Bestehende Bestellungen zuordnen', 'hairhelp-partner' ); ?></h3>
 		<p class="description" style="max-width:48em">
-			<?php esc_html_e( 'Bestellungen, die vor der Installation eingegangen sind, tragen noch keine Zuordnung. Der Abgleich prueft die vorhandenen Bestellungen auf die hinterlegten Gutschein- und Kampagnencodes und traegt die Herkunft nach. Der Vorgang kann jederzeit wiederholt werden.', 'hairhelp-partner' ); ?>
+			<?php esc_html_e( 'Bestellungen, die vor der Installation eingegangen sind, tragen noch keine Zuordnung. Der Abgleich prüft die vorhandenen Bestellungen auf die hinterlegten Gutschein- und Kampagnencodes und trägt die Herkunft nach. Der Vorgang kann jederzeit wiederholt werden.', 'hairhelp-partner' ); ?>
 		</p>
 		<p>
 			<label for="hhp-reindex-after"><?php esc_html_e( 'Bestellungen ab', 'hairhelp-partner' ); ?></label>
@@ -757,7 +813,7 @@ class HHP_Admin {
 			</p>
 		<?php endif; ?>
 
-		<h3><?php esc_html_e( 'Pruefung des Trackings', 'hairhelp-partner' ); ?></h3>
+		<h3><?php esc_html_e( 'Prüfung des Trackings', 'hairhelp-partner' ); ?></h3>
 		<p>
 			<?php esc_html_e( 'Aktuell gesetztes Cookie in diesem Browser:', 'hairhelp-partner' ); ?>
 			<code><?php echo esc_html( HHP_Tracker::current_code() ? HHP_Tracker::current_code() : __( 'keines', 'hairhelp-partner' ) ); ?></code>

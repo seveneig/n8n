@@ -58,7 +58,7 @@ function hhp_bootstrap() {
 			static function () {
 				printf(
 					'<div class="notice notice-error"><p>%s</p></div>',
-					esc_html__( 'Das HairHelp Vermittler-Dashboard benoetigt WooCommerce. Bitte WooCommerce aktivieren.', 'hairhelp-partner' )
+					esc_html__( 'Das HairHelp Vermittler-Dashboard benötigt WooCommerce. Bitte WooCommerce aktivieren.', 'hairhelp-partner' )
 				);
 			}
 		);
