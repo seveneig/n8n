@@ -509,6 +509,56 @@ class HHP_Admin {
 					<?php esc_html_e( 'Diesen Vermittler entfernen', 'hairhelp-partner' ); ?>
 				</label>
 			</div>
+
+			<details class="hhp-markenblock"<?php echo 'shop' !== $partner['brand_theme'] ? ' open' : ''; ?>>
+				<summary><?php esc_html_e( 'Eigenes Erscheinungsbild', 'hairhelp-partner' ); ?></summary>
+
+				<p class="description">
+					<?php esc_html_e( 'Leere Felder übernehmen die Werte des Shops. So bekommt ein Vermittler mit eigener Marke sein Design, ohne dass die anderen etwas einstellen müssen.', 'hairhelp-partner' ); ?>
+				</p>
+
+				<div class="hhp-partner-grid">
+					<label>
+						<span><?php esc_html_e( 'Anzeigename', 'hairhelp-partner' ); ?></span>
+						<input type="text" name="partners[<?php echo esc_attr( $index ); ?>][brand_name]" value="<?php echo esc_attr( $partner['brand_name'] ); ?>" placeholder="LoopX13" />
+					</label>
+					<label>
+						<span><?php esc_html_e( 'Farbschema', 'hairhelp-partner' ); ?></span>
+						<select name="partners[<?php echo esc_attr( $index ); ?>][brand_theme]">
+							<option value="shop" <?php selected( $partner['brand_theme'], 'shop' ); ?>><?php esc_html_e( 'wie der Shop', 'hairhelp-partner' ); ?></option>
+							<option value="hell" <?php selected( $partner['brand_theme'], 'hell' ); ?>><?php esc_html_e( 'hell', 'hairhelp-partner' ); ?></option>
+							<option value="dunkel" <?php selected( $partner['brand_theme'], 'dunkel' ); ?>><?php esc_html_e( 'dunkel', 'hairhelp-partner' ); ?></option>
+						</select>
+					</label>
+					<label>
+						<span><?php esc_html_e( 'Leitfarbe', 'hairhelp-partner' ); ?></span>
+						<input type="text" name="partners[<?php echo esc_attr( $index ); ?>][brand_primary]" value="<?php echo esc_attr( $partner['brand_primary'] ); ?>" placeholder="#00e5ff" />
+					</label>
+					<label>
+						<span><?php esc_html_e( 'Zweitfarbe', 'hairhelp-partner' ); ?></span>
+						<input type="text" name="partners[<?php echo esc_attr( $index ); ?>][brand_accent]" value="<?php echo esc_attr( $partner['brand_accent'] ); ?>" placeholder="#ff007a" />
+					</label>
+					<label>
+						<span><?php esc_html_e( 'Hintergrund (nur bei dunkel)', 'hairhelp-partner' ); ?></span>
+						<input type="text" name="partners[<?php echo esc_attr( $index ); ?>][brand_grund]" value="<?php echo esc_attr( $partner['brand_grund'] ); ?>" placeholder="#030712" />
+					</label>
+					<label>
+						<span><?php esc_html_e( 'Logo-Adresse', 'hairhelp-partner' ); ?></span>
+						<input type="url" name="partners[<?php echo esc_attr( $index ); ?>][brand_logo]" value="<?php echo esc_attr( $partner['brand_logo'] ); ?>" placeholder="https://..." />
+					</label>
+					<label class="hhp-breit">
+						<span><?php esc_html_e( 'Schriftstapel', 'hairhelp-partner' ); ?></span>
+						<input type="text" name="partners[<?php echo esc_attr( $index ); ?>][brand_font]" value="<?php echo esc_attr( $partner['brand_font'] ); ?>" placeholder="Inter, &quot;Helvetica Neue&quot;, Arial, sans-serif" />
+					</label>
+				</div>
+
+				<p class="description">
+					<?php esc_html_e( 'Schriften werden nie von einem externen Dienst nachgeladen, weil damit die Adresse jedes Besuchers an einen Dritten ginge. Angegeben wird nur, welche Schrift verwendet werden soll, wenn sie vorhanden ist.', 'hairhelp-partner' ); ?>
+				</p>
+				<p class="description">
+					<?php esc_html_e( 'Zu helle Farben werden für Text automatisch so weit nachgedunkelt oder aufgehellt, bis sie lesbar sind. Flächen und Diagramm behalten den Originalton.', 'hairhelp-partner' ); ?>
+				</p>
+			</details>
 		</div>
 		<?php
 	}
@@ -571,6 +621,13 @@ class HHP_Admin {
 				'commission_base' => isset( $entry['commission_base'] ) && 'gross' === $entry['commission_base'] ? 'gross' : 'net',
 				'token'           => $token,
 				'username'        => isset( $entry['username'] ) ? HHP_Auth::sanitize_username( $entry['username'] ) : '',
+				'brand_name'      => isset( $entry['brand_name'] ) ? sanitize_text_field( $entry['brand_name'] ) : '',
+				'brand_theme'     => isset( $entry['brand_theme'] ) ? $entry['brand_theme'] : 'shop',
+				'brand_primary'   => isset( $entry['brand_primary'] ) ? $entry['brand_primary'] : '',
+				'brand_accent'    => isset( $entry['brand_accent'] ) ? $entry['brand_accent'] : '',
+				'brand_grund'     => isset( $entry['brand_grund'] ) ? $entry['brand_grund'] : '',
+				'brand_logo'      => isset( $entry['brand_logo'] ) ? $entry['brand_logo'] : '',
+				'brand_font'      => isset( $entry['brand_font'] ) ? $entry['brand_font'] : '',
 				'password_hash'   => $hash,
 				'active'          => ! empty( $entry['active'] ) ? 1 : 0,
 				'note'            => '',

@@ -66,6 +66,16 @@
 	display: block;
 }
 
+/* Ersatz fuer ein fehlendes Bildlogo: der Markenname als Schriftzug. */
+.hhp-wortmarke {
+	font-family: var( --hhp-schrift-titel );
+	font-size: 1.5em;
+	font-weight: 700;
+	letter-spacing: -0.02em;
+	color: var( --hhp-dark );
+	white-space: nowrap;
+}
+
 .hhp-title {
 	font-family: var( --hhp-schrift-titel );
 	font-weight: 500;
@@ -92,7 +102,7 @@
 	font-size: 0.74em;
 	text-transform: uppercase;
 	letter-spacing: 0.12em;
-	color: var( --hhp-primary );
+	color: var( --hhp-primary-text, var( --hhp-primary ) );
 	border: 1px solid var( --hhp-primary );
 	padding: 6px 14px;
 }
@@ -169,7 +179,7 @@
 .hhp-button-ghost {
 	margin-left: auto;
 	border-color: var( --hhp-primary );
-	color: var( --hhp-primary );
+	color: var( --hhp-primary-text, var( --hhp-primary ) );
 }
 
 .hhp-button-ghost:hover,
@@ -226,7 +236,7 @@
 }
 
 .hhp-kachel-akzent .hhp-kachel-wert {
-	color: var( --hhp-primary );
+	color: var( --hhp-primary-text, var( --hhp-primary ) );
 }
 
 .hhp-kachel-wert .woocommerce-Price-amount {
@@ -379,7 +389,7 @@
 
 .hhp-tag-qr {
 	border-color: var( --hhp-primary );
-	color: var( --hhp-primary );
+	color: var( --hhp-primary-text, var( --hhp-primary ) );
 }
 
 .hhp-tag-coupon {
@@ -415,7 +425,7 @@
 }
 
 .hhp-sitzung a {
-	color: var( --hhp-primary );
+	color: var( --hhp-primary-text, var( --hhp-primary ) );
 	text-decoration: none;
 	border-bottom: 1px solid currentColor;
 }
@@ -593,4 +603,215 @@
 	.hhp-tabelle-wrapper {
 		break-inside: avoid;
 	}
+}
+
+/* ---------------------------------------------------------------------- *
+ * Dunkles Schema
+ *
+ * Wird gesetzt, wenn ein Vermittler ein eigenes dunkles Erscheinungsbild
+ * hinterlegt hat. Anders als im hellen Schema erbt hier nichts mehr vom
+ * Theme: auf dunklem Grund waere die dunkle Textfarbe des Themes unlesbar.
+ * ---------------------------------------------------------------------- */
+
+.hhp-dashboard.hhp-thema-dunkel {
+	--hhp-flaeche: #0b1220;
+	--hhp-flaeche-warm: #111c30;
+	--hhp-linie: rgba( 255, 255, 255, 0.11 );
+	--hhp-gedaempft: #a1a1aa;
+	--hhp-dark: #ffffff;
+	--hhp-tief: #ffffff;
+
+	background: var( --hhp-grund, #030712 );
+	color: #ffffff;
+	padding: 44px 38px;
+}
+
+.hhp-thema-dunkel .hhp-title,
+.hhp-thema-dunkel .hhp-kachel-wert {
+	color: #ffffff;
+}
+
+/* Die Wortmarke steht in der Leitfarbe und wird durch eine Linie vom Titel
+   getrennt, sonst lesen sich beide als eine einzige Überschrift. */
+.hhp-thema-dunkel .hhp-wortmarke {
+	color: var( --hhp-primary-text, var( --hhp-primary ) );
+	padding-right: 20px;
+	border-right: 1px solid var( --hhp-linie );
+}
+
+/* Grosse Versalien mit enger Laufweite, wie auf der Website der Marke. */
+.hhp-thema-dunkel .hhp-title,
+.hhp-thema-dunkel .hhp-wortmarke {
+	text-transform: uppercase;
+	font-weight: 800;
+	letter-spacing: -0.01em;
+}
+
+.hhp-thema-dunkel .hhp-kachel-wert {
+	font-weight: 700;
+}
+
+.hhp-thema-dunkel .hhp-header {
+	border-bottom-color: var( --hhp-linie );
+}
+
+.hhp-thema-dunkel .hhp-block-titel,
+.hhp-thema-dunkel .hhp-kachel-label,
+.hhp-thema-dunkel .hhp-field > span,
+.hhp-thema-dunkel .hhp-tabelle thead th {
+	color: var( --hhp-primary-text, var( --hhp-primary ) );
+}
+
+.hhp-thema-dunkel .hhp-kacheln {
+	background: var( --hhp-linie );
+	border-color: var( --hhp-linie );
+}
+
+.hhp-thema-dunkel .hhp-kachel {
+	background: var( --hhp-flaeche );
+}
+
+/* Die Provisionskachel bekommt einen zurueckhaltenden Schimmer in der Leitfarbe. */
+.hhp-thema-dunkel .hhp-kachel-akzent {
+	background: linear-gradient( 160deg, var( --hhp-flaeche-warm ), var( --hhp-flaeche ) 70% );
+	box-shadow: inset 0 0 0 1px var( --hhp-primary );
+}
+
+.hhp-thema-dunkel .hhp-tabelle,
+.hhp-thema-dunkel .hhp-tabelle-wrapper {
+	background: var( --hhp-flaeche );
+	border-color: var( --hhp-linie );
+}
+
+.hhp-thema-dunkel .hhp-tabelle thead th,
+.hhp-thema-dunkel .hhp-tabelle tfoot th {
+	background: var( --hhp-flaeche-warm );
+}
+
+.hhp-thema-dunkel .hhp-tabelle tbody tr:hover {
+	background: var( --hhp-flaeche-warm );
+}
+
+.hhp-thema-dunkel .hhp-tabelle th,
+.hhp-thema-dunkel .hhp-tabelle td {
+	border-bottom-color: var( --hhp-linie );
+}
+
+.hhp-thema-dunkel .hhp-nummer,
+.hhp-thema-dunkel .hhp-tabelle tfoot th {
+	color: #ffffff;
+}
+
+/* Buttons: gefuellt in der Leitfarbe, Schrift im Grundton fuer vollen Kontrast. */
+.hhp-thema-dunkel .hhp-button {
+	background: var( --hhp-primary );
+	border-color: var( --hhp-primary );
+	color: var( --hhp-grund, #030712 );
+	font-weight: 700;
+}
+
+.hhp-thema-dunkel .hhp-button:hover,
+.hhp-thema-dunkel .hhp-button:focus {
+	background: #ffffff;
+	border-color: #ffffff;
+	color: var( --hhp-grund, #030712 );
+}
+
+.hhp-thema-dunkel .hhp-button-ghost {
+	background: transparent;
+	color: var( --hhp-primary-text, var( --hhp-primary ) );
+	border-color: var( --hhp-primary );
+}
+
+.hhp-thema-dunkel .hhp-button-ghost:hover,
+.hhp-thema-dunkel .hhp-button-ghost:focus {
+	background: var( --hhp-primary );
+	color: var( --hhp-grund, #030712 );
+}
+
+.hhp-thema-dunkel .hhp-field select,
+.hhp-thema-dunkel .hhp-field input {
+	color: #ffffff;
+	background: transparent;
+	border-bottom-color: var( --hhp-linie );
+}
+
+.hhp-thema-dunkel .hhp-field select option {
+	color: #111111;
+}
+
+.hhp-thema-dunkel .hhp-field select:focus,
+.hhp-thema-dunkel .hhp-field input:focus {
+	border-bottom-color: var( --hhp-primary );
+}
+
+.hhp-thema-dunkel .hhp-axis {
+	fill: #a1a1aa;
+}
+
+.hhp-thema-dunkel .hhp-axis-line {
+	stroke: rgba( 255, 255, 255, 0.14 );
+}
+
+.hhp-thema-dunkel .hhp-bar:hover {
+	fill: var( --hhp-accent );
+}
+
+/* Die Zweitfarbe kennzeichnet Gutscheinbestellungen. */
+.hhp-thema-dunkel .hhp-tag {
+	border-color: var( --hhp-linie );
+	color: var( --hhp-gedaempft );
+}
+
+.hhp-thema-dunkel .hhp-tag-coupon {
+	background: transparent;
+	border-color: var( --hhp-accent );
+	color: var( --hhp-accent-text, var( --hhp-accent ) );
+}
+
+.hhp-thema-dunkel .hhp-tag-qr-coupon {
+	background: var( --hhp-primary );
+	border-color: var( --hhp-primary );
+	color: var( --hhp-grund, #030712 );
+}
+
+.hhp-thema-dunkel .hhp-hinweis-box {
+	background: var( --hhp-flaeche-warm );
+	border-left-color: var( --hhp-primary );
+}
+
+.hhp-thema-dunkel .hhp-fehler {
+	background: var( --hhp-flaeche-warm );
+	border-left-color: var( --hhp-accent );
+}
+
+.hhp-thema-dunkel .hhp-passwortblock {
+	border-color: var( --hhp-linie );
+}
+
+.hhp-thema-dunkel .hhp-passwortblock summary {
+	color: var( --hhp-primary-text, var( --hhp-primary ) );
+}
+
+.hhp-thema-dunkel .hhp-adminhinweis {
+	border-color: var( --hhp-primary );
+}
+
+.hhp-thema-dunkel .hhp-fuss {
+	border-top-color: var( --hhp-linie );
+}
+
+@media ( max-width: 640px ) {
+	.hhp-dashboard.hhp-thema-dunkel {
+		padding: 28px 18px;
+	}
+
+	.hhp-thema-dunkel .hhp-tabelle tr {
+		border-bottom-color: var( --hhp-linie );
+	}
+}
+
+/* Nach der allgemeinen Weiss-Regel, damit die Provision hervorsticht. */
+.hhp-thema-dunkel .hhp-kachel-akzent .hhp-kachel-wert {
+	color: var( --hhp-primary-text, var( --hhp-primary ) );
 }

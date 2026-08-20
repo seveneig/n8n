@@ -10,10 +10,10 @@
 
 defined( 'ABSPATH' ) || exit;
 ?>
-<div class="hhp-dashboard hhp-dashboard-schmal" style="<?php echo esc_attr( HHP_Dashboard::brand_style() ); ?>">
+<div class="hhp-dashboard hhp-dashboard-schmal <?php echo esc_attr( HHP_Dashboard::theme_class( isset( $marke ) ? $marke : null ) ); ?>" style="<?php echo esc_attr( HHP_Dashboard::brand_style( isset( $marke ) ? $marke : null ) ); ?>">
 	<header class="hhp-header">
 		<div class="hhp-header-brand">
-			<?php echo wp_kses_post( HHP_Dashboard::brand_logo() ); ?>
+			<?php echo wp_kses_post( HHP_Dashboard::brand_logo( isset( $marke ) ? $marke : null ) ); ?>
 			<div>
 				<h2 class="hhp-title"><?php esc_html_e( 'Vermittler-Zugang', 'hairhelp-partner' ); ?></h2>
 				<p class="hhp-subtitle"><?php esc_html_e( 'Bitte melde dich an, um deine vermittelten Verkäufe zu sehen.', 'hairhelp-partner' ); ?></p>

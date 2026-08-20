@@ -96,5 +96,65 @@ $GLOBALS['optionen']['permalink_structure'] = '/%postname%/';
 pruefe( 'kurze Adresse', HHP_Tracker::build_qr_url( 'loopx13' ), 'https://www.hairhelp-haarverdichter.ch/qr/loopx13' );
 pruefe( 'leerer Code ergibt keine Adresse', HHP_Tracker::build_qr_url( '' ), '' );
 
+echo "\nErscheinungsbild je Vermittler\n";
+
+// Ein frueherer Abschnitt hat die Vermittlerliste ersetzt; hier wird der
+// Auslieferungszustand wiederhergestellt, um die Vorbelegung zu pruefen.
+unset( $GLOBALS['optionen']['hhp_partners'] );
+HHP_Settings::install_defaults();
+
+$loop = HHP_Settings::get_partner( 'loopx13' );
+pruefe( 'LoopX13 nutzt das dunkle Schema', HHP_Dashboard::theme_class( $loop ), 'hhp-thema-dunkel' );
+pruefe( 'ohne Vermittler bleibt es hell', HHP_Dashboard::theme_class( null ), '' );
+
+$marke = HHP_Dashboard::brand( $loop );
+pruefe( 'Leitfarbe kommt vom Vermittler', $marke['primary'], '#00e5ff' );
+pruefe( 'Zweitfarbe kommt vom Vermittler', $marke['accent'], '#ff007a' );
+pruefe( 'Grund kommt vom Vermittler', $marke['grund'], '#030712' );
+
+$shop = HHP_Dashboard::brand( null );
+pruefe( 'ohne Vermittler gelten die Shopfarben', $shop['primary'], '#a39772' );
+
+// Ein Vermittler ohne eigene Werte faellt vollstaendig auf den Shop zurueck.
+$leer = HHP_Settings::normalize_partner( array( 'id' => 'leer' ) );
+pruefe( 'leere Marke erbt die Shopfarbe', HHP_Dashboard::brand( $leer )['primary'], '#a39772' );
+pruefe( 'leere Marke bleibt hell', HHP_Dashboard::brand( $leer )['thema'], 'hell' );
+
+echo "\nKontrastsicherung\n";
+$weiss = array( 255, 255, 255 );
+$schwarz = array( 0, 0, 0 );
+pruefe( 'Schwarz auf Weiss ergibt 21 zu 1', round( HHP_Dashboard::contrast( $schwarz, $weiss ), 1 ), 21.0 );
+
+/**
+ * Kontrast zweier Hexwerte.
+ *
+ * @param string $a Farbe.
+ * @param string $b Farbe.
+ *
+ * @return float
+ */
+function kontrast( $a, $b ) {
+	$zu = function ( $hex ) {
+		$hex = ltrim( $hex, '#' );
+		return array( hexdec( substr( $hex, 0, 2 ) ), hexdec( substr( $hex, 2, 2 ) ), hexdec( substr( $hex, 4, 2 ) ) );
+	};
+	return HHP_Dashboard::contrast( $zu( $a ), $zu( $b ) );
+}
+
+pruefe( 'Cyan auf Weiss ist ungeprüft unlesbar', kontrast( '#00e5ff', '#ffffff' ) < 2.0, true );
+$fix = HHP_Dashboard::readable( '#00e5ff', '#ffffff' );
+pruefe( 'nach der Korrektur lesbar auf Weiss', kontrast( $fix, '#ffffff' ) >= 4.5, true );
+
+$fix2 = HHP_Dashboard::readable( '#00e5ff', '#030712' );
+pruefe( 'auf dunklem Grund bleibt Cyan unverändert', $fix2, '#00e5ff' );
+
+$gold = HHP_Dashboard::readable( '#a39772', '#ffffff' );
+pruefe( 'Markengold wird für Text nachgedunkelt', kontrast( $gold, '#ffffff' ) >= 4.5, true );
+
+$dunkelblau = HHP_Dashboard::readable( '#0a1832', '#030712' );
+pruefe( 'zu dunkle Farbe wird auf dunklem Grund aufgehellt', kontrast( $dunkelblau, '#030712' ) >= 4.5, true );
+
+pruefe( 'unsinniger Farbwert wird unverändert zurückgegeben', HHP_Dashboard::readable( 'kaputt', '#ffffff' ), 'kaputt' );
+
 printf( "\n=== %d bestanden, %d fehlgeschlagen ===\n", $ok, $fehl );
 exit( $fehl > 0 ? 1 : 0 );

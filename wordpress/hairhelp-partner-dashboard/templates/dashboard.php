@@ -34,11 +34,11 @@ $hhp_zeitraeume = array(
 	'eigen'    => __( 'Eigener Zeitraum', 'hairhelp-partner' ),
 );
 ?>
-<div class="hhp-dashboard" style="<?php echo esc_attr( HHP_Dashboard::brand_style() ); ?>">
+<div class="hhp-dashboard <?php echo esc_attr( HHP_Dashboard::theme_class( $partner ) ); ?>" style="<?php echo esc_attr( HHP_Dashboard::brand_style( $partner ) ); ?>">
 
 	<header class="hhp-header">
 		<div class="hhp-header-brand">
-			<?php echo wp_kses_post( HHP_Dashboard::brand_logo() ); ?>
+			<?php echo wp_kses_post( HHP_Dashboard::brand_logo( $partner ) ); ?>
 			<div>
 				<h2 class="hhp-title"><?php echo esc_html( $hhp_titel ); ?></h2>
 				<p class="hhp-subtitle">

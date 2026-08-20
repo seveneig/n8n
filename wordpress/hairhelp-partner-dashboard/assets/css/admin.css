@@ -141,3 +141,23 @@
 	font-style: normal;
 	font-weight: 400;
 }
+
+.hhp-admin .hhp-markenblock {
+	margin-top: 14px;
+	padding-top: 12px;
+	border-top: 1px solid #f0f0f1;
+}
+
+.hhp-admin .hhp-markenblock summary {
+	font-weight: 600;
+	cursor: pointer;
+	margin-bottom: 8px;
+}
+
+.hhp-admin .hhp-markenblock .description {
+	margin: 6px 0 10px;
+}
+
+.hhp-admin .hhp-breit {
+	grid-column: 1 / -1;
+}

@@ -91,11 +91,25 @@ class HHP_Dashboard {
 				$fehler = 'kein_zugang';
 			}
 
+			// Vor der Anmeldung ist der Vermittler unbekannt. Nennt der Shortcode
+			// einen, traegt schon die Anmeldemaske dessen Erscheinungsbild.
+			$marke = '' !== $atts['partner'] ? HHP_Settings::get_partner( $atts['partner'] ) : null;
+
+			if ( ! $marke ) {
+				// Gibt es nur einen aktiven Vermittler, gehoert die Seite ihm.
+				$aktive = HHP_Settings::partners( true );
+
+				if ( 1 === count( $aktive ) ) {
+					$marke = $aktive[0];
+				}
+			}
+
 			return self::render_template(
 				'login',
 				array(
 					'fehler'  => HHP_Auth::message( $fehler ),
 					'hinweis' => HHP_Auth::notice( $hinweis ),
+					'marke'   => $marke,
 				)
 			);
 		}
@@ -233,44 +247,125 @@ class HHP_Dashboard {
 	}
 
 	/**
-	 * Liefert die Markenfarben als CSS-Variablen.
+	 * Liefert die Markenwerte eines Vermittlers mit Rueckfall auf die Shopwerte.
 	 *
-	 * Schriftarten werden bewusst nicht gesetzt: Das Dashboard uebernimmt die
-	 * Typografie des aktiven Themes und fuegt sich damit von selbst in das
-	 * bestehende Erscheinungsbild ein.
+	 * @param array|null $partner Vermittler oder null fuer die Shopwerte.
+	 *
+	 * @return array
+	 */
+	public static function brand( $partner = null ) {
+		$shop = HHP_Settings::all();
+
+		$werte = array(
+			'thema'   => 'hell',
+			'primary' => sanitize_hex_color( $shop['brand_primary'] ) ? $shop['brand_primary'] : '#a39772',
+			'accent'  => sanitize_hex_color( $shop['brand_accent'] ) ? $shop['brand_accent'] : '#d1bc92',
+			'grund'   => '',
+			'font'    => '',
+			'name'    => '',
+			'logo'    => '',
+		);
+
+		if ( is_array( $partner ) ) {
+			if ( 'shop' !== $partner['brand_theme'] ) {
+				$werte['thema'] = $partner['brand_theme'];
+			}
+
+			foreach ( array( 'primary', 'accent', 'grund', 'font', 'name', 'logo' ) as $feld ) {
+				if ( ! empty( $partner[ 'brand_' . $feld ] ) ) {
+					$werte[ $feld ] = $partner[ 'brand_' . $feld ];
+				}
+			}
+		}
+
+		if ( 'dunkel' === $werte['thema'] && '' === $werte['grund'] ) {
+			$werte['grund'] = '#0b0b0f';
+		}
+
+		return $werte;
+	}
+
+	/**
+	 * Liefert die CSS-Klasse des gewaehlten Farbschemas.
+	 *
+	 * @param array|null $partner Vermittler.
 	 *
 	 * @return string
 	 */
-	public static function brand_style() {
-		$primary = sanitize_hex_color( HHP_Settings::get( 'brand_primary' ) );
-		$accent  = sanitize_hex_color( HHP_Settings::get( 'brand_accent' ) );
-		$dark    = sanitize_hex_color( HHP_Settings::get( 'brand_dark' ) );
+	public static function theme_class( $partner = null ) {
+		$brand = self::brand( $partner );
 
-		return sprintf(
-			'--hhp-primary:%s;--hhp-accent:%s;--hhp-dark:%s;',
-			$primary ? $primary : '#a39772',
-			$accent ? $accent : '#d1bc92',
-			$dark ? $dark : '#292929'
+		return 'dunkel' === $brand['thema'] ? 'hhp-thema-dunkel' : '';
+	}
+
+	/**
+	 * Liefert die Markenwerte als CSS-Variablen.
+	 *
+	 * Die Schriftart wird bewusst nur als Stapel gesetzt und nie nachgeladen:
+	 * ein externer Schriftdienst wuerde bei jedem Aufruf die Adresse des
+	 * Besuchers an einen Dritten uebermitteln.
+	 *
+	 * @param array|null $partner Vermittler.
+	 *
+	 * @return string
+	 */
+	public static function brand_style( $partner = null ) {
+		$brand  = self::brand( $partner );
+		$dunkel = 'dunkel' === $brand['thema'];
+		$grund  = $dunkel ? $brand['grund'] : '#ffffff';
+
+		$css = sprintf(
+			'--hhp-primary:%s;--hhp-accent:%s;--hhp-primary-text:%s;--hhp-accent-text:%s;',
+			$brand['primary'],
+			$brand['accent'],
+			// Fuer Text wird die Farbe so weit aufgehellt oder abgedunkelt, bis
+			// sie auf dem jeweiligen Grund lesbar ist.
+			self::readable( $brand['primary'], $grund ),
+			self::readable( $brand['accent'], $grund )
 		);
+
+		if ( $dunkel ) {
+			$css .= sprintf( '--hhp-grund:%s;', $grund );
+		} else {
+			$dark = sanitize_hex_color( HHP_Settings::get( 'brand_dark' ) );
+			$css .= sprintf( '--hhp-dark:%s;', $dark ? $dark : '#292929' );
+		}
+
+		if ( '' !== $brand['font'] ) {
+			$css .= sprintf( '--hhp-schrift-titel:%1$s;--hhp-schrift-text:%1$s;', $brand['font'] );
+		}
+
+		return $css;
 	}
 
 	/**
 	 * Liefert das Logo fuer den Dashboard-Kopf.
 	 *
-	 * Standardmaessig wird das in WordPress hinterlegte Website-Logo verwendet,
-	 * damit das Dashboard ohne weitere Pflege zum Auftritt der Seite passt.
+	 * Hat der Vermittler ein eigenes Logo hinterlegt, wird dieses verwendet,
+	 * sonst das in WordPress hinterlegte Website-Logo.
+	 *
+	 * @param array|null $partner Vermittler.
 	 *
 	 * @return string HTML des Logos oder leerer String.
 	 */
-	public static function brand_logo() {
+	public static function brand_logo( $partner = null ) {
+		$brand = self::brand( $partner );
+		$name  = '' !== $brand['name'] ? $brand['name'] : get_bloginfo( 'name' );
+
+		if ( '' !== $brand['logo'] ) {
+			return sprintf( '<img src="%s" alt="%s" class="hhp-logo" />', esc_url( $brand['logo'] ), esc_attr( $name ) );
+		}
+
 		$custom = HHP_Settings::get( 'brand_logo' );
 
-		if ( $custom ) {
-			return sprintf(
-				'<img src="%s" alt="%s" class="hhp-logo" />',
-				esc_url( $custom ),
-				esc_attr( get_bloginfo( 'name' ) )
-			);
+		if ( $custom && ! is_array( $partner ) ) {
+			return sprintf( '<img src="%s" alt="%s" class="hhp-logo" />', esc_url( $custom ), esc_attr( $name ) );
+		}
+
+		// Ein Vermittler mit eigener Marke bekommt nicht das Shoplogo, sondern
+		// seinen Namen als Schriftzug.
+		if ( '' !== $brand['name'] ) {
+			return sprintf( '<span class="hhp-wortmarke">%s</span>', esc_html( $brand['name'] ) );
 		}
 
 		if ( ! HHP_Settings::get( 'use_site_logo' ) ) {
@@ -283,15 +378,109 @@ class HHP_Dashboard {
 			$src = wp_get_attachment_image_url( $logo_id, 'medium' );
 
 			if ( $src ) {
-				return sprintf(
-					'<img src="%s" alt="%s" class="hhp-logo" />',
-					esc_url( $src ),
-					esc_attr( get_bloginfo( 'name' ) )
-				);
+				return sprintf( '<img src="%s" alt="%s" class="hhp-logo" />', esc_url( $src ), esc_attr( $name ) );
 			}
 		}
 
 		return '';
+	}
+
+	/**
+	 * Passt eine Farbe an, bis sie auf dem Grund lesbar ist.
+	 *
+	 * Im Backend darf jede Farbe gewaehlt werden. Ohne diese Absicherung wuerde
+	 * etwa Cyan auf Weiss nur ein Kontrastverhaeltnis von rund 1,7 zu 1
+	 * erreichen und die Zahlen waeren praktisch unlesbar. Aufgehellt oder
+	 * abgedunkelt wird schrittweise, bis der Wert 4,5 zu 1 erreicht ist.
+	 *
+	 * @param string $farbe  Wunschfarbe.
+	 * @param string $grund  Hintergrundfarbe.
+	 * @param float  $ziel   Angestrebtes Kontrastverhaeltnis.
+	 *
+	 * @return string
+	 */
+	public static function readable( $farbe, $grund, $ziel = 4.5 ) {
+		$vorne  = self::to_rgb( $farbe );
+		$hinten = self::to_rgb( $grund );
+
+		if ( null === $vorne || null === $hinten ) {
+			return (string) $farbe;
+		}
+
+		// Auf hellem Grund abdunkeln, auf dunklem Grund aufhellen.
+		$aufhellen = self::luminance( $hinten ) < 0.5;
+
+		for ( $schritt = 0; $schritt < 40; $schritt++ ) {
+			if ( self::contrast( $vorne, $hinten ) >= $ziel ) {
+				break;
+			}
+
+			foreach ( $vorne as $i => $wert ) {
+				$vorne[ $i ] = $aufhellen
+					? min( 255, (int) round( $wert + ( ( 255 - $wert ) * 0.12 ) + 3 ) )
+					: max( 0, (int) round( $wert * 0.88 ) );
+			}
+		}
+
+		return sprintf( '#%02x%02x%02x', $vorne[0], $vorne[1], $vorne[2] );
+	}
+
+	/**
+	 * Wandelt einen Hexwert in RGB-Anteile.
+	 *
+	 * @param string $hex Farbwert.
+	 *
+	 * @return array|null
+	 */
+	protected static function to_rgb( $hex ) {
+		$hex = ltrim( (string) $hex, '#' );
+
+		if ( 3 === strlen( $hex ) ) {
+			$hex = $hex[0] . $hex[0] . $hex[1] . $hex[1] . $hex[2] . $hex[2];
+		}
+
+		if ( 6 !== strlen( $hex ) || ! ctype_xdigit( $hex ) ) {
+			return null;
+		}
+
+		return array(
+			hexdec( substr( $hex, 0, 2 ) ),
+			hexdec( substr( $hex, 2, 2 ) ),
+			hexdec( substr( $hex, 4, 2 ) ),
+		);
+	}
+
+	/**
+	 * Relative Helligkeit nach WCAG.
+	 *
+	 * @param array $rgb Farbanteile.
+	 *
+	 * @return float
+	 */
+	protected static function luminance( $rgb ) {
+		$teile = array();
+
+		foreach ( $rgb as $wert ) {
+			$anteil  = $wert / 255;
+			$teile[] = $anteil <= 0.03928 ? $anteil / 12.92 : pow( ( $anteil + 0.055 ) / 1.055, 2.4 );
+		}
+
+		return ( 0.2126 * $teile[0] ) + ( 0.7152 * $teile[1] ) + ( 0.0722 * $teile[2] );
+	}
+
+	/**
+	 * Kontrastverhaeltnis zweier Farben nach WCAG.
+	 *
+	 * @param array $a Farbe.
+	 * @param array $b Farbe.
+	 *
+	 * @return float
+	 */
+	public static function contrast( $a, $b ) {
+		$la = self::luminance( $a );
+		$lb = self::luminance( $b );
+
+		return ( max( $la, $lb ) + 0.05 ) / ( min( $la, $lb ) + 0.05 );
 	}
 
 	/**

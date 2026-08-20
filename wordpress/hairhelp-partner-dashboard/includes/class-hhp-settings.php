@@ -112,6 +112,15 @@ class HHP_Settings {
 						'token'           => self::generate_token(),
 						'username'        => 'loopx13',
 						'password_hash'   => '',
+
+						// Erscheinungsbild von loopx13.ch: fast schwarzer Grund,
+						// Cyan als Leitfarbe, Magenta als Zweitfarbe.
+						'brand_name'      => 'LoopX13',
+						'brand_theme'     => 'dunkel',
+						'brand_primary'   => '#00e5ff',
+						'brand_accent'    => '#ff007a',
+						'brand_grund'     => '#030712',
+						'brand_font'      => 'Inter, "Helvetica Neue", Helvetica, Arial, sans-serif',
 						'active'          => 1,
 						'note'            => '',
 					),
@@ -221,6 +230,16 @@ class HHP_Settings {
 			'commission_base' => isset( $partner['commission_base'] ) && 'gross' === $partner['commission_base'] ? 'gross' : 'net',
 			'token'           => isset( $partner['token'] ) ? preg_replace( '/[^a-f0-9]/', '', (string) $partner['token'] ) : '',
 			'username'        => isset( $partner['username'] ) ? HHP_Auth::sanitize_username( $partner['username'] ) : '',
+
+			// Eigenes Erscheinungsbild. Leere Werte fallen auf die Shopwerte
+			// zurueck, damit ein Vermittler ohne eigene Marke nichts einstellen muss.
+			'brand_name'      => isset( $partner['brand_name'] ) ? sanitize_text_field( $partner['brand_name'] ) : '',
+			'brand_logo'      => isset( $partner['brand_logo'] ) ? esc_url_raw( $partner['brand_logo'] ) : '',
+			'brand_theme'     => isset( $partner['brand_theme'] ) && in_array( $partner['brand_theme'], array( 'hell', 'dunkel' ), true ) ? $partner['brand_theme'] : 'shop',
+			'brand_primary'   => isset( $partner['brand_primary'] ) ? (string) sanitize_hex_color( $partner['brand_primary'] ) : '',
+			'brand_accent'    => isset( $partner['brand_accent'] ) ? (string) sanitize_hex_color( $partner['brand_accent'] ) : '',
+			'brand_grund'     => isset( $partner['brand_grund'] ) ? (string) sanitize_hex_color( $partner['brand_grund'] ) : '',
+			'brand_font'      => isset( $partner['brand_font'] ) ? sanitize_text_field( $partner['brand_font'] ) : '',
 			'password_hash'   => isset( $partner['password_hash'] ) ? (string) $partner['password_hash'] : '',
 			'active'          => ! empty( $partner['active'] ) ? 1 : 0,
 			'note'            => isset( $partner['note'] ) ? sanitize_text_field( $partner['note'] ) : '',

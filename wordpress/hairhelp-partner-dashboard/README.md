@@ -340,6 +340,56 @@ Dashboard automatisch mit. Das Logo kommt aus dem WordPress-Customizer.
 Die drei Hauptfarben stehen unter **Einstellungen → Erscheinungsbild** und
 sind dort jederzeit änderbar; die neutralen Grautöne liegen im Stylesheet.
 
+### Eigenes Erscheinungsbild je Vermittler
+
+Ein Vermittler mit eigener Marke bekommt sein Dashboard in **seinem** Design,
+ohne dass sich am Shop etwas ändert. Unter **Vermittler → Eigenes
+Erscheinungsbild**:
+
+| Feld | Wirkung |
+|---|---|
+| Anzeigename | Wortmarke im Kopf, ersetzt das Shop-Logo |
+| Farbschema | *wie der Shop*, *hell* oder *dunkel* |
+| Leitfarbe | Diagramm, Provisionswert, Beschriftungen, Buttons |
+| Zweitfarbe | Kennzeichnung der Gutscheinbestellungen |
+| Hintergrund | Grundton, nur beim dunklen Schema |
+| Logo-Adresse | eigenes Bildlogo statt Wortmarke |
+| Schriftstapel | gewünschte Schrift, falls vorhanden |
+
+Leere Felder übernehmen die Shopwerte. Für **LoopX13** ist das Design bereits
+hinterlegt, entnommen der Website des Vermittlers:
+
+| Rolle | Wert |
+|---|---|
+| Grund | `#030712` |
+| Leitfarbe | `#00E5FF` (Cyan) |
+| Zweitfarbe | `#FF007A` (Magenta) |
+| Schrift | Inter, Helvetica Neue, Arial |
+
+Im dunklen Schema erbt das Dashboard bewusst **nichts** mehr vom Theme: Auf
+dunklem Grund wäre die dunkle Textfarbe des Themes unlesbar. Es bringt daher
+alle Farben selbst mit und zeichnet seinen eigenen Hintergrund.
+
+> **Kontrastsicherung:** Für Text wird jede Farbe automatisch so weit
+> nachgedunkelt oder aufgehellt, bis sie auf dem jeweiligen Grund ein
+> Kontrastverhältnis von 4,5:1 erreicht. Ohne das käme Cyan auf Weiss auf
+> rund 1,7:1 und die Zahlen wären praktisch unlesbar. Flächen, Rahmen und
+> Diagrammbalken behalten den Originalton.
+
+> **Schriften werden nie nachgeladen.** Angegeben wird nur, welche Schrift
+> verwendet werden soll, wenn sie auf dem Gerät vorhanden ist. Ein externer
+> Schriftdienst würde bei jedem Aufruf die Adresse des Besuchers an einen
+> Dritten übermitteln – in der Schweiz und der EU ein Datenschutzproblem.
+
+Damit schon die **Anmeldemaske** im Design des Vermittlers erscheint, muss
+klar sein, wem die Seite gehört. Gibt es nur einen aktiven Vermittler, wird
+dessen Design automatisch verwendet. Bei mehreren Vermittlern den Shortcode
+entsprechend setzen:
+
+```
+[hhp_partner_dashboard partner="loopx13"]
+```
+
 > Hinweis zum Kontrast: Das Markengold erreicht auf Weiss nur ein
 > Kontrastverhältnis von rund 2,6:1. Es wird deshalb für Flächen, Linien und
 > grosse Zahlen eingesetzt, nie für Fliesstext – dort steht Anthrazit.
