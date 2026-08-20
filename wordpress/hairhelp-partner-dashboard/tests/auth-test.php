@@ -55,6 +55,21 @@ pruefe( 'falsches Passwort passt nicht', wp_check_password( 'GeheimesPasswort202
 pruefe( 'leeres Passwort passt nicht', wp_check_password( '', $partner['password_hash'] ), false );
 pruefe( 'Passwort für unbekannten Vermittler schlägt fehl', HHP_Settings::set_password( 'gibtesnicht', 'IrgendeinPasswort' ), false );
 
+echo "\nAnmeldung prüfen\n";
+pruefe( 'richtige Zugangsdaten werden angenommen', HHP_Auth::verify_credentials( 'loopx13', 'GeheimesPasswort2026' )['id'], 'loopx13' );
+pruefe( 'falsches Passwort wird abgewiesen', HHP_Auth::verify_credentials( 'loopx13', 'falsch12345' ), null );
+pruefe( 'unbekannter Benutzer wird abgewiesen', HHP_Auth::verify_credentials( 'fremd', 'GeheimesPasswort2026' ), null );
+pruefe( 'leere Eingaben werden abgewiesen', HHP_Auth::verify_credentials( '', '' ), null );
+
+// Der wichtigste Fall: Solange kein Passwort gesetzt ist, darf niemand hinein.
+$ohne = HHP_Settings::partners();
+$ohne[0]['password_hash'] = '';
+HHP_Settings::save_partners( $ohne );
+pruefe( 'ohne gesetztes Passwort kein Zugang', HHP_Auth::verify_credentials( 'loopx13', '' ), null );
+pruefe( 'ohne gesetztes Passwort auch mit Rateversuch kein Zugang', HHP_Auth::verify_credentials( 'loopx13', 'passwort123' ), null );
+pruefe( 'Ersatz-Hash umgeht den MD5-Pfad von WordPress', strlen( HHP_Auth::ERSATZ_HASH ) > 32, true );
+HHP_Settings::set_password( 'loopx13', 'GeheimesPasswort2026' );
+
 echo "\nBenutzer finden\n";
 pruefe( 'Benutzername findet den Vermittler', HHP_Auth::find_by_username( 'loopx13' )['id'], 'loopx13' );
 pruefe( 'Gross-/Kleinschreibung egal', HHP_Auth::find_by_username( 'LOOPX13' )['id'], 'loopx13' );

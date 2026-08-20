@@ -20,6 +20,14 @@ class HHP_Auth {
 	const COOKIE = 'hhp_session';
 
 	/**
+	 * Ersatz-Hash fuer Konten ohne Passwort und unbekannte Benutzernamen.
+	 *
+	 * Passt auf keine Eingabe und ist laenger als 32 Zeichen, damit WordPress
+	 * ihn nicht als MD5-Hash behandelt.
+	 */
+	const ERSATZ_HASH = '$P$Bkeinpasswortgesetzt00000000000000';
+
+	/**
 	 * Hoechstzahl Fehlversuche je Adresse innerhalb des Zeitfensters.
 	 */
 	const MAX_VERSUCHE = 8;
@@ -98,20 +106,12 @@ class HHP_Auth {
 			self::redirect_back( array( 'hhp_fehler' => 'gesperrt' ) );
 		}
 
-		$benutzer  = isset( $_POST['hhp_benutzer'] ) ? self::sanitize_username( wp_unslash( $_POST['hhp_benutzer'] ) ) : '';
-		$passwort  = isset( $_POST['hhp_passwort'] ) ? (string) wp_unslash( $_POST['hhp_passwort'] ) : '';
-		$gemerkt   = ! empty( $_POST['hhp_merken'] );
-		$partner   = self::find_by_username( $benutzer );
+		$benutzer = isset( $_POST['hhp_benutzer'] ) ? (string) wp_unslash( $_POST['hhp_benutzer'] ) : '';
+		$passwort = isset( $_POST['hhp_passwort'] ) ? (string) wp_unslash( $_POST['hhp_passwort'] ) : '';
+		$gemerkt  = ! empty( $_POST['hhp_merken'] );
+		$partner  = self::verify_credentials( $benutzer, $passwort );
 
-		// Auch bei unbekanntem Benutzernamen wird ein Hash geprueft, damit die
-		// Antwortzeit nicht verraet, ob es den Zugang gibt.
-		$hash = $partner && ! empty( $partner['password_hash'] )
-			? $partner['password_hash']
-			: '$P$Bnichtvorhanden0000000000000000000';
-
-		$passt = wp_check_password( $passwort, $hash );
-
-		if ( ! $partner || ! $passt ) {
+		if ( ! $partner ) {
 			self::register_failure();
 			self::redirect_back( array( 'hhp_fehler' => 'zugangsdaten' ) );
 		}
@@ -120,6 +120,38 @@ class HHP_Auth {
 		self::start_session( $partner['id'], $gemerkt );
 
 		self::redirect_back();
+	}
+
+	/**
+	 * Prueft Benutzername und Passwort.
+	 *
+	 * Ist kein Passwort hinterlegt, wird gegen einen Ersatz-Hash geprueft, der
+	 * auf keine Eingabe passt. Ein Vermittler ohne gesetztes Passwort kann sich
+	 * also nicht anmelden, auch nicht mit leerer Eingabe. Der Ersatz-Hash wird
+	 * ebenso bei unbekanntem Benutzernamen geprueft, damit die Antwortzeit nicht
+	 * verraet, ob es den Zugang gibt.
+	 *
+	 * @param string $benutzer Benutzername.
+	 * @param string $passwort Passwort im Klartext.
+	 *
+	 * @return array|null Vermittler bei Erfolg, sonst null.
+	 */
+	public static function verify_credentials( $benutzer, $passwort ) {
+		$partner = self::find_by_username( $benutzer );
+
+		// Bewusst laenger als 32 Zeichen: kuerzere Werte vergleicht WordPress
+		// als MD5-Hash, was hier der falsche Pfad waere.
+		$hash = ( $partner && '' !== $partner['password_hash'] )
+			? $partner['password_hash']
+			: self::ERSATZ_HASH;
+
+		$passt = wp_check_password( (string) $passwort, $hash );
+
+		if ( ! $partner || ! $passt ) {
+			return null;
+		}
+
+		return $partner;
 	}
 
 	/**
