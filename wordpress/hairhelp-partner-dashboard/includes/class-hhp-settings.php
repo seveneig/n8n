@@ -59,6 +59,13 @@ class HHP_Settings {
 			'statuses'         => array( 'processing', 'completed' ),
 			'refunded_status'  => array( 'refunded', 'cancelled', 'failed' ),
 			'customer_data'    => 'initials',
+
+			// Zugang: 'login' (Benutzername und Passwort), 'token' (geheimer
+			// Link) oder 'both'. Standard ist der Login, weil ein Link durch
+			// blosses Weiterleiten seine Schutzwirkung verliert.
+			'access_mode'      => 'login',
+			'session_hours'    => 12,
+			'remember_days'    => 30,
 			'show_products'    => 1,
 			'currency_note'    => '',
 
@@ -103,6 +110,8 @@ class HHP_Settings {
 						'commission'      => 10.0,
 						'commission_base' => 'net',
 						'token'           => self::generate_token(),
+						'username'        => 'loopx13',
+						'password_hash'   => '',
 						'active'          => 1,
 						'note'            => '',
 					),
@@ -211,6 +220,8 @@ class HHP_Settings {
 			'commission'      => isset( $partner['commission'] ) ? (float) $partner['commission'] : 0.0,
 			'commission_base' => isset( $partner['commission_base'] ) && 'gross' === $partner['commission_base'] ? 'gross' : 'net',
 			'token'           => isset( $partner['token'] ) ? preg_replace( '/[^a-f0-9]/', '', (string) $partner['token'] ) : '',
+			'username'        => isset( $partner['username'] ) ? HHP_Auth::sanitize_username( $partner['username'] ) : '',
+			'password_hash'   => isset( $partner['password_hash'] ) ? (string) $partner['password_hash'] : '',
 			'active'          => ! empty( $partner['active'] ) ? 1 : 0,
 			'note'            => isset( $partner['note'] ) ? sanitize_text_field( $partner['note'] ) : '',
 		);
@@ -338,6 +349,39 @@ class HHP_Settings {
 		}
 
 		return null;
+	}
+
+	/**
+	 * Setzt das Passwort eines Vermittlers.
+	 *
+	 * Gehasht wird mit den WordPress-Funktionen, damit dieselbe Absicherung
+	 * greift wie bei regulaeren Benutzerkonten.
+	 *
+	 * @param string $id       Kennung des Vermittlers.
+	 * @param string $passwort Klartextpasswort.
+	 *
+	 * @return bool
+	 */
+	public static function set_password( $id, $passwort ) {
+		$id       = sanitize_key( $id );
+		$partners = self::partners();
+		$gefunden = false;
+
+		foreach ( $partners as $index => $partner ) {
+			if ( $partner['id'] === $id ) {
+				$partners[ $index ]['password_hash'] = wp_hash_password( $passwort );
+				$gefunden                            = true;
+				break;
+			}
+		}
+
+		if ( ! $gefunden ) {
+			return false;
+		}
+
+		self::save_partners( $partners );
+
+		return true;
 	}
 
 	/**

@@ -53,12 +53,38 @@ $hhp_zeitraeume = array(
 			</div>
 		</div>
 
-		<?php if ( $ist_admin ) : ?>
-			<p class="hhp-adminhinweis">
-				<?php esc_html_e( 'Interne Ansicht als Shop-Verantwortliche.', 'hairhelp-partner' ); ?>
-			</p>
-		<?php endif; ?>
+		<div class="hhp-kopf-rechts">
+			<?php if ( $ist_admin ) : ?>
+				<p class="hhp-adminhinweis">
+					<?php esc_html_e( 'Interne Ansicht als Shop-Verantwortliche.', 'hairhelp-partner' ); ?>
+				</p>
+			<?php endif; ?>
+
+			<?php if ( ! empty( $angemeldet ) ) : ?>
+				<p class="hhp-sitzung">
+					<?php
+					printf(
+						/* translators: %s: Benutzername */
+						esc_html__( 'Angemeldet als %s', 'hairhelp-partner' ),
+						'<strong>' . esc_html( $partner['username'] ) . '</strong>'
+					);
+					?>
+					&middot;
+					<a href="<?php echo esc_url( wp_nonce_url( add_query_arg( 'hhp_abmelden', '1', get_permalink() ), 'hhp_abmelden' ) ); ?>">
+						<?php esc_html_e( 'Abmelden', 'hairhelp-partner' ); ?>
+					</a>
+				</p>
+			<?php endif; ?>
+		</div>
 	</header>
+
+	<?php if ( ! empty( $hinweis ) ) : ?>
+		<p class="hhp-hinweis-box"><?php echo esc_html( $hinweis ); ?></p>
+	<?php endif; ?>
+
+	<?php if ( ! empty( $fehler ) ) : ?>
+		<p class="hhp-fehler"><?php echo esc_html( $fehler ); ?></p>
+	<?php endif; ?>
 
 	<form class="hhp-filter" method="get">
 		<?php if ( '' !== $token ) : ?>
@@ -232,6 +258,40 @@ $hhp_zeitraeume = array(
 			</div>
 		<?php endif; ?>
 	</section>
+
+	<?php if ( ! empty( $angemeldet ) ) : ?>
+		<section class="hhp-block">
+			<details class="hhp-passwortblock">
+				<summary><?php esc_html_e( 'Passwort ändern', 'hairhelp-partner' ); ?></summary>
+
+				<form class="hhp-passwortform" method="post">
+					<input type="hidden" name="hhp_aktion" value="passwort" />
+					<?php wp_nonce_field( 'hhp_passwort' ); ?>
+
+					<label class="hhp-field">
+						<span><?php esc_html_e( 'Bisheriges Passwort', 'hairhelp-partner' ); ?></span>
+						<input type="password" name="hhp_alt" autocomplete="current-password" required />
+					</label>
+
+					<label class="hhp-field">
+						<span><?php esc_html_e( 'Neues Passwort', 'hairhelp-partner' ); ?></span>
+						<input type="password" name="hhp_neu" autocomplete="new-password" minlength="10" required />
+					</label>
+
+					<label class="hhp-field">
+						<span><?php esc_html_e( 'Neues Passwort wiederholen', 'hairhelp-partner' ); ?></span>
+						<input type="password" name="hhp_neu2" autocomplete="new-password" minlength="10" required />
+					</label>
+
+					<button type="submit" class="hhp-button"><?php esc_html_e( 'Speichern', 'hairhelp-partner' ); ?></button>
+				</form>
+
+				<p class="hhp-hinweis">
+					<?php esc_html_e( 'Mindestens 10 Zeichen. Nach der Änderung wirst du auf allen anderen Geräten abgemeldet.', 'hairhelp-partner' ); ?>
+				</p>
+			</details>
+		</section>
+	<?php endif; ?>
 
 	<footer class="hhp-fuss">
 		<p>

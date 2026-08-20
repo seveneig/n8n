@@ -11,6 +11,7 @@ define( 'ABSPATH', __DIR__ );
 define( 'DAY_IN_SECONDS', 86400 );
 define( 'MINUTE_IN_SECONDS', 60 );
 define( 'HOUR_IN_SECONDS', 3600 );
+define( 'YEAR_IN_SECONDS', 31536000 );
 
 $GLOBALS['optionen']   = array();
 $GLOBALS['transients'] = array();
@@ -61,6 +62,13 @@ class WC_Order {
     public function get_coupon_codes() { return $this->coupons; }
 }
 
+function wp_hash_password( $p ) { return password_hash( (string) $p, PASSWORD_BCRYPT ); }
+function wp_check_password( $p, $hash ) { return password_verify( (string) $p, (string) $hash ); }
+function delete_transient( $k ) { unset( $GLOBALS['transients'][ $k ] ); return true; }
+function get_queried_object_id() { return 0; }
+function wp_verify_nonce( $n, $a = -1 ) { return 'nonce' === $n; }
+
+require __DIR__ . '/../includes/class-hhp-auth.php';
 require __DIR__ . '/../includes/class-hhp-settings.php';
 require __DIR__ . '/../includes/class-hhp-tracker.php';
 require __DIR__ . '/../includes/class-hhp-attribution.php';

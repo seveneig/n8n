@@ -6,7 +6,7 @@
 <style>
 	/* Erscheinungsbild von www.hairhelp-haarverdichter.ch:
 	   Gold als einziger Akzent, eckige Kanten, Haarlinien statt Rahmen. */
-	@page { size: A4; margin: 15mm 16mm 12mm; }
+	@page { size: A4; margin: 14mm 16mm 11mm; }
 
 	:root {
 		--gold: #a39772;
@@ -63,12 +63,12 @@
 		font-size: 9pt;
 		text-transform: uppercase;
 		letter-spacing: 0.14em;
-		margin: 0 0 5px;
-		padding-bottom: 4px;
+		margin: 0 0 4px;
+		padding-bottom: 3px;
 		border-bottom: 1px solid var(--linie);
 	}
 
-	section { margin-bottom: 9px; }
+	section { margin-bottom: 7px; }
 
 	.zugang {
 		background: var(--warm);
@@ -89,6 +89,18 @@
 		padding: 8px 10px;
 		margin: 8px 0 6px;
 		word-break: break-all;
+	}
+
+	.zugangsdaten { width: auto; margin: 8px 0 6px; }
+
+	.zugangsdaten td { border: 0; padding: 2px 22px 2px 0; font-size: 9pt; }
+
+	.zugangsdaten td:first-child { color: var(--grau); }
+
+	.platzhalter-klein {
+		font-family: Consolas, Monaco, monospace;
+		font-size: 8.5pt;
+		border-bottom: 1px dashed var(--gold);
 	}
 
 	.schritte { display: flex; gap: 18px; }
@@ -138,8 +150,8 @@
 	.klein { font-size: 8pt; color: var(--grau); }
 
 	footer {
-		margin-top: 11px;
-		padding-top: 8px;
+		margin-top: 9px;
+		padding-top: 7px;
 		border-top: 1px solid var(--linie);
 		font-size: 8pt;
 		color: var(--grau);
@@ -157,11 +169,15 @@
 <p class="unter">Alle Verk&auml;ufe, die durch deine Werbung entstehen &ndash; jederzeit einsehbar</p>
 
 <div class="zugang">
-	<p><strong>Dein pers&ouml;nlicher Link</strong></p>
-	<span class="platzhalter">https://www.hairhelp-haarverdichter.ch/vermittler/?hhp_token=&lt;hier den Zugangslink einsetzen&gt;</span>
+	<p><strong>Deine Zugangsdaten</strong></p>
+	<span class="platzhalter">https://www.hairhelp-haarverdichter.ch/vermittler/</span>
+	<table class="zugangsdaten">
+		<tr><td>Benutzername</td><td class="platzhalter-klein">&lt;Benutzername eintragen&gt;</td></tr>
+		<tr><td>Passwort</td><td class="platzhalter-klein">&lt;Passwort eintragen&gt;</td></tr>
+	</table>
 	<p class="klein">
-		Am besten als Lesezeichen speichern. Der Link ist dein Zugang &ndash; du brauchst kein Konto und kein Passwort.
-		Bitte gib ihn nicht weiter; wer ihn hat, sieht deine Zahlen.
+		Seite als Lesezeichen speichern. Das Passwort kannst du nach der ersten Anmeldung im Dashboard
+		unter &bdquo;Passwort &auml;ndern&ldquo; selbst setzen. Bitte gib deine Zugangsdaten nicht weiter.
 	</p>
 </div>
 
@@ -211,7 +227,7 @@
 		</tr>
 	</table>
 	<p class="klein" style="margin-top:8px">
-		Nicht gez&auml;hlte Bestellungen werden im Dashboard trotzdem angezeigt &ndash; damit du siehst, was passiert ist, statt dich zu wundern, warum eine Bestellung fehlt.
+		Nicht gez&auml;hlte Bestellungen erscheinen trotzdem in der Liste &ndash; damit du siehst, was passiert ist.
 	</p>
 </section>
 
@@ -223,9 +239,8 @@
 			<p style="margin:0 0 10px">F&uuml;hrt auf <strong>www.hairhelp-haarverdichter.ch</strong> und setzt das Tracking f&uuml;r 30 Tage.</p>
 			<p style="margin:0 0 12px">Gutscheincode an der Kasse: <span class="chip">LOOPX13</span></p>
 			<p class="klein" style="margin:0">
-				Druckgr&ouml;sse als Faustregel: <strong>Kantenl&auml;nge &asymp; Scanabstand geteilt durch 10</strong>.
-				Auf Flyer und Visitenkarte 2,5 bis 3 cm, auf Aufsteller 4 bis 6 cm, auf ein Plakat A3 mindestens 10 cm.
-				Den weissen Rand rund um den Code bitte nie wegschneiden, und den Code nicht auf ein Bild setzen.
+				Druckgr&ouml;sse: <strong>Kantenl&auml;nge &asymp; Scanabstand geteilt durch 10</strong> &ndash; auf Flyer 2,5 bis 3 cm,
+				auf Aufsteller 4 bis 6 cm, auf Plakat A3 ab 10 cm. Den weissen Rand nie wegschneiden.
 				Druckfertige Dateien gibt es beim Shop.
 			</p>
 		</div>
@@ -236,7 +251,7 @@
 	<strong>Datenschutz:</strong> Du siehst ausschliesslich deine eigenen vermittelten Verk&auml;ufe &ndash; keine
 	Kundenadressen, keine E-Mail-Adressen, keine anderen Bestellungen des Shops. Kundennamen erscheinen nur
 	als Initialen, damit R&uuml;ckfragen zugeordnet werden k&ouml;nnen.<br>
-	Fragen zum Zugang oder zur Abrechnung? Melde dich beim Shop. &middot; www.hairhelp-haarverdichter.ch
+	Zugangsdaten vergessen oder Fragen zur Abrechnung? Melde dich beim Shop. &middot; www.hairhelp-haarverdichter.ch
 </footer>
 
 </body>

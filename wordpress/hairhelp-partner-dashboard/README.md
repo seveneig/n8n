@@ -15,22 +15,46 @@ trotzdem nur **einmal** gezählt.
 
 ## 1. Wie der Zugang ohne WordPress funktioniert
 
-Jeder Vermittler bekommt einen geheimen Link:
+Der Vermittler meldet sich mit **Benutzername und Passwort** auf der
+Dashboard-Seite an – ohne WordPress-Konto und ohne Backend-Zugriff.
 
-```
-https://www.hairhelp-haarverdichter.ch/vermittler/?hhp_token=<48-stelliges-Token>
-```
+Er sieht **ausschliesslich** seine eigenen vermittelten Verkäufe. Was er
+**nicht** sieht: andere Bestellungen, Kundenadressen, E-Mail-Adressen,
+Telefonnummern, Umsätze des Shops insgesamt, Einstellungen.
 
-Wer diesen Link öffnet, sieht **ausschliesslich** seine eigenen vermittelten
-Verkäufe. Kein Benutzerkonto, kein Passwort, kein Backend-Zugriff.
+### Drei Zugangsarten zur Wahl
 
-Was der Vermittler **nicht** sieht: andere Bestellungen, Kundenadressen,
-E-Mail-Adressen, Telefonnummern, Umsätze des Shops insgesamt, Einstellungen.
+Unter **Einstellungen → Zugang für den Vermittler**:
 
-Das Token ist 48 Hexadezimalzeichen lang (192 Bit Zufall) und wird
-zeitkonstant verglichen. Zusätzlich sind pro IP-Adresse maximal 10 Fehlversuche
-pro Minute erlaubt. Ein Token lässt sich jederzeit im Backend neu erzeugen –
-der alte Link wird damit sofort ungültig.
+| Modus | Bedeutung |
+|---|---|
+| **Anmeldung** (Standard) | Benutzername und Passwort. Der Zugangslink funktioniert nicht. |
+| Nur Zugangslink | Geheimer Link ohne Passwort. Bequem, aber ungeschützt, sobald jemand ihn weiterleitet. |
+| Beides | Link und Anmeldung parallel zulässig. |
+
+Ein geheimer Link schützt nur so lange, wie er nicht weitergegeben wird –
+einmal in einer Nachricht weitergeleitet, sieht ihn jeder Empfänger. Deshalb
+ist die Anmeldung der Standard.
+
+### Wie die Anmeldung abgesichert ist
+
+* Passwörter werden mit den WordPress-Funktionen gehasht (`wp_hash_password`),
+  im Klartext wird nichts gespeichert
+* Mindestlänge 10 Zeichen
+* Die Sitzung liegt **serverseitig**; im Browser steht nur eine 64-stellige
+  Zufallskennung in einem `HttpOnly`-Cookie, für JavaScript unlesbar
+* In der Datenbank steht nur der Hash dieser Kennung – wer Datenbankzugriff
+  hat, kann daraus keine gültige Sitzung bauen
+* Nach **8 Fehlversuchen** ist die IP-Adresse 15 Minuten gesperrt
+* Bei unbekanntem Benutzernamen wird trotzdem ein Hash geprüft, damit die
+  Antwortzeit nicht verrät, ob es den Zugang gibt
+* Anmeldung gilt 12 Stunden, mit „Angemeldet bleiben“ 30 Tage (beides einstellbar)
+* Ein Passwortwechsel beendet alle bestehenden Sitzungen auf allen Geräten
+* Wird ein Vermittler auf inaktiv gesetzt, greifen Anmeldung und Link sofort nicht mehr
+
+Der Zugangslink bleibt für den Modus *Nur Link* oder *Beides* verfügbar: 48
+Hexadezimalzeichen (192 Bit Zufall), zeitkonstant verglichen, jederzeit im
+Backend neu erzeugbar.
 
 ---
 
@@ -73,12 +97,22 @@ diesen Shortcode einfügen:
 Die Seite wird automatisch auf `noindex` gesetzt und erscheint damit nicht bei
 Google. Sie sollte **nicht** ins Menü aufgenommen werden.
 
-### Schritt 3: Vermittler prüfen
+### Schritt 3: Zugangsdaten vergeben
 
 Unter **WooCommerce → Vermittler-Dashboard → Vermittler** ist *Loop X* mit dem
-Code `loopx13` bereits vorangelegt. Dort werden Provisionssatz und
-Berechnungsgrundlage eingestellt. Der fertige Zugangslink steht direkt daneben
-und lässt sich mit einem Klick kopieren.
+Code `loopx13` und dem Benutzernamen `loopx13` bereits vorangelegt. Dort:
+
+1. **Passwort setzen** – mindestens 10 Zeichen. Das Feld ist beim Speichern
+   wieder leer; daneben steht, ob ein Passwort hinterlegt ist. Ein leeres Feld
+   lässt das bisherige Passwort unverändert.
+2. Provisionssatz und Berechnungsgrundlage einstellen.
+
+Benutzername und Passwort dem Vermittler auf getrennten Wegen zukommen lassen
+(z. B. Benutzername per E-Mail, Passwort per Telefon oder SMS). Er kann das
+Passwort danach im Dashboard selbst ändern.
+
+Im Modus *Nur Link* oder *Beides* steht daneben zusätzlich der fertige
+Zugangslink mit Kopieren-Knopf.
 
 ### Schritt 4: QR-Code verteilen
 
@@ -256,6 +290,16 @@ Browser gesetzt ist.
 Abfrage, statt bei jedem Aufruf alle Bestellungen nach Gutscheinen zu
 durchsuchen. Auswertungen werden zusätzlich fünf Minuten zwischengespeichert.
 
+### Gespeicherte Optionen zur Anmeldung
+
+| Option | Inhalt |
+|---|---|
+| `hhp_partners[].username` | Benutzername, klein geschrieben |
+| `hhp_partners[].password_hash` | Passwort-Hash, nie Klartext |
+| `hhp_sessions_<vermittler>` | Liste der offenen Sitzungen zum gemeinsamen Beenden |
+| Transient `hhp_sess_<hash>` | Die Sitzung selbst, verfällt automatisch |
+| Transient `hhp_try_<hash-der-ip>` | Zähler der Fehlversuche |
+
 ### Filter für eigene Anpassungen
 
 | Filter/Aktion | Zweck |
@@ -359,6 +403,7 @@ Zwei Prüfungen lassen sich ohne WordPress-Installation direkt ausführen:
 ```bash
 php tests/qr-test.php      # QR-Encoder gegen hinterlegte Referenzwerte
 php tests/logic-test.php   # Zuordnung, Token-Prüfung, Zeiträume
+php tests/auth-test.php    # Anmeldung, Passwörter, Sitzungen
 ```
 
 Der QR-Encoder wurde gegen eine unabhängige Referenzumsetzung abgeglichen:

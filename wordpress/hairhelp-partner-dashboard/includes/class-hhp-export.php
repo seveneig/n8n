@@ -41,11 +41,13 @@ class HHP_Export {
 
 		if ( '' !== $token ) {
 			$args['hhp_token'] = $token;
-		} else {
+		} elseif ( current_user_can( 'manage_woocommerce' ) ) {
 			$args['hhp_partner'] = $partner['id'];
 			$args['_wpnonce']    = wp_create_nonce( 'hhp_export_' . $partner['id'] );
 		}
 
+		// Ohne Token und ohne Backend-Rechte traegt die Sitzung den Nachweis:
+		// Das Sitzungs-Cookie wird bei admin-post.php mitgeschickt.
 		return add_query_arg( $args, admin_url( 'admin-post.php' ) );
 	}
 
@@ -56,9 +58,13 @@ class HHP_Export {
 	 */
 	public static function handle() {
 		$token   = isset( $_GET['hhp_token'] ) ? sanitize_text_field( wp_unslash( $_GET['hhp_token'] ) ) : '';
-		$partner = null;
 
-		if ( '' !== $token ) {
+		// Angemeldete Vermittler zuerst: die Sitzung ist der staerkste Nachweis.
+		$partner = HHP_Auth::session_partner();
+
+		if ( $partner ) {
+			$token = '';
+		} elseif ( '' !== $token && HHP_Auth::token_allowed() ) {
 			$partner = HHP_Settings::get_partner_by_token( $token );
 		} elseif ( current_user_can( 'manage_woocommerce' ) ) {
 			$id    = isset( $_GET['hhp_partner'] ) ? sanitize_key( wp_unslash( $_GET['hhp_partner'] ) ) : '';

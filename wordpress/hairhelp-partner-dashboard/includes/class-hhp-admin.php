@@ -116,6 +116,14 @@ class HHP_Admin {
 			);
 		}
 
+		// phpcs:ignore WordPress.Security.NonceVerification.Recommended -- Reine Anzeige.
+		if ( isset( $_GET['hhp_passwort_kurz'] ) ) {
+			printf(
+				'<div class="notice notice-warning is-dismissible"><p>%s</p></div>',
+				esc_html__( 'Ein Passwort war kürzer als 10 Zeichen und wurde nicht übernommen. Das bisherige Passwort gilt weiter.', 'hairhelp-partner' )
+			);
+		}
+
 		echo '<h2 class="nav-tab-wrapper">';
 
 		foreach ( $tabs as $key => $label ) {
@@ -224,6 +232,36 @@ class HHP_Admin {
 				</tr>
 			</table>
 
+			<h3><?php esc_html_e( 'Zugang für den Vermittler', 'hairhelp-partner' ); ?></h3>
+			<table class="form-table" role="presentation">
+				<tr>
+					<th scope="row"><?php esc_html_e( 'Zugangsart', 'hairhelp-partner' ); ?></th>
+					<td>
+						<label><input type="radio" name="access_mode" value="login" <?php checked( $s['access_mode'], 'login' ); ?> /> <?php esc_html_e( 'Anmeldung mit Benutzername und Passwort (empfohlen)', 'hairhelp-partner' ); ?></label><br />
+						<label><input type="radio" name="access_mode" value="token" <?php checked( $s['access_mode'], 'token' ); ?> /> <?php esc_html_e( 'Nur geheimer Zugangslink', 'hairhelp-partner' ); ?></label><br />
+						<label><input type="radio" name="access_mode" value="both" <?php checked( $s['access_mode'], 'both' ); ?> /> <?php esc_html_e( 'Beides zulassen', 'hairhelp-partner' ); ?></label>
+						<p class="description">
+							<?php esc_html_e( 'Ein Zugangslink schützt nur so lange, wie er nicht weitergegeben wird: Einmal weitergeleitet, sieht ihn jeder Empfänger. Die Anmeldung mit Passwort ist deshalb die sichere Wahl.', 'hairhelp-partner' ); ?>
+						</p>
+					</td>
+				</tr>
+				<tr>
+					<th scope="row"><label for="hhp-sitzung"><?php esc_html_e( 'Anmeldung gültig für', 'hairhelp-partner' ); ?></label></th>
+					<td>
+						<input name="session_hours" id="hhp-sitzung" type="number" min="1" max="720" value="<?php echo esc_attr( $s['session_hours'] ); ?>" />
+						<?php esc_html_e( 'Stunden', 'hairhelp-partner' ); ?>
+						<p class="description"><?php esc_html_e( 'Gilt ohne den Haken „Angemeldet bleiben“.', 'hairhelp-partner' ); ?></p>
+					</td>
+				</tr>
+				<tr>
+					<th scope="row"><label for="hhp-merken"><?php esc_html_e( '„Angemeldet bleiben“ gültig für', 'hairhelp-partner' ); ?></label></th>
+					<td>
+						<input name="remember_days" id="hhp-merken" type="number" min="1" max="365" value="<?php echo esc_attr( $s['remember_days'] ); ?>" />
+						<?php esc_html_e( 'Tage', 'hairhelp-partner' ); ?>
+					</td>
+				</tr>
+			</table>
+
 			<h3><?php esc_html_e( 'Auswertung', 'hairhelp-partner' ); ?></h3>
 			<table class="form-table" role="presentation">
 				<tr>
@@ -315,6 +353,9 @@ class HHP_Admin {
 			'pretty_urls'     => isset( $_POST['pretty_urls'] ) ? 1 : 0,
 			'statuses'        => isset( $_POST['statuses'] ) ? array_map( 'sanitize_key', (array) wp_unslash( $_POST['statuses'] ) ) : array(),
 			'customer_data'   => isset( $_POST['customer_data'] ) && in_array( $_POST['customer_data'], array( 'none', 'initials', 'full' ), true ) ? sanitize_key( wp_unslash( $_POST['customer_data'] ) ) : 'initials',
+			'access_mode'     => isset( $_POST['access_mode'] ) && in_array( $_POST['access_mode'], array( 'login', 'token', 'both' ), true ) ? sanitize_key( wp_unslash( $_POST['access_mode'] ) ) : 'login',
+			'session_hours'   => isset( $_POST['session_hours'] ) ? min( 720, max( 1, (int) $_POST['session_hours'] ) ) : 12,
+			'remember_days'   => isset( $_POST['remember_days'] ) ? min( 365, max( 1, (int) $_POST['remember_days'] ) ) : 30,
 			'show_products'   => isset( $_POST['show_products'] ) ? 1 : 0,
 			'brand_primary'   => isset( $_POST['brand_primary'] ) ? (string) sanitize_hex_color( wp_unslash( $_POST['brand_primary'] ) ) : '#2f6f62',
 			'brand_accent'    => isset( $_POST['brand_accent'] ) ? (string) sanitize_hex_color( wp_unslash( $_POST['brand_accent'] ) ) : '#c8a04a',
@@ -404,6 +445,10 @@ class HHP_Admin {
 					<input type="text" name="partners[<?php echo esc_attr( $index ); ?>][name]" value="<?php echo esc_attr( $partner['name'] ); ?>" placeholder="Loop X" />
 				</label>
 				<label>
+					<span><?php esc_html_e( 'Benutzername', 'hairhelp-partner' ); ?></span>
+					<input type="text" name="partners[<?php echo esc_attr( $index ); ?>][username]" value="<?php echo esc_attr( $partner['username'] ); ?>" placeholder="loopx13" autocapitalize="none" spellcheck="false" />
+				</label>
+				<label>
 					<span><?php esc_html_e( 'QR-Codes', 'hairhelp-partner' ); ?></span>
 					<input type="text" name="partners[<?php echo esc_attr( $index ); ?>][codes]" value="<?php echo esc_attr( implode( ', ', $partner['codes'] ) ); ?>" placeholder="loopx13" />
 				</label>
@@ -431,6 +476,18 @@ class HHP_Admin {
 				</label>
 
 				<input type="hidden" name="partners[<?php echo esc_attr( $index ); ?>][token]" value="<?php echo esc_attr( $partner['token'] ); ?>" />
+
+				<label class="hhp-linkfield hhp-passwortfeld">
+					<span>
+						<?php esc_html_e( 'Passwort setzen', 'hairhelp-partner' ); ?>
+						<?php if ( '' !== $partner['password_hash'] ) : ?>
+							<em class="hhp-gesetzt"><?php esc_html_e( '– ist gesetzt', 'hairhelp-partner' ); ?></em>
+						<?php else : ?>
+							<em class="hhp-offen"><?php esc_html_e( '– noch keins vergeben', 'hairhelp-partner' ); ?></em>
+						<?php endif; ?>
+					</span>
+					<input type="text" name="partners[<?php echo esc_attr( $index ); ?>][passwort]" value="" autocomplete="off" placeholder="<?php esc_attr_e( 'leer lassen, um das bisherige zu behalten', 'hairhelp-partner' ); ?>" />
+				</label>
 
 				<?php if ( $link ) : ?>
 					<label class="hhp-linkfield">
@@ -466,8 +523,9 @@ class HHP_Admin {
 			wp_die( esc_html__( 'Fehlende Berechtigung.', 'hairhelp-partner' ) );
 		}
 
-		$raw   = isset( $_POST['partners'] ) ? (array) wp_unslash( $_POST['partners'] ) : array();
-		$clean = array();
+		$raw     = isset( $_POST['partners'] ) ? (array) wp_unslash( $_POST['partners'] ) : array();
+		$clean   = array();
+		$zu_kurz = false;
 
 		foreach ( $raw as $entry ) {
 			if ( ! is_array( $entry ) || ! empty( $entry['loeschen'] ) ) {
@@ -486,6 +544,24 @@ class HHP_Admin {
 				$token = HHP_Settings::generate_token();
 			}
 
+			// Der Hash steht nie im Formular. Er wird aus dem bestehenden
+			// Datensatz uebernommen und nur ersetzt, wenn ein neues Passwort
+			// eingetragen wurde.
+			$bestehend = HHP_Settings::get_partner( $id );
+			$hash      = $bestehend ? $bestehend['password_hash'] : '';
+			$neu       = isset( $entry['passwort'] ) ? trim( (string) $entry['passwort'] ) : '';
+
+			if ( '' !== $neu ) {
+				if ( ! HHP_Auth::password_acceptable( $neu ) ) {
+					$zu_kurz = true;
+				} else {
+					$hash = wp_hash_password( $neu );
+
+					// Bestehende Anmeldungen dieses Vermittlers beenden.
+					HHP_Auth::destroy_sessions( $id );
+				}
+			}
+
 			$clean[] = array(
 				'id'              => $id,
 				'name'            => isset( $entry['name'] ) ? sanitize_text_field( $entry['name'] ) : '',
@@ -494,6 +570,8 @@ class HHP_Admin {
 				'commission'      => isset( $entry['commission'] ) ? (float) $entry['commission'] : 0.0,
 				'commission_base' => isset( $entry['commission_base'] ) && 'gross' === $entry['commission_base'] ? 'gross' : 'net',
 				'token'           => $token,
+				'username'        => isset( $entry['username'] ) ? HHP_Auth::sanitize_username( $entry['username'] ) : '',
+				'password_hash'   => $hash,
 				'active'          => ! empty( $entry['active'] ) ? 1 : 0,
 				'note'            => '',
 			);
@@ -502,7 +580,13 @@ class HHP_Admin {
 		HHP_Settings::save_partners( $clean );
 		HHP_Repository::bump_cache_version();
 
-		wp_safe_redirect( admin_url( 'admin.php?page=' . self::SLUG . '&tab=vermittler&hhp_gespeichert=1' ) );
+		$ziel = admin_url( 'admin.php?page=' . self::SLUG . '&tab=vermittler&hhp_gespeichert=1' );
+
+		if ( $zu_kurz ) {
+			$ziel = add_query_arg( 'hhp_passwort_kurz', '1', $ziel );
+		}
+
+		wp_safe_redirect( $ziel );
 		exit;
 	}
 

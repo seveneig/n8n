@@ -26,6 +26,7 @@ define( 'HHP_URL', plugin_dir_url( __FILE__ ) );
 
 require_once HHP_PATH . 'includes/class-hhp-qr-code.php';
 require_once HHP_PATH . 'includes/class-hhp-settings.php';
+require_once HHP_PATH . 'includes/class-hhp-auth.php';
 require_once HHP_PATH . 'includes/class-hhp-tracker.php';
 require_once HHP_PATH . 'includes/class-hhp-attribution.php';
 require_once HHP_PATH . 'includes/class-hhp-repository.php';
@@ -67,6 +68,7 @@ function hhp_bootstrap() {
 	}
 
 	HHP_Settings::init();
+	HHP_Auth::init();
 	HHP_Tracker::init();
 	HHP_Attribution::init();
 	HHP_Repository::init();

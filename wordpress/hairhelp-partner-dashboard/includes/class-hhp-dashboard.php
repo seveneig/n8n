@@ -76,144 +76,52 @@ class HHP_Dashboard {
 			self::SHORTCODE
 		);
 
-		$partner = self::resolve_partner( $atts['partner'] );
+		$partner = HHP_Auth::current_partner( $atts['partner'] );
+
+		// phpcs:disable WordPress.Security.NonceVerification.Recommended -- Reine Anzeige der Rueckmeldung nach der Umleitung.
+		$fehler  = isset( $_GET['hhp_fehler'] ) ? sanitize_key( wp_unslash( $_GET['hhp_fehler'] ) ) : '';
+		$hinweis = isset( $_GET['hhp_hinweis'] ) ? sanitize_key( wp_unslash( $_GET['hhp_hinweis'] ) ) : '';
+		$token   = isset( $_REQUEST['hhp_token'] ) ? sanitize_text_field( wp_unslash( $_REQUEST['hhp_token'] ) ) : '';
+		// phpcs:enable WordPress.Security.NonceVerification.Recommended
 
 		if ( ! $partner ) {
-			return self::render_template( 'token-form', array( 'fehler' => self::$auth_error ) );
+			// Ein mitgeschickter, aber ungueltiger Zugangslink wird benannt,
+			// damit der Vermittler den Grund erkennt.
+			if ( '' === $fehler && '' !== $token && HHP_Auth::token_allowed() ) {
+				$fehler = 'kein_zugang';
+			}
+
+			return self::render_template(
+				'login',
+				array(
+					'fehler'  => HHP_Auth::message( $fehler ),
+					'hinweis' => HHP_Auth::notice( $hinweis ),
+				)
+			);
 		}
 
 		list( $from, $to, $range ) = self::resolve_range();
 
-		$report = HHP_Repository::get_report( $partner, $from, $to );
+		$report      = HHP_Repository::get_report( $partner, $from, $to );
+		$angemeldet  = HHP_Auth::is_logged_in();
 
 		return self::render_template(
 			'dashboard',
 			array(
-				'partner'  => $partner,
-				'report'   => $report,
-				'von'      => $from,
-				'bis'      => $to,
-				'zeitraum' => $range,
-				'token'    => self::$active_token,
-				'ist_admin' => current_user_can( 'manage_woocommerce' ),
+				'partner'    => $partner,
+				'report'     => $report,
+				'von'        => $from,
+				'bis'        => $to,
+				'zeitraum'   => $range,
+				// Der Token wird nur weitergereicht, wenn der Zugriff auch
+				// darueber erfolgt ist; bei Anmeldung traegt ihn die Sitzung.
+				'token'      => ( ! $angemeldet && HHP_Auth::token_allowed() ) ? $token : '',
+				'angemeldet' => $angemeldet,
+				'ist_admin'  => current_user_can( 'manage_woocommerce' ),
+				'hinweis'    => HHP_Auth::notice( $hinweis ),
+				'fehler'     => HHP_Auth::message( $fehler ),
 			)
 		);
-	}
-
-	/**
-	 * Fehlermeldung der Zugangspruefung.
-	 *
-	 * @var string
-	 */
-	protected static $auth_error = '';
-
-	/**
-	 * Token des aktuellen Zugriffs.
-	 *
-	 * @var string
-	 */
-	protected static $active_token = '';
-
-	/**
-	 * Ermittelt den anzuzeigenden Vermittler.
-	 *
-	 * @param string $forced Im Shortcode fest hinterlegter Vermittler.
-	 *
-	 * @return array|null
-	 */
-	protected static function resolve_partner( $forced = '' ) {
-		// phpcs:disable WordPress.Security.NonceVerification.Recommended -- Zugang erfolgt ueber das Token, nicht ueber ein Formular mit Sitzungsbezug.
-		$token = isset( $_REQUEST['hhp_token'] ) ? sanitize_text_field( wp_unslash( $_REQUEST['hhp_token'] ) ) : '';
-
-		if ( '' !== $token ) {
-			if ( ! self::throttle_ok() ) {
-				self::$auth_error = __( 'Zu viele Versuche. Bitte in einer Minute erneut versuchen.', 'hairhelp-partner' );
-
-				return null;
-			}
-
-			$partner = HHP_Settings::get_partner_by_token( $token );
-
-			if ( $partner ) {
-				self::$active_token = $partner['token'];
-
-				return $partner;
-			}
-
-			self::register_failed_attempt();
-			self::$auth_error = __( 'Dieser Zugangslink ist ungültig oder wurde zurückgezogen.', 'hairhelp-partner' );
-
-			return null;
-		}
-
-		// Shop-Verantwortliche duerfen jeden Vermittler einsehen.
-		if ( current_user_can( 'manage_woocommerce' ) ) {
-			$requested = isset( $_GET['hhp_partner'] ) ? sanitize_key( wp_unslash( $_GET['hhp_partner'] ) ) : '';
-			// phpcs:enable WordPress.Security.NonceVerification.Recommended
-
-			if ( '' !== $requested ) {
-				$partner = HHP_Settings::get_partner( $requested );
-
-				if ( $partner ) {
-					return $partner;
-				}
-			}
-
-			if ( '' !== $forced ) {
-				$partner = HHP_Settings::get_partner( $forced );
-
-				if ( $partner ) {
-					return $partner;
-				}
-			}
-
-			$partners = HHP_Settings::partners( true );
-
-			if ( ! empty( $partners ) ) {
-				return $partners[0];
-			}
-		}
-
-		if ( '' !== $forced ) {
-			// Fest zugewiesene Seite, etwa fuer einen einzelnen Vermittler.
-			$partner = HHP_Settings::get_partner( $forced );
-
-			if ( $partner && ! empty( $partner['active'] ) ) {
-				return $partner;
-			}
-		}
-
-		return null;
-	}
-
-	/**
-	 * Prueft, ob von dieser Adresse noch Versuche zulaessig sind.
-	 *
-	 * @return bool
-	 */
-	protected static function throttle_ok() {
-		return (int) get_transient( self::throttle_key() ) < 10;
-	}
-
-	/**
-	 * Vermerkt einen fehlgeschlagenen Zugangsversuch.
-	 *
-	 * @return void
-	 */
-	protected static function register_failed_attempt() {
-		$key = self::throttle_key();
-		set_transient( $key, (int) get_transient( $key ) + 1, MINUTE_IN_SECONDS );
-	}
-
-	/**
-	 * Bildet den Schluessel der Versuchszaehlung.
-	 *
-	 * @return string
-	 */
-	protected static function throttle_key() {
-		$ip = isset( $_SERVER['REMOTE_ADDR'] ) ? sanitize_text_field( wp_unslash( $_SERVER['REMOTE_ADDR'] ) ) : 'unbekannt';
-
-		return 'hhp_try_' . md5( $ip );
 	}
 
 	/**

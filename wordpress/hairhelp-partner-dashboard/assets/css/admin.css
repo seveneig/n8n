@@ -119,3 +119,25 @@
 	color: #b32d2e;
 	font-weight: 600;
 }
+
+.hhp-admin .hhp-passwortfeld {
+	flex: 1 1 340px;
+}
+
+.hhp-admin .hhp-passwortfeld input {
+	width: 100%;
+	font-family: Consolas, Monaco, monospace;
+	font-size: 12px;
+}
+
+.hhp-admin .hhp-gesetzt {
+	color: #1a7f37;
+	font-style: normal;
+	font-weight: 400;
+}
+
+.hhp-admin .hhp-offen {
+	color: #b26200;
+	font-style: normal;
+	font-weight: 400;
+}

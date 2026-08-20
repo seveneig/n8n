@@ -394,22 +394,117 @@
 	color: #ffffff;
 }
 
-/* Zugangsformular ------------------------------------------------------ */
+/* Anmeldestatus im Kopf ------------------------------------------------ */
 
-.hhp-tokenform {
+.hhp-kopf-rechts {
 	display: flex;
-	flex-wrap: wrap;
-	gap: 16px;
+	flex-direction: column;
 	align-items: flex-end;
+	gap: 8px;
+}
+
+.hhp-sitzung {
+	margin: 0;
+	font-size: 0.82em;
+	color: var( --hhp-gedaempft );
+}
+
+.hhp-sitzung strong {
+	color: var( --hhp-dark );
+	font-weight: 500;
+}
+
+.hhp-sitzung a {
+	color: var( --hhp-primary );
+	text-decoration: none;
+	border-bottom: 1px solid currentColor;
+}
+
+.hhp-sitzung a:hover {
+	color: var( --hhp-dark );
+}
+
+/* Anmeldeformular ------------------------------------------------------ */
+
+.hhp-loginform {
+	display: flex;
+	flex-direction: column;
+	gap: 18px;
 	margin-bottom: 20px;
 }
 
-.hhp-tokenform .hhp-field {
-	flex: 1 1 260px;
+.hhp-loginform .hhp-field input {
+	width: 100%;
+	min-width: 0;
 }
 
-.hhp-tokenform input {
+.hhp-loginform .hhp-button {
+	align-self: flex-start;
+}
+
+.hhp-merken {
+	display: flex;
+	align-items: center;
+	gap: 9px;
+	font-size: 0.86em;
+	color: var( --hhp-gedaempft );
+}
+
+.hhp-merken input {
+	accent-color: var( --hhp-primary );
+}
+
+/* Passwortwechsel ------------------------------------------------------ */
+
+.hhp-passwortblock {
+	border: 1px solid var( --hhp-linie );
+	padding: 0 20px;
+}
+
+.hhp-passwortblock summary {
+	font-family: var( --hhp-schrift-titel );
+	font-size: 0.76em;
+	font-weight: 500;
+	text-transform: uppercase;
+	letter-spacing: 0.12em;
+	padding: 16px 0;
+	cursor: pointer;
+	color: var( --hhp-dark );
+}
+
+.hhp-passwortblock[open] summary {
+	border-bottom: 1px solid var( --hhp-linie );
+	margin-bottom: 18px;
+}
+
+.hhp-passwortform {
+	display: flex;
+	flex-wrap: wrap;
+	gap: 18px;
+	align-items: flex-end;
+	max-width: 760px;
+}
+
+.hhp-passwortform .hhp-field {
+	flex: 1 1 200px;
+}
+
+.hhp-passwortform input {
 	width: 100%;
+}
+
+.hhp-passwortblock .hhp-hinweis {
+	margin: 14px 0 20px;
+}
+
+/* Rueckmeldungen ------------------------------------------------------- */
+
+.hhp-hinweis-box {
+	background: var( --hhp-flaeche-warm );
+	border-left: 2px solid var( --hhp-primary );
+	padding: 13px 18px;
+	margin-bottom: 20px;
+	font-size: 0.88em;
 }
 
 .hhp-fehler {
