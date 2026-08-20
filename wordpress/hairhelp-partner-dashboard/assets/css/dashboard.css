@@ -1,0 +1,437 @@
+/**
+ * Vermittler-Dashboard im Frontend.
+ *
+ * Schriftart und Textfarbe werden bewusst vom Theme geerbt, damit sich das
+ * Dashboard ohne Anpassung in das bestehende Erscheinungsbild einfuegt.
+ * Farbig gesetzt wird nur, was die Marke ausmacht.
+ */
+
+.hhp-dashboard {
+	--hhp-flaeche: #ffffff;
+	--hhp-linie: rgba(28, 43, 40, 0.12);
+	--hhp-gedaempft: rgba(28, 43, 40, 0.62);
+	--hhp-radius: 14px;
+
+	font-family: inherit;
+	color: var(--hhp-dark);
+	max-width: 1180px;
+	margin: 0 auto;
+}
+
+.hhp-dashboard * {
+	box-sizing: border-box;
+}
+
+.hhp-dashboard-schmal {
+	max-width: 520px;
+}
+
+/* Kopfbereich ---------------------------------------------------------- */
+
+.hhp-header {
+	display: flex;
+	flex-wrap: wrap;
+	align-items: center;
+	justify-content: space-between;
+	gap: 16px;
+	padding-bottom: 20px;
+	border-bottom: 2px solid var(--hhp-primary);
+	margin-bottom: 24px;
+}
+
+.hhp-header-brand {
+	display: flex;
+	align-items: center;
+	gap: 18px;
+}
+
+.hhp-logo {
+	max-height: 56px;
+	width: auto;
+	display: block;
+}
+
+.hhp-title {
+	margin: 0;
+	font-size: 1.6em;
+	line-height: 1.25;
+	color: inherit;
+}
+
+.hhp-subtitle {
+	margin: 4px 0 0;
+	color: var(--hhp-gedaempft);
+	font-size: 0.95em;
+}
+
+.hhp-adminhinweis {
+	margin: 0;
+	font-size: 0.82em;
+	color: var(--hhp-gedaempft);
+	background: rgba(200, 160, 74, 0.14);
+	border-radius: 999px;
+	padding: 6px 14px;
+}
+
+/* Filterleiste --------------------------------------------------------- */
+
+.hhp-filter {
+	display: flex;
+	flex-wrap: wrap;
+	align-items: flex-end;
+	gap: 12px;
+	margin-bottom: 8px;
+}
+
+.hhp-field {
+	display: flex;
+	flex-direction: column;
+	gap: 4px;
+	font-size: 0.85em;
+}
+
+.hhp-field > span {
+	color: var(--hhp-gedaempft);
+	font-weight: 600;
+	letter-spacing: 0.02em;
+}
+
+.hhp-field select,
+.hhp-field input {
+	font: inherit;
+	font-size: 0.95em;
+	padding: 9px 12px;
+	border: 1px solid var(--hhp-linie);
+	border-radius: 8px;
+	background: var(--hhp-flaeche);
+	color: inherit;
+	min-width: 170px;
+}
+
+.hhp-field select:focus,
+.hhp-field input:focus {
+	outline: 2px solid var(--hhp-primary);
+	outline-offset: 1px;
+}
+
+.hhp-button {
+	display: inline-block;
+	font: inherit;
+	font-size: 0.9em;
+	font-weight: 600;
+	padding: 10px 18px;
+	border-radius: 8px;
+	border: 1px solid var(--hhp-primary);
+	background: var(--hhp-primary);
+	color: #ffffff;
+	cursor: pointer;
+	text-decoration: none;
+	transition: opacity 0.15s ease;
+}
+
+.hhp-button:hover,
+.hhp-button:focus {
+	opacity: 0.88;
+	color: #ffffff;
+}
+
+.hhp-button-ghost {
+	background: transparent;
+	color: var(--hhp-primary);
+	margin-left: auto;
+}
+
+.hhp-button-ghost:hover,
+.hhp-button-ghost:focus {
+	background: var(--hhp-primary);
+	color: #ffffff;
+}
+
+.hhp-zeitraum-hinweis {
+	margin: 0 0 22px;
+	font-size: 0.85em;
+	color: var(--hhp-gedaempft);
+}
+
+/* Kennzahlen ----------------------------------------------------------- */
+
+.hhp-kacheln {
+	display: grid;
+	grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+	gap: 16px;
+	margin-bottom: 32px;
+}
+
+.hhp-kachel {
+	background: var(--hhp-flaeche);
+	border: 1px solid var(--hhp-linie);
+	border-top: 3px solid var(--hhp-primary);
+	border-radius: var(--hhp-radius);
+	padding: 20px;
+	display: flex;
+	flex-direction: column;
+	gap: 6px;
+}
+
+.hhp-kachel-akzent {
+	border-top-color: var(--hhp-accent);
+	background: linear-gradient(180deg, rgba(200, 160, 74, 0.08), transparent 60%);
+}
+
+.hhp-kachel-label {
+	font-size: 0.8em;
+	font-weight: 600;
+	text-transform: uppercase;
+	letter-spacing: 0.06em;
+	color: var(--hhp-gedaempft);
+}
+
+.hhp-kachel-wert {
+	font-size: 1.9em;
+	line-height: 1.15;
+	font-weight: 700;
+}
+
+.hhp-kachel-wert .woocommerce-Price-amount {
+	font-size: inherit;
+	font-weight: inherit;
+}
+
+.hhp-kachel-fuss {
+	font-size: 0.8em;
+	color: var(--hhp-gedaempft);
+}
+
+/* Bloecke -------------------------------------------------------------- */
+
+.hhp-block {
+	margin-bottom: 34px;
+}
+
+.hhp-block-titel {
+	margin: 0 0 14px;
+	font-size: 1.05em;
+	font-weight: 700;
+	color: inherit;
+}
+
+.hhp-chart {
+	width: 100%;
+	height: 240px;
+	display: block;
+}
+
+.hhp-bar {
+	fill: var(--hhp-primary);
+}
+
+.hhp-bar:hover {
+	fill: var(--hhp-accent);
+}
+
+.hhp-axis {
+	font-size: 15px;
+	fill: rgba(28, 43, 40, 0.55);
+	font-family: inherit;
+}
+
+.hhp-axis-line {
+	stroke: rgba(28, 43, 40, 0.18);
+	stroke-width: 1;
+}
+
+.hhp-empty {
+	color: var(--hhp-gedaempft);
+	font-style: italic;
+	padding: 18px 0;
+	margin: 0;
+}
+
+/* Tabelle -------------------------------------------------------------- */
+
+.hhp-tabelle-wrapper {
+	overflow-x: auto;
+	border: 1px solid var(--hhp-linie);
+	border-radius: var(--hhp-radius);
+}
+
+.hhp-tabelle {
+	width: 100%;
+	border-collapse: collapse;
+	font-size: 0.9em;
+	background: var(--hhp-flaeche);
+	margin: 0;
+}
+
+.hhp-tabelle th,
+.hhp-tabelle td {
+	padding: 12px 14px;
+	text-align: left;
+	border-bottom: 1px solid var(--hhp-linie);
+	vertical-align: top;
+}
+
+.hhp-tabelle thead th {
+	font-size: 0.78em;
+	text-transform: uppercase;
+	letter-spacing: 0.05em;
+	color: var(--hhp-gedaempft);
+	background: rgba(47, 111, 98, 0.05);
+	white-space: nowrap;
+}
+
+.hhp-tabelle tfoot th {
+	background: rgba(47, 111, 98, 0.05);
+	border-bottom: none;
+	font-weight: 700;
+}
+
+.hhp-tabelle tbody tr:last-child td {
+	border-bottom: none;
+}
+
+.hhp-rechts {
+	text-align: right;
+	white-space: nowrap;
+}
+
+.hhp-nicht-gezaehlt {
+	opacity: 0.55;
+}
+
+.hhp-nummer {
+	font-weight: 700;
+	display: block;
+}
+
+.hhp-kunde,
+.hhp-artikel {
+	display: block;
+	font-size: 0.86em;
+	color: var(--hhp-gedaempft);
+}
+
+.hhp-tag {
+	display: inline-block;
+	font-size: 0.78em;
+	font-weight: 600;
+	padding: 3px 10px;
+	border-radius: 999px;
+	background: rgba(47, 111, 98, 0.12);
+	color: var(--hhp-primary);
+	white-space: nowrap;
+}
+
+.hhp-tag-coupon {
+	background: rgba(200, 160, 74, 0.18);
+	color: #8a6a1f;
+}
+
+.hhp-tag-qr-coupon {
+	background: rgba(47, 111, 98, 0.2);
+}
+
+/* Zugangsformular ------------------------------------------------------ */
+
+.hhp-tokenform {
+	display: flex;
+	flex-wrap: wrap;
+	gap: 12px;
+	align-items: flex-end;
+	margin-bottom: 16px;
+}
+
+.hhp-tokenform .hhp-field {
+	flex: 1 1 260px;
+}
+
+.hhp-tokenform input {
+	width: 100%;
+}
+
+.hhp-fehler {
+	background: rgba(190, 60, 60, 0.1);
+	border-left: 3px solid #be3c3c;
+	padding: 12px 16px;
+	border-radius: 6px;
+	margin-bottom: 18px;
+}
+
+.hhp-hinweis,
+.hhp-fuss {
+	font-size: 0.85em;
+	color: var(--hhp-gedaempft);
+	line-height: 1.6;
+}
+
+.hhp-fuss {
+	border-top: 1px solid var(--hhp-linie);
+	padding-top: 16px;
+}
+
+/* Kleine Bildschirme --------------------------------------------------- */
+
+@media (max-width: 640px) {
+	.hhp-button-ghost {
+		margin-left: 0;
+	}
+
+	.hhp-tabelle thead {
+		display: none;
+	}
+
+	.hhp-tabelle,
+	.hhp-tabelle tbody,
+	.hhp-tabelle tr,
+	.hhp-tabelle td {
+		display: block;
+		width: 100%;
+	}
+
+	.hhp-tabelle tr {
+		border-bottom: 1px solid var(--hhp-linie);
+		padding: 6px 0;
+	}
+
+	.hhp-tabelle td {
+		border-bottom: none;
+		display: flex;
+		justify-content: space-between;
+		gap: 14px;
+		padding: 6px 14px;
+		text-align: right;
+	}
+
+	.hhp-tabelle td::before {
+		content: attr(data-label);
+		font-size: 0.78em;
+		text-transform: uppercase;
+		letter-spacing: 0.05em;
+		color: var(--hhp-gedaempft);
+		text-align: left;
+		flex: 0 0 auto;
+	}
+
+	.hhp-tabelle tfoot th {
+		display: block;
+		text-align: right;
+	}
+}
+
+/* Druck ---------------------------------------------------------------- */
+
+@media print {
+	.hhp-filter,
+	.hhp-adminhinweis {
+		display: none;
+	}
+
+	.hhp-dashboard {
+		max-width: none;
+	}
+
+	.hhp-kachel,
+	.hhp-tabelle-wrapper {
+		break-inside: avoid;
+	}
+}
