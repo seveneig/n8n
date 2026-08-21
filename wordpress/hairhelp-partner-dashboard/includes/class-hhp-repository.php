@@ -138,8 +138,13 @@ class HHP_Repository {
 			$gross     = (float) $order->get_total() - $refunded;
 			$shipping  = (float) $order->get_shipping_total();
 			$tax       = (float) $order->get_total_tax();
-			$net       = max( 0.0, (float) $order->get_total() - $shipping - $tax - $refunded );
-			$base      = 'gross' === $partner['commission_base'] ? $gross : $net;
+			$base      = self::umsatzbasis(
+				(float) $order->get_total(),
+				$shipping,
+				$tax,
+				$refunded,
+				$partner['commission_base']
+			);
 			$provision = $is_valid ? ( $base * (float) $partner['commission'] ) / 100 : 0.0;
 			$source    = (string) $order->get_meta( HHP_Attribution::META_SOURCE );
 			$date      = $order->get_date_created();
@@ -214,6 +219,50 @@ class HHP_Repository {
 		set_transient( $key, $report, (int) apply_filters( 'hhp_cache_ttl', 300 ) );
 
 		return $report;
+	}
+
+	/**
+	 * Ermittelt die Umsatzbasis einer Bestellung.
+	 *
+	 * Bei der Grundlage "Warenwert" werden Versand und Steuer abgezogen. Der
+	 * Versand wird dabei mindestens mit der hinterlegten Pauschale angesetzt,
+	 * auch wenn dem Kunden nichts berechnet wurde: Ab einem Bestellwert von
+	 * 35 Franken liefert der Shop gratis, die Kosten fallen aber trotzdem an
+	 * und sollen nicht in die Provision einfliessen. Hat jemand einen teureren
+	 * Versand gewaehlt, gilt der tatsaechliche Betrag.
+	 *
+	 * @param float  $total     Bestellsumme.
+	 * @param float  $shipping  Berechnete Versandkosten.
+	 * @param float  $tax       Enthaltene Steuer.
+	 * @param float  $refunded  Zurueckerstatteter Betrag.
+	 * @param string $grundlage 'net' oder 'gross'.
+	 *
+	 * @return float
+	 */
+	public static function umsatzbasis( $total, $shipping, $tax, $refunded, $grundlage = 'net' ) {
+		if ( 'gross' === $grundlage ) {
+			return max( 0.0, (float) $total - (float) $refunded );
+		}
+
+		$abzug = (float) $shipping;
+
+		if ( HHP_Settings::get( 'shipping_deduct' ) ) {
+			$abzug = max( $abzug, (float) HHP_Settings::get( 'shipping_flat', 4.95 ) );
+		}
+
+		// Auf die Nachkommastellen der Waehrung runden: Fliesskommarechnung
+		// erzeugt sonst Werte wie 29.900000000000002, die sich ueber viele
+		// Bestellungen zu sichtbaren Rundungsdifferenzen summieren.
+		return round( max( 0.0, (float) $total - $abzug - (float) $tax - (float) $refunded ), self::nachkommastellen() );
+	}
+
+	/**
+	 * Nachkommastellen der Shopwaehrung.
+	 *
+	 * @return int
+	 */
+	protected static function nachkommastellen() {
+		return function_exists( 'wc_get_price_decimals' ) ? (int) wc_get_price_decimals() : 2;
 	}
 
 	/**

@@ -68,6 +68,11 @@ class HHP_Settings {
 			'session_hours'    => 12,
 			'remember_days'    => 30,
 			'show_products'    => 1,
+
+			// Der Shop liefert ab 35 Franken gratis, die Versandkosten fallen
+			// aber trotzdem an. Sie werden daher immer abgezogen.
+			'shipping_deduct'  => 1,
+			'shipping_flat'    => 4.95,
 			'currency_note'    => '',
 
 			// Darstellung.

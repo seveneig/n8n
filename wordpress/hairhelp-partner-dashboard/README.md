@@ -222,6 +222,25 @@ Zwei Grundlagen stehen zur Wahl:
 * **Warenwert ohne Versand und Steuer** (Standard) – `Bestellsumme − Versand − Steuer − Rückerstattungen`
 * **Bestellsumme gesamt** – `Bestellsumme − Rückerstattungen`
 
+### Versandkosten werden immer abgezogen
+
+Ab 35 Franken liefert der Shop gratis – die Kosten fallen aber trotzdem an.
+Bei der Grundlage *Warenwert* wird der Versand deshalb bei **jeder** Bestellung
+abgezogen, auch bei Gratislieferung. Massgebend ist der höhere der beiden
+Werte:
+
+| Fall | Berechneter Versand | Abzug |
+|---|---|---|
+| Gratislieferung ab 35 CHF | 0.00 | **4.95** |
+| Standardversand darunter | 4.95 | 4.95 |
+| Teurerer Versand gewählt | 9.90 | **9.90** |
+
+Beispiel: Bestellung über 89.80 CHF mit Gratislieferung, 10 % Provision →
+Umsatzbasis 84.85 CHF, Provision **8.49 CHF**.
+
+Betrag und Ein-/Ausschalter stehen unter **Einstellungen → Versandkosten**.
+Bei der Grundlage *Bestellsumme gesamt* wird nichts abgezogen.
+
 > Hinweis zu Teilrückerstattungen: Der erstattete Betrag wird vollständig von
 > der Umsatzbasis abgezogen. Betrifft eine Teilrückerstattung anteilig Versand
 > oder Steuer, fällt die Basis dadurch geringfügig zu niedrig aus – zugunsten
@@ -410,6 +429,20 @@ entsprechend setzen:
 [hhp_partner_dashboard partner="loopx13"]
 ```
 
+### Volle Breite im Seitenbaukasten
+
+Standardmässig ist das Dashboard auf 1180 Pixel begrenzt und zentriert. In
+einem Abschnitt über die volle Breite wirkt das wie ein Kasten in der Mitte.
+Dann:
+
+```
+[hhp_partner_dashboard breite="voll"]
+```
+
+Möglich sind `voll`, `standard` (Vorgabe) oder eine eigene Länge wie
+`breite="1400px"`. Beides lässt sich kombinieren:
+`[hhp_partner_dashboard partner="loopx13" breite="voll"]`
+
 > Hinweis zum Kontrast: Das Markengold erreicht auf Weiss nur ein
 > Kontrastverhältnis von rund 2,6:1. Es wird deshalb für Flächen, Linien und
 > grosse Zahlen eingesetzt, nie für Fliesstext – dort steht Anthrazit.
@@ -492,6 +525,17 @@ Dieses Plugin ist nicht beteiligt: Es registriert keinen Rückruf auf
 `deleted_post` oder `transition_post_status` und verwendet seit Fassung 1.1.1
 ausschliesslich benannte Funktionen und Klassenmethoden – anonyme Funktionen
 sind genau die Art von Rückruf, die solche Zahlenschlüssel erzeugt.
+
+### Seiten-Cache und die Dashboard-Seite
+
+Die Dashboard-Seite ist persönlich und enthält ein Formular mit einem
+zeitlich begrenzten Prüfwert. Würde sie zwischengespeichert, bekäme jeder
+Besucher dieselbe Fassung – mit fremden Zahlen und einem abgelaufenen
+Prüfwert, an dem jede Anmeldung mit „Formular abgelaufen" scheitert.
+
+Das Plugin setzt deshalb ab Fassung 1.2.0 auf dieser Seite `DONOTCACHEPAGE`
+und sendet passende Kopfzeilen. WP Rocket, WP Super Cache und W3 Total Cache
+werten das aus; ein Eintrag in deren Ausschlusslisten ist nicht nötig.
 
 ---
 

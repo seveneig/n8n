@@ -34,7 +34,7 @@ $hhp_zeitraeume = array(
 	'eigen'    => __( 'Eigener Zeitraum', 'hairhelp-partner' ),
 );
 ?>
-<div class="hhp-dashboard <?php echo esc_attr( HHP_Dashboard::theme_class( $partner ) ); ?>" style="<?php echo esc_attr( HHP_Dashboard::brand_style( $partner ) ); ?>">
+<div class="hhp-dashboard <?php echo esc_attr( HHP_Dashboard::theme_class( $partner ) ); ?>" style="<?php echo esc_attr( isset( $stil ) ? $stil : '' ); ?>">
 
 	<header class="hhp-header">
 		<div class="hhp-header-brand">
@@ -152,9 +152,17 @@ $hhp_zeitraeume = array(
 			<strong class="hhp-kachel-wert"><?php echo wp_kses_post( $hhp_preis( $hhp_summen['revenue'] ) ); ?></strong>
 			<span class="hhp-kachel-fuss">
 				<?php
-				echo 'gross' === $partner['commission_base']
-					? esc_html__( 'Bestellsumme gesamt', 'hairhelp-partner' )
-					: esc_html__( 'Warenwert ohne Versand und Steuer', 'hairhelp-partner' );
+				if ( 'gross' === $partner['commission_base'] ) {
+					esc_html_e( 'Bestellsumme gesamt', 'hairhelp-partner' );
+				} elseif ( HHP_Settings::get( 'shipping_deduct' ) ) {
+					printf(
+						/* translators: %s: Versandbetrag */
+						esc_html__( 'Warenwert ohne Steuer, Versand pauschal %s abgezogen', 'hairhelp-partner' ),
+						wp_kses_post( $hhp_preis( HHP_Settings::get( 'shipping_flat', 4.95 ) ) )
+					);
+				} else {
+					esc_html_e( 'Warenwert ohne Versand und Steuer', 'hairhelp-partner' );
+				}
 				?>
 			</span>
 		</div>

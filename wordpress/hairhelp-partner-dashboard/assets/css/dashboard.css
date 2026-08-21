@@ -29,7 +29,10 @@
 	font-family: var( --hhp-schrift-text );
 	font-weight: 300;
 	color: var( --hhp-dark );
-	max-width: 1180px;
+
+	/* Ueber das Shortcode-Attribut breite="voll" auf 100 Prozent stellbar. */
+	max-width: var( --hhp-max, 1180px );
+	width: 100%;
 	margin: 0 auto;
 }
 
@@ -132,25 +135,59 @@
 	color: var( --hhp-gedaempft );
 }
 
-/* Eingabefelder folgen dem Kit: nur eine Linie unten, keine Rundung. */
-.hhp-field select,
-.hhp-field input {
+/* Eingabefelder folgen dem Kit: nur eine Linie unten, keine Rundung.
+   Die Auswahl ist bewusst ueber .hhp-dashboard verankert: Themes setzen fuer
+   input haeufig eigene Hintergruende und Textfarben, und ohne diese
+   zusaetzliche Stufe gewinnt deren Regel. Im Elementor-Kit dieser Website ist
+   das ein halbtransparentes Weiss mit grauer Schrift - auf hellem wie auf
+   dunklem Grund schwer zu lesen. */
+.hhp-dashboard .hhp-field select,
+.hhp-dashboard .hhp-field input {
 	font-family: var( --hhp-schrift-text );
-	font-weight: 300;
-	font-size: 0.95em;
+	font-weight: 400;
+	font-size: 1em;
 	color: var( --hhp-dark );
-	padding: 8px 2px;
-	border: 0;
-	border-bottom: 1px solid var( --hhp-linie );
+	caret-color: var( --hhp-primary );
+	padding: 10px 12px;
+	border: 1px solid var( --hhp-linie );
 	border-radius: 0;
-	background: transparent;
+	background-color: var( --hhp-flaeche );
 	min-width: 180px;
+	box-shadow: none;
+	-webkit-appearance: none;
+	appearance: none;
 }
 
-.hhp-field select:focus,
-.hhp-field input:focus {
+.hhp-dashboard .hhp-field select {
+	/* Pfeil der Auswahlliste, damit sie ohne Systemdarstellung erkennbar bleibt. */
+	background-image: linear-gradient( 45deg, transparent 50%, currentColor 50% ), linear-gradient( 135deg, currentColor 50%, transparent 50% );
+	background-position: calc( 100% - 18px ) calc( 50% + 2px ), calc( 100% - 13px ) calc( 50% + 2px );
+	background-size: 5px 5px, 5px 5px;
+	background-repeat: no-repeat;
+	padding-right: 34px;
+}
+
+.hhp-dashboard .hhp-field select:focus,
+.hhp-dashboard .hhp-field input:focus {
 	outline: 0;
-	border-bottom-color: var( --hhp-primary );
+	border-color: var( --hhp-primary );
+	box-shadow: 0 0 0 2px color-mix( in srgb, var( --hhp-primary ) 30%, transparent );
+}
+
+.hhp-dashboard .hhp-field input::placeholder {
+	color: var( --hhp-gedaempft );
+	opacity: 1;
+}
+
+/* Die Browser-Autoausfuellung ueberschreibt Hintergrund und Textfarbe.
+   Beides wird hier zurueckgeholt, sonst steht heller Text auf hellem Grund. */
+.hhp-dashboard .hhp-field input:-webkit-autofill,
+.hhp-dashboard .hhp-field input:-webkit-autofill:hover,
+.hhp-dashboard .hhp-field input:-webkit-autofill:focus {
+	-webkit-text-fill-color: var( --hhp-dark );
+	-webkit-box-shadow: inset 0 0 0 1000px var( --hhp-flaeche );
+	caret-color: var( --hhp-dark );
+	transition: background-color 9999s ease-out;
 }
 
 .hhp-button {
@@ -729,20 +766,36 @@
 	color: var( --hhp-grund, #030712 );
 }
 
-.hhp-thema-dunkel .hhp-field select,
-.hhp-thema-dunkel .hhp-field input {
+.hhp-dashboard.hhp-thema-dunkel .hhp-field select,
+.hhp-dashboard.hhp-thema-dunkel .hhp-field input {
 	color: #ffffff;
-	background: transparent;
-	border-bottom-color: var( --hhp-linie );
+	background-color: rgba( 255, 255, 255, 0.06 );
+	border-color: rgba( 255, 255, 255, 0.22 );
+	caret-color: var( --hhp-primary );
 }
 
-.hhp-thema-dunkel .hhp-field select option {
+.hhp-dashboard.hhp-thema-dunkel .hhp-field input::placeholder {
+	color: rgba( 255, 255, 255, 0.45 );
+}
+
+/* Die aufgeklappte Liste zeichnet das Betriebssystem hell. */
+.hhp-dashboard.hhp-thema-dunkel .hhp-field select option {
 	color: #111111;
+	background: #ffffff;
 }
 
-.hhp-thema-dunkel .hhp-field select:focus,
-.hhp-thema-dunkel .hhp-field input:focus {
-	border-bottom-color: var( --hhp-primary );
+.hhp-dashboard.hhp-thema-dunkel .hhp-field select:focus,
+.hhp-dashboard.hhp-thema-dunkel .hhp-field input:focus {
+	border-color: var( --hhp-primary );
+	background-color: rgba( 255, 255, 255, 0.10 );
+}
+
+.hhp-dashboard.hhp-thema-dunkel .hhp-field input:-webkit-autofill,
+.hhp-dashboard.hhp-thema-dunkel .hhp-field input:-webkit-autofill:hover,
+.hhp-dashboard.hhp-thema-dunkel .hhp-field input:-webkit-autofill:focus {
+	-webkit-text-fill-color: #ffffff;
+	-webkit-box-shadow: inset 0 0 0 1000px #14202f;
+	caret-color: #ffffff;
 }
 
 .hhp-thema-dunkel .hhp-axis {

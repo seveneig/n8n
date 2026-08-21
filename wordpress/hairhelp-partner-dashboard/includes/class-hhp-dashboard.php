@@ -23,6 +23,74 @@ class HHP_Dashboard {
 		add_shortcode( self::SHORTCODE, array( __CLASS__, 'render' ) );
 		add_action( 'wp_enqueue_scripts', array( __CLASS__, 'register_assets' ) );
 		add_filter( 'wp_robots', array( __CLASS__, 'noindex_dashboard' ) );
+		add_action( 'template_redirect', array( __CLASS__, 'prevent_caching' ), 1 );
+	}
+
+	/**
+	 * Nimmt die Dashboard-Seite vom Seiten-Cache aus.
+	 *
+	 * Die Seite ist persoenlich: Sie zeigt die Zahlen des angemeldeten
+	 * Vermittlers und enthaelt ein Formular mit einem zeitlich begrenzten
+	 * Pruefwert. Wird sie zwischengespeichert, bekaeme jeder Besucher dieselbe
+	 * Fassung - mit fremden Zahlen und einem abgelaufenen Pruefwert, an dem
+	 * jede Anmeldung mit "Formular abgelaufen" scheitert.
+	 *
+	 * DONOTCACHEPAGE wird von WP Rocket, WP Super Cache, W3 Total Cache und
+	 * weiteren Erweiterungen ausgewertet.
+	 *
+	 * @return void
+	 */
+	public static function prevent_caching() {
+		if ( ! self::page_has_dashboard() ) {
+			return;
+		}
+
+		foreach ( array( 'DONOTCACHEPAGE', 'DONOTCACHEOBJECT', 'DONOTCACHEDB' ) as $konstante ) {
+			if ( ! defined( $konstante ) ) {
+				define( $konstante, true );
+			}
+		}
+
+		if ( ! headers_sent() ) {
+			nocache_headers();
+		}
+	}
+
+	/**
+	 * Prueft, ob eine Seite das Dashboard enthaelt.
+	 *
+	 * Der Shortcode steht nicht zwingend in post_content: Seitenbaukaesten wie
+	 * Elementor legen den Inhalt in eigenen Metaangaben ab und lassen
+	 * post_content leer. Eine Pruefung allein auf post_content wuerde das
+	 * Dashboard dort nicht erkennen - mit der Folge, dass die Seite weder auf
+	 * noindex gesetzt noch vom Seiten-Cache ausgenommen wird.
+	 *
+	 * @param WP_Post|int|null $post Beitrag oder Kennung.
+	 *
+	 * @return bool
+	 */
+	public static function page_has_dashboard( $post = null ) {
+		$post = get_post( $post );
+
+		if ( ! $post instanceof WP_Post ) {
+			return false;
+		}
+
+		if ( has_shortcode( (string) $post->post_content, self::SHORTCODE ) ) {
+			return true;
+		}
+
+		// Inhalte aus Seitenbaukaesten: dort steht der Shortcode in den
+		// Metaangaben, teils mit maskierten Anfuehrungszeichen.
+		foreach ( array( '_elementor_data', 'panels_data', '_et_pb_use_builder' ) as $feld ) {
+			$wert = get_post_meta( $post->ID, $feld, true );
+
+			if ( is_string( $wert ) && '' !== $wert && false !== strpos( $wert, '[' . self::SHORTCODE ) ) {
+				return true;
+			}
+		}
+
+		return false;
 	}
 
 	/**
@@ -33,9 +101,7 @@ class HHP_Dashboard {
 	public static function register_assets() {
 		wp_register_style( 'hhp-dashboard', HHP_URL . 'assets/css/dashboard.css', array(), HHP_VERSION );
 
-		$post = get_post();
-
-		if ( $post instanceof WP_Post && has_shortcode( (string) $post->post_content, self::SHORTCODE ) ) {
+		if ( self::page_has_dashboard() ) {
 			wp_enqueue_style( 'hhp-dashboard' );
 		}
 	}
@@ -48,9 +114,7 @@ class HHP_Dashboard {
 	 * @return array
 	 */
 	public static function noindex_dashboard( $robots ) {
-		$post = get_post();
-
-		if ( $post instanceof WP_Post && has_shortcode( (string) $post->post_content, self::SHORTCODE ) ) {
+		if ( self::page_has_dashboard() ) {
 			$robots['noindex']  = true;
 			$robots['nofollow'] = true;
 		}
@@ -71,6 +135,7 @@ class HHP_Dashboard {
 		$atts = shortcode_atts(
 			array(
 				'partner' => '',
+				'breite'  => '',
 			),
 			$atts,
 			self::SHORTCODE
@@ -110,6 +175,7 @@ class HHP_Dashboard {
 					'fehler'  => HHP_Auth::message( $fehler ),
 					'hinweis' => HHP_Auth::notice( $hinweis ),
 					'marke'   => $marke,
+					'stil'    => self::brand_style( $marke ) . self::width_style( $atts['breite'] ),
 				)
 			);
 		}
@@ -134,6 +200,7 @@ class HHP_Dashboard {
 				'ist_admin'  => current_user_can( 'manage_woocommerce' ),
 				'hinweis'    => HHP_Auth::notice( $hinweis ),
 				'fehler'     => HHP_Auth::message( $fehler ),
+				'stil'       => self::brand_style( $partner ) . self::width_style( $atts['breite'] ),
 			)
 		);
 	}
@@ -339,6 +406,36 @@ class HHP_Dashboard {
 	}
 
 	/**
+	 * Liefert die Breitenvorgabe als CSS-Variable.
+	 *
+	 * Standardmaessig ist das Dashboard auf 1180 Pixel begrenzt und zentriert.
+	 * In einem Seitenaufbau ueber die volle Breite wirkt das wie ein Kasten in
+	 * der Mitte; dort hilft breite="voll" im Shortcode.
+	 *
+	 * @param string $breite 'voll', 'standard' oder eine CSS-Laenge.
+	 *
+	 * @return string
+	 */
+	public static function width_style( $breite ) {
+		$breite = strtolower( trim( (string) $breite ) );
+
+		if ( '' === $breite || 'standard' === $breite ) {
+			return '';
+		}
+
+		if ( in_array( $breite, array( 'voll', 'full', '100%', 'none' ), true ) ) {
+			return '--hhp-max:none;';
+		}
+
+		// Eigene Laenge, etwa breite="1400px" - nur unbedenkliche Zeichen zulassen.
+		if ( preg_match( '/^\d{2,5}(px|%|rem|em|vw)$/', $breite ) ) {
+			return '--hhp-max:' . $breite . ';';
+		}
+
+		return '';
+	}
+
+	/**
 	 * Liefert das Logo fuer den Dashboard-Kopf.
 	 *
 	 * Hat der Vermittler ein eigenes Logo hinterlegt, wird dieses verwendet,
@@ -507,8 +604,13 @@ class HHP_Dashboard {
 			$max = max( $max, (float) $point['umsatz'] );
 		}
 
-		if ( $max <= 0 ) {
-			return '<p class="hhp-empty">' . esc_html__( 'Im gewählten Zeitraum wurden keine Umsätze erfasst.', 'hairhelp-partner' ) . '</p>';
+		// Auch ohne Umsatz wird das Diagramm gezeichnet: Der Vermittler soll den
+		// gewählten Zeitraum sehen und nicht nur einen Satz, der aussieht, als
+		// müsse er erst einen Filter setzen.
+		$leer = $max <= 0;
+
+		if ( $leer ) {
+			$max = 1.0;
 		}
 
 		$count   = count( $series );
@@ -559,7 +661,7 @@ class HHP_Dashboard {
 			}
 		}
 
-		return sprintf(
+		$svg = sprintf(
 			'<svg class="hhp-chart" viewBox="0 0 %d %d" role="img" aria-label="%s"><line x1="0" y1="%d" x2="%d" y2="%d" class="hhp-axis-line"/>%s%s</svg>',
 			$width,
 			$height,
@@ -567,8 +669,14 @@ class HHP_Dashboard {
 			$height - $pad_b,
 			$width,
 			$height - $pad_b,
-			$bars,
+			$leer ? '' : $bars,
 			$labels
 		);
+
+		if ( $leer ) {
+			$svg .= '<p class="hhp-empty">' . esc_html__( 'In diesem Zeitraum sind noch keine Umsätze eingegangen.', 'hairhelp-partner' ) . '</p>';
+		}
+
+		return $svg;
 	}
 }

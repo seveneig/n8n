@@ -199,5 +199,46 @@ unset( $GLOBALS['optionen']['hhp_version'] );
 HHP_Settings::maybe_upgrade();
 pruefe( 'eigene Farbwahl bleibt erhalten', HHP_Settings::get_partner( 'loopx13' )['brand_primary'], '#abcdef' );
 
+echo "\nUmsatzbasis und Versandabzug\n";
+HHP_Settings::save( array( 'shipping_deduct' => 1, 'shipping_flat' => 4.95 ) );
+
+// Gratislieferung ab 35 Franken: der Versand wird trotzdem abgezogen.
+pruefe( 'Gratislieferung: Pauschale wird abgezogen', HHP_Repository::umsatzbasis( 89.80, 0.0, 0.0, 0.0, 'net' ), 84.85 );
+
+// Unter 35 Franken zahlt der Kunde den Versand; abgezogen wird derselbe Betrag.
+pruefe( 'berechneter Versand wird abgezogen', HHP_Repository::umsatzbasis( 34.85, 4.95, 0.0, 0.0, 'net' ), 29.90 );
+
+// Teurerer Versand: der tatsächliche Betrag gilt, nicht die Pauschale.
+pruefe( 'teurerer Versand zählt voll', HHP_Repository::umsatzbasis( 109.90, 9.90, 0.0, 0.0, 'net' ), 100.00 );
+
+// Steuer wird zusätzlich abgezogen.
+pruefe( 'Steuer wird zusätzlich abgezogen', HHP_Repository::umsatzbasis( 100.00, 0.0, 7.70, 0.0, 'net' ), 87.35 );
+
+// Rückerstattung mindert die Basis.
+pruefe( 'Rückerstattung mindert die Basis', HHP_Repository::umsatzbasis( 89.80, 0.0, 0.0, 40.00, 'net' ), 44.85 );
+
+// Die Basis wird nie negativ.
+pruefe( 'Basis wird nie negativ', HHP_Repository::umsatzbasis( 3.00, 0.0, 0.0, 0.0, 'net' ), 0.0 );
+
+// Bestellsumme gesamt: kein Abzug.
+pruefe( 'Grundlage Bestellsumme zieht nichts ab', HHP_Repository::umsatzbasis( 89.80, 0.0, 7.70, 0.0, 'gross' ), 89.80 );
+
+// Abschaltbar: dann gilt nur der tatsächlich berechnete Versand.
+HHP_Settings::save( array( 'shipping_deduct' => 0 ) );
+pruefe( 'ohne Pauschale bleibt Gratislieferung ungekürzt', HHP_Repository::umsatzbasis( 89.80, 0.0, 0.0, 0.0, 'net' ), 89.80 );
+pruefe( 'ohne Pauschale zählt der berechnete Versand', HHP_Repository::umsatzbasis( 39.80, 4.95, 0.0, 0.0, 'net' ), 34.85 );
+HHP_Settings::save( array( 'shipping_deduct' => 1 ) );
+
+// Provision auf die Basis, nicht auf die Bestellsumme.
+$basis = HHP_Repository::umsatzbasis( 89.80, 0.0, 0.0, 0.0, 'net' );
+pruefe( '10 Prozent Provision auf 84.85', round( $basis * 0.10, 2 ), 8.49 );
+
+echo "\nBreite des Dashboards\n";
+pruefe( 'ohne Angabe bleibt es begrenzt', HHP_Dashboard::width_style( '' ), '' );
+pruefe( 'voll ergibt volle Breite', HHP_Dashboard::width_style( 'voll' ), '--hhp-max:none;' );
+pruefe( 'Grossschreibung egal', HHP_Dashboard::width_style( 'VOLL' ), '--hhp-max:none;' );
+pruefe( 'eigene Länge wird übernommen', HHP_Dashboard::width_style( '1400px' ), '--hhp-max:1400px;' );
+pruefe( 'unzulässige Eingabe wird verworfen', HHP_Dashboard::width_style( '"><script>' ), '' );
+
 printf( "\n=== %d bestanden, %d fehlgeschlagen ===\n", $ok, $fehl );
 exit( $fehl > 0 ? 1 : 0 );

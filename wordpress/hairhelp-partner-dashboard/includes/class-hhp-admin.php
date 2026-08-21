@@ -287,6 +287,26 @@ class HHP_Admin {
 					</td>
 				</tr>
 				<tr>
+					<th scope="row"><?php esc_html_e( 'Versandkosten', 'hairhelp-partner' ); ?></th>
+					<td>
+						<label>
+							<input type="checkbox" name="shipping_deduct" value="1" <?php checked( $s['shipping_deduct'], 1 ); ?> />
+							<?php esc_html_e( 'Versand immer von der Umsatzbasis abziehen', 'hairhelp-partner' ); ?>
+						</label>
+						<p style="margin:8px 0 0">
+							<label for="hhp-versand"><?php esc_html_e( 'Mindestbetrag', 'hairhelp-partner' ); ?></label>
+							<input name="shipping_flat" id="hhp-versand" type="number" step="0.05" min="0" max="999" value="<?php echo esc_attr( $s['shipping_flat'] ); ?>" />
+							<?php echo esc_html( get_woocommerce_currency() ); ?>
+						</p>
+						<p class="description">
+							<?php esc_html_e( 'Ab 35 Franken liefert der Shop gratis, die Kosten fallen aber trotzdem an. Mit dieser Einstellung wird der Versand bei jeder Bestellung abgezogen, auch bei Gratislieferung. Hat jemand einen teureren Versand gewählt, gilt der tatsächlich berechnete Betrag.', 'hairhelp-partner' ); ?>
+						</p>
+						<p class="description">
+							<?php esc_html_e( 'Betrifft nur die Grundlage „Warenwert ohne Versand und Steuer“. Bei „Bestellsumme gesamt“ wird nichts abgezogen.', 'hairhelp-partner' ); ?>
+						</p>
+					</td>
+				</tr>
+				<tr>
 					<th scope="row"><?php esc_html_e( 'Bestellte Artikel zeigen', 'hairhelp-partner' ); ?></th>
 					<td><label><input type="checkbox" name="show_products" value="1" <?php checked( $s['show_products'], 1 ); ?> /> <?php esc_html_e( 'Artikelnamen in der Bestellliste anzeigen', 'hairhelp-partner' ); ?></label></td>
 				</tr>
@@ -367,6 +387,8 @@ class HHP_Admin {
 			'session_hours'   => isset( $_POST['session_hours'] ) ? min( 720, max( 1, (int) $_POST['session_hours'] ) ) : 12,
 			'remember_days'   => isset( $_POST['remember_days'] ) ? min( 365, max( 1, (int) $_POST['remember_days'] ) ) : 30,
 			'show_products'   => isset( $_POST['show_products'] ) ? 1 : 0,
+			'shipping_deduct' => isset( $_POST['shipping_deduct'] ) ? 1 : 0,
+			'shipping_flat'   => isset( $_POST['shipping_flat'] ) ? max( 0, (float) $_POST['shipping_flat'] ) : 4.95,
 			'brand_primary'   => isset( $_POST['brand_primary'] ) ? (string) sanitize_hex_color( wp_unslash( $_POST['brand_primary'] ) ) : '#2f6f62',
 			'brand_accent'    => isset( $_POST['brand_accent'] ) ? (string) sanitize_hex_color( wp_unslash( $_POST['brand_accent'] ) ) : '#c8a04a',
 			'brand_dark'      => isset( $_POST['brand_dark'] ) ? (string) sanitize_hex_color( wp_unslash( $_POST['brand_dark'] ) ) : '#1c2b28',
@@ -1034,16 +1056,13 @@ class HHP_Admin {
 			array(
 				'post_type'      => 'page',
 				'post_status'    => 'publish',
-				'posts_per_page' => 20,
-				's'              => '[' . HHP_Dashboard::SHORTCODE,
+				'posts_per_page' => 100,
 				'fields'         => 'ids',
 			)
 		);
 
 		foreach ( $pages as $page_id ) {
-			$content = get_post_field( 'post_content', $page_id );
-
-			if ( has_shortcode( (string) $content, HHP_Dashboard::SHORTCODE ) ) {
+			if ( HHP_Dashboard::page_has_dashboard( $page_id ) ) {
 				$url = get_permalink( $page_id );
 				set_transient( 'hhp_dashboard_page', $url, HOUR_IN_SECONDS );
 

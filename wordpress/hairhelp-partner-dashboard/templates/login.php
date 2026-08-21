@@ -10,7 +10,7 @@
 
 defined( 'ABSPATH' ) || exit;
 ?>
-<div class="hhp-dashboard hhp-dashboard-schmal <?php echo esc_attr( HHP_Dashboard::theme_class( isset( $marke ) ? $marke : null ) ); ?>" style="<?php echo esc_attr( HHP_Dashboard::brand_style( isset( $marke ) ? $marke : null ) ); ?>">
+<div class="hhp-dashboard hhp-dashboard-schmal <?php echo esc_attr( HHP_Dashboard::theme_class( isset( $marke ) ? $marke : null ) ); ?>" style="<?php echo esc_attr( isset( $stil ) ? $stil : '' ); ?>">
 	<header class="hhp-header">
 		<div class="hhp-header-brand">
 			<?php echo wp_kses_post( HHP_Dashboard::brand_logo( isset( $marke ) ? $marke : null ) ); ?>

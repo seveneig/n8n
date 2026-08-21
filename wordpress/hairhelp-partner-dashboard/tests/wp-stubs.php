@@ -75,4 +75,5 @@ require __DIR__ . '/../includes/class-hhp-auth.php';
 require __DIR__ . '/../includes/class-hhp-settings.php';
 require __DIR__ . '/../includes/class-hhp-tracker.php';
 require __DIR__ . '/../includes/class-hhp-attribution.php';
+require __DIR__ . '/../includes/class-hhp-repository.php';
 require __DIR__ . '/../includes/class-hhp-dashboard.php';
