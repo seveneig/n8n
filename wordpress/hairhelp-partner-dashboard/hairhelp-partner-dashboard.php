@@ -3,7 +3,7 @@
  * Plugin Name:       HairHelp Vermittler-Dashboard
  * Plugin URI:        https://www.hairhelp-haarverdichter.ch/
  * Description:       QR-Code-Tracking mit 30-Tage-Cookie und Gutschein-Erfassung fuer WooCommerce. Vermittler melden sich mit Benutzername und Passwort an und sehen ihre vermittelten Verkaeufe im eigenen Erscheinungsbild, ganz ohne WordPress-Zugang.
- * Version:           1.2.0
+ * Version:           1.2.1
  * Requires at least: 6.0
  * Requires PHP:      7.4
  * Author:            HairHelp
@@ -19,7 +19,7 @@
 
 defined( 'ABSPATH' ) || exit;
 
-define( 'HHP_VERSION', '1.2.0' );
+define( 'HHP_VERSION', '1.2.1' );
 define( 'HHP_FILE', __FILE__ );
 define( 'HHP_PATH', plugin_dir_path( __FILE__ ) );
 define( 'HHP_URL', plugin_dir_url( __FILE__ ) );

@@ -389,8 +389,8 @@ Erscheinungsbild**:
 |---|---|
 | Anzeigename | Wortmarke im Kopf, ersetzt das Shop-Logo |
 | Farbschema | *wie der Shop*, *hell* oder *dunkel* |
-| Leitfarbe | Diagramm, Provisionswert, Beschriftungen, Buttons |
-| Zweitfarbe | Kennzeichnung der Gutscheinbestellungen |
+| Leitfarbe | Diagramm, Provisionswert, Beschriftungen, Buttons, Abmelden-Link |
+| Zweitfarbe | Fehlerhinweise, Doppelquellen |
 | Hintergrund | Grundton, nur beim dunklen Schema |
 | Logo-Adresse | eigenes Bildlogo statt Wortmarke |
 | Schriftstapel | gewünschte Schrift, falls vorhanden |
@@ -408,6 +408,18 @@ hinterlegt, entnommen der Website des Vermittlers:
 Im dunklen Schema erbt das Dashboard bewusst **nichts** mehr vom Theme: Auf
 dunklem Grund wäre die dunkle Textfarbe des Themes unlesbar. Es bringt daher
 alle Farben selbst mit und zeichnet seinen eigenen Hintergrund.
+
+Die Herkunft einer Bestellung ist fest eingefärbt und folgt nicht der
+Markenfarbe, damit die drei Fälle auf einen Blick unterscheidbar bleiben:
+
+| Herkunft | Farbe |
+|---|---|
+| QR-Code | gelb |
+| Gutscheincode | grün |
+| beides | gefüllt in der Leitfarbe |
+
+Auf hellem Grund werden Gelb und Grün automatisch dunkler gesetzt, sonst
+wären sie auf Weiss nicht lesbar.
 
 > **Kontrastsicherung:** Für Text wird jede Farbe automatisch so weit
 > nachgedunkelt oder aufgehellt, bis sie auf dem jeweiligen Grund ein
