@@ -466,7 +466,36 @@ Provisionsrechnung. Bei aktivem Plugin werden sie **nicht** gebraucht.
 
 ---
 
-## 13. Tests
+## 13. Bekanntes Umfeldproblem: WP Rocket unter WordPress 7.1
+
+Tritt beim Aufruf einer Seite ein kritischer Fehler auf und nennt der
+Wiederherstellungsmodus **WP Rocket**, liegt es an einer bekannten
+Unverträglichkeit von WP Rocket 3.23 mit WordPress 7.1 – nicht an diesem
+Plugin.
+
+Fehlerbild:
+
+```
+Uncaught TypeError: substr(): Argument #1 ($string) must be of type string,
+int given in .../wp-rocket/inc/ThirdParty/Plugins/CDN/Cloudflare.php:562
+```
+
+WP Rocket durchsucht dort die Rückruflisten der Hooks `deleted_post` und
+`transition_post_status` und erwartet für jeden Schlüssel einen Text. Unter
+WordPress 7.1 kann ein Schlüssel eine Zahl sein – dann bricht `substr()` ab.
+Das Modul läuft bei jedem Aufruf, auch ohne Cloudflare.
+
+**Lösung: WP Rocket auf 3.23.2.2 oder neuer aktualisieren.** Dort ist die
+Umwandlung in einen Text enthalten.
+
+Dieses Plugin ist nicht beteiligt: Es registriert keinen Rückruf auf
+`deleted_post` oder `transition_post_status` und verwendet seit Fassung 1.1.1
+ausschliesslich benannte Funktionen und Klassenmethoden – anonyme Funktionen
+sind genau die Art von Rückruf, die solche Zahlenschlüssel erzeugt.
+
+---
+
+## 14. Tests
 
 Zwei Prüfungen lassen sich ohne WordPress-Installation direkt ausführen:
 
