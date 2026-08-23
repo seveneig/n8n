@@ -1,7 +1,8 @@
 # Lärchi-Trophy 2027 · Golfplanung
 
-Anmelde- und Planungsseite für die Lärchiwoche **18. – 24. Juli 2027**
-im Hotel Lärchenhof, Erpfendorf (Tirol).
+Anmelde- und Planungsseite für die Lärchiwoche **17. – 24. Juli 2027**
+(Samstag bis Samstag) im Hotel **Der Lärchenhof**, Erpfendorf (Tirol).
+Gespielt wird von Sonntag, 18., bis Samstag, 24. Juli.
 
 Teilnehmer melden sich einmalig an und tragen sich anschließend für die sieben
 Golfplätze der Woche ein — je Tag wahlweise **9 oder 18 Loch**. Wer wann wo
@@ -25,7 +26,7 @@ kann die eigene Auswahl nur, wem sie gehört (persönlicher Zugangscode).
 
 1. **Anmeldung** — wer schon angemeldet ist, wird direkt zum Auswahlbereich geführt
    (der Button beschriftet sich dann selbst als „Meine Golfplätze wählen“).
-2. **Golfplätze wählen** — die eigene Auswahl, jederzeit änderbar.
+2. **Golfplätze wählen** — die eigene Auswahl, bis Ende September änderbar.
 3. **Live-Ansicht** — öffentliche Übersicht aller Anmeldungen.
 
 **Anmeldung** — Pflichtfelder: Vorname, Nachname, Handicap (−10 bis 54),
