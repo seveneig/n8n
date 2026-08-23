@@ -17,6 +17,7 @@ kann die eigene Auswahl nur, wem sie gehört (persönlicher Zugangscode).
 |---|---|
 | `Index.html` | Die komplette Web-App — eine Datei, alles inline (CSS + JS), keine externen Abhängigkeiten. Läuft **direkt im Browser** (Vorschau, Speicher lokal) **und** als Google-Apps-Script-Oberfläche (zentrale Speicherung). |
 | `Code.gs` | Apps-Script-Backend: speichert Teilnehmer und Auswahl in einer Google-Tabelle, prüft Zugangscodes und das Organisator-Passwort. |
+| `ANLEITUNG.md` | **Schritt für Schritt zum öffentlichen Link** — ausführlich, mit Fehlerbehebung. |
 
 ---
 
@@ -76,6 +77,9 @@ echten Einsatz. Organisator-Passwort in der Vorschau: `banfhold15`.
 ---
 
 ## Veröffentlichen mit Google-Tabelle (echter Einsatz)
+
+> Ausführlich, mit Bildbeschreibungen und Fehlerbehebung: **[ANLEITUNG.md](ANLEITUNG.md)**.
+> Hier nur die Kurzfassung.
 
 1. Neue **Google-Tabelle** anlegen → [sheets.new](https://sheets.new)
 2. **Erweiterungen → Apps Script** öffnen.
