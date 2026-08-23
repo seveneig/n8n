@@ -326,8 +326,14 @@ table.matrix tfoot td,table.matrix tfoot td.nm{
   border-top:1px solid var(--line);border-bottom:0;padding:16px 12px;
 }
 table.matrix tfoot .sub{display:block;font-weight:400;font-size:11px;color:var(--muted);margin-top:3px}
-.hcp{display:inline-block;min-width:46px;padding:3px 9px;margin-right:11px;border-radius:5px;background:var(--gold-soft);color:var(--brand-2);font-size:12px;text-align:center;vertical-align:2px}
-[data-theme="dark"] .hcp{color:var(--gold-2)}
+/* Handicap-Feld: eigener Rahmen und eigene Füllung, damit es auch in der
+   golden hervorgehobenen eigenen Zeile als Feld erkennbar bleibt */
+.hcp{
+  display:inline-block;min-width:46px;padding:3px 9px;margin-right:11px;border-radius:5px;
+  background:var(--card);border:1px solid var(--gold);color:var(--brand-2);
+  font-size:12.5px;font-weight:600;text-align:center;vertical-align:2px;
+}
+[data-theme="dark"] .hcp{color:var(--gold-2);background:var(--card)}
 .pname{font-weight:600}
 .pclub{font-size:12.5px;color:var(--muted);margin-left:57px;margin-top:2px}
 .me-tag{display:inline-block;margin-left:8px;padding:1px 8px;border-radius:999px;background:var(--gold);color:#171106;font-size:10px;letter-spacing:.1em;text-transform:uppercase;vertical-align:2px}
