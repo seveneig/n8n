@@ -17,10 +17,9 @@ var ADMIN_PASSWORT = 'banfhold15';
 /** Name des Tabellenblatts */
 var BLATT = 'Anmeldungen';
 
-/** Zeitzone für alle Datums- und Zeitangaben. Die Anzeige nennt sie nicht,
-    sie sorgt nur dafür, dass überall dieselbe Uhrzeit steht. */
+/** Zeitzone der Tabelle. Die Seite zeigt keine Zeiten an — die Spalte
+    „Angemeldet am“ ist nur ein Vermerk in der Tabelle selbst. */
 var ZEITZONE = 'Europe/Zurich';
-var ZEITFORMAT = 'dd.MM.yyyy, HH:mm';
 
 /** Die sieben Golfplätze — Reihenfolge und IDs müssen zu Index.html passen. */
 var COURSES = [
@@ -114,9 +113,24 @@ function text_(wert){
   return String(wert);
 }
 
-/** Datum → „24.08.2026, 14:32“ in Schweizer Zeit. */
-function zeitText_(wert){
-  if(wert instanceof Date) return Utilities.formatDate(wert, ZEITZONE, ZEITFORMAT);
+/**
+ * Handicap aus der Zelle lesen.
+ *
+ * Google Tabellen deutet Eingaben wie „5.5“ oder „19.9“ als Datum um —
+ * aus 5.5 wird der 5. Mai. Betroffen ist jeder Wert, dessen Nachkommastelle
+ * eine gültige Monatszahl ist; „21.0“ oder „38.8“ bleiben verschont, weil es
+ * keinen Monat 0 und keinen 38. Tag gibt.
+ *
+ * Steht in der Zelle ein Datum, rechnen wir es hier zurück: Tag und Monat
+ * ergeben wieder die ursprüngliche Zahl. Neue Eintragungen sind davon nicht
+ * mehr betroffen, weil die Spalte als Text formatiert wird — siehe
+ * spaltenFormate_(). Für bereits bestehende Zeilen rettet diese Umrechnung
+ * die Werte.
+ */
+function handicapText_(wert){
+  if(wert instanceof Date){
+    return wert.getDate() + ',' + (wert.getMonth() + 1);
+  }
   return text_(wert);
 }
 
@@ -129,10 +143,9 @@ function zuObjekt_(r, mitCode){
   });
   var o = {
     ref:        text_(r[C_REF]),
-    created:    zeitText_(r[C_ZEIT]),
     vorname:    text_(r[C_VOR]),
     nachname:   text_(r[C_NACH]),
-    handicap:   text_(r[C_HCP]),
+    handicap:   handicapText_(r[C_HCP]),
     heimatclub: text_(r[C_CLUB]),
     id:         text_(r[C_ID]),
     sel:        sel
@@ -187,7 +200,7 @@ function apiRegister(d){
     sh.appendRow(zeile);
 
     return {ok: true, teilnehmer: {
-      ref: ref, created: zeitText_(jetzt), vorname: vor, nachname: nach,
+      ref: ref, vorname: vor, nachname: nach,
       handicap: hcp, heimatclub: club, id: id, code: code, sel: {}
     }};
   } finally {
@@ -286,6 +299,32 @@ function apiAdminDelete(pw, id){
 function setup(){
   var sh = blatt_();
   spaltenFormate_(sh);
-  SpreadsheetApp.getActiveSpreadsheet()
-    .toast('Blatt "' + BLATT + '" bereit, Zeitzone ' + ZEITZONE + '.');
+  var repariert = handicapsReparieren();
+  SpreadsheetApp.getActiveSpreadsheet().toast(
+    'Blatt "' + BLATT + '" bereit.' +
+    (repariert ? ' ' + repariert + ' Handicap(s) zurückgerechnet.' : ''));
+}
+
+/**
+ * Handicaps reparieren, die Google Tabellen als Datum eingelesen hat.
+ *
+ * Rechnet betroffene Zellen zurück (5. Mai → „5,5“) und stellt die Spalte auf
+ * Text, damit es nicht wieder passiert. Kann gefahrlos mehrfach laufen —
+ * unauffällige Werte werden nur unverändert zurückgeschrieben.
+ * Wird von setup() aufgerufen.
+ */
+function handicapsReparieren(){
+  var a = alleZeilen_(), sh = a.sh, rows = a.rows;
+  if(!rows.length) return 0;
+
+  var anzahl = 0;
+  var werte = rows.map(function(r){
+    if(r[C_HCP] instanceof Date) anzahl++;
+    return [handicapText_(r[C_HCP])];
+  });
+
+  var bereich = sh.getRange(2, C_HCP + 1, rows.length, 1);
+  bereich.setNumberFormat('@');      // erst Text-Format …
+  bereich.setValues(werte);          // … dann die Werte schreiben
+  return anzahl;
 }

@@ -188,6 +188,7 @@ sichtbar. Du musst eine neue Version bereitstellen:
 | „Sie benötigen die Berechtigung, um auf diese Datei zuzugreifen“ | *Zugriff* steht nicht auf **Jeder**. Unter *Bereitstellungen verwalten* bearbeiten und umstellen. |
 | Änderungen sind nicht sichtbar | Keine neue Version bereitgestellt — siehe Abschnitt oben. Notfalls den Browser-Cache mit Strg + F5 umgehen. |
 | Anmeldung schlägt fehl, Tabelle bleibt leer | Im Skript-Editor einmal die Funktion `setup` ausführen (oben Funktion auswählen → *Ausführen*). Sie legt das Blatt „Anmeldungen“ mit den Spaltenüberschriften an. |
+| Statt des Handicaps steht ein Datum oder eine Zeitzone da | Google Tabellen hat Werte wie `5.5` als 5. Mai gelesen. Einmal die Funktion `setup` ausführen — sie rechnet betroffene Zellen zurück und stellt die Spalte auf Text. |
 | Beim Einfügen hängt der Editor | Die Datei ist groß. Einmal einfügen, warten, nicht abbrechen. Notfalls Browser-Tab schließen, Apps Script neu öffnen und noch einmal versuchen. |
 
 ---
