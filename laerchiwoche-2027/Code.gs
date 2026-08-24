@@ -17,6 +17,11 @@ var ADMIN_PASSWORT = 'banfhold15';
 /** Name des Tabellenblatts */
 var BLATT = 'Anmeldungen';
 
+/** Zeitzone für alle Datums- und Zeitangaben. Die Anzeige nennt sie nicht,
+    sie sorgt nur dafür, dass überall dieselbe Uhrzeit steht. */
+var ZEITZONE = 'Europe/Zurich';
+var ZEITFORMAT = 'dd.MM.yyyy, HH:mm';
+
 /** Die sieben Golfplätze — Reihenfolge und IDs müssen zu Index.html passen. */
 var COURSES = [
   {id:'d1', kurz:'So 18.07', name:'Wilder Kaiser Ellmau'},
@@ -51,6 +56,14 @@ function doGet(){
 
 function blatt_(){
   var ss = SpreadsheetApp.getActiveSpreadsheet();
+
+  // Tabelle auf Schweizer Zeit stellen. Ohne das rechnet die Tabelle in ihrer
+  // eigenen Zeitzone und das Skript in seiner — die Anmeldezeiten stimmen dann
+  // nicht überein und verschieben sich je nach Sommer- oder Winterzeit anders.
+  if(ss.getSpreadsheetTimeZone() !== ZEITZONE){
+    ss.setSpreadsheetTimeZone(ZEITZONE);
+  }
+
   var sh = ss.getSheetByName(BLATT);
   if(!sh){
     sh = ss.insertSheet(BLATT);
@@ -65,8 +78,23 @@ function blatt_(){
     sh.setFrozenRows(1);
     sh.setColumnWidth(1, 90);
     sh.setColumnWidth(2, 150);
+    spaltenFormate_(sh);
   }
   return sh;
+}
+
+/**
+ * Spaltenformate setzen. Steht bewusst in einer eigenen Funktion, damit
+ * `setup()` sie auch auf eine bereits bestehende Tabelle anwenden kann.
+ */
+function spaltenFormate_(sh){
+  var zeilen = sh.getMaxRows() - 1;
+  if(zeilen < 1) return;
+  // „Angemeldet am“ mit Datum und Uhrzeit anzeigen
+  sh.getRange(2, C_ZEIT + 1, zeilen, 1).setNumberFormat('dd.MM.yyyy HH:mm');
+  // Handicap als Text führen, damit die Tabelle „5,5“ nicht in eine andere
+  // Zahl oder gar ein Datum umdeutet
+  sh.getRange(2, C_HCP + 1, zeilen, 1).setNumberFormat('@');
 }
 
 function alleZeilen_(){
@@ -77,24 +105,39 @@ function alleZeilen_(){
   return {sh: sh, rows: sh.getRange(2, 1, n, breite).getValues()};
 }
 
+/**
+ * Zelle → Text. Wichtig: NICHT `wert || ''` verwenden — die Zahl 0 ist in
+ * JavaScript unwahr und ein Handicap von 0 würde damit verschwinden.
+ */
+function text_(wert){
+  if(wert === null || wert === undefined) return '';
+  return String(wert);
+}
+
+/** Datum → „24.08.2026, 14:32“ in Schweizer Zeit. */
+function zeitText_(wert){
+  if(wert instanceof Date) return Utilities.formatDate(wert, ZEITZONE, ZEITFORMAT);
+  return text_(wert);
+}
+
 /** Zeile → Objekt. mitCode=false entfernt den Zugangscode (öffentliche Ansicht). */
 function zuObjekt_(r, mitCode){
   var sel = {};
   COURSES.forEach(function(c, i){
-    var v = String(r[C_SEL + i] || '').trim();
+    var v = text_(r[C_SEL + i]).trim();
     sel[c.id] = (v === '9' || v === '18') ? v : '';
   });
   var o = {
-    ref:        String(r[C_REF] || ''),
-    created:    r[C_ZEIT] instanceof Date ? r[C_ZEIT].toISOString() : String(r[C_ZEIT] || ''),
-    vorname:    String(r[C_VOR] || ''),
-    nachname:   String(r[C_NACH] || ''),
-    handicap:   String(r[C_HCP] || ''),
-    heimatclub: String(r[C_CLUB] || ''),
-    id:         String(r[C_ID] || ''),
+    ref:        text_(r[C_REF]),
+    created:    zeitText_(r[C_ZEIT]),
+    vorname:    text_(r[C_VOR]),
+    nachname:   text_(r[C_NACH]),
+    handicap:   text_(r[C_HCP]),
+    heimatclub: text_(r[C_CLUB]),
+    id:         text_(r[C_ID]),
     sel:        sel
   };
-  if(mitCode) o.code = String(r[C_CODE] || '');
+  if(mitCode) o.code = text_(r[C_CODE]);
   return o;
 }
 
@@ -144,7 +187,7 @@ function apiRegister(d){
     sh.appendRow(zeile);
 
     return {ok: true, teilnehmer: {
-      ref: ref, created: jetzt.toISOString(), vorname: vor, nachname: nach,
+      ref: ref, created: zeitText_(jetzt), vorname: vor, nachname: nach,
       handicap: hcp, heimatclub: club, id: id, code: code, sel: {}
     }};
   } finally {
@@ -233,10 +276,16 @@ function apiAdminDelete(pw, id){
 /* ─────────────────────────── HILFE / TEST ─────────────────────────── */
 
 /**
- * Einmal ausführen, um Tabellenblatt und Kopfzeile anzulegen
- * (passiert sonst automatisch bei der ersten Anmeldung).
+ * Einmal ausführen, um Tabellenblatt und Kopfzeile anzulegen (passiert sonst
+ * automatisch bei der ersten Anmeldung).
+ *
+ * Bei einer bereits bestehenden Tabelle stellt der Aufruf ausserdem die
+ * Zeitzone auf Schweizer Zeit und die Spaltenformate richtig — sinnvoll, wenn
+ * die Tabelle noch mit einer älteren Fassung dieses Skripts angelegt wurde.
  */
 function setup(){
-  blatt_();
-  SpreadsheetApp.getActiveSpreadsheet().toast('Tabellenblatt "' + BLATT + '" ist bereit.');
+  var sh = blatt_();
+  spaltenFormate_(sh);
+  SpreadsheetApp.getActiveSpreadsheet()
+    .toast('Blatt "' + BLATT + '" bereit, Zeitzone ' + ZEITZONE + '.');
 }

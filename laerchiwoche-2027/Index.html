@@ -314,7 +314,7 @@ table.matrix thead th.nm .wd{margin-bottom:0}
 
 table.matrix th.nm,table.matrix td.nm{
   text-align:left;position:sticky;left:0;z-index:3;background:var(--card);
-  border-right:1px solid var(--line);min-width:250px;
+  border-right:1px solid var(--line);min-width:300px;
 }
 table.matrix thead th.nm{z-index:4}
 table.matrix tbody td{background:var(--card)}
@@ -326,16 +326,23 @@ table.matrix tfoot td,table.matrix tfoot td.nm{
   border-top:1px solid var(--line);border-bottom:0;padding:16px 12px;
 }
 table.matrix tfoot .sub{display:block;font-weight:400;font-size:11px;color:var(--muted);margin-top:3px}
-/* Handicap-Feld: eigener Rahmen und eigene Füllung, damit es auch in der
-   golden hervorgehobenen eigenen Zeile als Feld erkennbar bleibt */
+/* Handicap als kleine Plakette: eigene Füllung und goldene Kontur, damit sie
+   auf jedem Zeilenhintergrund trägt — auch in der golden hervorgehobenen
+   eigenen Zeile, wo sie vorher mit dem Untergrund verschmolz */
 .hcp{
-  display:inline-block;min-width:46px;padding:3px 9px;margin-right:11px;border-radius:5px;
-  background:var(--card);border:1px solid var(--gold);color:var(--brand-2);
-  font-size:12.5px;font-weight:600;text-align:center;vertical-align:2px;
+  display:inline-flex;align-items:baseline;justify-content:center;gap:5px;
+  min-width:74px;flex:0 0 74px;padding:4px 9px;border-radius:6px;
+  background:var(--card);border:1px solid var(--gold);
+  box-shadow:0 1px 2px rgba(36,29,20,.07);
+  vertical-align:2px;white-space:nowrap;
 }
-[data-theme="dark"] .hcp{color:var(--gold-2);background:var(--card)}
+.hcp i{font-style:normal;font-size:9px;letter-spacing:.1em;text-transform:uppercase;color:var(--gold)}
+.hcp b{font-size:13px;font-weight:700;color:var(--brand);font-variant-numeric:tabular-nums}
+[data-theme="dark"] .hcp{background:var(--card-2);box-shadow:none}
+[data-theme="dark"] .hcp b{color:var(--gold-2)}
+.nmcell{display:flex;align-items:center;gap:12px}
 .pname{font-weight:600}
-.pclub{font-size:12.5px;color:var(--muted);margin-left:57px;margin-top:2px}
+.pclub{font-size:12.5px;color:var(--muted);margin-top:2px}
 .me-tag{display:inline-block;margin-left:8px;padding:1px 8px;border-radius:999px;background:var(--gold);color:#171106;font-size:10px;letter-spacing:.1em;text-transform:uppercase;vertical-align:2px}
 .me-row td,.me-row td.nm{background:var(--gold-soft)!important}
 .chip{display:inline-flex;align-items:center;justify-content:center;min-width:38px;padding:4px 10px;border-radius:999px;font-size:12.5px;font-weight:600}
@@ -857,7 +864,7 @@ var DB = {
       id: 'p' + Date.now() + Math.floor(Math.random()*1000),
       ref: 'LT27-' + ('00' + (all.length+1)).slice(-3),
       code: String(Math.floor(100000 + Math.random()*900000)),
-      created: new Date().toISOString(),
+      created: zeitText(new Date()),
       vorname: d.vorname, nachname: d.nachname, handicap: d.handicap, heimatclub: d.heimatclub,
       sel: {}
     };
@@ -910,9 +917,17 @@ function esc(s){
   });
 }
 function hcpTxt(h){
+  if(h === null || h === undefined || String(h).trim() === '') return '';
   var n = parseFloat(String(h).replace(',', '.'));
-  if(isNaN(n)) return String(h || '');
+  if(isNaN(n)) return String(h);          /* z. B. „PR“ unverändert stehen lassen */
   return (Math.round(n*10)/10).toFixed(1).replace('.', ',');
+}
+
+/* Kleine Handicap-Plakette für die Tabelle */
+function plakette(h){
+  var t = hcpTxt(h);
+  return '<span class="hcp" title="Handicap ' + esc(t || 'nicht angegeben') + '">' +
+         '<i>HCP</i><b>' + esc(t || '–') + '</b></span>';
 }
 function toast(msg, kind){
   var t = $('toast');
@@ -1307,10 +1322,12 @@ function renderLive(){
       return '<td class="day"><span class="chip-no">·</span></td>';
     }).join('');
     return '<tr' + (mine ? ' class="me-row"' : '') + '>'
-      + '<td class="nm"><span class="hcp">' + esc(hcpTxt(p.handicap)) + '</span>'
-      + '<span class="pname">' + esc(p.vorname + ' ' + p.nachname) + '</span>'
-      + (mine ? '<span class="me-tag">Du</span>' : '')
-      + '<div class="pclub">' + esc(p.heimatclub) + '</div></td>'
+      + '<td class="nm"><div class="nmcell">' + plakette(p.handicap) + '<div>'
+      +   '<span class="pname">' + esc(p.vorname + ' ' + p.nachname) + '</span>'
+      +   (mine ? '<span class="me-tag">Du</span>' : '')
+      +   '<div class="pclub" title="Angemeldet am ' + esc(zeitAnzeige(p.created)) + '">'
+      +   esc(p.heimatclub) + '</div>'
+      + '</div></div></td>'
       + cells + '<td class="tot">' + days + '</td></tr>';
   }).join('');
 
@@ -1333,11 +1350,39 @@ function renderLive(){
     + '</table></div>';
 }
 function stat(n, l){ return '<div class="stat"><b>' + n + '</b><span>' + esc(l) + '</span></div>'; }
-function zeit(){
-  var d = new Date();
-  function p(x){ return ('0' + x).slice(-2); }
-  return p(d.getDate()) + '.' + p(d.getMonth()+1) + '.' + d.getFullYear() + ', ' + p(d.getHours()) + ':' + p(d.getMinutes()) + ' Uhr';
+/* ── Zeitangaben ──────────────────────────────────────────────────────────
+   Alles läuft über Schweizer Zeit. Sonst zeigt jedes Gerät seine eigene
+   Uhrzeit, und in Weltzeit (UTC) gespeicherte Zeitstempel liegen im Winter
+   eine, im Sommer zwei Stunden daneben — Einträge aus verschiedenen
+   Jahreszeiten springen dann unterschiedlich weit.                        */
+var ZEITZONE = 'Europe/Zurich';
+
+function zeitText(d){
+  d = d || new Date();
+  try{
+    return new Intl.DateTimeFormat('de-CH', {
+      timeZone: ZEITZONE, day: '2-digit', month: '2-digit', year: 'numeric',
+      hour: '2-digit', minute: '2-digit'
+    }).format(d).replace(/[  ]/g, ' ');
+  }catch(e){
+    function p(x){ return ('0' + x).slice(-2); }
+    return p(d.getDate()) + '.' + p(d.getMonth()+1) + '.' + d.getFullYear() +
+           ', ' + p(d.getHours()) + ':' + p(d.getMinutes());
+  }
 }
+
+/* Gespeicherten Wert anzeigen — verträgt das Format „24.08.2026, 14:32“
+   ebenso wie ältere, in Weltzeit abgelegte Einträge. */
+function zeitAnzeige(wert){
+  if(!wert) return '–';
+  if(/^\d{4}-\d{2}-\d{2}T/.test(String(wert))){
+    var d = new Date(wert);
+    if(!isNaN(d.getTime())) return zeitText(d);
+  }
+  return String(wert);
+}
+
+function zeit(){ return zeitText() + ' Uhr'; }
 function copyLink(){
   var url = (window.location && window.location.href) ? window.location.href : '';
   if(!url){ toast('Link konnte nicht ermittelt werden.', 'err'); return; }
@@ -1392,8 +1437,9 @@ function renderAdmin(){
     var nm = (p.vorname + ' ' + p.nachname).replace(/'/g, "\\'");
     return '<div class="adm-item">'
       + '<div><div class="nm">' + esc(p.vorname + ' ' + p.nachname) + '</div>'
-      + '<div class="mt">HCP ' + esc(hcpTxt(p.handicap)) + ' · ' + esc(p.heimatclub) + ' · ' + esc(p.ref)
-      + ' · Code <b>' + esc(p.code || '–') + '</b> · ' + tage + ' Tag(e)</div></div>'
+      + '<div class="mt">HCP ' + esc(hcpTxt(p.handicap) || '–') + ' · ' + esc(p.heimatclub) + ' · ' + esc(p.ref)
+      + ' · Code <b>' + esc(p.code || '–') + '</b> · ' + tage + ' Tag(e)'
+      + '<br>Angemeldet am ' + esc(zeitAnzeige(p.created)) + '</div></div>'
       + '<div class="sp"><button class="btn btn-line btn-sm" onclick="admDel(\'' + p.id + '\',\'' + esc(nm) + '\')">Löschen</button></div>'
       + '</div>';
   }).join('') || '<div class="empty">Noch keine Teilnehmer.</div>';
@@ -1420,7 +1466,7 @@ function exportCsv(){
   var rows = STATE.admAll.map(function(p){
     var sel = p.sel || {}, tage = 0;
     var cells = COURSES.map(function(c){ if(sel[c.id]) tage++; return sel[c.id] ? sel[c.id] + ' Loch' : ''; });
-    return [p.ref, String(p.created || '').substring(0,10), p.vorname, p.nachname, hcpTxt(p.handicap), p.heimatclub]
+    return [p.ref, zeitAnzeige(p.created), p.vorname, p.nachname, hcpTxt(p.handicap), p.heimatclub]
       .concat(cells).concat([String(tage)]);
   });
   var csv = [head].concat(rows).map(function(r){
