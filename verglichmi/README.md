@@ -1,17 +1,7 @@
 # Verglichmi – Vergleichs- & Test-Template
 
-Erste Version des allgemeinen Seitentemplates für Produktvergleiche auf **Verglichmi**.
-Demo-Inhalt ist ein Vergleich von **8 Haartrocknern**.
-
-Aufbau der Seite entspricht dem redaktionellen Ablauf:
-
-1. **Artikelkopf** – Kicker, Titel, Autor, Testkennzahlen, Affiliate-Hinweis, Inhaltsverzeichnis
-2. **Bestenliste** – alle Produkte als Boxen mit Testnote, Kurz-Messwerten, **+ / –** und drei Shop-Buttons
-3. **Einzeltests** – pro Produkt ein ausführlicher Test: Fliesstext, Einzelwertungen als Balken, vollständige Spezifikationen, Empfehlung, Wiederholungs-Box mit Kaufbuttons
-4. **So testen wir** – Testkriterien mit Gewichtung
-5. **Direktvergleich** – grosse Tabelle mit allen Messwerten (horizontal scrollbar, fixierte erste Spalte)
-6. **Fazit** – Zusammenfassung, Redaktions-Zitat, kompakte Rangliste
-7. **FAQ** – aufklappbare Fragen (inkl. `FAQPage`-Markup für Google)
+Seitentemplate für Produktvergleiche auf **Verglichmi**.
+Demo-Inhalt ist ein Vergleich von **8 Schlauchbooten fürs Böötle**.
 
 ## Öffnen
 
@@ -19,113 +9,130 @@ Aufbau der Seite entspricht dem redaktionellen Ablauf:
 verglichmi/index.html im Browser öffnen – kein Build, kein Server nötig.
 ```
 
+## Seitenaufbau
+
+| # | Abschnitt | Zweck |
+|---|-----------|-------|
+| – | **Artikelkopf** | Kicker, Titel, Autor, Testkennzahlen, Vertrauens-Hinweis, Begriffs-Glossar |
+| 01 | **Schnellwahl** | Zwei Angaben (Gruppengrösse, Nutzungshäufigkeit) → ein konkreter Vorschlag |
+| 02 | **Bestenliste** | Alle Produkte als Boxen, filterbar nach Eigenschaften |
+| 03 | **Einzeltests** | Pro Produkt: Fliesstext, Einzelwertungen, volle Spezifikationen, Kaufbox |
+| 04 | **Ausstattung & Gadgets** | Matrix: Punkt = an Bord, Ring = Aufpreis, Strich = nicht vorgesehen |
+| 05 | **So testen wir** | Testkriterien mit Gewichtung |
+| 06 | **Sicher unterwegs** | Kategoriespezifische Sicherheitshinweise |
+| 07 | **Datenvergleich** | Grosse Tabelle, Kopfzeile und Merkmalsspalte bleiben stehen |
+| 08 | **Fazit** | Zusammenfassung, Redaktions-Zitat, kompakte Rangliste |
+| 09 | **Häufige Fragen** | Aufklappbar, inkl. `FAQPage`-Markup |
+
+Links begleitet eine **Sticky-Rail** mit Abschnittsnavigation, aktiver Markierung
+und Lesefortschritt. Unter 1080 px Breite entfällt sie; die Seite bleibt einspaltig.
+
 ## Dateien
 
 ```
 verglichmi/
-├── index.html                  Seitenhülle: Meta-Tags, Font, Einbindung
+├── index.html                 Seitenhülle: Meta-Tags, Schriften, Einbindung
 ├── data/
-│   └── haartrockner.js         → HIER stehen alle Inhalte
+│   ├── flussboote.js          → aktive Demo: alle Inhalte stehen hier
+│   └── haartrockner.js        zweiter Datensatz (ältere Demo)
 ├── assets/
-│   ├── css/template.css        Designsystem (Light/Dark), alle Bausteine
-│   └── js/template.js          Renderer: baut die Seite aus der Datendatei
+│   ├── css/template.css       Designsystem (Light/Dark), alle Bausteine
+│   └── js/template.js         Renderer: baut die Seite aus der Datendatei
 └── README.md
 ```
-
-Der Renderer und das Stylesheet sind **kategorieunabhängig**. Ein neuer Vergleich
-braucht nur eine neue Datendatei.
 
 ## Neuen Vergleich anlegen
 
 ```bash
-cp verglichmi/data/haartrockner.js verglichmi/data/kaffeemaschinen.js
+cp verglichmi/data/flussboote.js verglichmi/data/kaffeemaschinen.js
 ```
 
-Werte in der Kopie ersetzen, danach in `index.html` die eine Zeile umbiegen:
+Werte ersetzen, dann in `index.html` die eine Zeile umbiegen:
 
 ```html
 <script src="data/kaffeemaschinen.js"></script>
 ```
 
-Kategoriespezifisch sind nur vier Felder:
+Kategoriespezifisch sind sechs Felder:
 
-| Feld          | Bedeutung                                                                 |
-|---------------|---------------------------------------------------------------------------|
-| `meta`        | Titel, Kicker, Lead, Autor, Testkennzahlen                                 |
-| `criteria`    | Testkriterien + Gewichtung (Summe muss 100 ergeben)                        |
-| `specFields`  | Zeilen der Vergleichstabelle, gruppiert über `group`                       |
-| `quickSpecs`  | welche `specFields` als Chips direkt in der Produktbox erscheinen          |
+| Feld          | Bedeutung                                                       |
+|---------------|------------------------------------------------------------------|
+| `meta`        | Titel, Kicker, Lead, Autor, Testkennzahlen, optionales Glossar    |
+| `criteria`    | Testkriterien + Gewichtung (Summe muss 100 ergeben)               |
+| `specFields`  | Zeilen der Datentabelle, gruppiert über `group`                   |
+| `quickSpecs`  | welche `specFields` als Messwert-Streifen in der Produktbox stehen |
+| `gadgets`     | Zeilen der Ausstattungsmatrix                                     |
+| `filters`     | Filter-Chips über der Bestenliste, greifen auf `product.tags` zu  |
+
+### Optionale Blöcke
+
+Fehlt einer dieser Blöcke, entfällt der Abschnitt ersatzlos – Rail-Navigation
+und Nummerierung passen sich automatisch an:
+
+`meta.glossary` · `quickPicker` · `filters` · `gadgets` · `safety`
+
+Deshalb rendert auch `data/haartrockner.js` weiterhin, obwohl dieser Datensatz
+weder Gadget-Matrix noch Schnellwahl kennt.
 
 ## Datenschema (Auszug)
 
 ```js
 products: [{
-  id:      'dyson-nural',            // eindeutig, wird zu Anker #test-dyson-nural
-  brand:   'Dyson',
-  model:   'Supersonic Nural HD16',
+  id:      'grabner-riverstar',      // eindeutig, wird zu Anker #test-grabner-riverstar
+  brand:   'Grabner',
+  model:   'Riverstar',
   badge:   'Testsieger',             // oder null
-  grade:   1.1,                      // Note 1–6, bestimmt Farbe + Label automatisch
-  accent:  '#c94f7c',                // Farbe der Platzhalter-Illustration
+  grade:   1.2,                      // Note 1–6, bestimmt Farbe + Wort automatisch
+  accent:  '#0E5A6E',                // Farbe der Platzhalter-Illustration
   claim:   'Kurzsatz in der Kopfzeile der Box',
-  price:   { current: 519, uvp: 549 },// Ersparnis wird berechnet
-  pros:    ['…'],                    // erscheint als „+"
-  cons:    ['…'],                    // erscheint als „–"
-  specs:   { leistung: '1600 W', … },// Schlüssel = specFields[].key
-  scores:  { trocknung: 97, … },     // 0–100, Schlüssel = criteria[].key
-  offers:  {                         // je Shop SKU + Preis
-    amazon:  { sku: 'B0CTHM5QW3', price: 519 },
-    galaxus: { sku: '48219733',   price: 529 },
-    brack:   { sku: 'dyson-…',    price: 535 },
-  },
-  review: {                          // der ausführliche Einzeltest
-    kicker, headline, verdict, bestFor,
-    paragraphs: ['…'],               // <strong> und <em> sind hier erlaubt
-    imageCaption: '…',
-  },
+  price:   { current: 2690, uvp: 2890 },  // Ersparnis wird berechnet
+  tags:    ['selbstlenzer','ab4'],   // steuert die Filter-Chips
+  pros:    ['…'], cons: ['…'],       // erscheinen als + und –
+  specs:   { gewicht: '32,0 kg', … },// Schlüssel = specFields[].key
+  scores:  { fahrverhalten: 96, … }, // 0–100, Schlüssel = criteria[].key
+  gadgets: { kuehlbox: true, sonnendach: 'option', angel: false, becherhalter: '4×' },
+  offers:  { galaxus: { sku: '41220988', price: 2690 }, … },
+  review:  { kicker, headline, verdict, bestFor, paragraphs: ['…'], imageCaption },
 }]
 ```
 
-Produkte werden **in der Reihenfolge des Arrays** ausgegeben – also nach Testnote sortiert
-einpflegen. Platznummer, Notenfarbe (`sehr gut` … `mangelhaft`), Ersparnis in Prozent und
-die Markierung „Bester Preis" berechnet der Renderer selbst.
+Produkte werden **in Array-Reihenfolge** ausgegeben – also nach Testnote sortiert
+einpflegen. Platznummer, Notenfarbe, Ersparnis in Prozent und die Markierung
+„Bester Preis" berechnet der Renderer selbst.
 
-**Bilder:** Ohne `image`-Feld zeichnet der Renderer eine Platzhalter-Illustration in
-`accent`-Farbe. Sobald echte Fotos vorliegen:
+**Gadget-Werte:** `true` → voller Punkt · `'option'` → Ring · `false` → Strich ·
+jeder andere String (z. B. `'4×'`) wird direkt als Text gesetzt.
 
-```js
-image: 'assets/img/dyson-nural.jpg',
-```
+**Bilder:** Ohne `image`-Feld zeichnet der Renderer eine Platzhalter-Illustration
+in `accent`-Farbe. Sobald echte Fotos vorliegen: `image: 'assets/img/xy.jpg'`.
 
 ## Affiliate-Links
 
-Alle Shop-Links sind aktuell **Staging** – `data/…js`:
+Alle Shop-Links sind **Staging** – in der Datendatei:
 
 ```js
 affiliate: {
   staging: true,     // true  = Klick öffnet keinen Shop, sondern zeigt die Ziel-URL
                      // false = echte Deeplinks werden aufgerufen
   shops: {
-    amazon:  { label:'Amazon',   pattern:'https://www.amazon.de/dp/{sku}/?tag={tag}',           tag:'verglichmi-21' },
-    galaxus: { label:'Galaxus',  pattern:'https://www.galaxus.ch/de/s1/product/{sku}?utm_source={tag}', tag:'verglichmi' },
-    brack:   { label:'Brack.ch', pattern:'https://www.brack.ch/{sku}?utm_source={tag}',         tag:'verglichmi' },
+    galaxus: { label:'Galaxus',  pattern:'https://www.galaxus.ch/de/s7/product/{sku}?utm_source={tag}', tag:'verglichmi' },
+    brack:   { label:'Brack.ch', pattern:'https://www.brack.ch/{sku}?utm_source={tag}',                 tag:'verglichmi' },
+    amazon:  { label:'Amazon',   pattern:'https://www.amazon.de/dp/{sku}/?tag={tag}',                   tag:'verglichmi-21' },
   },
-  shopOrder: ['amazon','galaxus','brack'],   // Reihenfolge der Buttons
+  shopOrder: ['galaxus','brack','amazon'],   // Reihenfolge der Buttons
 }
 ```
 
-Die SKUs und Partner-Tags sind Platzhalter und müssen vor dem Livegang durch die echten
-Werte aus den jeweiligen Partnerprogrammen ersetzt werden.
+SKUs und Partner-Tags sind Platzhalter und müssen vor dem Livegang durch die
+echten Werte aus den Partnerprogrammen ersetzt werden.
 
-Für den Livegang:
+**Für den Livegang:** `staging: false` setzen · echte Partner-Tags eintragen ·
+`<meta name="robots" content="noindex, nofollow">` aus `index.html` entfernen.
 
-1. `staging: false` setzen
-2. echte Partner-Tags eintragen
-3. `<meta name="robots" content="noindex, nofollow">` in `index.html` entfernen
+Alle Links tragen `rel="sponsored nofollow noopener"`.
 
-Alle Links tragen `rel="sponsored nofollow noopener"` und `target="_blank"`.
-
-**Klick-Tracking:** Vor dem Öffnen ruft der Renderer `window.vgTrackOffer(payload)` auf,
-falls definiert – Anbindungspunkt für Analytics:
+**Klick-Tracking:** Vor dem Öffnen ruft der Renderer `window.vgTrackOffer(payload)`
+auf, falls definiert:
 
 ```js
 window.vgTrackOffer = ({ shop, product, url }) => { /* … */ };
@@ -133,43 +140,60 @@ window.vgTrackOffer = ({ shop, product, url }) => { /* … */ };
 
 ## Design
 
-Alle Farben, Abstände, Radien und Schriften liegen als CSS-Custom-Properties in `:root`
-(`assets/css/template.css`, Abschnitt 1). Markenfarbe ändern:
+Farben, Abstände, Radien und Schriften liegen als CSS-Custom-Properties in
+`:root` (`assets/css/template.css`, Abschnitt 1).
+
+**Farbe** – Flusspetrol als Marke, Bernstein ausschliesslich für Auszeichnungen
+(Testsieger-Badge, Fazit-Kasten im Einzeltest). Die Neutraltöne haben einen
+leichten Petrolstich, damit sie zur Marke gehören statt daneben zu stehen.
 
 ```css
---vg-brand: #d81f26;
+--brand:  #0E5A6E;   /* Marke */
+--accent: #E7913C;   /* nur Auszeichnungen */
 ```
 
-**Schriften** – zwei Rollen, beide über Google Fonts in `index.html` geladen:
+Die Notenskala `--grade-1` … `--grade-5` läuft von Teal über Oliv und Bernstein
+nach Terrakotta und wird anhand von `grade` automatisch zugewiesen.
 
-| Token           | Schrift             | Einsatz                                                    |
-|-----------------|---------------------|------------------------------------------------------------|
-| `--vg-display`  | Schibsted Grotesk   | Titel, Testnoten, Preise, Kennzahlen, Logo                  |
-| `--vg-sans`     | Inter               | Fliesstext und sämtliche Tabellenwerte (Tabellenziffern)    |
+**Schriften** – drei Rollen, über Google Fonts geladen:
 
-Beide mit System-Fallback, falls die Webfonts nicht laden.
+| Token       | Schrift              | Einsatz                                    |
+|-------------|----------------------|--------------------------------------------|
+| `--display` | Bricolage Grotesque  | Titel, Testnoten, Preise, Kennzahlen        |
+| `--sans`    | IBM Plex Sans        | Fliesstext und Bedienelemente               |
+| `--mono`    | IBM Plex Mono        | ausschliesslich **gemessene** Werte         |
 
-Die Notenfarben (`--vg-grade-1` … `--vg-grade-5`) bilden die Skala
-`sehr gut` → `mangelhaft` ab und werden anhand von `grade` automatisch zugewiesen.
+Die Mono-Schrift markiert visuell, was aus dem Testlabor stammt – Aufbauzeit,
+Kippwinkel, Druckverlust. Herstellerangaben laufen in der Textschrift.
 
-Dark Mode folgt dem Systemschema und lässt sich über den Schalter in der Kopfzeile
-umstellen (gespeichert in `localStorage`). Shop-Buttons behalten in beiden Modi ihre
-Markenfarben.
+Dark Mode folgt dem Systemschema und lässt sich über den Schalter in der
+Kopfzeile umstellen (gespeichert in `localStorage`, mit try/catch für den
+Privatmodus). Shop-Buttons behalten in beiden Modi ihre Markenfarben.
 
 ## Geprüft
 
-* Rendering in Chromium (1280 px und 390 px), kein horizontales Überlaufen
+* Rendering in Chromium bei 320, 390, 768, 1024 und 1440 px
+* **Kein seitliches Scrollen** – gemessen über `window.scrollX` an jedem
+  Abschnitt, nicht über `scrollWidth` (siehe Hinweis unten)
 * Light und Dark Mode
-* Tastaturbedienbar, sichtbarer Fokus, Sprungmarke zur Bestenliste
+* Schnellwahl, Filter, Rail-Markierung und Staging-Klick funktionsgeprüft
+* Keine JS-Fehler, keine doppelten IDs, alle Sprungmarken auflösbar
+* 81 Affiliate-Links, alle mit `rel="sponsored nofollow noopener"` und `aria-label`
 * `ItemList`- und `FAQPage`-JSON-LD werden erzeugt
-* Druckansicht ohne Navigation und Kaufbuttons
+
+> **Hinweis zu breiten Tabellen:** `.tablewrap` trägt `contain: paint`. Ohne das
+> rechnet Chromium die volle Tabellenbreite in die Scrollbreite des Dokuments
+> ein, und die ganze Seite lässt sich seitwärts ziehen, sobald man weit genug
+> nach unten gescrollt hat. `document.documentElement.scrollWidth` meldet den
+> Fehler nicht zuverlässig – prüfen Sie mit `window.scrollX` nach einem
+> `scrollTo(9999, y)`.
 
 ## Offen für die Produktivversion
 
-* **Serverseitiges Rendering** – aktuell baut JavaScript die Seite im Browser auf. Für SEO
-  sollte das HTML vorgerendert ausgeliefert werden; die Datenstruktur ist dafür bereits
-  vorbereitet.
-* **Preise** – derzeit fest in der Datendatei. Live sollte ein Preis-Feed die Werte und
-  den Zeitstempel „Günstigster Preis am …" füllen.
-* **Produktbilder** – Platzhalter-Illustrationen ersetzen (`image`-Feld).
-* **Rechtliches** – Impressum, Datenschutz und Affiliate-Hinweis im Footer verlinken.
+* **Serverseitiges Rendering** – aktuell baut JavaScript die Seite im Browser
+  auf. Für SEO sollte das HTML vorgerendert ausgeliefert werden; die
+  Datenstruktur ist dafür vorbereitet.
+* **Preise** – derzeit fest in der Datendatei. Live sollte ein Preis-Feed die
+  Werte und den Zeitstempel „Bestpreis am …" füllen.
+* **Produktbilder** – Platzhalter-Illustrationen durch Fotos ersetzen.
+* **Rechtliches** – Impressum, Datenschutz und Affiliate-Hinweis verlinken.
