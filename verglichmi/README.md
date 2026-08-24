@@ -133,12 +133,24 @@ window.vgTrackOffer = ({ shop, product, url }) => { /* … */ };
 
 ## Design
 
-Alle Farben, Abstände und Radien liegen als CSS-Custom-Properties in `:root`
+Alle Farben, Abstände, Radien und Schriften liegen als CSS-Custom-Properties in `:root`
 (`assets/css/template.css`, Abschnitt 1). Markenfarbe ändern:
 
 ```css
 --vg-brand: #d81f26;
 ```
+
+**Schriften** – zwei Rollen, beide über Google Fonts in `index.html` geladen:
+
+| Token           | Schrift             | Einsatz                                                    |
+|-----------------|---------------------|------------------------------------------------------------|
+| `--vg-display`  | Schibsted Grotesk   | Titel, Testnoten, Preise, Kennzahlen, Logo                  |
+| `--vg-sans`     | Inter               | Fliesstext und sämtliche Tabellenwerte (Tabellenziffern)    |
+
+Beide mit System-Fallback, falls die Webfonts nicht laden.
+
+Die Notenfarben (`--vg-grade-1` … `--vg-grade-5`) bilden die Skala
+`sehr gut` → `mangelhaft` ab und werden anhand von `grade` automatisch zugewiesen.
 
 Dark Mode folgt dem Systemschema und lässt sich über den Schalter in der Kopfzeile
 umstellen (gespeichert in `localStorage`). Shop-Buttons behalten in beiden Modi ihre

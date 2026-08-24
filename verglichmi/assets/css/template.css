@@ -62,9 +62,15 @@
   --vg-wrap: 1180px;
   --vg-col:  760px;
 
-  /* Typografie */
-  --vg-sans: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto,
-             'Helvetica Neue', Arial, sans-serif;
+  /* Typografie
+     Display: Schibsted Grotesk – fuer eine Publisher-Schrift entworfen,
+              traegt Titel, Noten und Preise.
+     Text:    Inter – laufender Text und alle Tabellenwerte; die
+              Tabellenziffern stehen exakt untereinander. */
+  --vg-display: 'Schibsted Grotesk', 'Inter', -apple-system, BlinkMacSystemFont,
+                'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+  --vg-sans:    'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto,
+                'Helvetica Neue', Arial, sans-serif;
 }
 
 @media (prefers-color-scheme: dark) {
@@ -132,7 +138,11 @@ body {
   -webkit-font-smoothing: antialiased;
 }
 
-h1, h2, h3, h4 { color: var(--vg-ink); line-height: 1.2; margin: 0; font-weight: 700; letter-spacing: -.015em; }
+h1, h2, h3, h4 {
+  color: var(--vg-ink); line-height: 1.2; margin: 0;
+  font-family: var(--vg-display); font-weight: 700; letter-spacing: -.015em;
+  text-wrap: balance;
+}
 h1 { font-size: clamp(2rem, 1.3rem + 2.8vw, 3.1rem); letter-spacing: -.03em; }
 h2 { font-size: clamp(1.5rem, 1.1rem + 1.6vw, 2.1rem); letter-spacing: -.022em; }
 h3 { font-size: clamp(1.18rem, 1rem + .7vw, 1.4rem); }
@@ -181,7 +191,7 @@ hr { border: 0; border-top: 1px solid var(--vg-line); margin: 2.5rem 0; }
   background: var(--vg-brand); color: #fff;
   display: grid; place-items: center; font-weight: 800; font-size: .95rem; letter-spacing: -.03em;
 }
-.vg-logo__text { font-weight: 800; font-size: 1.16rem; letter-spacing: -.035em; color: var(--vg-ink); }
+.vg-logo__text { font-family: var(--vg-display); font-weight: 800; font-size: 1.16rem; letter-spacing: -.035em; color: var(--vg-ink); }
 .vg-logo__text em { font-style: normal; color: var(--vg-brand); }
 
 .vg-nav { display: flex; gap: .25rem; margin-left: auto; overflow-x: auto; scrollbar-width: none; }
@@ -241,7 +251,7 @@ hr { border: 0; border-top: 1px solid var(--vg-line); margin: 2.5rem 0; }
   overflow: hidden; margin-top: 1.75rem;
 }
 .vg-facts__item { background: var(--vg-surface); padding: .9rem 1rem; text-align: center; }
-.vg-facts__value { font-size: 1.5rem; font-weight: 750; letter-spacing: -.03em; color: var(--vg-brand); line-height: 1.1; }
+.vg-facts__value { font-family: var(--vg-display); font-size: 1.5rem; font-weight: 750; letter-spacing: -.03em; color: var(--vg-brand); line-height: 1.1; }
 .vg-facts__label { font-size: .78rem; color: var(--vg-ink-3); margin-top: .15rem; }
 
 /* Affiliate-Hinweis */
@@ -342,6 +352,7 @@ hr { border: 0; border-top: 1px solid var(--vg-line); margin: 2.5rem 0; }
 .vg-grade__box {
   width: 58px; height: 58px; flex: none; border-radius: 12px;
   display: grid; place-items: center; color: #fff;
+  font-family: var(--vg-display);
   font-size: 1.45rem; font-weight: 800; letter-spacing: -.04em;
   font-variant-numeric: tabular-nums; line-height: 1;
 }
@@ -361,7 +372,7 @@ hr { border: 0; border-top: 1px solid var(--vg-line); margin: 2.5rem 0; }
 
 /* Titel */
 .vg-card__brand { font-size: .82rem; font-weight: 750; letter-spacing: .09em; text-transform: uppercase; color: var(--vg-ink-3); }
-.vg-card__model { font-size: 1.32rem; font-weight: 750; letter-spacing: -.025em; margin-top: .05rem; }
+.vg-card__model { font-family: var(--vg-display); font-size: 1.32rem; font-weight: 750; letter-spacing: -.025em; margin-top: .05rem; }
 .vg-card__model a { color: inherit; text-decoration: none; }
 .vg-card__model a:hover { color: var(--vg-brand); }
 
@@ -396,7 +407,7 @@ hr { border: 0; border-top: 1px solid var(--vg-line); margin: 2.5rem 0; }
 /* Preis + Shop-Buttons */
 .vg-offers { margin-top: 1.25rem; padding-top: 1.1rem; border-top: 1px dashed var(--vg-line-strong); }
 .vg-price { display: flex; align-items: baseline; gap: .6rem; flex-wrap: wrap; margin-bottom: .75rem; }
-.vg-price__now { font-size: 1.5rem; font-weight: 800; letter-spacing: -.03em; font-variant-numeric: tabular-nums; }
+.vg-price__now { font-family: var(--vg-display); font-size: 1.5rem; font-weight: 800; letter-spacing: -.03em; font-variant-numeric: tabular-nums; }
 .vg-price__was { font-size: .95rem; color: var(--vg-ink-3); text-decoration: line-through; }
 .vg-price__save {
   font-size: .76rem; font-weight: 700; color: var(--vg-pro);
@@ -442,7 +453,7 @@ hr { border: 0; border-top: 1px solid var(--vg-line); margin: 2.5rem 0; }
   border-radius: 0 var(--vg-r) var(--vg-r) 0;
   font-size: 1rem; font-weight: 600; color: var(--vg-ink);
 }
-.vg-review__body { font-size: 1.03rem; color: var(--vg-ink-2); }
+.vg-review__body { font-size: 1.03rem; color: var(--vg-ink-2); max-width: 68ch; }
 .vg-review__body p:last-child { margin-bottom: 0; }
 
 .vg-figure { margin: 1.6rem 0; }
@@ -592,7 +603,7 @@ table.vg-ctable tbody tr:hover th.vg-ctable__rowhead { background: var(--vg-bg-a
   content: '„'; position: absolute; top: -.1rem; left: .8rem;
   font-size: 4rem; line-height: 1; color: var(--vg-brand); opacity: .22; font-family: Georgia, serif;
 }
-.vg-quote__text { font-size: 1.1rem; font-weight: 550; line-height: 1.55; margin: 0 0 1rem; position: relative; }
+.vg-quote__text { font-family: var(--vg-display); font-size: 1.1rem; font-weight: 550; line-height: 1.55; margin: 0 0 1rem; position: relative; }
 .vg-quote__by { display: flex; align-items: center; gap: .7rem; }
 .vg-quote__by .vg-avatar { width: 36px; height: 36px; font-size: .78rem; }
 
