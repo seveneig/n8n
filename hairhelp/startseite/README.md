@@ -11,6 +11,7 @@ Garantietexte stammen von der bestehenden Seite.
 | `startseite.html` | Quelle. Bilder und Schrift als `ASSET:name`-Platzhalter. |
 | `assets.json` | Aus dem Seiten-Dump extrahiert, ergänzt um die Farbmuster aus `../haarverdichter/`. |
 | `build.py` | Erzeugt `ausgabe/startseite.html` mit eingebetteten Assets. |
+| `zuschnitt.py` | Richtet die sechs Vorher/Nachher-Aufnahmen deckungsgleich auf 4:3 aus. |
 
 ```
 python3 build.py
@@ -40,9 +41,7 @@ Titel zweifarbig. Die Trennstrich-Variante entfällt.
 **Eine Bandfolge:** Schwarz für den Auftakt, Weiss und Creme im Wechsel,
 Schwarz erneut für Ergebnisse und Garantie.
 
-**Ein Vorher/Nachher-Bauteil:** drei gleich grosse, ziehbare Vergleiche mit
-Tastaturbedienung – dieselbe Behandlung wie auf Produkt- und
-Haarverdichter-Seite. Das Karussell entfällt.
+**Der Abschnitt „Resultate" als Diptychon.** Siehe eigener Abschnitt unten.
 
 **Karten mit Fassung:** Bewertungen, „Für wen“, Qualität, Produkte und
 Prüfsiegel liegen in demselben Rasterbauteil mit warmer Linie.
@@ -52,6 +51,48 @@ sechs Original-Siegelbilder waren im Abzug nicht enthalten (unterhalb des
 sichtbaren Bereichs, nie nachgeladen).
 
 **Alternativtexte** für alle 34 Bilder.
+
+## Der Abschnitt „Resultate"
+
+Die drei Vergleiche standen nebeneinander in einer Reihe: zwei Frauen vor
+hellgrauem Studiogrund, ein Mann vor fast schwarzem. Der Unterschied der
+Gründe wirkte dadurch wie ein Versehen, und mit einer vierten dunklen
+Aufnahme wäre es schlimmer geworden – hell, hell, dunkel, dunkel in
+beliebiger Folge.
+
+**Neu bilden die beiden Studiogründe die Gliederung.** Der Abschnitt ist ein
+Diptychon: links eine Tafel „Für Frauen", rechts eine Tafel „Für Männer", je
+zwei Fälle übereinander, dazwischen eine Goldlinie im selben Gewicht wie die
+Linie über der Abschnittsüberschrift. Damit gruppieren sich die hellen
+Aufnahmen links und die dunklen rechts – aus dem Zufall wird eine Ordnung.
+
+**Die Tafeln sind dunkle Flächen** (`--ink-raise`) mit eigener Textfarbe, je
+mit einer Kopfzeile für die Bezeichnung. Die Bilder laufen randlos bis an die
+Tafelkante, die Bildunterschrift steht darunter auf der Tafel – eine gefasste
+Bildtafel statt frei stehender Karten.
+
+**Der Abschnitt liegt jetzt auf dem cremefarbenen Band.** Vorher war er
+schwarz und schloss direkt an den ebenfalls schwarzen Auftakt an; mit der
+grösseren Höhe wären das über 2000 px Schwarz am Stück gewesen.
+
+**Die Zuschnitte sind deckungsgleich ausgerichtet.** Die sechs Aufnahmen sind
+unterschiedlich gerahmt – ohne Ausgleich springt der Kopf, sobald man den
+Regler zieht. Für jedes Einzelbild sind Kopfoberkante, Kinn und Gesichtsmitte
+abgelesen; daraus berechnet `zuschnitt.py` einen Ausschnitt, in dem der Kopf
+überall gleich gross an derselben Stelle sitzt (4:3, aus den Originalen mit
+bis zu 2560 px Breite).
+
+**Der Reglergriff** war ein halbdurchsichtiger Kreis mit einer Klip-Form, die
+als Blitz statt als zwei Pfeile erschien. Neu ist er eine massive Goldscheibe
+mit einem echten SVG-Doppelpfeil in Warmschwarz – auf hellem wie dunklem Foto
+sofort als Bedienelement erkennbar.
+
+### Der vierte Fall
+
+Bis die vierte Aufnahme vorliegt, steht in der Männer-Tafel dasselbe Bildpaar
+zweimal, damit die Tafel ihre endgültige Höhe und Gliederung zeigt. Der Fall
+trägt die Marke **„Platzhalter"**. Beim Einbau sind Bildpaar, Beschriftung und
+diese Marke zu ersetzen; im Quelltext steht ein entsprechender Kommentar.
 
 ## Annahmen und offene Punkte
 

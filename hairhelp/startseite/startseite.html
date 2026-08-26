@@ -254,34 +254,71 @@ html{scroll-behavior:smooth}
    Ergebnisse
    ========================================================================== */
 
-.compare-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:26px}
-.compare{display:flex;flex-direction:column;gap:14px;margin:0}
-.cmp{position:relative;aspect-ratio:1/1;overflow:hidden;border-radius:var(--radius);
-  background:var(--ink-raise);--pos:50%;touch-action:pan-y}
+/* --------------------------------------------------------------------------
+   Ergebnisse als Diptychon.
+
+   Die Aufnahmen kommen aus zwei Studios: die Frauen vor hellgrauem Grund,
+   die Männer vor fast schwarzem. Nebeneinander in einer Reihe wirkte dieser
+   Unterschied wie ein Versehen. Neu bilden die beiden Gründe die Gliederung:
+   links die Frauen, rechts die Männer, je zwei Fälle auf einer Tafel. Die
+   Goldlinie in der Mitte trennt die beiden Seiten.
+   -------------------------------------------------------------------------- */
+
+.results{position:relative;display:grid;grid-template-columns:1fr 1fr;gap:56px}
+.results > *{min-width:0}
+/* Trennlinie zwischen den beiden Tafeln, oben und unten auslaufend */
+.results::before{content:"";position:absolute;top:8%;bottom:8%;left:50%;width:1px;
+  pointer-events:none;
+  background:linear-gradient(180deg,transparent,var(--gold) 14%,var(--gold) 86%,transparent)}
+
+.rplate{display:flex;flex-direction:column;margin:0;color:var(--ink-text);
+  background:var(--ink-raise);border:1px solid var(--ink-line);border-radius:var(--radius);
+  overflow:hidden;box-shadow:0 22px 44px -28px rgba(26,26,24,.5)}
+.rplate__head{padding:17px 22px;border-bottom:1px solid var(--ink-line)}
+.rplate__head b{font-size:12px;font-weight:600;letter-spacing:.2em;text-transform:uppercase;
+  color:var(--gold)}
+.rplate__head span{font-size:12px;color:var(--ink-text-soft);
+  letter-spacing:.1em;text-transform:uppercase}
+
+.rcase{display:flex;flex-direction:column;margin:0}
+.rcase + .rcase{border-top:1px solid var(--ink-line)}
+.rcase figcaption{display:flex;align-items:center;flex-wrap:wrap;gap:9px;padding:16px 22px 18px}
+.rcase .who{font-size:15.5px;font-weight:600}
+.rcase .what{font-size:13.5px;color:var(--ink-text-soft)}
+.rcase .dot{width:3px;height:3px;border-radius:50%;background:var(--gold);flex-shrink:0}
+/* Kennzeichnet den vorläufig doppelt gesetzten Fall – vor dem Einbau entfernen. */
+.rcase .draft{margin-left:auto;font-size:10px;font-weight:600;letter-spacing:.14em;
+  text-transform:uppercase;color:var(--gold);border:1px solid var(--gold);
+  border-radius:2px;padding:3px 8px}
+
+.cmp{position:relative;aspect-ratio:4/3;overflow:hidden;
+  background:var(--ink);--pos:50%;touch-action:pan-y}
 .cmp img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;user-select:none;-webkit-user-drag:none}
 .cmp .after{clip-path:inset(0 0 0 var(--pos))}
-.cmp-label{position:absolute;bottom:14px;font-size:10px;font-weight:600;letter-spacing:.2em;
-  text-transform:uppercase;padding:5px 10px;border-radius:2px;
-  background:rgba(15,14,12,.72);color:#F3F0E9;pointer-events:none}
-.cmp-label.is-before{left:14px}
-.cmp-label.is-after{right:14px;color:var(--gold-lt)}
+.cmp-label{position:absolute;bottom:13px;font-size:9.5px;font-weight:600;letter-spacing:.22em;
+  text-transform:uppercase;padding:5px 9px;border-radius:2px;
+  background:rgba(12,11,9,.66);backdrop-filter:blur(4px);color:#F3F0E9;pointer-events:none}
+.cmp-label.is-before{left:13px}
+.cmp-label.is-after{right:13px;color:var(--gold-lt)}
 .cmp-handle{position:absolute;top:0;bottom:0;left:var(--pos);width:2px;background:var(--gold);
-  transform:translateX(-1px);pointer-events:none}
-.cmp-handle::after{content:"";position:absolute;top:50%;left:50%;width:46px;height:46px;
-  transform:translate(-50%,-50%);border:2px solid var(--gold);border-radius:50%;
-  background:rgba(26,26,24,.55);backdrop-filter:blur(3px)}
-.cmp-handle::before{content:"";position:absolute;top:50%;left:50%;width:17px;height:9px;
-  transform:translate(-50%,-50%);background:var(--gold);z-index:1;
-  clip-path:polygon(0 50%,36% 0,36% 100%,64% 0,64% 100%,100% 50%)}
+  transform:translateX(-1px);pointer-events:none;box-shadow:0 0 14px rgba(0,0,0,.45)}
+.cmp-handle::after{content:"";position:absolute;top:50%;left:50%;width:42px;height:42px;
+  transform:translate(-50%,-50%);border-radius:50%;background:var(--gold);
+  box-shadow:0 8px 22px -8px rgba(0,0,0,.85),0 0 0 1px rgba(26,26,24,.2)}
+.cmp-handle svg{position:absolute;top:50%;left:50%;z-index:1;width:23px;height:12px;
+  transform:translate(-50%,-50%);stroke:#1A1A18;fill:none;stroke-width:2.2;
+  stroke-linecap:round;stroke-linejoin:round}
 .cmp-range{position:absolute;inset:0;width:100%;margin:0;opacity:0;cursor:ew-resize;appearance:none;background:none}
 .cmp-range::-webkit-slider-thumb{appearance:none;width:56px;height:100%}
 .cmp-range:focus-visible + .cmp-handle::after{box-shadow:0 0 0 4px rgba(163,151,114,.45)}
-.compare figcaption{display:flex;flex-direction:column;gap:3px}
-.compare .who{font-size:15px;font-weight:600}
-.compare .what{font-size:13.5px;color:var(--ink-text-soft)}
-.cmp-hint{display:flex;align-items:center;gap:9px;margin:34px 0 0;font-size:13px;color:var(--ink-text-soft)}
+
+.cmp-hint{display:flex;align-items:center;gap:9px;margin:30px 0 0;font-size:13px;color:var(--text-soft)}
 .cmp-hint svg{width:17px;height:17px;stroke:var(--gold);fill:none;stroke-width:1.7}
-@media (max-width:900px){.compare-grid{grid-template-columns:1fr;max-width:440px;margin:0 auto}}
+
+@media (max-width:900px){
+  .results{grid-template-columns:1fr;gap:34px;max-width:520px;margin:0 auto}
+  .results::before{display:none}
+}
 
 /* ==========================================================================
    Bewertungen
@@ -535,7 +572,7 @@ html{scroll-behavior:smooth}
 
 <!-- ====================== Ergebnisse ====================== -->
 
-<section class="band band--ink" id="resultate">
+<section class="band band--alt" id="resultate">
   <div class="spine">
     <div class="sect-head">
       <p class="eyebrow">Resultate</p>
@@ -543,39 +580,66 @@ html{scroll-behavior:smooth}
       <p>Der HairHelp Haarverdichter ist ein Schweizer Premium-Produkt aus pflanzlichem Keratin. Feine Fasern des Streuhaars, oft auch als Hair Fibers oder Schütthaar bekannt, haften durch statische Aufladung am Eigenhaar und schaffen ein dichtes, natürliches Gesamtbild für den ganzen Tag. Ob zum <a href="#">Kaschieren von Geheimratsecken</a>, bei <a href="#">dünner werdendem Scheitel</a> oder fürs Styling – unser Haarverdichter deckt alle Anwendungen ab.</p>
     </div>
 
-    <div class="compare-grid">
-      <figure class="compare">
-        <div class="cmp" data-cmp>
-          <img class="before" src="ASSET:priska-vorher" alt="Vor der Anwendung">
-          <img class="after" src="ASSET:priska-nachher" alt="Nach der Anwendung">
-          <span class="cmp-label is-before">Vorher</span><span class="cmp-label is-after">Nachher</span>
-          <input class="cmp-range" type="range" min="0" max="100" value="50" aria-label="Vorher-Nachher-Regler 1">
-          <span class="cmp-handle" aria-hidden="true"></span>
-        </div>
-        <figcaption><span class="who">Lichter Scheitel</span><span class="what">Farbe Dunkelbraun</span></figcaption>
+    <div class="results">
+
+      <!-- Linke Tafel: Frauen, hellgrauer Studiogrund -->
+      <figure class="rplate">
+        <div class="rplate__head"><b>Für Frauen</b></div>
+
+        <figure class="rcase">
+          <div class="cmp" data-cmp>
+            <img class="before" src="ASSET:priska-vorher" alt="Lichter Scheitel vor der Anwendung">
+            <img class="after" src="ASSET:priska-nachher" alt="Verdichteter Scheitel nach der Anwendung">
+            <span class="cmp-label is-before">Vorher</span><span class="cmp-label is-after">Nachher</span>
+            <input class="cmp-range" type="range" min="0" max="100" value="50" aria-label="Vorher-Nachher-Regler, lichter Scheitel">
+            <span class="cmp-handle" aria-hidden="true"><svg viewBox="0 0 24 12" focusable="false"><path d="M9.5 1.6L4.2 6l5.3 4.4M14.5 1.6L19.8 6l-5.3 4.4"/></svg></span>
+          </div>
+          <figcaption><span class="who">Lichter Scheitel</span><span class="dot" aria-hidden="true"></span><span class="what">Farbe Dunkelbraun</span></figcaption>
+        </figure>
+
+        <figure class="rcase">
+          <div class="cmp" data-cmp>
+            <img class="before" src="ASSET:mariana-vorher" alt="Dünner Ansatz vor der Anwendung">
+            <img class="after" src="ASSET:mariana-nachher" alt="Verdichteter Ansatz nach der Anwendung">
+            <span class="cmp-label is-before">Vorher</span><span class="cmp-label is-after">Nachher</span>
+            <input class="cmp-range" type="range" min="0" max="100" value="50" aria-label="Vorher-Nachher-Regler, dünner Ansatz">
+            <span class="cmp-handle" aria-hidden="true"><svg viewBox="0 0 24 12" focusable="false"><path d="M9.5 1.6L4.2 6l5.3 4.4M14.5 1.6L19.8 6l-5.3 4.4"/></svg></span>
+          </div>
+          <figcaption><span class="who">Dünner Ansatz</span><span class="dot" aria-hidden="true"></span><span class="what">Farbe Dunkelbraun</span></figcaption>
+        </figure>
       </figure>
 
-      <figure class="compare">
-        <div class="cmp" data-cmp>
-          <img class="before" src="ASSET:oliver-vorher" alt="Vor der Anwendung">
-          <img class="after" src="ASSET:oliver-nachher" alt="Nach der Anwendung">
-          <span class="cmp-label is-before">Vorher</span><span class="cmp-label is-after">Nachher</span>
-          <input class="cmp-range" type="range" min="0" max="100" value="50" aria-label="Vorher-Nachher-Regler 2">
-          <span class="cmp-handle" aria-hidden="true"></span>
-        </div>
-        <figcaption><span class="who">Geheimratsecken</span><span class="what">Farbe Braun</span></figcaption>
+      <!-- Rechte Tafel: Männer, fast schwarzer Studiogrund -->
+      <figure class="rplate">
+        <div class="rplate__head"><b>Für Männer</b></div>
+
+        <figure class="rcase">
+          <div class="cmp" data-cmp>
+            <img class="before" src="ASSET:oliver-vorher" alt="Geheimratsecken vor der Anwendung">
+            <img class="after" src="ASSET:oliver-nachher" alt="Verdichteter Haaransatz nach der Anwendung">
+            <span class="cmp-label is-before">Vorher</span><span class="cmp-label is-after">Nachher</span>
+            <input class="cmp-range" type="range" min="0" max="100" value="50" aria-label="Vorher-Nachher-Regler, Geheimratsecken">
+            <span class="cmp-handle" aria-hidden="true"><svg viewBox="0 0 24 12" focusable="false"><path d="M9.5 1.6L4.2 6l5.3 4.4M14.5 1.6L19.8 6l-5.3 4.4"/></svg></span>
+          </div>
+          <figcaption><span class="who">Geheimratsecken</span><span class="dot" aria-hidden="true"></span><span class="what">Farbe Braun</span></figcaption>
+        </figure>
+
+        <!-- PLATZHALTER: bis die vierte Aufnahme vorliegt, steht hier dasselbe
+             Bildpaar noch einmal – nur damit die Tafel ihre endgültige Höhe und
+             Gliederung zeigt. Beim Einbau Bildpaar, Beschriftung und die
+             Marke „Platzhalter" ersetzen. -->
+        <figure class="rcase">
+          <div class="cmp" data-cmp>
+            <img class="before" src="ASSET:oliver-vorher" alt="Platzhalter: Aufnahme vor der Anwendung">
+            <img class="after" src="ASSET:oliver-nachher" alt="Platzhalter: Aufnahme nach der Anwendung">
+            <span class="cmp-label is-before">Vorher</span><span class="cmp-label is-after">Nachher</span>
+            <input class="cmp-range" type="range" min="0" max="100" value="50" aria-label="Vorher-Nachher-Regler, Platzhalter">
+            <span class="cmp-handle" aria-hidden="true"><svg viewBox="0 0 24 12" focusable="false"><path d="M9.5 1.6L4.2 6l5.3 4.4M14.5 1.6L19.8 6l-5.3 4.4"/></svg></span>
+          </div>
+          <figcaption><span class="who">Lichter Oberkopf</span><span class="dot" aria-hidden="true"></span><span class="what">Farbe Braun</span><span class="draft">Platzhalter</span></figcaption>
+        </figure>
       </figure>
 
-      <figure class="compare">
-        <div class="cmp" data-cmp>
-          <img class="before" src="ASSET:mariana-vorher" alt="Vor der Anwendung">
-          <img class="after" src="ASSET:mariana-nachher" alt="Nach der Anwendung">
-          <span class="cmp-label is-before">Vorher</span><span class="cmp-label is-after">Nachher</span>
-          <input class="cmp-range" type="range" min="0" max="100" value="50" aria-label="Vorher-Nachher-Regler 3">
-          <span class="cmp-handle" aria-hidden="true"></span>
-        </div>
-        <figcaption><span class="who">Dünner Ansatz</span><span class="what">Farbe Dunkelbraun</span></figcaption>
-      </figure>
     </div>
 
     <p class="cmp-hint">
