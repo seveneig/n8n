@@ -1,0 +1,290 @@
+/* ==========================================================================
+   Entwurfsseite „Resultate" – fünf Richtungen
+   Markensystem der HairHelp-Seiten: Gold #A39772 · Textgold #7D6F45 ·
+   warmes Schwarz #1A1A18 · Creme #FAF9F6 · Hausschrift Jost.
+   ========================================================================== */
+
+:root{
+  --ground:#FFFFFF; --ground-alt:#FAF9F6; --surface:#FFFFFF;
+  --text:#1A1A18; --text-soft:#6E6959; --text-faint:#726C5C;
+  --gold:#A39772; --gold-lt:#D1BC92; --gold-text:#7D6F45; --gold-wash:#F4F0E6;
+  --line:#EBE6DB; --line-firm:#D9D2C2;
+  --ink:#1A1A18; --ink-raise:#25241F; --ink-text:#F3F0E9; --ink-text-soft:#B0AB98; --ink-line:#332F26;
+  /* Die beiden Studiogründe, aus den Aufnahmen gemessen */
+  --studio-hell:#E3E2E0; --studio-dunkel:#141413;
+  --spine:1240px; --radius:4px;
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --ground:#141310; --ground-alt:#1B1A15; --surface:#1D1C17;
+    --text:#F2EFE7; --text-soft:#A8A294; --text-faint:#9A9182;
+    --gold:#C2B58A; --gold-lt:#DACA9F; --gold-text:#C2B58A; --gold-wash:#262316;
+    --line:#332F26; --line-firm:#443E31;
+    --ink:#0E0D0B; --ink-raise:#1B1A15; --ink-line:#2B2820;
+  }
+}
+:root[data-theme="dark"]{
+  --ground:#141310; --ground-alt:#1B1A15; --surface:#1D1C17;
+  --text:#F2EFE7; --text-soft:#A8A294; --text-faint:#9A9182;
+  --gold:#C2B58A; --gold-lt:#DACA9F; --gold-text:#C2B58A; --gold-wash:#262316;
+  --line:#332F26; --line-firm:#443E31;
+  --ink:#0E0D0B; --ink-raise:#1B1A15; --ink-line:#2B2820;
+}
+
+*,*::before,*::after{box-sizing:border-box}
+[hidden]{display:none !important}
+body{margin:0;background:var(--ground);color:var(--text);
+  font-family:Jost,"Century Gothic",Futura,system-ui,sans-serif;
+  font-size:17px;line-height:1.7;-webkit-font-smoothing:antialiased}
+img{max-width:100%;display:block}
+:focus-visible{outline:2px solid var(--gold);outline-offset:3px}
+@media (prefers-reduced-motion: reduce){
+  *,*::before,*::after{animation-duration:.001ms!important;transition-duration:.001ms!important}
+}
+
+/* ==========================================================================
+   Rahmen der Entwurfsseite – bewusst nüchtern, damit er nicht mit den
+   Entwürfen verwechselt wird
+   ========================================================================== */
+
+.top{background:var(--ink);color:var(--ink-text);padding:64px 0 56px}
+.top__inner,.chrome__inner{max-width:var(--spine);margin:0 auto;padding:0 32px}
+.top__eyebrow{margin:0;font-size:12px;letter-spacing:.2em;text-transform:uppercase;color:var(--gold)}
+.top h1{margin:14px 0 0;font-size:clamp(28px,3.4vw,40px);font-weight:700;line-height:1.1;
+  letter-spacing:-.015em;text-transform:uppercase;text-wrap:balance}
+.top__lede{margin:18px 0 0;max-width:70ch;color:var(--ink-text-soft)}
+.top__nav{display:flex;flex-wrap:wrap;gap:10px;margin-top:28px}
+.top__nav a{display:flex;align-items:center;gap:9px;padding:9px 15px;text-decoration:none;
+  border:1px solid var(--ink-line);border-radius:99px;color:var(--ink-text);
+  font-size:13.5px;transition:border-color .18s,color .18s}
+.top__nav a:hover{border-color:var(--gold);color:var(--gold)}
+.top__nav b{color:var(--gold);font-variant-numeric:tabular-nums}
+
+.chrome{background:var(--ground-alt);border-top:1px solid var(--line);
+  border-bottom:1px solid var(--line);padding:34px 0 32px}
+.chrome__inner{display:flex;gap:24px;align-items:flex-start}
+.chrome__letter{flex-shrink:0;width:46px;height:46px;display:grid;place-items:center;
+  border:1px solid var(--gold);border-radius:50%;color:var(--gold-text);
+  font-size:17px;font-weight:600}
+.chrome__body h3{margin:0;font-size:22px;font-weight:600;letter-spacing:-.005em}
+.chrome__body p{margin:9px 0 0;max-width:76ch;color:var(--text-soft);font-size:16px}
+.chrome__tags{display:flex;flex-wrap:wrap;gap:8px;margin-top:14px}
+.chrome__tags span{font-size:11.5px;letter-spacing:.1em;text-transform:uppercase;
+  color:var(--text-faint);border:1px solid var(--line-firm);border-radius:2px;padding:4px 9px}
+.ende{background:var(--ink);color:var(--ink-text-soft);padding:44px 0}
+
+/* Gruppenwort am einzelnen Fall – nur dort sichtbar, wo die Spaltenlabels
+   wegfallen, weil das Raster stapelt. */
+.grp{display:none}
+@media (max-width:900px){
+  .grp{display:inline-block;font-style:normal;font-size:10px;font-weight:600;
+    letter-spacing:.16em;text-transform:uppercase;color:var(--gold);
+    border:1px solid currentColor;border-radius:2px;padding:2px 6px;margin-right:8px}
+}
+
+/* Gemeinsames für die Entwürfe */
+.v{padding:72px 0 78px}
+.v__inner{max-width:var(--spine);margin:0 auto;padding:0 32px}
+.v__eyebrow{margin:0;font-size:12px;font-weight:500;letter-spacing:.18em;
+  text-transform:uppercase;color:var(--gold-text)}
+.v__h2{margin:12px 0 40px;font-size:clamp(26px,3.3vw,40px);font-weight:700;
+  letter-spacing:-.005em;line-height:1.12;text-transform:uppercase;text-wrap:balance}
+.v__h2 span{color:var(--gold-text);font-weight:500}
+
+/* Regler, wie ihn die Entwürfe B, D und E benutzen */
+.cmp{position:relative;overflow:hidden;--pos:50%;touch-action:pan-y;background:var(--ink)}
+.cmp__img{position:absolute;inset:0;background-size:cover;background-position:center}
+.cmp__img--after{clip-path:inset(0 0 0 var(--pos))}
+.cmp__range{position:absolute;inset:0;width:100%;height:100%;margin:0;opacity:0;
+  cursor:ew-resize;appearance:none;background:none}
+.cmp__range::-webkit-slider-thumb{appearance:none;width:56px;height:100%}
+.cmp__bar{position:absolute;top:0;bottom:0;left:var(--pos);width:2px;background:var(--gold);
+  pointer-events:none;box-shadow:0 0 14px rgba(0,0,0,.45)}
+.cmp__knob{position:absolute;top:50%;left:50%;width:40px;height:40px;
+  transform:translate(-50%,-50%);border-radius:50%;background:var(--gold);
+  box-shadow:0 8px 22px -8px rgba(0,0,0,.85)}
+.cmp__knob::before,.cmp__knob::after{content:"";position:absolute;top:50%;width:7px;height:7px;
+  border:1.9px solid #1A1A18;border-width:1.9px 1.9px 0 0}
+.cmp__knob::before{left:9px;transform:translateY(-50%) rotate(-135deg)}
+.cmp__knob::after{right:9px;transform:translateY(-50%) rotate(45deg)}
+.cmp__range:focus-visible + .cmp__bar .cmp__knob{box-shadow:0 0 0 4px rgba(163,151,114,.5)}
+
+/* ==========================================================================
+   A · Die Achse
+   Ein Regler über alle vier Aufnahmen. Die Goldlinie läuft quer durch den
+   ganzen Abschnitt; was sie passiert hat, trägt die Fasern.
+   ========================================================================== */
+
+.v-axis{background:var(--ink);color:var(--ink-text)}
+.v-axis .v__eyebrow{color:var(--gold)}
+.v-axis .v__h2 span{color:var(--gold)}
+.ax{position:relative}
+.ax__labels{display:grid;grid-template-columns:1fr 1fr;margin-bottom:14px}
+.ax__group{font-size:12px;font-weight:600;letter-spacing:.2em;text-transform:uppercase;
+  color:var(--gold);padding-bottom:10px;border-bottom:1px solid var(--gold)}
+.ax__group:last-child{margin-left:2px}
+.ax__row{position:relative;display:grid;grid-template-columns:repeat(4,1fr);
+  background:var(--ink-line);gap:1px;border-top:1px solid var(--ink-line);
+  border-bottom:1px solid var(--ink-line)}
+.ax__item{position:relative;margin:0;aspect-ratio:3/4;overflow:hidden;background:var(--ink)}
+.ax__item--seam::before{content:"";position:absolute;left:-1px;top:-20px;bottom:-20px;width:1px;
+  background:var(--gold);z-index:3}
+.ax__img{position:absolute;inset:0;background-size:cover;background-position:center top}
+/* --p läuft je Bild von 0 auf 1, sobald die Achse darüberzieht */
+.ax__img--after{clip-path:inset(0 calc((1 - var(--p,0)) * 100%) 0 0)}
+.ax__item figcaption{position:absolute;left:0;right:0;bottom:0;z-index:2;
+  padding:38px 18px 16px;display:flex;flex-direction:column;gap:2px;
+  background:linear-gradient(180deg,transparent,rgba(10,9,8,.82))}
+.ax__item figcaption b{font-size:15px;font-weight:600;color:#F3F0E9}
+.ax__item figcaption span{font-size:13px;color:var(--gold-lt);display:flex;gap:8px;align-items:center;flex-wrap:wrap}
+.ax__ph{font-size:9.5px;font-weight:600;letter-spacing:.14em;text-transform:uppercase;
+  color:var(--gold);border:1px solid var(--gold);border-radius:2px;padding:2px 6px}
+.ax__line{position:absolute;top:-20px;bottom:-20px;left:var(--sweep,0%);width:2px;
+  background:var(--gold);z-index:4;pointer-events:none;transform:translateX(-1px)}
+.ax__knob{position:absolute;top:50%;left:50%;width:46px;height:46px;transform:translate(-50%,-50%);
+  border-radius:50%;background:var(--gold);box-shadow:0 10px 26px -8px rgba(0,0,0,.9)}
+.ax__knob::before{content:"";position:absolute;top:50%;left:50%;width:9px;height:9px;
+  transform:translate(-70%,-50%) rotate(45deg);border:2px solid #1A1A18;border-width:2px 2px 0 0}
+.ax__range{position:absolute;left:0;right:0;top:0;bottom:0;width:100%;height:100%;
+  margin:0;opacity:0;cursor:ew-resize;appearance:none;background:none;z-index:5}
+.ax__range::-webkit-slider-thumb{appearance:none;width:60px;height:100%}
+.ax__range:focus-visible ~ .ax__row .ax__line .ax__knob,
+.ax__range:focus-visible + .ax__foot{outline:2px solid var(--gold);outline-offset:4px}
+.ax__foot{display:flex;justify-content:space-between;align-items:baseline;gap:20px;
+  margin-top:18px;font-size:13px;color:var(--ink-text-soft)}
+.ax__state{color:var(--gold);letter-spacing:.14em;text-transform:uppercase;font-size:12px;font-weight:600}
+@media (max-width:900px){
+  .ax__row{grid-template-columns:repeat(2,1fr)}
+  .ax__item--seam::before{display:none}
+  /* Die zwei Spaltenlabels stimmen nur nebeneinander – gestapelt trägt
+     jeder Fall sein Gruppenwort selbst. */
+  .ax__labels{display:none}
+}
+
+/* ==========================================================================
+   B · Der Schnitt
+   Die Seite zerfällt in zwei Hälften in den Farben der beiden Studios.
+   Die Aufnahmen haben keine Fassung – ihr Grund läuft in den Seitengrund.
+   ========================================================================== */
+
+.v-split{padding-bottom:0}
+.sp{position:relative;display:grid;grid-template-columns:1fr 1fr;margin-top:8px}
+.sp__half{padding:52px clamp(24px,4vw,64px) 64px;display:flex;flex-direction:column;gap:44px}
+.sp__half--hell{background:var(--studio-hell);color:#1A1A18;align-items:flex-end;
+  /* Der Studiogrund ist dunkler als Weiss – Textgold und Fliesstext ziehen nach. */
+  --gold-text:#6E6139; --text-soft:#615D4E}
+.sp__half--dunkel{background:var(--studio-dunkel);color:#F3F0E9}
+.sp__label{margin:0;font-size:12px;font-weight:600;letter-spacing:.2em;text-transform:uppercase;
+  color:var(--gold-text)}
+.sp__half--dunkel .sp__label{color:var(--gold-lt)}
+.sp__case{margin:0;width:100%;max-width:480px}
+.sp__half--hell .sp__case{margin-left:auto}
+.sp__case .cmp{aspect-ratio:4/3}
+.sp__case figcaption{display:flex;align-items:baseline;gap:10px;margin-top:12px}
+.sp__case figcaption b{font-size:16px;font-weight:600}
+.sp__case figcaption span{font-size:13.5px;color:var(--text-soft)}
+.sp__half--dunkel figcaption span{color:var(--ink-text-soft)}
+.sp__seam{position:absolute;top:0;bottom:0;left:50%;width:1px;background:var(--gold);
+  z-index:2;pointer-events:none}
+@media (max-width:900px){
+  .sp{grid-template-columns:1fr}
+  .sp__half--hell{align-items:stretch}
+  .sp__half--hell .sp__case{margin-left:0}
+  .sp__seam{display:none}
+}
+
+/* ==========================================================================
+   C · Die Wand
+   Zwei Reihen, keine Bedienung: oben ohne Fasern, unten mit.
+   ========================================================================== */
+
+.v-wall{background:var(--ground-alt)}
+.wl{margin-top:6px}
+.wl__groups{display:grid;grid-template-columns:1fr 1fr;margin-bottom:12px}
+.wl__groups span{font-size:12px;font-weight:600;letter-spacing:.2em;text-transform:uppercase;
+  color:var(--gold-text);padding-bottom:10px;border-bottom:1px solid var(--gold)}
+.wl__groups span:last-child{margin-left:2px}
+.wl__row{display:grid;grid-template-columns:repeat(4,1fr);gap:1px;background:var(--line-firm)}
+.wl__cell{position:relative;margin:0;background:var(--ground-alt)}
+.wl__cell--seam::before{content:"";position:absolute;left:-1px;top:0;bottom:0;width:1px;
+  background:var(--gold);z-index:2}
+.wl__img{display:block;aspect-ratio:3/4;background-size:cover;background-position:center top}
+/* Die obere Reihe wird gedämpft: sie ist der Zustand davor. */
+.wl__img.is-before{filter:grayscale(.5) brightness(.86) contrast(.96)}
+.wl__cell figcaption{position:absolute;left:0;right:0;bottom:0;z-index:2;
+  padding:34px 16px 14px;display:flex;flex-direction:column;gap:1px;
+  background:linear-gradient(180deg,transparent,rgba(10,9,8,.8))}
+.wl__cell figcaption b{font-size:15px;font-weight:600;color:#F3F0E9}
+.wl__cell figcaption span{font-size:13px;color:var(--gold-lt)}
+.wl__rule{display:flex;align-items:center;gap:18px;padding:0 32px;margin:0}
+.wl__rule span{font-size:12px;font-weight:600;letter-spacing:.22em;text-transform:uppercase;
+  color:var(--gold-text);padding:16px 0;flex-shrink:0}
+.wl__rule i{flex:1;height:1px;background:var(--gold)}
+@media (max-width:900px){
+  .wl__row{grid-template-columns:repeat(2,1fr)}
+  .wl__cell--seam::before{display:none}
+  .wl__groups{display:none}
+}
+
+/* ==========================================================================
+   D · Die Kolonnade
+   Vier Bogenfenster auf einer Goldlinie; zwischen zweitem und drittem
+   Bogen steht ein höherer Pfeiler.
+   ========================================================================== */
+
+.v-arch{background:var(--gold-wash);
+  /* Goldwaschung als Grund: Textgold eine Stufe dunkler. */
+  --gold-text:#73663D}
+.ko{position:relative}
+.ko__groups{display:grid;grid-template-columns:1fr 1fr;margin-bottom:26px}
+.ko__groups span{font-size:12px;font-weight:600;letter-spacing:.2em;text-transform:uppercase;
+  color:var(--gold-text)}
+.ko__row{display:grid;grid-template-columns:repeat(4,1fr);gap:clamp(16px,2.4vw,34px);align-items:end}
+.ko__col{position:relative;margin:0}
+.ko__col--seam::before{content:"";position:absolute;left:calc(-1 * clamp(8px,1.2vw,17px));
+  top:-34px;bottom:-26px;width:1px;background:var(--gold)}
+.ko__arch{border:1px solid var(--gold);border-radius:999px 999px var(--radius) var(--radius);
+  overflow:hidden;background:var(--studio-hell)}
+.ko__arch .cmp{aspect-ratio:3/4;border-radius:inherit}
+.ko__col figcaption{padding-top:16px;display:flex;flex-direction:column;gap:2px;text-align:center}
+.ko__col figcaption b{font-size:15px;font-weight:600}
+.ko__col figcaption span{font-size:13px;color:var(--text-soft)}
+.ko__base{height:1px;background:var(--gold);margin-top:26px}
+@media (max-width:900px){
+  .ko__row{grid-template-columns:repeat(2,1fr);row-gap:34px}
+  .ko__col--seam::before{display:none}
+  .ko__groups{display:none}
+}
+
+/* ==========================================================================
+   E · Die Fallakte
+   Nummerierte Akten mit Kenndaten – der Ton einer Dokumentation.
+   ========================================================================== */
+
+.v-file{background:var(--ground)}
+.fa{display:grid;grid-template-columns:1fr 1fr;gap:clamp(20px,2.6vw,34px)}
+.fa__card{position:relative;margin:0;border:1px solid var(--line-firm);border-radius:var(--radius);
+  background:var(--surface);overflow:hidden}
+.fa__head{display:flex;align-items:baseline;justify-content:space-between;gap:16px;
+  padding:15px 20px;border-bottom:1px solid var(--line)}
+.fa__head b{font-size:13px;font-weight:600;letter-spacing:.16em;text-transform:uppercase;
+  color:var(--gold-text);font-variant-numeric:tabular-nums}
+.fa__head span{font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:var(--text-faint)}
+.fa__card .cmp{aspect-ratio:4/3}
+.fa__data{margin:0;padding:6px 20px 16px}
+.fa__data div{display:flex;justify-content:space-between;gap:16px;padding:11px 0;
+  border-bottom:1px solid var(--line)}
+.fa__data div:last-child{border-bottom:0}
+.fa__data dt{margin:0;font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:var(--text-faint)}
+.fa__data dd{margin:0;font-size:15px;font-weight:500}
+.fa__ph{position:absolute;top:13px;right:74px;font-size:9.5px;font-weight:600;letter-spacing:.14em;
+  text-transform:uppercase;color:var(--gold-text);border:1px solid var(--gold);
+  border-radius:2px;padding:3px 7px;background:var(--surface)}
+@media (max-width:900px){.fa{grid-template-columns:1fr}}
+
+@media (max-width:720px){
+  body{font-size:16px}
+  .v{padding:52px 0 56px}
+  .v__inner,.top__inner,.chrome__inner{padding:0 20px}
+  .chrome__inner{flex-direction:column;gap:16px}
+}
