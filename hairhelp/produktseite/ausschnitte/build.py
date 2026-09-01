@@ -1,0 +1,160 @@
+#!/usr/bin/env python3
+"""Löst den Garantie-Abschnitt („Ohne Risiko") aus der Produktseite heraus.
+
+Ergebnis ist eine einzelne, in sich geschlossene HTML-Datei: Schrift, Farbtoken
+und alle benutzten Regeln sind eingebettet, das Siegelbild ebenso. Sie läuft
+ohne Netzwerkzugriff.
+
+Alles ist unter `.hh-garantie` gekapselt – keine Regel auf `body`, `*` oder
+`:root`. Der Block lässt sich damit unverändert in ein HTML-Widget einsetzen,
+ohne die Gastseite zu verändern.
+"""
+import json, pathlib, re
+
+HIER = pathlib.Path(__file__).parent
+QUELLE = HIER.parent / 'produktseite.html'
+ZIEL = HIER / 'garantie-ohne-risiko.html'
+WURZEL = '.hh-garantie'
+
+quelle = QUELLE.read_text(encoding='utf-8')
+
+SIEGEL = ('https://hairhelp-haarverdichter.ch/wp-content/uploads/2024/10/'
+          'Shop-30Tage-Geld-zurueck-Siegel1.webp')
+
+
+def token_block(anfang: str) -> str:
+    """Liest einen Deklarationsrumpf (nur die --token:wert-Zeilen) aus."""
+    i = quelle.index(anfang) + len(anfang)
+    rumpf = quelle[i:quelle.index('\n}', i)]
+    zeilen = [z.strip() for z in rumpf.split('\n')]
+    return '\n'.join('  ' + z for z in zeilen if z.startswith('--'))
+
+
+def abschnitt() -> str:
+    """Der Abschnitt hinter der Kommentarmarke „Garantie"."""
+    marke = quelle.index('<!-- ====================== Garantie ====================== -->')
+    anfang = quelle.index('<section', marke)
+    tiefe, j = 0, anfang
+    while True:
+        auf = quelle.find('<section', j + 1)
+        zu = quelle.find('</section>', j + 1)
+        if auf != -1 and auf < zu:
+            tiefe += 1
+            j = auf
+        elif tiefe == 0:
+            return quelle[anfang:zu + len('</section>')]
+        else:
+            tiefe -= 1
+            j = zu
+
+
+mittel = json.loads((HIER.parent / 'assets.json').read_text(encoding='utf-8'))
+
+markup = (abschnitt()
+          .replace(SIEGEL, mittel['url2data'][SIEGEL])
+          .replace('<section class="band band--ink">',
+                   '<section class="hh-garantie band band--ink" lang="de">', 1))
+
+hell = token_block(':root{')
+dunkel = token_block('@media (prefers-color-scheme: dark){\n  :root:not([data-theme="light"]){')
+if not dunkel:
+    dunkel = token_block(':root[data-theme="dark"]{')
+
+css = f"""{WURZEL}{{
+{hell}
+}}
+/* Das Band ist immer dunkel; die Token laufen trotzdem mit, damit der Block
+   sich auch in einer dunklen Umgebung richtig verhält. */
+@media (prefers-color-scheme: dark){{
+  :root:not([data-theme="light"]) {WURZEL}{{
+{dunkel}
+  }}
+}}
+:root[data-theme="dark"] {WURZEL}{{
+{dunkel}
+}}
+
+{WURZEL},{WURZEL} *,{WURZEL} *::before,{WURZEL} *::after{{box-sizing:border-box}}
+{WURZEL}{{
+  background:var(--ink);
+  color:var(--ink-text);
+  font-family:Jost,"Century Gothic","Futura",system-ui,sans-serif;
+  font-size:17px;
+  line-height:1.7;
+  -webkit-font-smoothing:antialiased;
+  padding:88px 0;
+}}
+{WURZEL} img{{max-width:100%;display:block}}
+{WURZEL} a{{color:inherit}}
+{WURZEL} :focus-visible{{outline:2px solid var(--gold);outline-offset:3px;border-radius:2px}}
+@media (prefers-reduced-motion: reduce){{
+  {WURZEL} *,{WURZEL} *::before,{WURZEL} *::after{{
+    animation-duration:.001ms!important;transition-duration:.001ms!important}}
+}}
+
+{WURZEL} .spine{{max-width:var(--spine);margin:0 auto;padding:0 32px}}
+
+{WURZEL} .sect-head{{
+  display:flex;flex-direction:column;gap:14px;
+  padding-top:22px;border-top:1px solid var(--gold);margin-bottom:44px;
+}}
+{WURZEL} .sect-head h2{{
+  font-size:clamp(28px,3.6vw,42px);font-weight:700;letter-spacing:-.005em;
+  line-height:1.12;text-transform:uppercase;margin:0;text-wrap:balance;
+}}
+/* Auf dunklem Grund trägt das helle Gold 6:1 – dort bleibt es die Textfarbe. */
+{WURZEL} .eyebrow{{
+  font-size:12px;font-weight:500;letter-spacing:.18em;
+  text-transform:uppercase;color:var(--gold);margin:0;
+}}
+{WURZEL} .sect-head h2 .lead{{color:var(--gold);font-weight:500}}
+
+{WURZEL} .guarantee{{
+  display:grid;grid-template-columns:minmax(0,1fr) 300px;gap:60px;align-items:center;
+}}
+{WURZEL} .guarantee-list{{
+  margin:32px 0 0;padding:0;list-style:none;display:flex;flex-direction:column;gap:18px;
+}}
+{WURZEL} .guarantee-list li{{display:flex;gap:15px;align-items:flex-start}}
+{WURZEL} .guarantee-list svg{{
+  width:20px;height:20px;flex-shrink:0;margin-top:4px;
+  stroke:var(--gold);fill:none;stroke-width:1.7;
+}}
+{WURZEL} .guarantee-list strong{{font-weight:600}}
+{WURZEL} .guarantee-list span{{color:var(--ink-text-soft)}}
+{WURZEL} .guarantee-seal img{{width:100%;max-width:280px;margin:0 auto}}
+
+@media (max-width:860px){{
+  {WURZEL} .guarantee{{grid-template-columns:1fr;gap:38px}}
+  {WURZEL} .guarantee-seal{{max-width:200px}}
+}}
+@media (max-width:720px){{
+  {WURZEL}{{font-size:16px;padding:64px 0}}
+  {WURZEL} .spine{{padding:0 20px}}
+}}"""
+
+seite = f"""<meta charset="utf-8">
+<title>HairHelp – 30-Tage-Sorglos-Garantie</title>
+<meta name="description" content="Der Garantie-Abschnitt der HairHelp-Produktseite: 30 Tage testen, kostenloser Rückversand, 100 % Geld zurück.">
+
+<style>
+/* ==========================================================================
+   HairHelp – Abschnitt „Ohne Risiko / Ihre 30-Tage-Sorglos-Garantie"
+   Herausgelöst aus der Produktseite.
+
+   Schrift, Farbtoken, alle benutzten Regeln und das Siegelbild sind
+   eingebettet – die Datei läuft für sich, ohne Netzwerkzugriff.
+   Alles ist unter .hh-garantie gekapselt: keine Regel auf body, * oder :root.
+   Der Block kann darum unverändert in ein HTML-Widget eingesetzt werden.
+   ========================================================================== */
+
+{mittel['fontcss']}
+
+{css}
+</style>
+
+{markup}
+"""
+
+ZIEL.write_text(seite, encoding='utf-8')
+print(f'{ZIEL.name}  {ZIEL.stat().st_size / 1e6:.2f} MB')
