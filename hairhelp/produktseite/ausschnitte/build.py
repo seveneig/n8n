@@ -14,7 +14,7 @@ import json, pathlib, re
 HIER = pathlib.Path(__file__).parent
 QUELLE = HIER.parent / 'produktseite.html'
 ZIEL = HIER / 'garantie-ohne-risiko.html'
-WURZEL = '.hh-garantie'
+WURZEL = '.hh-garantie.hh-garantie'
 
 quelle = QUELLE.read_text(encoding='utf-8')
 
@@ -76,6 +76,7 @@ css = f"""{WURZEL}{{
 
 {WURZEL},{WURZEL} *,{WURZEL} *::before,{WURZEL} *::after{{box-sizing:border-box}}
 {WURZEL}{{
+  position:relative;
   background:var(--ink);
   color:var(--ink-text);
   font-family:Jost,"Century Gothic","Futura",system-ui,sans-serif;
@@ -84,6 +85,16 @@ css = f"""{WURZEL}{{
   -webkit-font-smoothing:antialiased;
   padding:88px 0;
 }}
+/* Nur die Hintergrundfarbe bricht aus der Spalte aus und läuft über die
+   volle Breite; der Inhalt bleibt in der Spalte. Läuft die Seite dadurch
+   waagrecht über, braucht die Gastseite `overflow-x:hidden` am body – oder
+   der Elementor-Container wird auf volle Breite gestellt. */
+{WURZEL}::before{{
+  content:"";position:absolute;top:0;bottom:0;
+  left:calc(50% - 50vw);width:100vw;
+  background:var(--ink);z-index:0;pointer-events:none;
+}}
+{WURZEL} > *{{position:relative;z-index:1}}
 {WURZEL} img{{max-width:100%;display:block}}
 {WURZEL} a{{color:inherit}}
 {WURZEL} :focus-visible{{outline:2px solid var(--gold);outline-offset:3px;border-radius:2px}}
@@ -101,6 +112,8 @@ css = f"""{WURZEL}{{
 {WURZEL} .sect-head h2{{
   font-size:clamp(28px,3.6vw,42px);font-weight:700;letter-spacing:-.005em;
   line-height:1.12;text-transform:uppercase;margin:0;text-wrap:balance;
+  /* Ausdrücklich, nicht geerbt: eine Theme-Regel auf h2 schlägt sonst durch. */
+  color:var(--ink-text);
 }}
 /* Auf dunklem Grund trägt das helle Gold 6:1 – dort bleibt es die Textfarbe. */
 {WURZEL} .eyebrow{{
@@ -120,13 +133,15 @@ css = f"""{WURZEL}{{
   width:20px;height:20px;flex-shrink:0;margin-top:4px;
   stroke:var(--gold);fill:none;stroke-width:1.7;
 }}
-{WURZEL} .guarantee-list strong{{font-weight:600}}
+{WURZEL} .guarantee-list li{{color:var(--ink-text)}}
+{WURZEL} .guarantee-list strong{{font-weight:600;color:var(--ink-text)}}
 {WURZEL} .guarantee-list span{{color:var(--ink-text-soft)}}
 {WURZEL} .guarantee-seal img{{width:100%;max-width:280px;margin:0 auto}}
 
 @media (max-width:860px){{
   {WURZEL} .guarantee{{grid-template-columns:1fr;gap:38px}}
-  {WURZEL} .guarantee-seal{{max-width:200px}}
+  /* Einspaltig richtet sich die Grafik durch die max-width sonst links aus. */
+  {WURZEL} .guarantee-seal{{max-width:200px;margin-left:auto;margin-right:auto}}
 }}
 @media (max-width:720px){{
   {WURZEL}{{font-size:16px;padding:64px 0}}
