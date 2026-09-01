@@ -5,8 +5,10 @@ lauffähig gemacht.
 
 | Datei | Zweck |
 | --- | --- |
-| `build.py` | Löst den Garantie-Abschnitt heraus und bettet alles Nötige ein. |
-| `garantie-ohne-risiko.html` | Ergebnis: „Ohne Risiko / Ihre 30-Tage-Sorglos-Garantie". |
+| `build.py` | Erzeugt alle drei Ausgaben. |
+| `garantie-ohne-risiko.html` | Eigenständig, alles eingebettet – zum Ansehen und Archivieren. |
+| `garantie.css` | Zum Einbau: unter Elementor → Website-Einstellungen → Benutzerdefiniertes CSS. |
+| `garantie-widget.html` | Zum Einbau: ins HTML-Widget. |
 
 ```
 python3 build.py
@@ -17,6 +19,41 @@ python3 build.py
 Schrift (Jost, 10 Schnitte), alle Farbtoken, sämtliche benutzten Regeln und
 das Siegelbild sind eingebettet. Die Datei braucht keinen Netzwerkzugriff –
 im Test werden null externe Adressen abgerufen.
+
+## Warum es zerlegt ist: WP Rocket
+
+Die erste Fassung war eine einzige Datei mit `<style>`-Block. Im
+Elementor-Editor sah sie richtig aus, auf der Live-Seite nicht: weisser Grund,
+dunkle Schrift, und die Symbole wuchsen als schwarze Flächen über die ganze
+Spaltenbreite. Ursache war **WP Rocket mit „Ungenutztes CSS entfernen"** – der
+Block wurde weggeräumt.
+
+Dass ausgerechnet die Symbole so auffällig kaputtgingen, liegt daran, dass ihre
+Grösse (`20 × 20`) und ihre Strichdarstellung (`fill:none`) nur aus dem
+Stylesheet kamen. Ohne CSS ist ein SVG so gross wie sein Container und
+schwarz gefüllt.
+
+**Drei Konsequenzen:**
+
+1. **Getrennte Dateien.** Das Stylesheet gehört unter Elementor →
+   Website-Einstellungen → Benutzerdefiniertes CSS, nicht in das Widget.
+2. **Schrift und Bild fallen weg.** Die eigenständige Datei schleppt 284 KB
+   Schrift und ein 121 KB grosses Siegelbild mit sich. Die Website hat beides
+   längst: Jost ist ihre Hausschrift, das Siegel liegt in der Mediathek. Damit
+   schrumpft der Einbau von 417 KB auf 6,3 KB CSS und 2,5 KB Markup.
+3. **Die Symbole tragen ihre Masse jetzt als Attribut** (`width`, `height`,
+   `fill="none"`, `stroke="currentColor"`). Attribute stehen unter jeder
+   CSS-Regel, ändern also nichts, solange das Stylesheet greift. Fällt es
+   wieder einmal weg, bleibt eine schlichte, lesbare Liste stehen statt eines
+   schwarzen Klotzes.
+
+### In WP Rocket
+
+* **Werkzeuge → Gespeichertes CSS leeren**, sonst wird weiter das alte
+  „benutzte CSS" ausgeliefert, das die neuen Regeln nicht kennt.
+* **Datei-Optimierung → Ungenutztes CSS entfernen → CSS-Sicherheitsliste:**
+  `hh-garantie` eintragen. Dann lässt Rocket die Regeln in Ruhe, auch bei
+  jeder späteren Analyse.
 
 ## Im fremden Theme
 

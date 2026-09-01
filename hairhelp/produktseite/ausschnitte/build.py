@@ -50,10 +50,28 @@ def abschnitt() -> str:
 
 mittel = json.loads((HIER.parent / 'assets.json').read_text(encoding='utf-8'))
 
-markup = (abschnitt()
-          .replace(SIEGEL, mittel['url2data'][SIEGEL])
-          .replace('<section class="band band--ink">',
-                   '<section class="hh-garantie band band--ink" lang="de">', 1))
+def haerten(html: str) -> str:
+    """Gibt den Symbolen Masse und Strichfarbe als Attribut mit.
+
+    Attribute stehen in der Rangfolge unter jeder CSS-Regel – solange das
+    Stylesheet greift, ändert sich nichts. Fällt es weg (WordPress filtert
+    <style> heraus, ein Optimierer räumt es weg), bleiben die Symbole klein
+    und als Strichzeichnung stehen, statt als schwarze Flächen über die
+    ganze Spaltenbreite zu wachsen.
+    """
+    return html.replace(
+        '<svg aria-hidden="true" focusable="false" viewBox="0 0 24 24">',
+        '<svg aria-hidden="true" focusable="false" viewBox="0 0 24 24" '
+        'width="20" height="20" fill="none" stroke="currentColor" '
+        'stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round">')
+
+
+roh = haerten(abschnitt()).replace(
+    '<section class="band band--ink">',
+    '<section class="hh-garantie band band--ink" lang="de">', 1)
+
+markup = roh.replace(SIEGEL, mittel['url2data'][SIEGEL])   # eigenständig
+markup_widget = roh                                        # Bild von der Website
 
 hell = token_block(':root{')
 dunkel = token_block('@media (prefers-color-scheme: dark){\n  :root:not([data-theme="light"]){')
@@ -172,4 +190,33 @@ seite = f"""<meta charset="utf-8">
 """
 
 ZIEL.write_text(seite, encoding='utf-8')
-print(f'{ZIEL.name}  {ZIEL.stat().st_size / 1e6:.2f} MB')
+
+
+# ---------------------------------------------------------------------------
+# Fassung für den Einbau: getrennt in Stylesheet und Markup.
+#
+# Die eigenständige Datei trägt 284 KB Schrift und ein 121 KB grosses Bild mit
+# sich. Die Website hat beides längst – Jost ist ihre Hausschrift, das Siegel
+# liegt in der Mediathek. Für den Einbau fallen sie weg; übrig bleiben wenige
+# Kilobyte, die kein Filter und kein Optimierer mehr abräumt.
+# ---------------------------------------------------------------------------
+STIL = HIER / 'garantie.css'
+WIDGET = HIER / 'garantie-widget.html'
+
+STIL.write_text(
+    '/* HairHelp – Abschnitt „Ohne Risiko / Ihre 30-Tage-Sorglos-Garantie"\n'
+    '   Einsetzen unter Elementor \u2192 Website-Einstellungen \u2192 Benutzerdefiniertes CSS.\n'
+    '   Ohne Schrifteinbettung: Jost ist die Hausschrift der Website.\n'
+    '   Alles unter .hh-garantie gekapselt, die Klasse steht doppelt, damit die\n'
+    '   Regeln die Theme-Regeln schlagen, ohne dass !important nötig wird.\n'
+    '   Bei WP Rocket \u2192 „Ungenutztes CSS entfernen" auf die Ausschlussliste setzen. */\n\n'
+    + css + '\n', encoding='utf-8')
+
+WIDGET.write_text(
+    '<!-- HairHelp – Abschnitt „Ohne Risiko / Ihre 30-Tage-Sorglos-Garantie"\n'
+    '     In ein HTML-Widget einfügen. Das Stylesheet steht in garantie.css und\n'
+    '     gehört unter Elementor \u2192 Website-Einstellungen \u2192 Benutzerdefiniertes CSS. -->\n'
+    + markup_widget + '\n', encoding='utf-8')
+
+for datei in (ZIEL, STIL, WIDGET):
+    print(f'{datei.name:28s} {datei.stat().st_size/1024:7.1f} KB')
