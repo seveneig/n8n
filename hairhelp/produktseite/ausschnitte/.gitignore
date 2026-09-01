@@ -1,4 +1,7 @@
 # Erzeugte Dateien – mit `python3 build.py` herstellbar.
+*.css
+*-widget.html
 garantie-ohne-risiko.html
-garantie.css
-garantie-widget.html
+kundengeschichte-barbara.html
+haeufige-fragen.html
+schlussaufruf.html

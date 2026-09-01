@@ -3,12 +3,25 @@
 Einzelne Abschnitte, aus `../produktseite.html` herausgelöst und für sich
 lauffähig gemacht.
 
-| Datei | Zweck |
+`build.py` erzeugt je Abschnitt drei Dateien:
+
+| Endung | Zweck |
 | --- | --- |
-| `build.py` | Erzeugt alle drei Ausgaben. |
-| `garantie-ohne-risiko.html` | Eigenständig, alles eingebettet – zum Ansehen und Archivieren. |
-| `garantie.css` | Zum Einbau: unter Elementor → Website-Einstellungen → Benutzerdefiniertes CSS. |
-| `garantie-widget.html` | Zum Einbau: ins HTML-Widget. |
+| `.html` | Eigenständig, alles eingebettet – zum Ansehen und Archivieren. |
+| `.css` | Zum Einbau: unter Elementor → Website-Einstellungen → Benutzerdefiniertes CSS. |
+| `-widget.html` | Zum Einbau: ins HTML-Widget. |
+
+| Abschnitt | Wurzelklasse | Band |
+| --- | --- | --- |
+| `garantie-ohne-risiko` | `hh-garantie` | schwarz |
+| `kundengeschichte-barbara` | `hh-stimme` | creme |
+| `haeufige-fragen` | `hh-faq` | weiss |
+| `schlussaufruf` | `hh-schluss` | Foto mit Verlauf |
+
+Jeder Abschnitt hat eine **eigene** Wurzelklasse. Es lassen sich also
+beliebig viele davon auf derselben Seite einsetzen, ohne dass sie sich in die
+Quere kommen. Die Stylesheets können hintereinander in dasselbe
+Benutzerdefinierte CSS.
 
 ```
 python3 build.py
@@ -70,6 +83,11 @@ Drei Dinge, die beim Einbau in Elementor auffielen und behoben sind:
   `::before`-Element mit `left:calc(50% - 50vw); width:100vw`. Läuft die Seite
   dadurch waagrecht über, braucht die Gastseite `overflow-x:hidden` am body –
   oder der Elementor-Container wird auf volle Breite gestellt.
+* **Beim Schlussaufruf bricht der ganze Abschnitt aus**, nicht nur die Farbe:
+  sein Grund ist ein Foto mit Verlauf, das mitlaufen muss. Dort steht darum
+  `margin-left/right:calc(50% - 50vw)` am Abschnitt selbst.
+* **Auf hellem Band gilt das dunklere Textgold.** Das helle Gold trägt dort
+  nur 2.9:1. Betrifft die Kundengeschichte und die häufigen Fragen.
 
 ## Gekapselt
 
@@ -85,11 +103,12 @@ hat kein `<html>`-Element, und ein Skript würde die Sprache der Gastseite
 
 ## Geprüft
 
-Hell, dunkel und auf 390 px: Bild geladen, Alternativtext vorhanden, Jost
-aktiv, kein Querlauf, keine Kontrastbefunde, keine Konsolenfehler. Das Siegel
-steht einspaltig mittig (gemessen: Bildmitte gleich Spaltenmitte).
+Jeder Abschnitt eigenständig: Bilder geladen, Alternativtexte vorhanden, Jost
+aktiv, keine externen Abrufe, kein Querlauf, keine Konsolenfehler. Beim
+Garantie-Abschnitt steht das Siegel einspaltig mittig (gemessen: Bildmitte
+gleich Spaltenmitte).
 
-Zusätzlich gegen eine Testseite geprüft, die eigene Regeln auf `h2`, `strong`
-und `li` setzt und den Block in einen 700 px breiten Container legt: Titel und
-Fettdruck bleiben hell, der Hintergrund misst die volle Fensterbreite, der
-Inhalt bleibt in der Spalte, und es entsteht kein Querlauf.
+Jeder Abschnitt zusätzlich gegen eine Testseite geprüft, die eigene Regeln auf
+`h2`, `h3`, `h4`, `strong`, `b`, `p`, `li` und `summary` setzt und den Block in
+einen 900 px breiten Container legt: keine Kontrastbefunde, kein Querlauf, die
+Gastseite bleibt in Schrift und Kastenmassen unverändert.
