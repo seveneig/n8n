@@ -1,11 +1,18 @@
 # Auftakt der Männerseite mit Studiofoto
 
 Neue Fassung der Auftaktsektion von `../maenner.html`. Statt des gerahmten
-Hochformats (`.hero-media`, 4:5, Passepartout, Radius) steht jetzt das
-Studiofoto des lächelnden Mannes – randlos, ohne Fassung.
+Hochformats (`.hero-media`, 4:5, Passepartout, Radius) liegt jetzt das
+Studiofoto als Hintergrund über der ganzen Fläche – klassische
+Hero-Struktur: Foto, darüber ein Schleier, darüber der Satz.
 
-`grund-glaetten.py` erzeugt `mann-hero.webp` aus `mann-hero-original.webp`.
-`build.py` erzeugt daraus drei Dateien:
+Bildaufbereitung in zwei Schritten, dann der Satz:
+
+```
+mann-hero-original.webp   wie geliefert, 2000 x 1116, mit Vignette
+  → grund-glaetten.py  →  mann-hero.webp        1500 x 837, Grund überall #131410
+  → breit-machen.py    →  mann-hero-breit.webp  2000 x 881, Mann rechts
+  → build.py           →  die drei Dateien unten
+```
 
 | Endung | Zweck |
 | --- | --- |
@@ -21,11 +28,15 @@ Wurzelklasse: `hh-auftakt`. Sie steht doppelt (`.hh-auftakt.hh-auftakt`), das
 hebt die Spezifität über die üblichen Theme-Regeln, ohne dass `!important`
 nötig wird. Im Markup bleibt es eine einzige Klasse.
 
-## Der Grundgedanke: eine einzige Oberfläche
+## Der Schleier hat die Farbe des Fotos
 
-Gewünscht war, dass der Hintergrund der Herofläche mit dem des Fotos
-übereinstimmt. Erreicht ist das nicht durch Angleichen, sondern dadurch, dass
-es dieselbe Farbe ist:
+Abgedunkelt wird nicht mit einem fremden Schwarz, sondern mit genau dem Ton,
+den der Studiogrund des Fotos schon trägt. Der Schleier verstärkt den Grund,
+statt ihn zu überdecken – links, wo der Satz steht, dicht; rechts, wo der
+Mann steht, licht. Fläche, Schleier und Foto laufen dadurch ineinander, es
+gibt keine sichtbare Kante zwischen ihnen.
+
+Woher der Ton kommt:
 
 1. **Gemessen.** Der Studiogrund des Fotos wurde über die personenfreien
    Randspalten ausgemessen: Median `#131410`, 577'530 Bildpunkte.
@@ -34,55 +45,61 @@ es dieselbe Farbe ist:
    Grundfeld über ein Raster, wäscht die Lücken hinter der Person aus den
    Rändern ein und zieht die Abweichung ab, gewichtet nach Dunkelheit. Danach
    liegt die Streuung bei 1,8 Stufen – unter der Sichtbarkeitsschwelle.
-3. **Übernommen.** `--auftakt-grund:#131410` trägt die Fläche.
+3. **Übernommen.** `--auftakt-grund:#131410` trägt Fläche und Schleier.
 
-Foto und Fläche sind damit dieselbe Oberfläche. Es gibt keine Bildkante,
-keinen Rahmen und keinen Radius; der Mann steht direkt auf der Seite.
+## Das Bild wird nach links verbreitert
 
-Zwei kurze Verläufe in genau dieser Farbe lösen die verbliebenen Kanten auf:
-links die Bildkante (sie überdeckt nur den leeren Teil des Fotos – die Person
-beginnt erst bei rund 35 % der Bildbreite), unten den Übergang, damit der
-Oberkörper weich ausläuft, statt an der Abschnittskante abgeschnitten zu
-werden.
+Als Hintergrund über die ganze Fläche stünde der Mann in der Mitte – also
+genau unter der Schrift. `breit-machen.py` setzt darum links Grund an.
 
-## Das Bild
+Angesetzt wird kein Farbklecks, sondern die **gespiegelte linke Randspalte
+des Fotos selbst**: an der Spiegelachse ist der Verlauf stetig, und die
+Körnung des Films läuft mit. Eine glatt gefüllte Fläche würde sich daneben
+durch ihre fehlende Körnung verraten. Nachgemessen an der Nahtstelle:
+`#131412` links davon wie rechts davon.
 
-`mann-hero.webp`, 1500 × 837, 51 KB. Erzeugt aus dem gelieferten Foto
-(2000 × 1116) mit `grund-glaetten.py`.
+Danach steht der Mann bei 46,0 – 78,3 % der Bildbreite (vorher 31,6 – 72,6 %),
+Kopfoberkante bei 5,6 %.
 
-Für den Einbau in die Mediathek laden; das Widget erwartet sie unter
-`/wp-content/uploads/hairhelp/mann-hero.webp` (Adresse im Markup anpassen,
-falls sie abweicht).
+`mann-hero-breit.webp`, 2000 × 881, 51 KB. Für den Einbau in die Mediathek
+laden; das Widget erwartet sie unter
+`/wp-content/uploads/hairhelp/mann-hero-breit.webp` (Adresse im Markup
+anpassen, falls sie abweicht).
 
 ## Der Ausschnitt
 
-Der Mann steht im Foto bei 31,6 – 72,6 % der Breite, Kopfoberkante bei 5,5 %
-der Höhe. Daraus ergibt sich die Platzierung:
+* **Ab 1281 px** zeigt `object-position:0%` den linken Bildteil – dort liegt
+  der angesetzte Grund, und der Mann rückt dadurch nach rechts, aus dem
+  Satzspiegel heraus.
+* **Unter 1281 px** wird der Ausschnitt schmaler als der angesetzte Grund;
+  `object-position` rückt darum auf 62 % ins Foto hinein, damit sein Gesicht
+  sichtbar bleibt.
+* **Unter 901 px** steht der Satz über dem ganzen Bild statt daneben. Der
+  Schleier wird dort gleichmässig statt seitlich verlaufend – ein Verlauf
+  würde je nach Textlänge mitten im Gesicht liegen.
 
-* **Ab 1181 px** liegt das Foto rechts hinter dem Satz, `width:min(82%,1240px)`,
-  `object-position:0%`. Der Nullwert zeigt den linken Bildteil und rückt den
-  Mann dadurch nach rechts, aus dem Satzspiegel heraus.
-* **Unter 1181 px** steht das Foto über dem Satz. Je schmaler das Fenster,
-  desto hochformatiger der Ausschnitt (16:10 → 3:2 → 1:1), damit der Mann
-  gross genug bleibt, statt in der Breite zu verschwinden.
-* **Ab 1400 px abwärts** gibt der Satz Breite ab (52 % → 48 %), damit die
-  Schulter frei bleibt.
+## Wie stark abgedunkelt wird
+
+Die Deckung ist nicht geschätzt, sondern aus der Lesbarkeit zurückgerechnet
+und danach nachgemessen. Massgebend ist die Augenbraue: kleines Gold
+(`#A39772`) auf der hellsten Stelle des Fotos. Bei einem Wangenwert von 200
+braucht es Deckung 0,87, damit 5:1 stehen bleibt – daher rund 0,9 im
+einspaltigen Fall. Der Mann bleibt darunter als Gestalt erkennbar, sein
+Shirt hebt sich mit 35 gegen 19 vom Grund ab.
 
 ## Geprüft
 
-Gemessen über 17 Fensterbreiten von 320 bis 1920 px:
+Gemessen über 15 Fensterbreiten von 320 bis 1920 px, jeweils mit dem Satz
+unsichtbar geschaltet, damit unter jeder Zeile der tatsächliche Grund
+sichtbar wird:
 
+* **Kontrast je Textzeile.** Für jeden einzelnen Zeilenkasten (über
+  `Range.getClientRects`, nicht über den Blockkasten) wurde der **hellste**
+  Bildpunkt darunter gesucht und gegen die berechnete Textfarbe gestellt.
+  Schlechtester Wert über alle Breiten: **5,47:1** – überall über 4,5:1.
 * **Kein Querlauf** in keiner Breite.
-* **Keine Kante.** Die hellste Stelle an allen vier Rändern des Abschnitts
-  liegt bei Helligkeit 19 – 26 (der Grund selbst liegt bei 19). Die Person
-  wird also nirgends angeschnitten, oben, unten oder seitlich.
-* **Kein Text über dem Bild.** Für jede einzelne Textzeile (über
-  `Range.getClientRects`, nicht über den Blockkasten) wurde der Grund
-  darunter gemessen: höchstens 27,4 statt 19. Der Satz liegt überall auf der
-  ruhigen Fläche.
-* **Kontrast** auf `#131410`: Titel 16,25:1 · Vorspann 9,97:1 · Fliesstext
-  8,04:1 · Augenbraue 6,37:1 · Knopfschrift auf Gold 6,00:1. Alles über
-  4,5:1, auch im dunklen Erscheinungsbild.
+* Der Knopf bringt seinen eigenen deckenden Grund mit und liegt nie auf dem
+  Foto; separat gerechnet trägt er 6,00:1 (`#1A1A18` auf `#A39772`).
 
 ## Im fremden Theme
 

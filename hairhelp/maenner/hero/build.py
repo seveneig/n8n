@@ -7,11 +7,16 @@ Es entstehen drei Dateien:
   hero-mann.css           zum Einbau: Elementor → Website-Einstellungen → CSS
   hero-mann-widget.html   zum Einbau: ins HTML-Widget
 
-Der Grundgedanke: Der Studiogrund des Fotos ist – nach dem Ausgleich der
-Vignette durch grund-glaetten.py – überall #131410. Genau diese Farbe trägt
-auch die Herofläche. Foto und Fläche sind damit dieselbe Oberfläche, es gibt
-keine Bildkante und keinen Rahmen; der Mann steht scheinbar direkt auf der
-Seite. Deshalb auch kein Passepartout und kein Radius wie bei .hero-media.
+Klassische Hero-Struktur: das Foto liegt als Hintergrund über der ganzen
+Fläche, darüber ein Schleier, darüber der Satz.
+
+Der Schleier hat genau die Farbe des Studiogrunds (#131410, gemessen und
+durch grund-glaetten.py geglättet). Er dunkelt also nicht mit einem fremden
+Schwarz ab, sondern verstärkt den Grund, den das Foto schon hat – links, wo
+der Satz steht, dicht; rechts, wo der Mann steht, licht.
+
+Das Foto ist von breit-machen.py nach links verbreitert. Ohne das stünde der
+Mann in der Mitte der Fläche, also genau unter der Schrift.
 
 Getrennte CSS-Datei, weil WP Rocket mit „Ungenutztes CSS entfernen" einen
 inline gesetzten <style>-Block wegräumt (das ist auf der Website schon
@@ -31,7 +36,7 @@ KLASSE = 'hh-auftakt'
 W = f'.{KLASSE}.{KLASSE}'
 
 # Adresse des Fotos in der WordPress-Mediathek. Für die Widget-Fassung.
-BILD_URL = '/wp-content/uploads/hairhelp/mann-hero.webp'
+BILD_URL = '/wp-content/uploads/hairhelp/mann-hero-breit.webp'
 BILD_ALT = ('Lächelnder Mann mit vollem, dichtem Haar vor dunklem Studiogrund')
 
 
@@ -68,8 +73,8 @@ CSS = f"""{W}{{
 }}
 
 {W}{{
-  /* Der Studiogrund des Fotos, gemessen und geglättet. Fläche und Foto
-     tragen dieselbe Farbe – deshalb ist die Bildkante unsichtbar. */
+  /* Der Studiogrund des Fotos, gemessen und geglättet. Fläche, Schleier und
+     Foto tragen damit denselben Ton. */
   --auftakt-grund:{GRUND};
 }}
 
@@ -77,6 +82,9 @@ CSS = f"""{W}{{
 {W}{{
   position:relative;
   isolation:isolate;
+  display:flex;
+  align-items:center;
+  min-height:clamp(540px,50vw,760px);
   background:var(--auftakt-grund);
   color:var(--ink-text);
   font-family:Jost,"Century Gothic","Futura",system-ui,sans-serif;
@@ -101,54 +109,48 @@ CSS = f"""{W}{{
     animation-duration:.001ms!important;transition-duration:.001ms!important}}
 }}
 
-/* --- Das Foto -----------------------------------------------------------
-   Es liegt hinter dem Satz und füllt die Fläche rechts vollständig aus:
-   keine Fassung, kein Radius, keine Kante. Der linke Rand löst sich über
-   einen kurzen Verlauf auf – er überdeckt nur den leeren Teil des Fotos,
-   die Person beginnt erst bei rund 35 % der Bildbreite. */
-{W} .auftakt__bild{{
-  position:absolute;top:0;bottom:0;right:0;
-  width:min(82%,1240px);
-  margin:0;
-  z-index:0;
-  pointer-events:none;
-}}
-{W} .auftakt__bild img{{
+/* --- Hintergrund --------------------------------------------------------
+   Das Foto füllt die ganze Fläche. `object-position:0%` zeigt den linken
+   Bildteil – dort liegt der von breit-machen.py angesetzte Grund, und der
+   Mann rückt dadurch nach rechts, aus dem Satzspiegel heraus. */
+{W} .auftakt__grund{{
+  position:absolute;inset:0;z-index:0;
   width:100%;height:100%;
+  margin:0;
   object-fit:cover;
-  /* 0 % zeigt den linken Bildteil – dadurch rückt der Mann nach rechts,
-     aus dem Satzspiegel heraus. */
-  object-position:0% 18%;
+  object-position:0% center;
 }}
-/* Zwei Verläufe in derselben Grundfarbe: links löst sich die Bildkante
-   auf, unten geht der Mann in die Fläche über, statt an der
-   Abschnittskante abgeschnitten zu werden. */
-{W} .auftakt__bild::after{{
-  content:"";position:absolute;inset:0;
+
+/* --- Schleier -----------------------------------------------------------
+   Waagrecht: dicht über dem Satz, licht über dem Mann. Senkrecht: oben und
+   unten etwas dichter, damit auch die Augenbraue und die Zusagenzeile
+   überall auf ruhigem Grund liegen. Die Deckung ist nicht geschätzt, sondern
+   an der hellsten Stelle unter jeder Textzeile nachgemessen. */
+{W} .auftakt__schleier{{
+  position:absolute;inset:0;z-index:1;pointer-events:none;
   background:
-    linear-gradient(0deg,
-      var(--auftakt-grund) 0 1%,
-      rgba(19,20,16,.5) 7%,
-      rgba(19,20,16,0) 17%),
+    linear-gradient(180deg,
+      rgba(19,20,16,.34) 0%,
+      rgba(19,20,16,0) 26%,
+      rgba(19,20,16,0) 66%,
+      rgba(19,20,16,.4) 100%),
     linear-gradient(90deg,
-      var(--auftakt-grund) 0 8%,
-      rgba(19,20,16,.55) 17%,
-      rgba(19,20,16,0) 28%);
+      rgba(19,20,16,.97) 0%,
+      rgba(19,20,16,.95) 28%,
+      rgba(19,20,16,.82) 46%,
+      rgba(19,20,16,.55) 66%,
+      rgba(19,20,16,.4) 84%,
+      rgba(19,20,16,.42) 100%);
 }}
 
 /* --- Der Satz ------------------------------------------------------------ */
 {W} .spine{{
-  position:relative;z-index:1;
+  position:relative;z-index:2;width:100%;
   max-width:var(--spine);margin:0 auto;padding:0 32px;
 }}
 {W} .auftakt__satz{{
-  max-width:min(52%,600px);
-  padding:96px 0 104px;
-}}
-/* Wird die Fläche schmaler, rückt der Mann näher an den Satz. Der Satz
-   gibt dann Breite ab, damit die Schulter frei bleibt. */
-@media (max-width:1400px){{
-  {W} .auftakt__satz{{max-width:min(48%,540px)}}
+  max-width:min(54%,620px);
+  padding:92px 0;
 }}
 /* Dieselbe Goldlinie wie über jeder Abschnittsüberschrift der Seite. */
 {W} .auftakt__satz::before{{
@@ -191,42 +193,63 @@ CSS = f"""{W}{{
    `color`, weil das Attribut `stroke:currentColor` setzt. */
 {W} .auftakt__zusagen svg{{color:var(--gold)}}
 
-/* --- Schmale Fenster -----------------------------------------------------
-   Ab hier steht das Foto oben und der Satz darunter. Es bleibt randlos:
-   der untere Bildrand läuft über einen Verlauf in die Fläche aus, sodass
-   auch gestapelt keine Kante entsteht. */
-@media (max-width:1180px){{
-  {W} .auftakt__bild{{
-    position:static;width:auto;
-    margin-left:calc(50% - 50vw);margin-right:calc(50% - 50vw);
+/* --- Schmalere Fenster ---------------------------------------------------
+   Unter 1281 px reicht die Breite nicht mehr, um den Mann rechts stehen zu
+   lassen: der Ausschnitt wird schmaler als der angesetzte Grund. Ab hier
+   rückt `object-position` in das Foto hinein, damit sein Gesicht sichtbar
+   bleibt, und der Schleier wird gleichmässiger – der Satz liegt dann über
+   dem Bild, nicht mehr daneben. */
+@media (max-width:1280px){{
+  {W} .auftakt__grund{{object-position:62% center}}
+  {W} .auftakt__satz{{max-width:min(58%,560px)}}
+  {W} .auftakt__schleier{{
+    background:
+      linear-gradient(180deg,
+        rgba(19,20,16,.34) 0%,
+        rgba(19,20,16,0) 26%,
+        rgba(19,20,16,0) 62%,
+        rgba(19,20,16,.45) 100%),
+      linear-gradient(90deg,
+        rgba(19,20,16,.96) 0%,
+        rgba(19,20,16,.93) 34%,
+        rgba(19,20,16,.78) 58%,
+        rgba(19,20,16,.6) 82%,
+        rgba(19,20,16,.55) 100%);
   }}
-  {W} .auftakt__bild img{{
-    height:auto;aspect-ratio:16/10;
-    object-position:50% 6%;
-  }}
-  /* Gestapelt löst sich nur der untere Bildrand auf – lang genug, dass
-     auch der Oberkörper weich in die Fläche übergeht. */
-  {W} .auftakt__bild::after{{
-    background:linear-gradient(0deg,
-      var(--auftakt-grund) 0 7%,
-      rgba(19,20,16,.8) 17%,
-      rgba(19,20,16,0) 44%);
-  }}
-  {W} .auftakt__satz{{max-width:none;padding:26px 0 72px}}
 }}
-/* Je schmaler das Fenster, desto hochformatiger der Ausschnitt – so bleibt
-   der Mann gross genug, statt in der Breite zu verschwinden. */
+/* Einspaltig kann der Satz nicht mehr neben dem Mann stehen – er steht über
+   ihm. Statt das ganze Bild flach abzudunkeln, wird es geteilt: oben bleibt
+   sein Gesicht unter einem leichten Schleier sichtbar, darunter wird dicht
+   abgedunkelt, und der Satz beginnt erst dort. Das Bild bleibt so ein Bild
+   und nicht bloss eine dunkle Fläche. */
 @media (max-width:900px){{
-  {W} .auftakt__bild img{{aspect-ratio:3/2}}
+  /* Einspaltig steht der Satz über dem ganzen Bild, nicht mehr daneben.
+     Der Schleier wird darum gleichmässig – ein Verlauf würde je nach
+     Textlänge mitten im Gesicht liegen. Die Deckung von rund 0.9 ist nicht
+     geschätzt: bei der hellsten Stelle des Fotos (Wange, Wert 200) und dem
+     Gold der Augenbraue braucht es 0.87, damit 5:1 noch steht. Der Mann
+     bleibt darunter als Gestalt erkennbar, sein Shirt hebt sich vom Grund
+     ab (35 gegen 19). */
+  {W}{{min-height:clamp(560px,96vw,720px)}}
+  {W} .auftakt__grund{{object-position:62% center}}
+  {W} .auftakt__satz{{max-width:none;padding:80px 0}}
+  {W} .auftakt__schleier{{
+    background:
+      linear-gradient(180deg,
+        rgba(19,20,16,.84) 0%,
+        rgba(19,20,16,.89) 14%,
+        rgba(19,20,16,.91) 100%),
+      linear-gradient(90deg,
+        rgba(19,20,16,.34) 0%,
+        rgba(19,20,16,.14) 62%,
+        rgba(19,20,16,.1) 100%);
+  }}
 }}
 @media (max-width:720px){{
-  {W}{{font-size:16px}}
+  {W}{{font-size:16px;min-height:clamp(540px,130vw,700px)}}
   {W} .spine{{padding:0 20px}}
-  {W} .auftakt__satz{{padding:24px 0 60px}}
+  {W} .auftakt__satz{{padding:68px 0}}
   {W} .cta{{width:100%;padding-left:20px;padding-right:20px}}
-}}
-@media (max-width:640px){{
-  {W} .auftakt__bild img{{aspect-ratio:1/1;object-position:50% 3%}}
 }}
 """
 
@@ -247,10 +270,9 @@ def satz(bild_quelle: str) -> str:
                 f'stroke:currentColor">{pfade}</svg>')
 
     return f"""<section class="{KLASSE}" lang="de">
-  <figure class="auftakt__bild">
-    <img src="{bild_quelle}" alt="{BILD_ALT}"
-         width="1500" height="837" fetchpriority="high" decoding="async">
-  </figure>
+  <img class="auftakt__grund" src="{bild_quelle}" alt="{BILD_ALT}"
+       width="2000" height="881" fetchpriority="high" decoding="async">
+  <div class="auftakt__schleier" aria-hidden="true"></div>
   <div class="spine">
     <div class="auftakt__satz">
       <p class="eyebrow">Haarverdichtung für Männer</p>
@@ -267,7 +289,7 @@ def satz(bild_quelle: str) -> str:
 </section>"""
 
 
-daten = base64.b64encode((HIER / 'mann-hero.webp').read_bytes()).decode()
+daten = base64.b64encode((HIER / 'mann-hero-breit.webp').read_bytes()).decode()
 
 (HIER / 'hero-mann.html').write_text(
     f"""<meta charset="utf-8">
@@ -307,7 +329,7 @@ body{{margin:0;background:{GRUND}}}
     f'     In ein HTML-Widget einfügen. Das Stylesheet steht in hero-mann.css\n'
     f'     und gehört unter Elementor → Website-Einstellungen →\n'
     f'     Benutzerdefiniertes CSS.\n\n'
-    f'     mann-hero.webp in die Mediathek laden und die Adresse unten\n'
+    f'     mann-hero-breit.webp in die Mediathek laden und die Adresse unten\n'
     f'     anpassen, falls sie abweicht. -->\n'
     + satz(BILD_URL) + '\n', encoding='utf-8')
 
