@@ -148,8 +148,11 @@ Gastseite überschreiben.
 
 ## Text
 
-Der Fliesstext im Vorspann ist gegenüber `../maenner.html` um einen Satzteil
-gekürzt („Haarausfall verändert das Erscheinungsbild und kann am
-Selbstbewusstsein nagen" und „oder über radikale Schritte nachdenken"), damit
-die Spalte neben dem Foto nicht zu lang wird. Inhalt und Aussage bleiben
-gleich.
+Zwei Stellen weichen bewusst von `../maenner.html` ab:
+
+* **Der Fliesstext** ist neu geschrieben und führt die Begriffe Schütthaar
+  und Hair Fibers gleich im Auftakt ein.
+* **Die erste Zusage** heisst „Sofort sichtbar" statt „Sichtbar in unter 60
+  Sekunden".
+
+Auf `../maenner.html` steht an beiden Stellen noch die alte Fassung.

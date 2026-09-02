@@ -278,10 +278,10 @@ def satz(bild_quelle: str) -> str:
       <p class="eyebrow">Haarverdichtung für Männer</p>
       <h1>Streuhaar für Männer – Geheimratsecken und lichte Stellen sofort verdichten</h1>
       <p class="lede">Schluss mit Geheimratsecken und lichten Stellen.</p>
-      <p class="intro">Geheimratsecken, eine lichter werdende Tonsur oder allgemein dünnes Haar – viele Männer kennen dieses Problem. Bevor Sie zur Mütze greifen, gibt es eine einfache, sofort wirksame kosmetische Lösung.</p>
+      <p class="intro">Wenn das Haar sichtbar dünner wird, wünschen sich viele Männer eine diskrete und unkomplizierte Möglichkeit, ihr Erscheinungsbild schnell zu verbessern. Streuhaar – auch Schütthaar oder Hair Fibers genannt – kann dabei eine sofort anwendbare kosmetische Lösung sein.</p>
       <a class="cta" href="#shop">HairHelp Streuhaar bestellen</a>
       <div class="auftakt__zusagen">
-        <span>{sym('<path d="M12 6v6l4 2"/><circle cx="12" cy="12" r="9"/>')}Sichtbar in unter 60 Sekunden</span>
+        <span>{sym('<path d="M12 6v6l4 2"/><circle cx="12" cy="12" r="9"/>')}Sofort sichtbar</span>
         <span>{sym('<path d="M12 3l7 3v6c0 4-3 7-7 9-4-2-7-5-7-9V6z"/><path d="M9 12l2 2 4-4"/>')}30 Tage Rückgabe</span>
       </div>
     </div>
