@@ -30,6 +30,35 @@ const PAGES = [
 // waehrend .html im Browser landen wuerde.
 mkdirSync(resolve(root, 'zum-kopieren'), { recursive: true });
 
+// Fassung ohne Kopf- und Fusszeile (dunkelblaue Variante A).
+// Header und Footer kommen spaeter separat in Elementor dazu.
+const OHNE_CHROME = new Set([
+  'index.html', 'produkt.html', 'ueber-uns.html', 'kontakt.html',
+  'vertriebspartner.html', 'impressum.html', 'datenschutz.html',
+]);
+mkdirSync(resolve(root, 'ohne-header-footer'), { recursive: true });
+
+// Kleiner, bewusst gut auffindbarer Zusatzstil: haelt oben Platz frei, damit ein
+// transparenter Header spaeter ueber dem Seitenanfang liegen kann.
+const FREIRAUM = `<style>
+/* --------------------------------------------------------------
+   Freiraum fuer den spaeter ergaenzten, transparenten Header.
+   Der Seitenanfang haelt oben so viel Platz frei, dass ein
+   ueberlagernder Header nichts verdeckt.
+   Wird der Header NICHT ueberlagernd eingesetzt, diesen ganzen
+   <style>-Block loeschen - dann beginnt der Inhalt direkt oben.
+   -------------------------------------------------------------- */
+.sdx--bare .sd-phero { padding-top: clamp(148px, 12vw, 188px); }
+@media (max-width: 900px) {
+  .sdx--bare .sd-phero { padding-top: 132px; }
+  .sdx--bare .sd-hero--glass { padding-top: 116px; }
+}
+@media (max-width: 680px) {
+  .sdx--bare .sd-phero { padding-top: 116px; }
+  .sdx--bare .sd-hero--glass { padding-top: 100px; }
+}
+</style>`;
+
 const MIME = {
   webp: 'image/webp', png: 'image/png', jpg: 'image/jpeg',
   jpeg: 'image/jpeg', svg: 'image/svg+xml', gif: 'image/gif',
@@ -97,5 +126,39 @@ ${inlined}
   // Beim Markieren mit Strg+A wird das BOM nicht mitkopiert.
   writeFileSync(resolve(root, 'zum-kopieren', page.txt), '\uFEFF' + out, 'utf8');
   const kb = (statSync(resolve(root, page.out)).size / 1024).toFixed(0);
-  console.log(`${page.out.padEnd(30)} ${String(kb).padStart(4)} KB  ${used.size} Bilder  -> zum-kopieren/${page.txt}`);
+  console.log(`${page.out.padEnd(38)} ${String(kb).padStart(4)} KB  ${used.size} Bilder`);
+
+  if (!OHNE_CHROME.has(page.src)) continue;
+
+  // Kopf- und Fusszeile samt zugehoerigem Kommentar entfernen
+  const bare = inlined
+    .replace(/\s*<!-- -+ (?:Header|Kopfzeile)[^>]*-+ -->/g, '')
+    .replace(/\s*<!-- -+ (?:Footer|Fusszeile) -+ -->/g, '')
+    .replace(/\s*<header[\s\S]*?<\/header>/g, '')
+    .replace(/\s*<footer[\s\S]*?<\/footer>/g, '')
+    .replace('<div class="sdx">', '<div class="sdx sdx--bare">');
+
+  const bareOut = `<!--
+  ============================================================
+  SMELL DISCETTES - ${page.titel.toUpperCase()}  (ohne Kopf- und Fusszeile)
+  Kopfzeile und Fusszeile werden separat in Elementor ergaenzt.
+  Der Seitenanfang haelt Platz fuer einen transparenten Header frei -
+  siehe den kurz kommentierten Zusatzstil unten.
+  Container auf volle Breite stellen, Padding auf 0.
+  ============================================================
+-->
+<style>
+${fontCss}${extraFontCss ? '\n' + extraFontCss : ''}
+
+${sharedCss}${ownCss}
+</style>
+${FREIRAUM}
+
+${bare}
+`;
+  const basis = page.src.replace(/\.html$/, '');
+  writeFileSync(resolve(root, 'ohne-header-footer', `${basis}.html`), bareOut);
+  writeFileSync(resolve(root, 'ohne-header-footer', `${basis}.txt`), '\uFEFF' + bareOut, 'utf8');
+  const bkb = (statSync(resolve(root, 'ohne-header-footer', `${basis}.html`)).size / 1024).toFixed(0);
+  console.log(`   ohne-header-footer/${basis}.html`.padEnd(46) + `${String(bkb).padStart(4)} KB`);
 }

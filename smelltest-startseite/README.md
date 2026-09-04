@@ -22,6 +22,32 @@ einbauen. Die Aussagen sind in allen dreien dieselben; A und B unterscheiden sic
 gestalterisch, C ordnet die Abschnitte zusätzlich neu. Siehe «Variante B» und
 «Variante C».
 
+### Fassung ohne Kopf- und Fusszeile
+
+Im Ordner **`ohne-header-footer/`** liegen alle sieben Seiten der dunkelblauen
+Fassung noch einmal **ohne Header und ohne Footer** – als `.html` zum Anschauen und
+als `.txt` zum Kopieren. Diese Fassung ist gedacht, wenn Kopf- und Fusszeile separat
+in Elementor gebaut werden.
+
+| Seite | Datei |
+|---|---|
+| Startseite | `ohne-header-footer/index.txt` |
+| Produkt | `ohne-header-footer/produkt.txt` |
+| Über uns | `ohne-header-footer/ueber-uns.txt` |
+| Kontakt | `ohne-header-footer/kontakt.txt` |
+| Vertriebspartner | `ohne-header-footer/vertriebspartner.txt` |
+| Impressum | `ohne-header-footer/impressum.txt` |
+| Datenschutz | `ohne-header-footer/datenschutz.txt` |
+
+Jede dieser Dateien beginnt mit einem kurzen, kommentierten `<style>`-Block, der
+oben Platz für einen **transparenten, überlagernden Header** freihält: 148–188 px auf
+dem Desktop, 116–132 px auf schmalen Geräten. Auf der Startseite reserviert der Hero
+diesen Platz bereits selbst, sodass der Header dort direkt auf dem Produktbild liegt.
+Wird der Header nicht überlagernd eingesetzt, kann dieser `<style>`-Block ersatzlos
+gelöscht werden – dann beginnt der Inhalt direkt oben.
+
+### Fassung mit Kopf- und Fusszeile
+
 Die `elementor-*.html` sind die fertigen Copy-Paste-Blöcke: Schrift und alle Bilder
 sind eingebettet, es werden keine externen Dateien benötigt. Im Ordner
 **`zum-kopieren/`** liegen dieselben drei Blöcke als `.txt`, damit sie sich per
