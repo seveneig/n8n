@@ -24,6 +24,10 @@ const PAGES = [
   { src: 'vertriebspartner.html', out: 'elementor-vertriebspartner.html', txt: 'vertriebspartner.txt', titel: 'Vertriebspartner' },
   { src: 'impressum.html',        out: 'elementor-impressum.html',        txt: 'impressum.txt',        titel: 'Impressum' },
   { src: 'datenschutz.html',      out: 'elementor-datenschutz.html',      txt: 'datenschutz.txt',      titel: 'Datenschutz' },
+  { src: 'header.html', out: 'elementor-header.html', txt: 'header.txt',
+    titel: 'Kopfzeile (Theme Builder)', baseCss: 'assets/css/sd-header.css' },
+  { src: 'footer.html', out: 'elementor-footer.html', txt: 'footer.txt',
+    titel: 'Fusszeile (Theme Builder)', baseCss: 'assets/css/sd-footer.css', noFont: true },
 ];
 
 // Zusaetzlich als .txt ablegen: laesst sich per Doppelklick in Notepad oeffnen,
@@ -83,7 +87,7 @@ for (const page of PAGES) {
 
   // Body-Block zwischen Wrapper-Anfang und Endmarke herausschneiden
   const body = html
-    .match(/<div class="sdx">[\s\S]*<\/div>\s*<!-- ==== ENDE ELEMENTOR-BLOCK ==== -->/)[0]
+    .match(/<div class="sdx[^"]*">[\s\S]*<\/div>\s*<!-- ==== ENDE ELEMENTOR-BLOCK ==== -->/)[0]
     .replace(/\s*<!-- ==== ENDE ELEMENTOR-BLOCK ==== -->$/, '');
 
   // Seiteneigenes <style> (falls vorhanden) mitnehmen
@@ -113,9 +117,7 @@ for (const page of PAGES) {
   ============================================================
 -->
 <style>
-${fontCss}${extraFontCss ? '\n' + extraFontCss : ''}
-
-${sharedCss}${ownCss}
+${page.noFont ? '' : fontCss + (extraFontCss ? '\n' + extraFontCss : '') + '\n\n'}${sharedCss}${ownCss}
 </style>
 
 ${inlined}

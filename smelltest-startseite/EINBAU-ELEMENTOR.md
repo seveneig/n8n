@@ -15,6 +15,8 @@
 | Vertriebspartner | `zum-kopieren/vertriebspartner.txt` |
 | Impressum | `zum-kopieren/impressum.txt` |
 | Datenschutz | `zum-kopieren/datenschutz.txt` |
+| **Kopfzeile** (Theme Builder) | `zum-kopieren/header.txt` |
+| **Fusszeile** (Theme Builder) | `zum-kopieren/footer.txt` |
 
 > Für die Startseite **eine der drei Varianten** wählen. Die Aussagen sind in allen
 > dreien dieselben.
@@ -157,3 +159,64 @@ stattdessen den Inhalt der jeweiligen Quelldatei verwenden, wobei jeder Pfad
 `assets/…` durch die jeweilige Mediathek-URL ersetzt wird
 (`https://.../wp-content/uploads/…`). Der Font-Block aus `assets/fonts/lato.css`
 muss dabei im `<style>` bleiben, sonst greift wieder die Theme-Schrift.
+
+
+---
+
+# Kopf- und Fusszeile im Theme Builder
+
+Kopfzeile und Fusszeile sind eigenständige Blöcke mit eigenem CSS-Reset und eigenen
+Klassenpräfixen (`.sdxh` und `.sdxf`). Sie hängen nicht von den Seitenblöcken ab und
+überschreiben diese auch nicht.
+
+## Kopfzeile einrichten
+
+1. In Elementor **Templates → Theme Builder → Header → Neu hinzufügen**.
+2. Einen Container anlegen, darin ein **HTML-Widget** platzieren.
+3. `zum-kopieren/header.txt` vollständig hineinkopieren.
+4. **Container-Einstellungen:** Breite **Full Width**, Padding **0**, Margin **0**,
+   Gap **0**. Der Block bringt seine eigenen Abstände mit.
+5. Anzeigebedingung auf **Gesamte Website** setzen und veröffentlichen.
+
+**Wie der Header sich verhält.** Er liegt transparent über dem Seiteninhalt und
+belegt selbst **keine Höhe im Fluss** – technisch über einen 0 px hohen Anker, auf
+dem die Leiste absolut positioniert ist. Deshalb schiebt er nichts nach unten, und
+auf der Startseite liegt er direkt auf dem Produktbild. Die Seiten aus
+`ohne-header-footer/` halten oben genau den passenden Freiraum bereit.
+
+**Auf schmalen Geräten** (unter 980 px) wird die Leiste deckend weiss und zeigt ein
+Burger-Menü. Das Menü kommt **ohne JavaScript** aus – es funktioniert über einen
+versteckten Schalter im CSS und damit unabhängig davon, ob Theme oder Plugins ihr
+eigenes JavaScript mitbringen.
+
+**Elementors Sticky-Funktion** braucht es nicht und sollte hier auch nicht aktiviert
+werden: Sie setzt eigene Positionierung, die mit dem Anker kollidiert. Soll die
+Leiste beim Scrollen mitwandern, sage mir Bescheid – das löse ich im Block selbst.
+
+## Fusszeile einrichten
+
+1. **Theme Builder → Footer → Neu hinzufügen**, Container mit **HTML-Widget**.
+2. `zum-kopieren/footer.txt` hineinkopieren.
+3. Container ebenfalls auf **Full Width, Padding 0, Margin 0**.
+4. Anzeigebedingung **Gesamte Website**, veröffentlichen.
+
+Die Fusszeile bringt **keine eigene Schriftdatei** mit – Lato wird vom Kopfzeilen-Block
+geladen, der auf jeder Seite davor steht. Das spart rund 90 KB pro Seitenaufruf.
+Wird die Fusszeile ohne die Kopfzeile eingesetzt, greift die Systemschrift; dann den
+Inhalt von `assets/fonts/lato.css` oben in den `<style>`-Block der Fusszeile einfügen.
+
+## Header ohne Überlagerung
+
+Soll die Leiste stattdessen normal mitlaufen und den Inhalt nach unten schieben:
+
+1. Im Header-Block ganz unten im `<style>` den Abschnitt **8** einkommentieren
+   (zwei Regeln, im Code beschrieben).
+2. In jedem Seitenblock den kommentierten **Freiraum-Block** am Dateianfang löschen.
+
+## Verlinkung
+
+Die Links stehen wie in den Seitenblöcken auf `index.html`, `produkt.html`,
+`ueber-uns.html`, `kontakt.html`, `vertriebspartner.html`, `impressum.html` und
+`datenschutz.html`. Sie müssen nach dem Einfügen auf die tatsächlichen
+WordPress-Adressen geändert werden – am schnellsten per Suchen-und-Ersetzen im
+Widget, bevor gespeichert wird. Die Sprachlinks `FR` und `IT` sind noch Platzhalter.

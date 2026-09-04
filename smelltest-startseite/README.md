@@ -46,6 +46,19 @@ diesen Platz bereits selbst, sodass der Header dort direkt auf dem Produktbild l
 Wird der Header nicht überlagernd eingesetzt, kann dieser `<style>`-Block ersatzlos
 gelöscht werden – dann beginnt der Inhalt direkt oben.
 
+### Globale Kopf- und Fusszeile
+
+| Baustein | Quelldatei | Zum Einfügen |
+|---|---|---|
+| Kopfzeile | `header.html` | **`zum-kopieren/header.txt`** (128 KB) |
+| Fusszeile | `footer.html` | **`zum-kopieren/footer.txt`** (34 KB) |
+
+Eigenständige Blöcke für den Elementor Theme Builder, mit eigenem Reset und eigenen
+Präfixen (`.sdxh`, `.sdxf`). Der Header liegt transparent über dem Inhalt und belegt
+keine Höhe im Fluss; das Menü auf schmalen Geräten läuft ohne JavaScript. Die
+Fusszeile lädt bewusst keine eigene Schriftdatei – Lato kommt vom Header.
+Einrichtung in `EINBAU-ELEMENTOR.md`.
+
 ### Fassung mit Kopf- und Fusszeile
 
 Die `elementor-*.html` sind die fertigen Copy-Paste-Blöcke: Schrift und alle Bilder
@@ -61,6 +74,8 @@ Doppelklick in Notepad öffnen lassen statt im Browser. Anleitung in
 | `assets/css/sd.css` | **Gemeinsames Stylesheet aller Seiten** – hier wird das Design gepflegt |
 | `assets/css/sd-alt.css` | Überschreibungen für Variante B, wird nach `sd.css` geladen |
 | `assets/css/sd-c.css` | Eigenständiges Stylesheet für Variante C (ersetzt `sd.css`) |
+| `assets/css/sd-header.css` | Stylesheet der globalen Kopfzeile |
+| `assets/css/sd-footer.css` | Stylesheet der globalen Fusszeile |
 | `assets/fonts/lato-300.css` | Lato 300, nur von Variante C verwendet |
 | `assets/fonts/lato.css` | Lato als Base64 (SIL OFL), kein Google-Fonts-Aufruf |
 | `build-elementor.mjs` | Baut alle drei Elementor-Fassungen: `node build-elementor.mjs` |

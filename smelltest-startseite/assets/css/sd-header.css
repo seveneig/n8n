@@ -1,0 +1,152 @@
+/* ================================================================
+   SMELL DISCETTES – GLOBALE KOPFZEILE (Elementor Theme Builder)
+   Eigener Wrapper .sdxh und eigenes Präfix .sdh-, damit dieser Block
+   unabhängig von den Seitenblöcken (.sdx) funktioniert und sich
+   nicht mit ihnen überschreibt.
+
+   Standardverhalten: der Header liegt TRANSPARENT ÜBER dem Inhalt und
+   belegt selbst keine Höhe im Fluss. Die Seiten aus
+   ohne-header-footer/ halten oben genau dafür Platz frei.
+   Umschalten auf eine normal mitlaufende Leiste: siehe Abschnitt 8.
+   ================================================================ */
+
+/* ---------- 1. Kapselung / Reset -------------------------------- */
+.sdxh, .sdxh *, .sdxh *::before, .sdxh *::after { box-sizing: border-box; }
+.sdxh * {
+  margin: 0; padding: 0; border: 0; outline: 0;
+  background: transparent; box-shadow: none;
+  font: inherit; line-height: inherit; color: inherit;
+  letter-spacing: inherit; word-spacing: inherit; text-align: inherit;
+  text-transform: none; text-decoration: none; text-indent: 0; text-shadow: none;
+  list-style: none; vertical-align: baseline; white-space: normal;
+  float: none; max-width: none; min-width: 0;
+}
+.sdxh img, .sdxh svg { display: block; max-width: 100%; height: auto; }
+.sdxh a { color: inherit; text-decoration: none; }
+.sdxh strong, .sdxh b { font-weight: 700; }
+
+/* ---------- 2. Werte -------------------------------------------- */
+.sdxh {
+  --blue:       #407BA0;
+  --blue-light: #6098BA;
+  --blue-deep:  #31637F;
+  --blue-soft:  #BCD3E5;
+  --blue-mist:  #EDF4F9;
+  --navy:       #00102E;
+  --ink:        #16233A;
+  --muted:      #5C6E85;
+  --line:       #E1EAF2;
+
+  --wrap: 1200px;
+  --hoehe: 100px;          /* Höhe der Leiste auf dem Desktop */
+
+  font-family: 'LatoSD', 'Lato', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Arial, sans-serif;
+  font-size: 17px;
+  font-weight: 400;
+  font-style: normal;
+  font-variant: normal;
+  line-height: 1.65;
+  letter-spacing: normal;
+  word-spacing: normal;
+  color: var(--ink);
+  text-align: left;
+  text-transform: none;
+  direction: ltr;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* ---------- 3. Überlagernd, ohne eigene Höhe im Fluss ----------- */
+/* Der Anker ist 0 px hoch; die Leiste liegt absolut darüber.
+   Dadurch schiebt der Header den Seiteninhalt nicht nach unten. */
+.sdxh .sdh-anchor { position: relative; height: 0; z-index: 90; }
+.sdxh .sdh { position: absolute; top: 0; left: 0; right: 0; }
+.sdxh .sdh-in {
+  width: 100%; max-width: var(--wrap); margin: 0 auto;
+  padding: 0 28px; height: var(--hoehe);
+  display: flex; align-items: center; gap: 32px;
+}
+
+/* ---------- 4. Logo, Navigation, Sprachen ----------------------- */
+.sdxh .sdh-logo img { height: 56px; width: auto; }
+
+.sdxh .sdh-nav { display: flex; align-items: center; gap: 30px; margin-left: auto; }
+.sdxh .sdh-nav a {
+  font-size: 15px; font-weight: 700; color: var(--ink);
+  position: relative; padding: 6px 0;
+  transition: color .2s ease;
+}
+.sdxh .sdh-nav a::after {
+  content: ""; position: absolute; left: 0; right: 100%; bottom: 0;
+  height: 2px; background: var(--blue); transition: right .25s ease;
+}
+.sdxh .sdh-nav a:hover { color: var(--blue); }
+.sdxh .sdh-nav a:hover::after { right: 0; }
+.sdxh .sdh-nav a.is-current { color: var(--blue); }
+.sdxh .sdh-nav a.is-current::after { right: 0; }
+
+.sdxh .sdh-lang { display: flex; align-items: center; gap: 4px; font-size: 13px; font-weight: 700; letter-spacing: .06em; color: var(--muted); }
+.sdxh .sdh-lang a { padding: 4px 7px; border-radius: 6px; transition: color .2s ease, background-color .2s ease; }
+.sdxh .sdh-lang a:hover { color: var(--blue); background: var(--blue-mist); }
+.sdxh .sdh-lang .is-on { color: var(--navy); background: rgba(255,255,255,.72); }
+.sdxh .sdh-lang span { color: var(--line); }
+
+.sdxh .sdh-cta {
+  display: inline-flex; align-items: center; justify-content: center; gap: 10px;
+  padding: 12px 22px; border-radius: 999px;
+  background: var(--blue); color: #FFFFFF;
+  font-size: 14px; font-weight: 700; line-height: 1.2;
+  box-shadow: 0 10px 24px -12px rgba(64,123,160,.85);
+  transition: background-color .2s ease, transform .2s ease, box-shadow .2s ease;
+}
+.sdxh .sdh-cta:hover { background: var(--blue-light); transform: translateY(-1px); box-shadow: 0 16px 30px -14px rgba(96,152,186,.85); }
+
+/* ---------- 5. Menüschalter (ohne JavaScript) ------------------- */
+.sdxh .sdh-check { position: absolute; width: 1px; height: 1px; opacity: 0; pointer-events: none; }
+.sdxh .sdh-burger {
+  display: none; margin-left: auto; cursor: pointer;
+  width: 46px; height: 46px; border-radius: 999px;
+  background: rgba(255,255,255,.88); box-shadow: inset 0 0 0 1px var(--line);
+  align-items: center; justify-content: center; flex-direction: column; gap: 5px;
+}
+.sdxh .sdh-burger i { display: block; width: 20px; height: 2px; background: var(--navy); transition: transform .25s ease, opacity .2s ease; }
+.sdxh .sdh-check:focus-visible ~ .sdh .sdh-burger { box-shadow: inset 0 0 0 2px var(--blue); }
+.sdxh .sdh-check:checked ~ .sdh .sdh-burger i:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+.sdxh .sdh-check:checked ~ .sdh .sdh-burger i:nth-child(2) { opacity: 0; }
+.sdxh .sdh-check:checked ~ .sdh .sdh-burger i:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
+
+.sdxh .sdh-panel { display: none; background: #FFFFFF; border-bottom: 1px solid var(--line); box-shadow: 0 22px 48px -30px rgba(0,16,46,.45); }
+.sdxh .sdh-check:checked ~ .sdh .sdh-panel { display: block; }
+.sdxh .sdh-panel__in { max-width: var(--wrap); margin: 0 auto; padding: 12px 28px 28px; display: grid; gap: 4px; }
+.sdxh .sdh-panel a { display: block; padding: 15px 0; font-size: 17px; font-weight: 700; color: var(--ink); border-bottom: 1px solid var(--line); }
+.sdxh .sdh-panel a:hover { color: var(--blue); }
+.sdxh .sdh-panel .sdh-cta { margin-top: 20px; justify-self: start; }
+
+/* ---------- 6. Verhalten auf schmalen Geräten ------------------- */
+@media (max-width: 980px) {
+  .sdxh { --hoehe: 84px; }
+  .sdxh .sdh-nav, .sdxh .sdh-lang, .sdxh .sdh-in > .sdh-cta { display: none; }
+  .sdxh .sdh-burger { display: flex; }
+  /* Auf dem Handy wird die Leiste deckend – über einem Bild wäre sie sonst unlesbar */
+  .sdxh .sdh { background: rgba(255,255,255,.96); border-bottom: 1px solid var(--line); }
+  .sdxh .sdh-logo img { height: 46px; }
+}
+@media (max-width: 680px) {
+  .sdxh .sdh-in { padding: 0 20px; }
+  .sdxh .sdh-panel__in { padding: 12px 20px 24px; }
+}
+
+/* ---------- 7. Bewegung reduzieren ------------------------------ */
+@media (prefers-reduced-motion: reduce) {
+  .sdxh * { transition: none !important; }
+}
+
+/* ================================================================
+   8. UMSCHALTEN AUF EINE NORMAL MITLAUFENDE LEISTE
+   Falls der Header NICHT über dem Inhalt liegen soll, die folgenden
+   drei Regeln einkommentieren. Dann in den Seitenblöcken zusätzlich
+   den kommentierten Freiraum-Block am Dateianfang löschen.
+   ----------------------------------------------------------------
+   .sdxh .sdh-anchor { height: auto; }
+   .sdxh .sdh { position: static; background: #FFFFFF; border-bottom: 1px solid var(--line); }
+   ================================================================ */
