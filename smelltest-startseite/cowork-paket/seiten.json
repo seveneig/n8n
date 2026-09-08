@@ -1,0 +1,143 @@
+{
+  "projekt": "Smell Discettes – Website Deutsch",
+  "sprache": "de",
+  "erstellt": "2026-09-08",
+  "hinweis": "Alle Seitenblöcke sind ohne Kopf- und Fusszeile. Diese beiden werden einmalig als Theme-Builder-Vorlagen angelegt.",
+  "vorlagen": {
+    "kopfzeile": {
+      "datei": "bloecke/_kopfzeile.html",
+      "typ": "header",
+      "anzeigebedingung": "Gesamte Website",
+      "groesse_kb": 128
+    },
+    "fusszeile": {
+      "datei": "bloecke/_fusszeile.html",
+      "typ": "footer",
+      "anzeigebedingung": "Gesamte Website",
+      "groesse_kb": 36
+    }
+  },
+  "seiten": [
+    {
+      "datei": "bloecke/startseite.html",
+      "titel": "Startseite",
+      "slug": "startseite",
+      "menue_reihenfolge": 1,
+      "im_hauptmenue": false,
+      "startseite": true,
+      "alte_url": "/de/",
+      "groesse_kb": 520
+    },
+    {
+      "datei": "bloecke/produkt.html",
+      "titel": "Produkt",
+      "slug": "produkt",
+      "menue_reihenfolge": 2,
+      "im_hauptmenue": true,
+      "startseite": false,
+      "alte_url": "/de/product/",
+      "groesse_kb": 416
+    },
+    {
+      "datei": "bloecke/smelltest.html",
+      "titel": "SmellTest",
+      "slug": "smelltest",
+      "menue_reihenfolge": 3,
+      "im_hauptmenue": true,
+      "startseite": false,
+      "alte_url": "/de/SmellTest/",
+      "groesse_kb": 223
+    },
+    {
+      "datei": "bloecke/ueber-uns.html",
+      "titel": "Über uns",
+      "slug": "ueber-uns",
+      "menue_reihenfolge": 4,
+      "im_hauptmenue": true,
+      "startseite": false,
+      "alte_url": "/de/about/",
+      "groesse_kb": 335
+    },
+    {
+      "datei": "bloecke/faq.html",
+      "titel": "FAQ",
+      "slug": "faq",
+      "menue_reihenfolge": 5,
+      "im_hauptmenue": true,
+      "startseite": false,
+      "alte_url": null,
+      "groesse_kb": 137
+    },
+    {
+      "datei": "bloecke/kontakt.html",
+      "titel": "Kontakt",
+      "slug": "kontakt",
+      "menue_reihenfolge": 6,
+      "im_hauptmenue": true,
+      "startseite": false,
+      "alte_url": "/de/contact_form/",
+      "groesse_kb": 132
+    },
+    {
+      "datei": "bloecke/vertriebspartner.html",
+      "titel": "Vertriebspartner",
+      "slug": "vertriebspartner",
+      "menue_reihenfolge": 7,
+      "im_hauptmenue": false,
+      "startseite": false,
+      "alte_url": "/de/distributor_form/",
+      "groesse_kb": 189
+    },
+    {
+      "datei": "bloecke/impressum.html",
+      "titel": "Impressum",
+      "slug": "impressum",
+      "menue_reihenfolge": 8,
+      "im_hauptmenue": false,
+      "startseite": false,
+      "alte_url": null,
+      "groesse_kb": 131
+    },
+    {
+      "datei": "bloecke/datenschutz.html",
+      "titel": "Datenschutz",
+      "slug": "datenschutz",
+      "menue_reihenfolge": 9,
+      "im_hauptmenue": false,
+      "startseite": false,
+      "alte_url": null,
+      "groesse_kb": 130
+    }
+  ],
+  "container_einstellungen": {
+    "content_width": "full",
+    "padding": {
+      "top": 0,
+      "right": 0,
+      "bottom": 0,
+      "left": 0
+    },
+    "margin": {
+      "top": 0,
+      "right": 0,
+      "bottom": 0,
+      "left": 0
+    },
+    "gap": 0
+  },
+  "seitenvorlage": "elementor_header_footer",
+  "interne_links": {
+    "hinweis": "In den Blöcken stehen relative Pfade wie produkt.html. Diese vor dem Speichern durch die echten WordPress-Adressen ersetzen.",
+    "ersetzungen": {
+      "index.html": "/",
+      "produkt.html": "/produkt/",
+      "smelltest.html": "/smelltest/",
+      "ueber-uns.html": "/ueber-uns/",
+      "faq.html": "/faq/",
+      "kontakt.html": "/kontakt/",
+      "vertriebspartner.html": "/vertriebspartner/",
+      "impressum.html": "/impressum/",
+      "datenschutz.html": "/datenschutz/"
+    }
+  }
+}
