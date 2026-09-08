@@ -24,7 +24,7 @@ gestalterisch, C ordnet die Abschnitte zusätzlich neu. Siehe «Variante B» und
 
 ### Fassung ohne Kopf- und Fusszeile
 
-Im Ordner **`ohne-header-footer/`** liegen alle sieben Seiten der dunkelblauen
+Im Ordner **`ohne-header-footer/`** liegen alle neun Seiten der dunkelblauen
 Fassung noch einmal **ohne Header und ohne Footer** – als `.html` zum Anschauen und
 als `.txt` zum Kopieren. Diese Fassung ist gedacht, wenn Kopf- und Fusszeile separat
 in Elementor gebaut werden.
@@ -33,7 +33,9 @@ in Elementor gebaut werden.
 |---|---|
 | Startseite | `ohne-header-footer/index.txt` |
 | Produkt | `ohne-header-footer/produkt.txt` |
+| SmellTest | `ohne-header-footer/smelltest.txt` |
 | Über uns | `ohne-header-footer/ueber-uns.txt` |
+| FAQ | `ohne-header-footer/faq.txt` |
 | Kontakt | `ohne-header-footer/kontakt.txt` |
 | Vertriebspartner | `ohne-header-footer/vertriebspartner.txt` |
 | Impressum | `ohne-header-footer/impressum.txt` |
@@ -57,6 +59,11 @@ Eigenständige Blöcke für den Elementor Theme Builder, mit eigenem Reset und e
 Präfixen (`.sdxh`, `.sdxf`). Der Header liegt transparent über dem Inhalt und belegt
 keine Höhe im Fluss; das Menü auf schmalen Geräten läuft ohne JavaScript. Die
 Fusszeile lädt bewusst keine eigene Schriftdatei – Lato kommt vom Header.
+
+**Der Fachkreis-Hinweis** (Heilmittelgesetz: B2B und Fachkreise only) steht im
+Fusszeilen-Block, nicht in den einzelnen Seiten – so ist er an einer Stelle zu
+pflegen und erscheint trotzdem auf jeder Seite.
+
 Einrichtung in `EINBAU-ELEMENTOR.md`.
 
 ### Fassung mit Kopf- und Fusszeile
