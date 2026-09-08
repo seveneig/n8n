@@ -137,7 +137,15 @@ Diese stammen aus den Publikationen und dürfen genannt werden:
 - **Das Design liegt gemeinsam in `assets/css/sd.css`** – neue Seiten binden dieses
   Stylesheet ein und verwenden die vorhandenen Bausteine, statt eigenes CSS zu
   erfinden. Nur wirklich neue Komponenten kommen dort ergänzend hinzu.
+- `test.html` ist der interaktive Online-Test (Anmeldung, acht Sequenzen mit
+  Bildantworten, Score, Ergebnisblatt). Die 24 Auswahlbilder liegen als WebP unter
+  `assets/bilder/test/`, die Originale als SVG unter `assets/test-svg/`. Die Seite
+  ist die einzige mit JavaScript; sie läuft ohne Serverkomponente, die
+  Produktcode-Prüfung ist reine Formatprüfung und kein Zugangsschutz.
 - Danach `node build-elementor.mjs` ausführen – erzeugt alle Elementor-Fassungen neu.
-  Neue Seiten in der Liste `PAGES` im Build-Script eintragen.
+  Neue Seiten in der Liste `PAGES` im Build-Script eintragen. Das Script bettet
+  Bilder aus `src="assets/…"` **und** aus einfach gequoteten Zeichenketten
+  `'assets/…'` im Skript ein – deshalb Bildpfade dort immer vollständig
+  ausschreiben, nie zusammensetzen.
 - Alles bleibt im Wrapper `.sdx` gekapselt, kein Selektor greift nach aussen
 - Header-Navigation und Footer sind auf allen Seiten identisch zu halten

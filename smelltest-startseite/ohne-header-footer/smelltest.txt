@@ -665,11 +665,11 @@
         <p class="sd-lead">
           Der Online-Test führt Sie durch das Screening: Patientendaten erfassen, Nasenloch
           wählen, acht Disketten der Reihe nach riechen lassen und die Bildantwort
-          ankreuzen. Am Ende steht der Score von 0 bis 8. Laut Herstellerangaben der
-          einzige Online-Riechtest auf dem Markt.
+          ankreuzen. Am Ende steht der Score von 0 bis 8, direkt als Ergebnisblatt
+          zum Ausdrucken oder Archivieren.
         </p>
         <div class="sd-phero__cta">
-          <a class="sd-btn sd-btn--primary" href="#">SmellTest starten <span class="sd-btn__arrow">→</span></a>
+          <a class="sd-btn sd-btn--primary" href="test.html">Online-Test starten <span class="sd-btn__arrow">→</span></a>
           <a class="sd-btn sd-btn--ghost" href="#ablauf">Ablauf ansehen</a>
         </div>
       </div>
@@ -801,7 +801,7 @@
             Der Online-Test führt durch das Screening und hält das Ergebnis fest.
           </p>
           <div class="sd-cta__btns">
-            <a class="sd-btn sd-btn--primary" href="#">SmellTest starten <span class="sd-btn__arrow">→</span></a>
+            <a class="sd-btn sd-btn--primary" href="test.html">Online-Test starten <span class="sd-btn__arrow">→</span></a>
             <a class="sd-btn sd-btn--ghost" href="produkt.html">Zum Produkt</a>
           </div>
         </div>

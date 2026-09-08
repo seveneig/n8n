@@ -2,7 +2,7 @@
 
 ## Ziel
 
-Lege in der bestehenden WordPress-Installation **neun Seiten** an, befülle jede mit
+Lege in der bestehenden WordPress-Installation **zehn Seiten** an, befülle jede mit
 einem fertigen HTML-Block über ein **Elementor-HTML-Widget**, und richte
 **Kopf- und Fusszeile** einmalig als globale Theme-Builder-Vorlagen ein. Danach
 Hauptmenü setzen und Startseite festlegen.
@@ -30,9 +30,10 @@ Die verbindliche Liste steht in **`seiten.json`**. Kurzfassung:
 | Startseite | `startseite` | `bloecke/startseite.html` | – (wird Startseite) |
 | Produkt | `produkt` | `bloecke/produkt.html` | Position 2 |
 | SmellTest | `smelltest` | `bloecke/smelltest.html` | Position 3 |
-| Über uns | `ueber-uns` | `bloecke/ueber-uns.html` | Position 4 |
-| FAQ | `faq` | `bloecke/faq.html` | Position 5 |
-| Kontakt | `kontakt` | `bloecke/kontakt.html` | Position 6 |
+| Online-Test | `test` | `bloecke/test.html` | Position 4 |
+| Über uns | `ueber-uns` | `bloecke/ueber-uns.html` | Position 5 |
+| FAQ | `faq` | `bloecke/faq.html` | Position 6 |
+| Kontakt | `kontakt` | `bloecke/kontakt.html` | Position 7 |
 | Vertriebspartner | `vertriebspartner` | `bloecke/vertriebspartner.html` | nur Footer |
 | Impressum | `impressum` | `bloecke/impressum.html` | nur Footer |
 | Datenschutz | `datenschutz` | `bloecke/datenschutz.html` | nur Footer |
@@ -124,6 +125,27 @@ gehen die Escapes verloren und Elementor zeigt eine leere Seite.
 - Jede Seite im Frontend öffnen und prüfen (siehe Abnahme unten).
 - Erst danach von Entwurf auf **Veröffentlicht** setzen.
 
+## Sonderfall Online-Test
+
+`bloecke/test.html` ist die einzige Seite, die **JavaScript** mitbringt. Sie führt
+durch den Riechtest: Anmeldung, Patientendaten, acht Disketten mit je drei
+Bildantworten, Score und Ergebnisblatt zum Drucken. Für diese Seite gilt zusätzlich:
+
+- Das `<script>`-Element am Ende des Blocks **unverändert** übernehmen. Es steckt
+  bewusst im selben HTML-Widget wie das Markup.
+- Die Seite auf **`noindex`** setzen (Yoast, Rank Math oder das eingesetzte
+  SEO-Plugin). Sie gehört nicht in den Suchindex.
+- Falls ein Optimierungs- oder Cache-Plugin aktiv ist (WP Rocket, Autoptimize,
+  LiteSpeed, SiteGround Optimizer): **Inline-JavaScript für diese Seite von
+  Minifizierung, Zusammenfassung und „defer" ausnehmen.** Sonst funktioniert der
+  Test nicht mehr.
+- Der Test läuft vollständig im Browser. Es werden **keine Patientendaten** an
+  einen Server gesendet oder gespeichert – das ist so gewollt und darf nicht
+  „ergänzt" werden.
+- Die Prüfung des Produktcodes ist eine reine Formatprüfung im Browser und
+  **kein Zugangsschutz**. Wer echte Codes prüfen will, braucht eine
+  Serverkomponente; bis dahin nichts anderes behaupten.
+
 ## Kopf- und Fusszeile
 
 Beide sind Beiträge vom Typ `elementor_library`:
@@ -146,8 +168,8 @@ Elementors Sticky-Einstellung setzt eigene Positionierung und bricht das.
 
 ## Menü und Startseite
 
-- Menü **Hauptmenü** anlegen mit: Produkt, SmellTest, Über uns, FAQ, Kontakt
-  (Reihenfolge gemäss `menue_reihenfolge` in `seiten.json`).
+- Menü **Hauptmenü** anlegen mit: Produkt, SmellTest, Online-Test, Über uns, FAQ,
+  Kontakt (Reihenfolge gemäss `menue_reihenfolge` in `seiten.json`).
 - Menü der Theme-Position zuweisen, sofern das Theme eine erwartet. Die Navigation
   steckt allerdings bereits im Kopfzeilen-Block – ein zusätzliches Theme-Menü ist
   nur nötig, wenn es an anderer Stelle ausgegeben wird.
@@ -184,6 +206,10 @@ Prüfe nach dem Import auf **jeder** Seite:
 6. Auf dem Handy (390 px): Burger-Menü öffnet und schliesst, kein horizontales
    Scrollen.
 7. Alle Links in Navigation und Fusszeile führen auf existierende Seiten.
+8. Auf `/test/`: einmal komplett durchspielen. Anmelden, Patient erfassen, alle acht
+   Disketten beantworten, abschliessen. Der Score muss erscheinen, „Ergebnis drucken"
+   muss den Druckdialog mit dem Ergebnisblatt öffnen. Die Browser-Konsole bleibt
+   dabei fehlerfrei.
 
 ## Was nicht zu tun ist
 
@@ -204,7 +230,9 @@ Prüfe nach dem Import auf **jeder** Seite:
 | Schrift falsch, Abstände zerschossen | `<style>` beim Speichern gefiltert | als Administrator mit `unfiltered_html` importieren |
 | Inhalt startet unter einem grossen Leerraum | Header läuft normal mit statt zu überlagern | Elementor-Sticky deaktivieren; alternativ den kommentierten Freiraum-Block am Anfang jedes Seitenblocks löschen |
 | Farbige Bänder eingerückt | Container nicht auf volle Breite / Padding ≠ 0 | Container-Einstellungen gemäss Abschnitt 3 |
-| Editor wird sehr langsam | Blöcke sind 130–520 KB gross | normal; im Editor nicht scrollen, Änderungen an den Quelldateien vornehmen |
+| Editor wird sehr langsam | Blöcke sind 130–650 KB gross | normal; im Editor nicht scrollen, Änderungen an den Quelldateien vornehmen |
+| Online-Test reagiert nicht auf Klicks | Inline-JavaScript wurde vom Cache-Plugin verschoben oder minifiziert | Seite `/test/` von der JS-Optimierung ausnehmen |
+| Online-Test zeigt keine Bilder | Block wurde beim Einfügen abgeschnitten | vollständige Datei übernehmen, sie ist rund 650 KB gross |
 
 ## Rückmeldung
 

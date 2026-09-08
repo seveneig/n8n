@@ -49,10 +49,23 @@
       "groesse_kb": 223
     },
     {
+      "datei": "bloecke/test.html",
+      "titel": "Online-Test",
+      "slug": "test",
+      "menue_reihenfolge": 4,
+      "im_hauptmenue": true,
+      "startseite": false,
+      "alte_url": null,
+      "groesse_kb": 638,
+      "enthaelt_javascript": true,
+      "suchmaschinen": "noindex",
+      "hinweis": "Interaktiver Online-Test. Der Block enthaelt ein <script>-Element; es muss unveraendert im HTML-Widget bleiben. Seite auf noindex setzen."
+    },
+    {
       "datei": "bloecke/ueber-uns.html",
       "titel": "Über uns",
       "slug": "ueber-uns",
-      "menue_reihenfolge": 4,
+      "menue_reihenfolge": 5,
       "im_hauptmenue": true,
       "startseite": false,
       "alte_url": "/de/about/",
@@ -62,7 +75,7 @@
       "datei": "bloecke/faq.html",
       "titel": "FAQ",
       "slug": "faq",
-      "menue_reihenfolge": 5,
+      "menue_reihenfolge": 6,
       "im_hauptmenue": true,
       "startseite": false,
       "alte_url": null,
@@ -72,7 +85,7 @@
       "datei": "bloecke/kontakt.html",
       "titel": "Kontakt",
       "slug": "kontakt",
-      "menue_reihenfolge": 6,
+      "menue_reihenfolge": 7,
       "im_hauptmenue": true,
       "startseite": false,
       "alte_url": "/de/contact_form/",
@@ -82,7 +95,7 @@
       "datei": "bloecke/vertriebspartner.html",
       "titel": "Vertriebspartner",
       "slug": "vertriebspartner",
-      "menue_reihenfolge": 7,
+      "menue_reihenfolge": 8,
       "im_hauptmenue": false,
       "startseite": false,
       "alte_url": "/de/distributor_form/",
@@ -92,7 +105,7 @@
       "datei": "bloecke/impressum.html",
       "titel": "Impressum",
       "slug": "impressum",
-      "menue_reihenfolge": 8,
+      "menue_reihenfolge": 9,
       "im_hauptmenue": false,
       "startseite": false,
       "alte_url": null,
@@ -102,7 +115,7 @@
       "datei": "bloecke/datenschutz.html",
       "titel": "Datenschutz",
       "slug": "datenschutz",
-      "menue_reihenfolge": 9,
+      "menue_reihenfolge": 10,
       "im_hauptmenue": false,
       "startseite": false,
       "alte_url": null,
@@ -137,7 +150,8 @@
       "kontakt.html": "/kontakt/",
       "vertriebspartner.html": "/vertriebspartner/",
       "impressum.html": "/impressum/",
-      "datenschutz.html": "/datenschutz/"
+      "datenschutz.html": "/datenschutz/",
+      "test.html": "/test/"
     }
   }
 }

@@ -25,6 +25,7 @@ const PAGES = [
   { src: 'impressum.html',        out: 'elementor-impressum.html',        txt: 'impressum.txt',        titel: 'Impressum' },
   { src: 'datenschutz.html',      out: 'elementor-datenschutz.html',      txt: 'datenschutz.txt',      titel: 'Datenschutz' },
   { src: 'smelltest.html',        out: 'elementor-smelltest.html',        txt: 'smelltest.txt',        titel: 'SmellTest' },
+  { src: 'test.html',             out: 'elementor-test.html',             txt: 'test.txt',             titel: 'Online-Test' },
   { src: 'faq.html',              out: 'elementor-faq.html',              txt: 'faq.txt',              titel: 'FAQ' },
   { src: 'header.html', out: 'elementor-header.html', txt: 'header.txt',
     titel: 'Kopfzeile (Theme Builder)', baseCss: 'assets/css/sd-header.css' },
@@ -41,7 +42,7 @@ mkdirSync(resolve(root, 'zum-kopieren'), { recursive: true });
 const OHNE_CHROME = new Set([
   'index.html', 'produkt.html', 'ueber-uns.html', 'kontakt.html',
   'vertriebspartner.html', 'impressum.html', 'datenschutz.html',
-  'smelltest.html', 'faq.html',
+  'smelltest.html', 'faq.html', 'test.html',
 ]);
 mkdirSync(resolve(root, 'ohne-header-footer'), { recursive: true });
 
@@ -106,10 +107,17 @@ for (const page of PAGES) {
                + (own ? '\n\n' + own[1].trim() : '');
 
   const used = new Set();
-  const inlined = body.replace(/src="(assets\/[^"]+)"/g, (_m, rel) => {
-    used.add(rel);
-    return `src="${dataUri(rel)}"`;
-  });
+  const inlined = body
+    // Bilder im Markup
+    .replace(/src="(assets\/[^"]+)"/g, (_m, rel) => {
+      used.add(rel);
+      return `src="${dataUri(rel)}"`;
+    })
+    // Bildpfade, die als Zeichenkette im Skript stehen (Online-Test)
+    .replace(/'(assets\/[^']+\.(?:webp|png|jpe?g|svg|gif))'/g, (_m, rel) => {
+      used.add(rel);
+      return `'${dataUri(rel)}'`;
+    });
 
   const out = `<!--
   ============================================================
