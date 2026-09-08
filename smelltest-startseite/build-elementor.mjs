@@ -24,6 +24,8 @@ const PAGES = [
   { src: 'vertriebspartner.html', out: 'elementor-vertriebspartner.html', txt: 'vertriebspartner.txt', titel: 'Vertriebspartner' },
   { src: 'impressum.html',        out: 'elementor-impressum.html',        txt: 'impressum.txt',        titel: 'Impressum' },
   { src: 'datenschutz.html',      out: 'elementor-datenschutz.html',      txt: 'datenschutz.txt',      titel: 'Datenschutz' },
+  { src: 'smelltest.html',        out: 'elementor-smelltest.html',        txt: 'smelltest.txt',        titel: 'SmellTest' },
+  { src: 'faq.html',              out: 'elementor-faq.html',              txt: 'faq.txt',              titel: 'FAQ' },
   { src: 'header.html', out: 'elementor-header.html', txt: 'header.txt',
     titel: 'Kopfzeile (Theme Builder)', baseCss: 'assets/css/sd-header.css' },
   { src: 'footer.html', out: 'elementor-footer.html', txt: 'footer.txt',
@@ -39,6 +41,7 @@ mkdirSync(resolve(root, 'zum-kopieren'), { recursive: true });
 const OHNE_CHROME = new Set([
   'index.html', 'produkt.html', 'ueber-uns.html', 'kontakt.html',
   'vertriebspartner.html', 'impressum.html', 'datenschutz.html',
+  'smelltest.html', 'faq.html',
 ]);
 mkdirSync(resolve(root, 'ohne-header-footer'), { recursive: true });
 

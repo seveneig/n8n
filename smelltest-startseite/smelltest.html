@@ -1,0 +1,257 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>SmellTest – Der Online-Riechtest von Smell Discettes</title>
+<meta name="description" content="Der Online-Test führt durch das Riech-Screening: Patient anmelden, Nasenloch wählen, acht Düfte, Score 0 bis 8.">
+
+<link rel="stylesheet" href="assets/fonts/lato.css">
+<link rel="stylesheet" href="assets/css/sd.css">
+</head>
+<body style="margin:0">
+
+<!-- ==== AB HIER IN DEN ELEMENTOR-HTML-WIDGET KOPIEREN ==== -->
+<div class="sdx">
+
+  <!-- ---------- Header (löschbar, falls das Theme bereits einen Header hat) ---------- -->
+  <header class="sd-header">
+    <div class="sd-wrap sd-header__in">
+      <a class="sd-header__logo" href="index.html" aria-label="Smell Discettes Startseite">
+        <img src="assets/logo/logo.webp" alt="Smell Discettes" width="300" height="264">
+      </a>
+      <nav class="sd-nav">
+        <a href="produkt.html">Produkt</a>
+        <a class="is-current" href="smelltest.html">SmellTest</a>
+        <a href="ueber-uns.html">Über uns</a>
+        <a href="faq.html">FAQ</a>
+        <a href="kontakt.html">Kontakt</a>
+      </nav>
+      <div class="sd-lang">
+        <a class="is-active" href="#">DE</a><span>/</span><a href="#">EN</a><span>/</span><a href="#">FR</a><span>/</span><a href="#">IT</a>
+      </div>
+      <a class="sd-btn sd-btn--primary" href="produkt.html#bestellen">Bestellen</a>
+    </div>
+  </header>
+
+  <!-- ---------- Seitenkopf ---------- -->
+  <section class="sd-phero">
+    <div class="sd-wrap sd-phero__grid">
+      <div>
+        <span class="sd-eyebrow">Online-Test</span>
+        <h1 class="sd-h2" style="margin-top:18px">Der SmellTest – digital geführt</h1>
+        <p class="sd-lead">
+          Der Online-Test führt Sie durch das Screening: Patientendaten erfassen, Nasenloch
+          wählen, acht Disketten der Reihe nach riechen lassen und die Bildantwort
+          ankreuzen. Am Ende steht der Score von 0 bis 8. Laut Herstellerangaben der
+          einzige Online-Riechtest auf dem Markt.
+        </p>
+        <div class="sd-phero__cta">
+          <a class="sd-btn sd-btn--primary" href="#">SmellTest starten <span class="sd-btn__arrow">→</span></a>
+          <a class="sd-btn sd-btn--ghost" href="#ablauf">Ablauf ansehen</a>
+        </div>
+      </div>
+      <figure class="sd-phero__fig">
+        <img src="assets/bilder/produkt/bildantworten.webp" alt="Der Online-Test am Bildschirm mit drei Bildantworten zur Auswahl" width="1200" height="679">
+      </figure>
+    </div>
+  </section>
+
+  <!-- ---------- Ablauf ---------- -->
+  <section class="sd-sec" id="ablauf">
+    <div class="sd-wrap">
+      <div class="sd-head">
+        <span class="sd-eyebrow">Ablauf</span>
+        <h2 class="sd-h2">In vier Etappen zum dokumentierten Score</h2>
+        <p class="sd-lead">
+          Der Test ist vollständig an medizinische Praxisassistenz und Pflegepersonal
+          delegierbar. Das Testformular mit Bildantworten ist selbsterklärend.
+        </p>
+      </div>
+
+      <div class="sd-flow">
+        <article class="sd-flowcard">
+          <b>1</b>
+          <h3>Patient anmelden</h3>
+          <p>Vorname, Nachname, Geburtsdatum und Testdatum erfassen – die Grundlage für die archivierbare Dokumentation.</p>
+        </article>
+        <article class="sd-flowcard">
+          <b>2</b>
+          <h3>Nasenloch wählen</h3>
+          <p>Linkes Nasenloch, rechtes Nasenloch oder beide. Die lateralisierte Testung macht einseitige Riechstörungen sichtbar.</p>
+        </article>
+        <article class="sd-flowcard">
+          <b>3</b>
+          <h3>Acht Düfte riechen</h3>
+          <p>Zu jeder Diskette drei Bildantworten – Triple-Forced-Choice. Der Bildschirm führt Diskette für Diskette durch den Test.</p>
+        </article>
+        <article class="sd-flowcard">
+          <b>4</b>
+          <h3>Test abschliessen</h3>
+          <p>Die Zusammenfassung zeigt alle acht Antworten. Einzelne Angaben lassen sich vor dem Abschluss noch korrigieren.</p>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <!-- ---------- Score ---------- -->
+  <section class="sd-sec sd-steps" id="score">
+    <div class="sd-wrap">
+      <div class="sd-head">
+        <span class="sd-eyebrow">Auswertung</span>
+        <h2 class="sd-h2">Ein Score von 0 bis 8</h2>
+        <p class="sd-lead">
+          Jede richtig identifizierte Diskette zählt einen Punkt. Bei einem Score von
+          7 oder 8 liegt mit 99,74 % Wahrscheinlichkeit eine normale Riechfunktion vor.
+        </p>
+      </div>
+
+      <div class="sd-score">
+        <span>0</span><span>1</span><span>2</span><span>3</span><span>4</span>
+        <span>5</span><span>6</span><span class="is-ok">7</span><span class="is-ok">8</span>
+      </div>
+      <div class="sd-scorelegend">
+        <b>Score 7–8: normale Riechfunktion</b>
+        <b class="is-low">Score ≤ 6: auffälliges Ergebnis, weiterführende Abklärung</b>
+      </div>
+      <p class="sd-source" style="margin-top:24px">
+        99,74 % Wahrscheinlichkeit normaler Olfaktion bei Score 7 oder 8, berechnet über
+        die Binomialverteilung. Briner &amp; Simmen, <i>Rhinology</i> 1999; 37: 145–148 (n = 124).
+      </p>
+    </div>
+  </section>
+
+  <!-- ---------- Screening vs. Diagnose ---------- -->
+  <section class="sd-sec" id="abgrenzung">
+    <div class="sd-wrap">
+      <div class="sd-head">
+        <span class="sd-eyebrow">Einordnung</span>
+        <h2 class="sd-h2">Screening, nicht Diagnose</h2>
+        <p class="sd-lead">
+          Der Smell Discettes Olfaction Test beantwortet eine Frage: Riecht die Patientin
+          oder der Patient normal oder nicht? Er stellt keine Diagnose und ersetzt keine
+          weiterführende olfaktometrische Untersuchung.
+        </p>
+      </div>
+
+      <div class="sd-vs">
+        <div class="sd-vscol sd-vscol--on">
+          <span>Smell Discettes</span>
+          <h3>Screening</h3>
+          <dl>
+            <div><dt>Fragestellung</dt><dd>Liegt eine Riechstörung vor, ja oder nein?</dd></div>
+            <div><dt>Ergebnis</dt><dd>Normal (Score 7–8) oder auffällig (Score ≤ 6)</dd></div>
+            <div><dt>Methode</dt><dd>Identifikationstest: 8 Düfte, Triple-Forced-Choice, Score 0 bis 8</dd></div>
+            <div><dt>Dauer</dt><dd>Schnelles Screening</dd></div>
+            <div><dt>Durchführung</dt><dd>Delegierbar an MPA und Pflegepersonal</dd></div>
+          </dl>
+        </div>
+        <div class="sd-vscol sd-vscol--off">
+          <span>Weiterführend</span>
+          <h3>Diagnose</h3>
+          <dl>
+            <div><dt>Fragestellung</dt><dd>Welcher Grad und welche Art der Riechstörung liegt vor?</dd></div>
+            <div><dt>Ergebnis</dt><dd>Schwellenwert, Diskrimination, Identifikation, evozierte Potenziale</dd></div>
+            <div><dt>Methode</dt><dd>Schwellenwertmessung (z. B. N-Butanol), Olfaktometrie</dd></div>
+            <div><dt>Dauer</dt><dd>15 bis 45 Minuten</dd></div>
+            <div><dt>Durchführung</dt><dd>Spezialistin oder Spezialist</dd></div>
+          </dl>
+        </div>
+      </div>
+
+      <p class="sd-note" style="max-width:860px">
+        <b>Konsequenz bei auffälligem Ergebnis:</b> Weiterleitung an eine Spezialistin oder
+        einen Spezialisten beziehungsweise weiterführende Diagnostik. Der Test ergänzt die
+        bestehende Testinfrastruktur als schnelles Routine-Screening – er ersetzt sie nicht.
+      </p>
+    </div>
+  </section>
+
+  <!-- ---------- Abschluss ---------- -->
+  <section class="sd-sec sd-cta">
+    <div class="sd-wrap">
+      <div class="sd-cta__box">
+        <div>
+          <span class="sd-eyebrow">Loslegen</span>
+          <h2 class="sd-h2">Test starten oder Set bestellen</h2>
+          <p>
+            Für die Durchführung brauchen Sie das Smell-Test Set mit den acht Disketten.
+            Der Online-Test führt durch das Screening und hält das Ergebnis fest.
+          </p>
+          <div class="sd-cta__btns">
+            <a class="sd-btn sd-btn--primary" href="#">SmellTest starten <span class="sd-btn__arrow">→</span></a>
+            <a class="sd-btn sd-btn--ghost" href="produkt.html">Zum Produkt</a>
+          </div>
+        </div>
+        <div class="sd-cta__mascot">
+          <img src="assets/icons/maskottchen.webp" alt="" width="460" height="497">
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ---------- Fachkreis-Hinweis ---------- -->
+  <section class="sd-fach">
+    <div class="sd-wrap sd-fach__in">
+      <b>Fachkreise</b>
+      <span>Die Informationen auf dieser Website richten sich an HNO-Fachpersonen, Kliniken, Praxen sowie an Einkauf und Qualitätsmanagement. Der Smell Discettes Olfaction Test ist ein Screening-Instrument und ersetzt weder eine ärztliche Beurteilung noch eine weiterführende olfaktometrische Untersuchung.</span>
+    </div>
+  </section>
+
+  <!-- ---------- Footer ---------- -->
+  <footer class="sd-footer">
+    <div class="sd-wrap">
+      <div class="sd-footer__grid">
+        <div>
+          <div class="sd-footer__logo"><img src="assets/logo/logo.webp" alt="Smell Discettes" width="300" height="264"></div>
+          <p>Olfaktorischer Screening-Test für Klinik und Praxis. Entwickelt und hergestellt in der Schweiz.</p>
+        </div>
+        <div>
+          <h4>Produkt</h4>
+          <ul>
+            <li><a href="produkt.html">Übersicht</a></li>
+            <li><a href="produkt.html#artikel">Artikelangaben</a></li>
+            <li><a href="smelltest.html">SmellTest</a></li>
+            <li><a href="produkt.html#bestellen">Bezugsquellen</a></li>
+          </ul>
+        </div>
+        <div>
+          <h4>Fachpersonen</h4>
+          <ul>
+            <li><a href="index.html#praeoperativ">Präoperative Dokumentation</a></li>
+            <li><a href="ueber-uns.html#publikationen">Publikationen</a></li>
+            <li><a href="faq.html">FAQ</a></li>
+            <li><a href="ueber-uns.html">Über uns</a></li>
+            <li><a href="produkt.html#bestellen">Vertriebspartner</a></li>
+          </ul>
+        </div>
+        <div>
+          <h4>Kontakt</h4>
+          <ul>
+            <li>SMELL Discettes GmbH</li>
+            <li>Schartenrainstrasse 22<br>CH-5430 Wettingen</li>
+            <li>UID CHE-276.440.705</li>
+            <li><a href="tel:+41797050431">+41 79 705 04 31</a></li>
+            <li><a href="mailto:info@smelldiscettes.com">info@smelldiscettes.com</a></li>
+          </ul>
+        </div>
+      </div>
+      <div class="sd-footer__bar">
+        <span>© 2026 SMELL Discettes GmbH. Alle Rechte vorbehalten.</span>
+        <nav>
+          <a href="#">Deutsch</a>
+          <a href="#">English</a>
+          <a href="#">Français</a>
+          <a href="#">Italiano</a>
+          <a href="#">Impressum</a>
+          <a href="#">Datenschutz</a>
+        </nav>
+      </div>
+    </div>
+  </footer>
+
+</div>
+<!-- ==== ENDE ELEMENTOR-BLOCK ==== -->
+
+</body>
+</html>

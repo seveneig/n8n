@@ -1,6 +1,6 @@
-<!--
+﻿<!--
   ============================================================
-  SMELL DISCETTES - DATENSCHUTZ  (ohne Kopf- und Fusszeile)
+  SMELL DISCETTES - FAQ  (ohne Kopf- und Fusszeile)
   Kopfzeile und Fusszeile werden separat in Elementor ergaenzt.
   Der Seitenanfang haelt Platz fuer einen transparenten Header frei -
   siehe den kurz kommentierten Zusatzstil unten.
@@ -659,11 +659,12 @@
   <section class="sd-phero">
     <div class="sd-wrap">
       <div class="sd-head">
-        <span class="sd-eyebrow">Rechtliches</span>
-        <h1 class="sd-h2" style="margin-top:18px">Datenschutzerklärung</h1>
+        <span class="sd-eyebrow">Häufige Fragen</span>
+        <h1 class="sd-h2" style="margin-top:18px">FAQ</h1>
         <p class="sd-lead">
-          Wie wir mit personenbezogenen Daten umgehen, wenn Sie diese Website besuchen
-          oder mit uns Kontakt aufnehmen.
+          Antworten auf die Fragen, die uns Fachpersonen, Kliniken und Einkauf am
+          häufigsten stellen. Die Aussagen sind durch die Publikationen belegt, auf die
+          jeweils verwiesen wird.
         </p>
       </div>
     </div>
@@ -671,49 +672,143 @@
 
   <section class="sd-sec">
     <div class="sd-wrap">
-      <div class="sd-todo" style="max-width:760px;margin-top:0">
-        <b>Hier gehört der bestehende Text hinein</b>
-        <p>
-          Eine Datenschutzerklärung ist ein rechtsverbindliches Dokument – ich schreibe
-          sie nicht selbst, weil ein erfundener Text schlimmer wäre als gar keiner.
-          Auf smelldiscettes.com existiert bereits eine Fassung unter
-          <b>/policies/</b>. Diesen Text hier einsetzen: Er wird durch die Formatierung
-          unten automatisch im Seitenstil dargestellt. Struktur unten als Gerüst –
-          Überschriften mit <b>&lt;h3&gt;</b>, Absätze mit <b>&lt;p&gt;</b>.
-        </p>
+      <div class="sd-head">
+        <span class="sd-eyebrow">Zum Test</span>
+        <h2 class="sd-h2">Was der Test leistet</h2>
+      </div>
+      <div class="sd-faq">
+        <details open>
+          <summary>Was genau misst der Smell Discettes Olfaction Test?</summary>
+          <div class="sd-faq__a">
+            <p>Er ist ein Riech-Screening-Test. Er beantwortet die Frage, ob eine Patientin oder ein Patient normal riecht oder eine Riechstörung vorliegt. Die Testperson identifiziert acht Düfte über je drei Bildantworten (Triple-Forced-Choice), daraus ergibt sich ein Score von 0 bis 8.</p>
+            <p>Der Test unterscheidet zuverlässig zwischen normaler Olfaktion und Hyposmie beziehungsweise Anosmie. Er stellt keine Diagnose und ersetzt keine weiterführende olfaktometrische Untersuchung.</p>
+          </div>
+        </details>
+        <details>
+          <summary>Wie wird das Ergebnis interpretiert?</summary>
+          <div class="sd-faq__a">
+            <p>Bei einem Score von 7 oder 8 liegt mit 99,74 % Wahrscheinlichkeit eine normale Riechfunktion vor. Ein Score von 6 oder darunter gilt als auffällig und sollte weiterführend abgeklärt werden.</p>
+            <cite>Briner &amp; Simmen, Rhinology 1999; 37: 145–148 (n = 124, Binomialverteilung)</cite>
+          </div>
+        </details>
+        <details>
+          <summary>Welche acht Düfte enthält das aktuelle Set?</summary>
+          <div class="sd-faq__a">
+            <p>Kaffee, Vanille, Pfirsich, Gras, Ananas, Rose, Schokolade und Fisch – Düfte mit hohem Bekanntheitsgrad im europäischen Kulturkreis.</p>
+            <p>Diese Zusammenstellung weicht teilweise von den Düften ab, die in den Validierungsstudien von 1999 bis 2012 verwendet wurden. Die Studien beziehen sich auf die damalige Konfiguration und behalten ihre Gültigkeit für das Testprinzip: Identifikationstest, Triple-Forced-Choice, Score 0 bis 8.</p>
+          </div>
+        </details>
+        <details>
+          <summary>Lässt sich jedes Nasenloch einzeln prüfen?</summary>
+          <div class="sd-faq__a">
+            <p>Ja. Die lateralisierte Testung ist vorgesehen: linkes Nasenloch, rechtes Nasenloch oder beide. Das macht einseitige Riechstörungen sichtbar, etwa bei Polypen oder einer Septumdeviation.</p>
+          </div>
+        </details>
+        <details>
+          <summary>Ab welchem Alter ist der Test einsetzbar?</summary>
+          <div class="sd-faq__a">
+            <p>Ab sechs Jahren. Das Testformular arbeitet mit Bildantworten und funktioniert deshalb auch bei Sprachbarrieren sowie bei älteren Patientinnen und Patienten.</p>
+            <p>Der Test ist nicht für alle Altersgruppen gleich zuverlässig – kulturelle und kognitive Einschränkungen sind möglich und bei der Beurteilung zu berücksichtigen.</p>
+          </div>
+        </details>
+      </div>
+    </div>
+  </section>
+
+  <section class="sd-sec sd-steps">
+    <div class="sd-wrap">
+      <div class="sd-head">
+        <span class="sd-eyebrow">In der Praxis</span>
+        <h2 class="sd-h2">Einsatz und Aufwand</h2>
+      </div>
+      <div class="sd-faq">
+        <details>
+          <summary>Wer darf den Test durchführen?</summary>
+          <div class="sd-faq__a">
+            <p>Der Test ist vollständig an medizinische Praxisassistenz und Pflegepersonal delegierbar. In der Studie von Briner, Simmen und Jones wurde die Testdurchführung durch Pflegepersonal vorgenommen. Schulungsaufwand entfällt, das Testformular ist selbsterklärend.</p>
+            <cite>Briner, Simmen &amp; Jones, Clin Otolaryngol 2003; 28: 417–419</cite>
+          </div>
+        </details>
+        <details>
+          <summary>Wir fragen die Patienten einfach, ob sie gut riechen – reicht das nicht?</summary>
+          <div class="sd-faq__a">
+            <p>Die subjektive Selbsteinschätzung ist nachweislich unzuverlässig. In der Fünfjahresstudie korrelierte die subjektive Einschätzung über eine visuelle Analogskala nur mässig mit der objektiven Messung (r = 0,68).</p>
+            <p>Patientinnen und Patienten verwechseln häufig eine verbesserte Nasenatmung mit verbessertem Riechen und überschätzen deshalb ihre postoperative Riechleistung. Eine rein subjektive Befragung genügt nicht als belastbare Dokumentation.</p>
+            <cite>Briner, Jones &amp; Simmen, Rhinology 2012; 50: 178–184 (n = 45)</cite>
+          </div>
+        </details>
+        <details>
+          <summary>Warum vor einer Nasenoperation testen?</summary>
+          <div class="sd-faq__a">
+            <p>In der Studie von Briner, Simmen und Jones wiesen 10,3 % der Patientinnen und Patienten vor einer geplanten Nasenoperation bereits eine beeinträchtigte Riechfunktion auf, ohne sich dessen bewusst zu sein.</p>
+            <p>Ohne objektive Dokumentation besteht das Risiko, dass nach dem Eingriff der Vorwurf erhoben wird, die Operation habe den Riechverlust verursacht. Der Score von 0 bis 8 ist reproduzierbar und archivierbar und dient als Baseline vor dem Eingriff.</p>
+            <cite>Briner, Simmen &amp; Jones, Clin Otolaryngol 2003; 28: 417–419 (n = 109)</cite>
+          </div>
+        </details>
+        <details>
+          <summary>Eignet sich der Test auch für die Verlaufskontrolle?</summary>
+          <div class="sd-faq__a">
+            <p>Ja. In der Fünfjahresstudie wurde der Test als klinisches Verlaufs-Screening nach endoskopischer Nasennebenhöhlenchirurgie eingesetzt. Er eignet sich ebenso für die Verlaufskontrolle bei konservativer Therapie und ist auch bei postviralen Riechstörungen relevant.</p>
+            <cite>Briner, Jones &amp; Simmen, Rhinology 2012; 50: 178–184</cite>
+          </div>
+        </details>
+        <details>
+          <summary>Lohnt sich der Test für eine kleinere Praxis?</summary>
+          <div class="sd-faq__a">
+            <p>Riechstörungen sind häufiger als angenommen: 1 bis 2 % der Bevölkerung unter 65 Jahren sind betroffen. Seit COVID-19 ist die Nachfrage nach standardisierten Riechtests deutlich gestiegen.</p>
+            <cite>NIH Statistics on Smell 2005, zitiert in Simmen &amp; Briner, Rhinology 2006; 44: 98–101</cite>
+          </div>
+        </details>
+      </div>
+    </div>
+  </section>
+
+  <section class="sd-sec">
+    <div class="sd-wrap">
+      <div class="sd-head">
+        <span class="sd-eyebrow">Einordnung und Bezug</span>
+        <h2 class="sd-h2">Abgrenzung, Lagerung, Bestellung</h2>
+      </div>
+      <div class="sd-faq">
+        <details>
+          <summary>Wir arbeiten bereits mit anderen Riechtests – warum zusätzlich?</summary>
+          <div class="sd-faq__a">
+            <p>Der Smell Discettes Olfaction Test ist kein Ersatz für umfangreiche Schwellenwert-Tests, sondern ergänzt die bestehende Testinfrastruktur als schnelles Routine-Screening.</p>
+            <p>Die Logik: Jede Patientin und jeder Patient vor einer Nasenoperation durchläuft das delegierbare Screening. Nur bei einem auffälligen Ergebnis (Score ≤ 6) folgt die vertiefte Diagnostik. So werden Ressourcen gezielt eingesetzt.</p>
+          </div>
+        </details>
+        <details>
+          <summary>Wie lange sind die Disketten haltbar?</summary>
+          <div class="sd-faq__a">
+            <p>Bei sachgemässer Lagerung – Raumtemperatur, trocken und lichtgeschützt – bleiben die Disketten bis zu zwölf Monate stabil.</p>
+            <cite>Erfahrungswerte aus der Parfümindustrie, bestätigt in Briner &amp; Simmen, Rhinology 1999</cite>
+          </div>
+        </details>
+        <details>
+          <summary>Was ist im Erstset enthalten?</summary>
+          <div class="sd-faq__a">
+            <p>Das Erstset enthält acht Disketten, das Testformular mit Bildantworten und eine Kurzanleitung.</p>
+          </div>
+        </details>
+        <details>
+          <summary>Ist der Test ein zugelassenes Medizinprodukt?</summary>
+          <div class="sd-faq__a">
+            <p>Zur regulatorischen Klassifizierung machen wir an dieser Stelle bewusst keine Angabe. Sie wird ergänzt, sobald sie bestätigt vorliegt. Eine Empfehlung durch WHO, FDA oder Swissmedic besteht nicht.</p>
+          </div>
+        </details>
+        <details>
+          <summary>An wen richtet sich das Angebot?</summary>
+          <div class="sd-faq__a">
+            <p>An HNO-Fachpersonen, rhinologische Kliniken, niedergelassene Praxen sowie an Einkauf und Qualitätsmanagement. Die Informationen auf dieser Website richten sich an Fachkreise.</p>
+          </div>
+        </details>
       </div>
 
-      <div class="sd-legal" style="margin-top:48px">
-        <h3>Verantwortliche Stelle</h3>
-        <p>
-          SMELL Discettes GmbH, Schartenrainstrasse 22, CH-5430 Wettingen, Schweiz.
-          E-Mail: <a href="mailto:info@smelldiscettes.com">info@smelldiscettes.com</a>.
-        </p>
-
-        <h3>Welche Daten wir bearbeiten</h3>
-        <p><!-- Text einsetzen: Server-Logdaten, Formularangaben, Cookies --></p>
-
-        <h3>Zweck und Rechtsgrundlage</h3>
-        <p><!-- Text einsetzen --></p>
-
-        <h3>Cookies und Reichweitenmessung</h3>
-        <p><!-- Text einsetzen --></p>
-
-        <h3>Weitergabe an Dritte</h3>
-        <p><!-- Text einsetzen --></p>
-
-        <h3>Aufbewahrung</h3>
-        <p><!-- Text einsetzen --></p>
-
-        <h3>Ihre Rechte</h3>
-        <p><!-- Text einsetzen: Auskunft, Berichtigung, Löschung, Widerspruch --></p>
-
-        <h3>Kontakt in Datenschutzfragen</h3>
-        <p>
-          Wenden Sie sich an <a href="mailto:info@smelldiscettes.com">info@smelldiscettes.com</a>
-          oder über das <a href="kontakt.html">Kontaktformular</a>.
-        </p>
-      </div>
+      <p class="sd-note" style="max-width:860px;margin-top:44px">
+        <b>Ihre Frage ist nicht dabei?</b> Schreiben Sie uns an
+        <a class="sd-link" href="mailto:info@smelldiscettes.com">info@smelldiscettes.com</a>
+        oder über das <a class="sd-link" href="kontakt.html">Kontaktformular</a>.
+      </p>
     </div>
   </section>
 

@@ -554,6 +554,86 @@
 @media (max-width: 680px) {
   .sdx .sd-infolist > div { grid-template-columns: 1fr; gap: 6px; }
 }
+
+/* ================================================================
+   18. Bausteine für SmellTest- und FAQ-Seite
+   ================================================================ */
+/* --- Ablaufkarten mit Nummer --- */
+.sdx .sd-flow { display: grid; grid-template-columns: repeat(4, 1fr); gap: 22px; margin-top: 56px; }
+.sdx .sd-flowcard { background: var(--white); border-radius: var(--r-lg); padding: 34px 30px 36px; box-shadow: inset 0 0 0 1px var(--line); }
+.sdx .sd-flowcard b { display: inline-flex; align-items: center; justify-content: center; width: 38px; height: 38px; border-radius: 999px; background: var(--navy); color: var(--white); font-size: 14px; font-weight: 900; }
+.sdx .sd-flowcard h3 { margin-top: 20px; font-size: 18px; font-weight: 900; line-height: 1.35; color: var(--navy); }
+.sdx .sd-flowcard p { margin-top: 10px; font-size: 15px; line-height: 1.68; color: var(--muted); }
+
+/* --- Score-Skala --- */
+.sdx .sd-score { display: grid; grid-template-columns: repeat(9, 1fr); gap: 8px; margin-top: 40px; }
+.sdx .sd-score span {
+  display: flex; align-items: center; justify-content: center; height: 62px;
+  border-radius: var(--r-md); background: var(--blue-mist);
+  box-shadow: inset 0 0 0 1px var(--line);
+  font-size: 19px; font-weight: 900; color: var(--blue-deep);
+}
+.sdx .sd-score span.is-ok { background: var(--blue); color: var(--white); box-shadow: none; }
+.sdx .sd-scorelegend { display: flex; flex-wrap: wrap; gap: 12px 28px; margin-top: 20px; font-size: 14.5px; color: var(--muted); }
+.sdx .sd-scorelegend b { display: inline-flex; align-items: center; gap: 9px; color: var(--ink); font-weight: 700; }
+.sdx .sd-scorelegend b::before { content: ""; width: 13px; height: 13px; border-radius: 3px; background: var(--blue); }
+.sdx .sd-scorelegend b.is-low::before { background: var(--blue-mist); box-shadow: inset 0 0 0 1px var(--blue-soft); }
+
+/* --- Gegenüberstellung Screening / Diagnose --- */
+.sdx .sd-vs { display: grid; grid-template-columns: 1fr 1fr; gap: 26px; margin-top: 52px; }
+.sdx .sd-vscol { border-radius: var(--r-lg); padding: 38px 34px 40px; }
+.sdx .sd-vscol--on { background: var(--white); box-shadow: inset 0 0 0 2px var(--blue); }
+.sdx .sd-vscol--off { background: var(--tint); box-shadow: inset 0 0 0 1px var(--line); }
+.sdx .sd-vscol h3 { font-size: 20px; font-weight: 900; color: var(--navy); }
+.sdx .sd-vscol > span { display: block; margin-top: 6px; font-size: 12px; font-weight: 700; letter-spacing: .16em; text-transform: uppercase; color: var(--blue); }
+.sdx .sd-vscol--off > span { color: var(--muted); }
+.sdx .sd-vscol dl { margin-top: 24px; display: grid; gap: 0; }
+.sdx .sd-vscol dl > div { padding: 16px 0; border-top: 1px solid var(--line); }
+.sdx .sd-vscol dt { font-size: 12px; font-weight: 700; letter-spacing: .1em; text-transform: uppercase; color: var(--muted); }
+.sdx .sd-vscol dd { margin-top: 5px; font-size: 15.5px; line-height: 1.6; color: var(--ink); }
+
+/* --- FAQ --- */
+.sdx .sd-faq { margin-top: 52px; border-top: 1px solid var(--line); }
+.sdx .sd-faq details { border-bottom: 1px solid var(--line); }
+.sdx .sd-faq summary {
+  display: flex; align-items: flex-start; gap: 20px; cursor: pointer;
+  padding: 26px 0; list-style: none;
+  font-size: 18.5px; font-weight: 700; line-height: 1.45; color: var(--navy);
+}
+.sdx .sd-faq summary::-webkit-details-marker { display: none; }
+.sdx .sd-faq summary::after {
+  content: "+"; margin-left: auto; flex: none;
+  width: 30px; height: 30px; border-radius: 999px; background: var(--blue-mist);
+  display: flex; align-items: center; justify-content: center;
+  font-size: 19px; font-weight: 700; color: var(--blue-deep); line-height: 1;
+}
+.sdx .sd-faq details[open] summary::after { content: "–"; background: var(--blue); color: var(--white); }
+.sdx .sd-faq summary:hover { color: var(--blue); }
+.sdx .sd-faq__a { padding: 0 60px 30px 0; }
+.sdx .sd-faq__a p { font-size: 16.5px; line-height: 1.75; color: var(--muted); }
+.sdx .sd-faq__a p + p { margin-top: 14px; }
+.sdx .sd-faq__a cite { display: block; margin-top: 16px; font-style: normal; font-size: 13.5px; font-weight: 700; color: var(--blue-deep); }
+
+/* --- Fachkreis-Hinweis --- */
+.sdx .sd-fach {
+  background: var(--navy); color: rgba(255,255,255,.72);
+  padding: 20px 0; font-size: 14px; line-height: 1.6;
+}
+.sdx .sd-fach__in { display: flex; align-items: baseline; gap: 14px; }
+.sdx .sd-fach b { flex: none; font-size: 11.5px; font-weight: 700; letter-spacing: .16em; text-transform: uppercase; color: var(--blue-soft); }
+
+@media (max-width: 1080px) { .sdx .sd-flow { grid-template-columns: 1fr 1fr; } }
+@media (max-width: 900px) {
+  .sdx .sd-vs { grid-template-columns: 1fr; }
+  .sdx .sd-score { grid-template-columns: repeat(5, 1fr); }
+}
+@media (max-width: 680px) {
+  .sdx .sd-flow { grid-template-columns: 1fr; }
+  .sdx .sd-score { grid-template-columns: repeat(3, 1fr); }
+  .sdx .sd-faq summary { font-size: 17px; padding: 22px 0; }
+  .sdx .sd-faq__a { padding-right: 0; }
+  .sdx .sd-fach__in { flex-direction: column; gap: 6px; }
+}
 </style>
 <style>
 /* --------------------------------------------------------------
@@ -634,6 +714,14 @@
           oder über das <a href="kontakt.html">Kontaktformular</a>.
         </p>
       </div>
+    </div>
+  </section>
+
+  <!-- ---------- Fachkreis-Hinweis ---------- -->
+  <section class="sd-fach">
+    <div class="sd-wrap sd-fach__in">
+      <b>Fachkreise</b>
+      <span>Die Informationen auf dieser Website richten sich an HNO-Fachpersonen, Kliniken, Praxen sowie an Einkauf und Qualitätsmanagement. Der Smell Discettes Olfaction Test ist ein Screening-Instrument und ersetzt weder eine ärztliche Beurteilung noch eine weiterführende olfaktometrische Untersuchung.</span>
     </div>
   </section>
 
