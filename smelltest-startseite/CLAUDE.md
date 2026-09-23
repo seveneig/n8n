@@ -1,4 +1,4 @@
-# Smell Discettes – Projektregeln
+# SMELL Discettes – Projektregeln
 
 > **Verbindliche Grundlage: das Claim Sheet** («Strategisches Fundament», Februar 2026).
 > Es dürfen ausschliesslich Aussagen daraus verwendet werden. Keine neuen Claims
@@ -119,10 +119,38 @@ Diese stammen aus den Publikationen und dürfen genannt werden:
 - **3** Schritte im Ablauf
 - **4** Validierungspublikationen in *Rhinology* und *Clinical Otolaryngology*
 
+## Schreibweisen (Korrekturrunde September 2026)
+
+- **SMELL** immer in Grossbuchstaben: *SMELL Discettes*, *SMELL Test*,
+  *SMELL Test-Set*. Ausnahmen nur in Literaturangaben (Titel der Publikationen,
+  «NIH Statistics on Smell») und in Artikelnummern (`SmellTest`, `Disc#01`).
+- Produktname im Text: **SMELL Discettes Olfaction Test** statt «Smell Discettes».
+  Die Firma heisst **SMELL Discettes GmbH**.
+- Das Verkaufsprodukt ist das **SMELL Test-Set**, der Behälter die **TestBox**.
+  Nicht «Set» allein, nicht «Riechtest» als Produktbezeichnung.
+- «SMELL Test-Set» im sichtbaren Text in `<span class="sd-nw">…</span>` setzen,
+  damit es nicht am Bindestrich umbricht.
+- Menüpunkt und Seitentitel der Info-Seite: **SMELL Test** (Slug bleibt `smelltest`).
+- Anrede immer **Sie**.
+- Nicht verwenden: «wieder verfügbar», «CE-Kennzeichnung».
+
+## Link-Ziele
+
+| Absicht | Ziel |
+|---|---|
+| Bestellen, SMELL Test-Set bestellen | `kontakt.html?anliegen=bestellung#formular` |
+| Bezugsquellen, Vertriebspartner finden | `vertriebspartner.html#finden` |
+| Vertriebspartner werden | `vertriebspartner.html#partner-werden` |
+| Kontaktformular | `kontakt.html#formular` |
+| Online-Test | `test.html` |
+
+Die Sprachumschalter EN/FR/IT bleiben `#`, bis es die Sprachfassungen gibt.
+
 ## Gestaltung
 
 - Markenfarben unverändert: `#407BA0`, `#00102E`, `#BCD3E5`, Flächen `#F5F9FC`
-- Schrift Lato, eingebettet über `assets/fonts/lato.css` (kein Google-Fonts-Aufruf)
+- Schrift **Ebrima**: `font-family: ebrima, sans-serif;` (Systemschrift, wird nicht
+  eingebettet; Ebrima kennt nur 400 und 700, Angaben wie 900 erscheinen fett)
 - Aufbau, Bausteine und CSS-Kapselung wie in `index.html` – neue Seiten davon ableiten
 
 ## Technik
@@ -137,6 +165,9 @@ Diese stammen aus den Publikationen und dürfen genannt werden:
 - **Das Design liegt gemeinsam in `assets/css/sd.css`** – neue Seiten binden dieses
   Stylesheet ein und verwenden die vorhandenen Bausteine, statt eigenes CSS zu
   erfinden. Nur wirklich neue Komponenten kommen dort ergänzend hinzu.
+- Die Gebrauchsanweisungen liegen als PDF in `downloads/` (aus den korrigierten
+  Word-Dateien vom 9.4.2026, Änderungen angenommen). Sie sind Dokumente des Kunden
+  und werden **nicht** an die Claim-Regeln angepasst.
 - `test.html` ist der interaktive Online-Test (Anmeldung, acht Sequenzen mit
   Bildantworten, Score, Ergebnisblatt). Die 24 Auswahlbilder liegen als WebP unter
   `assets/bilder/test/`, die Originale als SVG unter `assets/test-svg/`. Die Seite

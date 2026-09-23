@@ -14,6 +14,7 @@
 .sdx button { cursor: pointer; -webkit-appearance: none; appearance: none; }
 .sdx strong, .sdx b { font-weight: 700; }
 .sdx i, .sdx em { font-style: italic; }
+.sdx .sd-nw { white-space: nowrap; }   /* Produktname nicht am Bindestrich trennen */
 
 /* ---------- 2. Design-Tokens ------------------------------------ */
 .sdx {
@@ -38,7 +39,7 @@
   --sh-sm: 0 1px 2px rgba(0,16,46,.05), 0 8px 24px -14px rgba(0,16,46,.18);
   --sh-md: 0 1px 2px rgba(0,16,46,.05), 0 22px 48px -24px rgba(0,16,46,.30);
 
-  font-family: 'LatoSD', 'Lato', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Arial, sans-serif;
+  font-family: ebrima, sans-serif;
   font-size: 17px;
   font-weight: 400;
   font-style: normal;
@@ -132,6 +133,8 @@
   font-size: clamp(38px, 4.7vw, 62px); font-weight: 900; line-height: 1.06;
   letter-spacing: -.03em; color: var(--navy);
 }
+/* Ohne vorangestelltes Etikett beginnt die Überschrift bündig oben */
+.sdx .sd-hero h1:first-child { margin-top: 0; }
 .sdx .sd-hero h1 em { font-style: normal; color: var(--blue); }
 .sdx .sd-hero__lead { margin-top: 24px; font-size: clamp(17px, 1.3vw, 19.5px); line-height: 1.72; color: var(--muted); max-width: 560px; }
 .sdx .sd-hero__cta { display: flex; flex-wrap: wrap; gap: 14px; margin-top: 36px; }

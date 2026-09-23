@@ -3,10 +3,9 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Kontakt – Smell Discettes</title>
+<title>Kontakt – SMELL Discettes</title>
 <meta name="description" content="Kontakt zu SMELL Discettes GmbH in Wettingen: Adresse, Telefon, E-Mail und Kontaktformular.">
 
-<link rel="stylesheet" href="assets/fonts/lato.css">
 <link rel="stylesheet" href="assets/css/sd.css">
 </head>
 <body style="margin:0">
@@ -17,21 +16,21 @@
   <!-- ---------- Header (löschbar, falls das Theme bereits einen Header hat) ---------- -->
   <header class="sd-header">
     <div class="sd-wrap sd-header__in">
-      <a class="sd-header__logo" href="index.html" aria-label="Smell Discettes Startseite">
-        <img src="assets/logo/logo.webp" alt="Smell Discettes" width="300" height="264">
+      <a class="sd-header__logo" href="index.html" aria-label="SMELL Discettes Startseite">
+        <img src="assets/logo/logo.webp" alt="SMELL Discettes" width="300" height="264">
       </a>
       <nav class="sd-nav">
         <a href="produkt.html">Produkt</a>
-        <a href="smelltest.html">SmellTest</a>
+        <a href="smelltest.html">SMELL Test</a>
         <a href="test.html">Online-Test</a>
         <a href="ueber-uns.html">Über uns</a>
         <a href="faq.html">FAQ</a>
         <a class="is-current" href="kontakt.html">Kontakt</a>
       </nav>
       <div class="sd-lang">
-        <a class="is-active" href="#">DE</a><span>/</span><a href="#">EN</a><span>/</span><a href="#">FR</a><span>/</span><a href="#">IT</a>
+        <a class="is-active" href="index.html">DE</a><span>/</span><a href="#">EN</a><span>/</span><a href="#">FR</a><span>/</span><a href="#">IT</a>
       </div>
-      <a class="sd-btn sd-btn--primary" href="produkt.html#bestellen">Bestellen</a>
+      <a class="sd-btn sd-btn--primary" href="kontakt.html?anliegen=bestellung#formular">Bestellen</a>
     </div>
   </header>
 
@@ -75,11 +74,11 @@
           </dl>
 
           <p style="margin-top:32px">
-            <a class="sd-btn sd-btn--ghost" href="produkt.html#bestellen">Zu den Bezugsquellen</a>
+            <a class="sd-btn sd-btn--ghost" href="vertriebspartner.html#finden">Zu den Bezugsquellen</a>
           </p>
         </div>
 
-        <div class="sd-formcard">
+        <div class="sd-formcard" id="formular">
           <span class="sd-eyebrow">Nachricht senden</span>
           <h2 class="sd-h3" style="margin-top:14px">Kontaktformular</h2>
           <!-- Das Formular ist gestaltet, aber noch nicht angebunden.
@@ -140,7 +139,7 @@
     <div class="sd-wrap">
       <div class="sd-footer__grid">
         <div>
-          <div class="sd-footer__logo"><img src="assets/logo/logo.webp" alt="Smell Discettes" width="300" height="264"></div>
+          <div class="sd-footer__logo"><img src="assets/logo/logo.webp" alt="SMELL Discettes" width="420" height="370"></div>
           <p>Olfaktorischer Screening-Test für Klinik und Praxis. Entwickelt und hergestellt in der Schweiz.</p>
         </div>
         <div>
@@ -148,7 +147,7 @@
           <ul>
             <li><a href="produkt.html">Übersicht</a></li>
             <li><a href="produkt.html#artikel">Artikelangaben</a></li>
-            <li><a href="smelltest.html">SmellTest</a></li>
+            <li><a href="smelltest.html">SMELL Test</a></li>
             <li><a href="vertriebspartner.html#finden">Bezugsquellen</a></li>
           </ul>
         </div>
@@ -171,14 +170,14 @@
             <li>UID CHE-276.440.705</li>
             <li><a href="tel:+41797050431">+41 79 705 04 31</a></li>
             <li><a href="mailto:info@smelldiscettes.com">info@smelldiscettes.com</a></li>
-            <li><a href="kontakt.html">Kontaktformular</a></li>
+            <li><a href="kontakt.html#formular">Kontaktformular</a></li>
           </ul>
         </div>
       </div>
       <div class="sd-footer__bar">
         <span>© 2026 SMELL Discettes GmbH. Alle Rechte vorbehalten.</span>
         <nav>
-          <a href="#">Deutsch</a>
+          <a href="index.html">Deutsch</a>
           <a href="#">English</a>
           <a href="#">Français</a>
           <a href="#">Italiano</a>
@@ -188,6 +187,19 @@
       </div>
     </div>
   </footer>
+
+<script>
+/* Links wie kontakt.html?anliegen=bestellung waehlen das passende Anliegen vor. */
+(function () {
+  var m = window.location.search.match(/[?&]anliegen=([^&#]+)/);
+  var feld = document.getElementById('sd-anliegen');
+  if (!m || !feld) return;
+  var text = { bestellung: 'Bestellung und Bezugsquellen', partner: 'Vertriebspartnerschaft' }[decodeURIComponent(m[1])];
+  for (var i = 0; text && i < feld.options.length; i++) {
+    if (feld.options[i].text === text) { feld.selectedIndex = i; break; }
+  }
+})();
+</script>
 
 </div>
 <!-- ==== ENDE ELEMENTOR-BLOCK ==== -->

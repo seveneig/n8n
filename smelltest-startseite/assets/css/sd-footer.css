@@ -2,10 +2,7 @@
    SMELL DISCETTES – GLOBALE FUSSZEILE (Elementor Theme Builder)
    Eigener Wrapper .sdxf und eigenes Präfix .sdf-.
 
-   Schrift: Lato wird vom Kopfzeilen-Block geladen, der auf jeder
-   Seite vor der Fusszeile steht. Wird die Fusszeile ohne den
-   Kopfzeilen-Block eingesetzt, greift die Systemschrift – dann den
-   Font-Block aus assets/fonts/lato.css hier oben einfügen.
+   Schrift: Ebrima als Systemschrift, nichts einzubetten.
    ================================================================ */
 
 /* ---------- 1. Kapselung / Reset -------------------------------- */
@@ -30,7 +27,7 @@
   --navy:      #00102E;
   --wrap: 1200px;
 
-  font-family: 'LatoSD', 'Lato', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Arial, sans-serif;
+  font-family: ebrima, sans-serif;
   font-size: 17px;
   font-weight: 400;
   font-style: normal;

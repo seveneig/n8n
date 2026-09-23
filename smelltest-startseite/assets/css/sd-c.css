@@ -51,7 +51,7 @@
   --pad: 48px;
   --gutter: max(var(--pad), calc((100% - var(--wrap)) / 2));
 
-  font-family: 'LatoSD', 'Lato', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Arial, sans-serif;
+  font-family: ebrima, sans-serif;
   font-size: 17px;             /* über dem empfohlenen Minimum von 16 px */
   font-weight: 400;
   font-style: normal;

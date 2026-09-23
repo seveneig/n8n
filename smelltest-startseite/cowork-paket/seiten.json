@@ -1,5 +1,5 @@
 {
-  "projekt": "Smell Discettes – Website Deutsch",
+  "projekt": "SMELL Discettes – Website Deutsch",
   "sprache": "de",
   "erstellt": "2026-09-08",
   "hinweis": "Alle Seitenblöcke sind ohne Kopf- und Fusszeile. Diese beiden werden einmalig als Theme-Builder-Vorlagen angelegt.",
@@ -8,13 +8,13 @@
       "datei": "bloecke/_kopfzeile.html",
       "typ": "header",
       "anzeigebedingung": "Gesamte Website",
-      "groesse_kb": 128
+      "groesse_kb": 38
     },
     "fusszeile": {
       "datei": "bloecke/_fusszeile.html",
       "typ": "footer",
       "anzeigebedingung": "Gesamte Website",
-      "groesse_kb": 36
+      "groesse_kb": 35
     }
   },
   "seiten": [
@@ -26,7 +26,7 @@
       "im_hauptmenue": false,
       "startseite": true,
       "alte_url": "/de/",
-      "groesse_kb": 520
+      "groesse_kb": 430
     },
     {
       "datei": "bloecke/produkt.html",
@@ -36,17 +36,17 @@
       "im_hauptmenue": true,
       "startseite": false,
       "alte_url": "/de/product/",
-      "groesse_kb": 416
+      "groesse_kb": 325
     },
     {
       "datei": "bloecke/smelltest.html",
-      "titel": "SmellTest",
+      "titel": "SMELL Test",
       "slug": "smelltest",
       "menue_reihenfolge": 3,
       "im_hauptmenue": true,
       "startseite": false,
       "alte_url": "/de/SmellTest/",
-      "groesse_kb": 223
+      "groesse_kb": 232
     },
     {
       "datei": "bloecke/test.html",
@@ -56,7 +56,7 @@
       "im_hauptmenue": true,
       "startseite": false,
       "alte_url": null,
-      "groesse_kb": 638,
+      "groesse_kb": 559,
       "enthaelt_javascript": true,
       "suchmaschinen": "noindex",
       "hinweis": "Interaktiver Online-Test. Der Block enthaelt ein <script>-Element; es muss unveraendert im HTML-Widget bleiben. Seite auf noindex setzen."
@@ -69,7 +69,7 @@
       "im_hauptmenue": true,
       "startseite": false,
       "alte_url": "/de/about/",
-      "groesse_kb": 335
+      "groesse_kb": 245
     },
     {
       "datei": "bloecke/faq.html",
@@ -79,7 +79,7 @@
       "im_hauptmenue": true,
       "startseite": false,
       "alte_url": null,
-      "groesse_kb": 137
+      "groesse_kb": 47
     },
     {
       "datei": "bloecke/kontakt.html",
@@ -89,7 +89,7 @@
       "im_hauptmenue": true,
       "startseite": false,
       "alte_url": "/de/contact_form/",
-      "groesse_kb": 132
+      "groesse_kb": 42
     },
     {
       "datei": "bloecke/vertriebspartner.html",
@@ -99,7 +99,7 @@
       "im_hauptmenue": false,
       "startseite": false,
       "alte_url": "/de/distributor_form/",
-      "groesse_kb": 189
+      "groesse_kb": 99
     },
     {
       "datei": "bloecke/impressum.html",
@@ -109,7 +109,7 @@
       "im_hauptmenue": false,
       "startseite": false,
       "alte_url": null,
-      "groesse_kb": 131
+      "groesse_kb": 40
     },
     {
       "datei": "bloecke/datenschutz.html",
@@ -119,7 +119,7 @@
       "im_hauptmenue": false,
       "startseite": false,
       "alte_url": null,
-      "groesse_kb": 130
+      "groesse_kb": 40
     }
   ],
   "container_einstellungen": {
@@ -140,7 +140,7 @@
   },
   "seitenvorlage": "elementor_header_footer",
   "interne_links": {
-    "hinweis": "In den Blöcken stehen relative Pfade wie produkt.html. Diese vor dem Speichern durch die echten WordPress-Adressen ersetzen.",
+    "hinweis": "Relative Pfade wie produkt.html vor dem Speichern durch die WordPress-Adressen ersetzen. Nur am Anfang eines href-Werts ersetzen (href=\"test.html darf nicht in href=\"smelltest.html greifen). Anhaenge bleiben erhalten: kontakt.html?anliegen=bestellung#formular -> /kontakt/?anliegen=bestellung#formular.",
     "ersetzungen": {
       "index.html": "/",
       "produkt.html": "/produkt/",
@@ -152,6 +152,48 @@
       "impressum.html": "/impressum/",
       "datenschutz.html": "/datenschutz/",
       "test.html": "/test/"
-    }
+    },
+    "offen": "Die Sprachumschalter EN / FR / IT (und English / Français / Italiano in der Fusszeile) haben noch kein Ziel (href=\"#\"), weil es die Sprachfassungen noch nicht gibt. Nicht selbst verlinken.",
+    "regex": "href=\"(produkt|smelltest|test|ueber-uns|faq|kontakt|vertriebspartner|impressum|datenschutz|index)\\.html"
+  },
+  "stand": "2026-09-23",
+  "schrift": {
+    "font_family": "ebrima, sans-serif",
+    "hinweis": "Systemschrift, wird nicht eingebettet. Auf Geraeten ohne Ebrima greift die serifenlose Systemschrift."
+  },
+  "downloads": {
+    "hinweis": "In die Mediathek hochladen, danach im Block bloecke/test.html den Pfad links durch die Mediathek-Adresse ersetzen.",
+    "dateien": [
+      {
+        "pfad_im_block": "downloads/Smell-Test_Gebrauchsanweisung_D.pdf",
+        "sprache": "de",
+        "titel": "Gebrauchsanweisung",
+        "groesse_kb": 218
+      },
+      {
+        "pfad_im_block": "downloads/Smell-Test_Instruction_for_use_E.pdf",
+        "sprache": "en",
+        "titel": "Instructions for use",
+        "groesse_kb": 241
+      },
+      {
+        "pfad_im_block": "downloads/Smell-Test_mode_d_emploi_F.pdf",
+        "sprache": "fr",
+        "titel": "Mode d'emploi",
+        "groesse_kb": 208
+      },
+      {
+        "pfad_im_block": "downloads/Smell-Test_Istruzioni_per_l_uso_I.pdf",
+        "sprache": "it",
+        "titel": "Istruzioni per l'uso",
+        "groesse_kb": 255
+      }
+    ]
+  },
+  "online_test": {
+    "video_platzhalter": "VIDEO-URL-DER-STARTSEITE",
+    "video_hinweis": "Im Skript von bloecke/test.html durch die Adresse des Startseiten-Videos ersetzen (YouTube, Vimeo oder MP4).",
+    "vorfuehrcode": "SMELL-2026-HANS",
+    "hinweis_neues_set_ab_anmeldungen": 10
   }
 }

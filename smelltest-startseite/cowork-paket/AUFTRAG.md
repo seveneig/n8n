@@ -1,4 +1,4 @@
-# Auftrag: Website Smell Discettes in WordPress mit Elementor anlegen
+# Auftrag: Website SMELL Discettes in WordPress mit Elementor anlegen und aktualisieren
 
 ## Ziel
 
@@ -8,8 +8,13 @@ einem fertigen HTML-Block über ein **Elementor-HTML-Widget**, und richte
 Hauptmenü setzen und Startseite festlegen.
 
 Alle Inhalte liegen in diesem Paket. **Es ist nichts zu texten und nichts zu
-gestalten** – die Blöcke bringen ihr eigenes CSS, ihre Schrift und alle Bilder
-eingebettet mit.
+gestalten** – die Blöcke bringen ihr eigenes CSS und alle Bilder eingebettet mit.
+Die Schrift ist **Ebrima** (`font-family: ebrima, sans-serif`), eine Systemschrift,
+die nicht eingebettet wird.
+
+> **Ist die Website bereits angelegt?** Dann gilt zuerst der Abschnitt
+> **„Aktualisierung einer bestehenden Installation"** weiter unten. Nichts doppelt
+> anlegen.
 
 ## Voraussetzungen
 
@@ -29,7 +34,7 @@ Die verbindliche Liste steht in **`seiten.json`**. Kurzfassung:
 |---|---|---|---|
 | Startseite | `startseite` | `bloecke/startseite.html` | – (wird Startseite) |
 | Produkt | `produkt` | `bloecke/produkt.html` | Position 2 |
-| SmellTest | `smelltest` | `bloecke/smelltest.html` | Position 3 |
+| SMELL Test | `smelltest` | `bloecke/smelltest.html` | Position 3 |
 | Online-Test | `test` | `bloecke/test.html` | Position 4 |
 | Über uns | `ueber-uns` | `bloecke/ueber-uns.html` | Position 5 |
 | FAQ | `faq` | `bloecke/faq.html` | Position 6 |
@@ -42,14 +47,53 @@ Dazu zwei Theme-Builder-Vorlagen: `bloecke/_kopfzeile.html` als **Header**,
 `bloecke/_fusszeile.html` als **Footer**, Anzeigebedingung jeweils
 **Gesamte Website**.
 
+Ausserdem vier PDF-Dateien in `downloads/` – die Gebrauchsanweisungen, die im
+Online-Test nach der Anmeldung angeboten werden (siehe „Sonderfall Online-Test").
+
+## Aktualisierung einer bestehenden Installation
+
+Sind die Seiten und Vorlagen schon vorhanden, werden sie **ersetzt, nicht neu
+angelegt**:
+
+1. Seite über den **Slug** finden (`wp post list --post_type=page --name=<slug>`).
+   Fehlt eine Seite, sie wie unten beschrieben neu anlegen.
+2. In der vorhandenen `_elementor_data` das **eine HTML-Widget** suchen und nur
+   dessen `settings.html` durch den neuen Blockinhalt ersetzen – nach der
+   Link-Ersetzung aus Schritt 1 unten. Container, Element-IDs und alle übrigen
+   Einstellungen bleiben unverändert. Wieder mit
+   `wp_slash( wp_json_encode( … ) )` speichern.
+3. Genauso bei **Kopfzeile global** und **Fusszeile global** (Beitragstyp
+   `elementor_library`).
+4. Seitentitel an `seiten.json` angleichen (die Seite `smelltest` heisst jetzt
+   **SMELL Test**) und im Hauptmenü die Beschriftung ebenfalls auf **SMELL Test**
+   ändern.
+5. Wurden auf der Live-Seite von Hand Inhalte ergänzt, die in den Blöcken nicht
+   vorkommen (zum Beispiel ein Video auf der Startseite oder ein eigenes
+   Elementor-Formular auf der Kontaktseite): **nicht löschen**, sondern vorher
+   melden und die Adresse des Startseiten-Videos notieren – sie wird für den
+   Online-Test gebraucht.
+6. Danach `wp elementor flush-css` und die Abnahme unten.
+
 ## Vorgehen je Seite
 
 ### 1. Interne Links ersetzen
 
 In den Blöcken stehen relative Pfade wie `produkt.html`. Diese **vor dem Speichern**
 durch die echten Adressen ersetzen – die Zuordnung steht in `seiten.json` unter
-`interne_links.ersetzungen`. Reine Textersetzung im HTML-String, zum Beispiel
-`href="produkt.html"` → `href="/produkt/"`.
+`interne_links.ersetzungen`.
+
+**Nur am Anfang eines `href`-Werts ersetzen**, nie als freie Textersetzung:
+`href="test.html` darf nicht in `href="smelltest.html` greifen. Sicher ist ein
+regulärer Ausdruck wie
+
+```
+href="(produkt|smelltest|test|ueber-uns|faq|kontakt|vertriebspartner|impressum|datenschutz|index)\.html
+```
+
+der nur den Dateinamen austauscht. Anhänge bleiben stehen:
+`href="kontakt.html?anliegen=bestellung#formular"` →
+`href="/kontakt/?anliegen=bestellung#formular"`,
+`href="index.html#praeoperativ"` → `href="/#praeoperativ"`.
 
 Achtung: `index.html` wird zu `/`, nicht zu `/startseite/`.
 
@@ -145,6 +189,41 @@ Bildantworten, Score und Ergebnisblatt zum Drucken. Für diese Seite gilt zusät
 - Die Prüfung des Produktcodes ist eine reine Formatprüfung im Browser und
   **kein Zugangsschutz**. Wer echte Codes prüfen will, braucht eine
   Serverkomponente; bis dahin nichts anderes behaupten.
+- Der Vorführcode **`SMELL-2026-HANS`** funktioniert immer. Ab der zehnten
+  Anmeldung mit demselben Produktcode erscheint ein Hinweis, ein neues SMELL
+  Test-Set zu bestellen. Gezählt wird im Browser (`localStorage`).
+
+### Gebrauchsanweisungen hochladen
+
+Die vier PDFs aus `downloads/` in die **Mediathek** hochladen. Danach im Block
+`bloecke/test.html` jeden Pfad `downloads/<Dateiname>.pdf` durch die Adresse
+der hochgeladenen Datei ersetzen, zum Beispiel
+`downloads/Smell-Test_Gebrauchsanweisung_D.pdf` →
+`/wp-content/uploads/2026/09/Smell-Test_Gebrauchsanweisung_D.pdf`.
+Die vier Pfade stehen auch in `seiten.json` unter `downloads`.
+
+### Erklärvideo eintragen
+
+Im Skript von `bloecke/test.html` steht:
+
+```js
+var VIDEO_URL = 'VIDEO-URL-DER-STARTSEITE';
+```
+
+Den Platzhalter durch die Adresse des Videos ersetzen, das auf der **Startseite**
+der Live-Website läuft (YouTube-, Vimeo- oder MP4-Adresse aus der Mediathek). Bleibt
+der Platzhalter stehen, zeigt der Online-Test an dieser Stelle nur einen Hinweis.
+Das Video wird erst beim Klick geladen; YouTube läuft über `youtube-nocookie.com`.
+Blockiert das Cookie-Plugin (z. B. Complianz) eingebettete Videos, dieses iframe
+für die Seite `/test/` freigeben oder als funktional einstufen.
+
+### Kontaktformular als Sprungziel
+
+Die „Bestellen"-Links führen auf `/kontakt/?anliegen=bestellung#formular`. Der
+Kontakt-Block hat dafür die Sprungmarke `id="formular"` und wählt das Anliegen
+„Bestellung und Bezugsquellen" automatisch vor. Wurde auf der Live-Seite ein
+**eigenes Elementor-Formular** eingesetzt, diesem Formular-Widget unter
+*Erweitert → CSS-ID* den Wert `formular` geben, damit der Sprung funktioniert.
 
 ## Kopf- und Fusszeile
 
@@ -168,7 +247,7 @@ Elementors Sticky-Einstellung setzt eigene Positionierung und bricht das.
 
 ## Menü und Startseite
 
-- Menü **Hauptmenü** anlegen mit: Produkt, SmellTest, Online-Test, Über uns, FAQ,
+- Menü **Hauptmenü** anlegen mit: Produkt, SMELL Test, Online-Test, Über uns, FAQ,
   Kontakt (Reihenfolge gemäss `menue_reihenfolge` in `seiten.json`).
 - Menü der Theme-Position zuweisen, sofern das Theme eine erwartet. Die Navigation
   steckt allerdings bereits im Kopfzeilen-Block – ein zusätzliches Theme-Menü ist
@@ -198,9 +277,10 @@ Prüfe nach dem Import auf **jeder** Seite:
    Platz frei, der Header liegt darüber.
 3. Die farbigen Bänder (dunkelblaues Kennzahlenband, Fusszeile) laufen über die
    **volle Bildschirmbreite**, nicht eingerückt.
-4. Die Schrift ist **Lato**, nicht die Theme-Schrift. Sieht es nach Serifen oder
-   nach Arial aus, wurde der `<style>`-Block beim Speichern gefiltert → fehlende
-   `unfiltered_html`-Berechtigung.
+4. Die Schrift ist **Ebrima** (unter Windows) bzw. die serifenlose Systemschrift
+   (Mac, iPhone, Android – Ebrima gibt es dort nicht, das ist erwartet). Sieht
+   es nach Serifen aus, wurde der `<style>`-Block beim Speichern gefiltert →
+   fehlende `unfiltered_html`-Berechtigung.
 5. Keine kaputten Bilder. Alle Bilder sind eingebettet, es gibt keine externen
    Bildpfade.
 6. Auf dem Handy (390 px): Burger-Menü öffnet und schliesst, kein horizontales
@@ -210,13 +290,18 @@ Prüfe nach dem Import auf **jeder** Seite:
    Disketten beantworten, abschliessen. Der Score muss erscheinen, „Ergebnis drucken"
    muss den Druckdialog mit dem Ergebnisblatt öffnen. Die Browser-Konsole bleibt
    dabei fehlerfrei.
+9. Auf `/test/` nach der Anmeldung: Bereich **Anleitung und Unterlagen** sichtbar,
+   alle vier PDFs öffnen sich, das Video spielt ab.
+10. „Bestellen" in der Kopfzeile führt auf das Kontaktformular, das Anliegen
+    „Bestellung und Bezugsquellen" ist vorausgewählt.
 
 ## Was nicht zu tun ist
 
 - **Keine Inhalte umschreiben, kürzen oder ergänzen.** Die Texte sind über ein
   Claim Sheet rechtlich abgesichert; jede Änderung kann eine unzulässige Aussage
   erzeugen. Bei inhaltlichen Zweifeln nachfragen statt anpassen.
-- Bestehende Seiten, Beiträge oder Vorlagen **nicht** verändern oder löschen.
+- Seiten, Beiträge oder Vorlagen, die **nicht** in `seiten.json` stehen, weder
+  verändern noch löschen.
 - Die Blöcke nicht in Gutenberg-Blöcke oder Elementor-Widgets zerlegen. Sie
   funktionieren nur als **ein** zusammenhängendes HTML-Widget, weil das CSS im
   selben Block steckt.
@@ -230,14 +315,17 @@ Prüfe nach dem Import auf **jeder** Seite:
 | Schrift falsch, Abstände zerschossen | `<style>` beim Speichern gefiltert | als Administrator mit `unfiltered_html` importieren |
 | Inhalt startet unter einem grossen Leerraum | Header läuft normal mit statt zu überlagern | Elementor-Sticky deaktivieren; alternativ den kommentierten Freiraum-Block am Anfang jedes Seitenblocks löschen |
 | Farbige Bänder eingerückt | Container nicht auf volle Breite / Padding ≠ 0 | Container-Einstellungen gemäss Abschnitt 3 |
-| Editor wird sehr langsam | Blöcke sind 130–650 KB gross | normal; im Editor nicht scrollen, Änderungen an den Quelldateien vornehmen |
+| Editor wird sehr langsam | Blöcke sind 40–560 KB gross | normal; im Editor nicht scrollen, Änderungen an den Quelldateien vornehmen |
 | Online-Test reagiert nicht auf Klicks | Inline-JavaScript wurde vom Cache-Plugin verschoben oder minifiziert | Seite `/test/` von der JS-Optimierung ausnehmen |
-| Online-Test zeigt keine Bilder | Block wurde beim Einfügen abgeschnitten | vollständige Datei übernehmen, sie ist rund 650 KB gross |
+| Online-Test zeigt keine Bilder | Block wurde beim Einfügen abgeschnitten | vollständige Datei übernehmen, sie ist rund 560 KB gross |
+| PDF-Links im Online-Test führen ins Leere | Pfade `downloads/…` nicht ersetzt | PDFs hochladen und Pfade ersetzen (Abschnitt „Gebrauchsanweisungen hochladen") |
 
 ## Rückmeldung
 
 Melde nach Abschluss zurück:
-- Liste der angelegten Seiten mit ihren IDs und URLs
+- Liste der angelegten bzw. aktualisierten Seiten mit ihren IDs und URLs
+- die Adresse des Startseiten-Videos, die im Online-Test eingetragen wurde
+- die Mediathek-Adressen der vier PDFs
 - Elementor-Version und ob Elementor Pro vorhanden war
 - welche Abnahmepunkte geprüft wurden und mit welchem Ergebnis
 - alles, was nicht wie beschrieben funktioniert hat

@@ -1,6 +1,7 @@
 /**
  * Baut aus jeder Quellseite den passenden Elementor-Block:
- *   - Schrift, gemeinsames Stylesheet und alle Bilder werden eingebettet
+ *   - Gemeinsames Stylesheet und alle Bilder werden eingebettet
+ *   - Schrift ist Ebrima als Systemschrift, es wird keine Schrift eingebettet
  *   - <html>/<head>/<body> entfallen
  *   - Ergebnis: elementor-<name>.html, je ein Copy-Paste-Block
  *
@@ -19,7 +20,7 @@ const PAGES = [
   { src: 'index-alt.html', out: 'elementor-startseite-variante-b.html', txt: 'startseite-variante-b.txt',
     titel: 'Startseite Variante B', extraCss: 'assets/css/sd-alt.css' },
   { src: 'index-c.html',   out: 'elementor-startseite-variante-c.html', txt: 'startseite-variante-c.txt',
-    titel: 'Startseite Variante C', baseCss: 'assets/css/sd-c.css', extraFonts: ['assets/fonts/lato-300.css'] },
+    titel: 'Startseite Variante C', baseCss: 'assets/css/sd-c.css' },
   { src: 'kontakt.html',          out: 'elementor-kontakt.html',          txt: 'kontakt.txt',          titel: 'Kontakt' },
   { src: 'vertriebspartner.html', out: 'elementor-vertriebspartner.html', txt: 'vertriebspartner.txt', titel: 'Vertriebspartner' },
   { src: 'impressum.html',        out: 'elementor-impressum.html',        txt: 'impressum.txt',        titel: 'Impressum' },
@@ -30,7 +31,7 @@ const PAGES = [
   { src: 'header.html', out: 'elementor-header.html', txt: 'header.txt',
     titel: 'Kopfzeile (Theme Builder)', baseCss: 'assets/css/sd-header.css' },
   { src: 'footer.html', out: 'elementor-footer.html', txt: 'footer.txt',
-    titel: 'Fusszeile (Theme Builder)', baseCss: 'assets/css/sd-footer.css', noFont: true },
+    titel: 'Fusszeile (Theme Builder)', baseCss: 'assets/css/sd-footer.css' },
 ];
 
 // Zusaetzlich als .txt ablegen: laesst sich per Doppelklick in Notepad oeffnen,
@@ -83,7 +84,7 @@ const dataUri = (rel) => {
   return uri;
 };
 
-const fontCss = readFileSync(resolve(root, 'assets/fonts/lato.css'), 'utf8').trim();
+// Schrift: Ebrima als Systemschrift (font-family: ebrima, sans-serif) - nichts einzubetten.
 const defaultCss = readFileSync(resolve(root, 'assets/css/sd.css'), 'utf8').trim();
 
 for (const page of PAGES) {
@@ -99,8 +100,6 @@ for (const page of PAGES) {
   const sharedCss = page.baseCss
     ? readFileSync(resolve(root, page.baseCss), 'utf8').trim()
     : defaultCss;
-  const extraFontCss = (page.extraFonts || [])
-    .map((f) => readFileSync(resolve(root, f), 'utf8').trim()).join('\n');
 
   const own = html.match(/<style>([\s\S]*?)<\/style>/);
   const ownCss = (page.extraCss ? '\n\n' + readFileSync(resolve(root, page.extraCss), 'utf8').trim() : '')
@@ -123,12 +122,13 @@ for (const page of PAGES) {
   ============================================================
   SMELL DISCETTES - ${page.titel.toUpperCase()}
   Diesen kompletten Block in ein Elementor-HTML-Widget einfuegen.
-  Enthaelt Schrift und Bilder eingebettet - keine externen Dateien noetig.
+  Enthaelt alle Bilder eingebettet - keine externen Dateien noetig.
+  Schrift: Ebrima (Systemschrift, font-family: ebrima, sans-serif).
   Container auf volle Breite stellen, Padding auf 0.
   ============================================================
 -->
 <style>
-${page.noFont ? '' : fontCss + (extraFontCss ? '\n' + extraFontCss : '') + '\n\n'}${sharedCss}${ownCss}
+${sharedCss}${ownCss}
 </style>
 
 ${inlined}
@@ -161,8 +161,6 @@ ${inlined}
   ============================================================
 -->
 <style>
-${fontCss}${extraFontCss ? '\n' + extraFontCss : ''}
-
 ${sharedCss}${ownCss}
 </style>
 ${FREIRAUM}
