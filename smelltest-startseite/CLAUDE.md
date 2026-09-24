@@ -58,7 +58,7 @@ offen lassen, bis die Angaben vorliegen.
 
 - «Klinisch erprobter Riech-Screening-Test» · «Klinisch erprobt seit über 25 Jahren»
 - «Entwickelt an der Universität Zürich (Klinik für ORL und Gesichtschirurgie)»
-- «4 Publikationen in Rhinology und Clinical Otolaryngology»
+- «Publiziert in Rhinology und Clinical Otolaryngology» – **keine Anzahl** nennen
 - «99,74 % statistische Sicherheit bei Score 7 oder 8»
 - «Schnelles Ergebnis» · «Kurze Testdauer» · «Wenige Minuten» (nie eine konkrete Dauer)
 - «Delegierbar an medizinische Praxisassistenz und Pflegepersonal»
@@ -93,7 +93,7 @@ offen lassen, bis die Angaben vorliegen.
 | Ergebnis | «Das Screening zeigt, ob eine Riechstörung vorliegt» | «Der Test diagnostiziert Hyposmie» |
 | Vergleich | «Ergänzt bestehende Testinfrastruktur» | «Besser als …» |
 | Zielgruppe | «Für HNO-Fachpersonen, Kliniken und Praxen» | «Für jedermann» |
-| Studienlage | «Klinisch erprobt in 4 Publikationen» | «Wissenschaftlich bewiesen, dass …» |
+| Studienlage | «Klinisch erprobt, publiziert in Rhinology und Clinical Otolaryngology» | «Wissenschaftlich bewiesen, dass …» |
 | COVID-Bezug | «Relevant auch bei postviralen Riechstörungen» | «Heilt Post-COVID-Anosmie» |
 | Herkunft | «Swiss Made, entwickelt an der Universität Zürich» | «Von der Universität Zürich zertifiziert» |
 
@@ -117,7 +117,7 @@ Diese stammen aus den Publikationen und dürfen genannt werden:
 - **10,3 %** präoperativ eingeschränkte Riechfunktion (Briner, Simmen & Jones 2003)
 - **8** überschwellige Riechstoffe, Format 5 × 6 cm
 - **3** Schritte im Ablauf
-- **4** Validierungspublikationen in *Rhinology* und *Clinical Otolaryngology*
+- Publikationen **ohne Anzahl** nennen («Publikationen», nicht «vier Publikationen»)
 
 ## Schreibweisen (Korrekturrunde September 2026)
 
@@ -132,7 +132,11 @@ Diese stammen aus den Publikationen und dürfen genannt werden:
   damit es nicht am Bindestrich umbricht.
 - Menüpunkt und Seitentitel der Info-Seite: **SMELL Test** (Slug bleibt `smelltest`).
 - Anrede immer **Sie**.
-- Nicht verwenden: «wieder verfügbar», «CE-Kennzeichnung».
+- Nicht verwenden: «wieder verfügbar», «CE-Kennzeichnung», eine Anzahl der Publikationen.
+- Kopf- und Fusszeile enthalten einen Link **Home**; die Fusszeile bringt den Knopf
+  «Zurück zum Seitenanfang» mit (unten rechts).
+- PDFs öffnen in der Lightbox: Link mit `data-lightbox="pdf"` (Stil in `sd.css`,
+  Skript derzeit in `test.html`).
 
 ## Link-Ziele
 

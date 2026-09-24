@@ -635,6 +635,59 @@
 }
 
 /* ================================================================
+   19. PDF-Lightbox
+   Links mit data-lightbox="pdf" öffnen das Dokument in einem
+   Overlay statt in einem neuen Tab. Das Skript liegt auf der Seite.
+   ================================================================ */
+.sdx .sd-lb { position: fixed; inset: 0; z-index: 10000; display: grid; place-items: center; padding: 24px; background: rgba(0,16,46,.72); }
+.sdx .sd-lb[hidden] { display: none; }
+.sdx .sd-lb__box {
+  width: 100%; max-width: 1000px; height: min(90vh, 1200px);
+  display: grid; grid-template-rows: auto 1fr; overflow: hidden;
+  background: var(--white); border-radius: var(--r-lg); box-shadow: 0 30px 80px -30px rgba(0,0,0,.6);
+}
+.sdx .sd-lb__bar { display: flex; align-items: center; gap: 10px; padding: 12px 14px 12px 22px; border-bottom: 1px solid var(--line); }
+.sdx .sd-lb__titel { margin-right: auto; font-size: 15px; font-weight: 700; color: var(--navy); line-height: 1.3; }
+.sdx .sd-lb__btn {
+  font-size: 13.5px; font-weight: 700; color: var(--blue-deep); padding: 8px 14px; border-radius: 999px;
+  box-shadow: inset 0 0 0 1px var(--line); transition: background-color .2s ease;
+}
+.sdx .sd-lb__btn:hover { background: var(--blue-mist); }
+.sdx .sd-lb__zu { position: relative; flex: none; width: 38px; height: 38px; border-radius: 50%; background: var(--blue-mist); transition: background-color .2s ease; }
+.sdx .sd-lb__zu:hover { background: var(--blue-soft); }
+.sdx .sd-lb__zu::before, .sdx .sd-lb__zu::after {
+  content: ""; position: absolute; left: 11px; right: 11px; top: 18px; height: 2px; border-radius: 1px; background: var(--navy);
+}
+.sdx .sd-lb__zu::before { transform: rotate(45deg); }
+.sdx .sd-lb__zu::after  { transform: rotate(-45deg); }
+.sdx .sd-lb__frame { width: 100%; height: 100%; border: 0; display: block; background: #525659; }
+@media (max-width: 680px) {
+  .sdx .sd-lb { padding: 0; }
+  .sdx .sd-lb__box { height: 100%; border-radius: 0; }
+  .sdx .sd-lb__bar { padding-left: 16px; }
+  .sdx .sd-lb__neu { display: none; }
+}
+
+/* ================================================================
+   20. Zurück zum Seitenanfang
+   ================================================================ */
+.sdx .sd-top {
+  position: fixed; right: 24px; bottom: 24px; z-index: 9000;
+  width: 48px; height: 48px; border-radius: 50%;
+  display: grid; place-items: center;
+  background: #407BA0; color: #FFFFFF;
+  box-shadow: 0 12px 28px -10px rgba(0,16,46,.55);
+  transition: opacity .25s ease, transform .25s ease, background-color .2s ease;
+}
+.sdx .sd-top:hover { background: #6098BA; transform: translateY(-2px); }
+.sdx .sd-top:focus-visible { outline: 3px solid #BCD3E5; outline-offset: 3px; }
+.sdx .sd-top svg { display: block; width: 20px; height: 20px; }
+/* Mit JavaScript erst nach etwas Scrollen sichtbar, ohne JavaScript immer */
+.sdx .sd-top.is-ready:not(.is-on) { opacity: 0; transform: translateY(12px); pointer-events: none; }
+@media (max-width: 680px) { .sdx .sd-top { right: 16px; bottom: 16px; width: 44px; height: 44px; } }
+@media print { .sdx .sd-top { display: none; } }
+
+/* ================================================================
    ONLINE-TEST – nur auf dieser Seite verwendete Bausteine.
    Alles bleibt im Wrapper .sdx gekapselt.
    ================================================================ */
@@ -749,6 +802,8 @@
 }
 .sdx .sd-reslist > div:first-child { font-size: 11.5px; font-weight: 700; letter-spacing: .12em; text-transform: uppercase; color: var(--muted); }
 .sdx .sd-reslist b { font-weight: 700; color: var(--navy); }
+.sdx .sd-resans { display: flex; align-items: center; gap: 12px; }
+.sdx .sd-resans img { width: 44px; height: 44px; object-fit: contain; flex: none; }
 .sdx .sd-reslist .sd-mark { font-weight: 900; text-align: center; color: var(--blue); }
 .sdx .sd-reslist .sd-mark.is-bad { color: var(--red); }
 
@@ -940,6 +995,7 @@
         <div class="sd-panel">
           <h2>Patient anmelden</h2>
           <p>Die Angaben erscheinen auf dem Ergebnisblatt und bleiben ausschliesslich in diesem Browser.</p>
+          <div class="sd-note" id="sdt-durchgang" hidden></div>
 
           <form class="sd-form" id="sdt-form-patient" novalidate>
             <div class="sd-form__row">
@@ -1053,7 +1109,8 @@
 
           <div class="sd-actions">
             <button type="button" class="sd-btn sd-btn--primary" id="sdt-print">Ergebnis drucken oder als PDF sichern</button>
-            <button type="button" class="sd-btn sd-btn--ghost" id="sdt-again">Neuen Test starten</button>
+            <button type="button" class="sd-btn sd-btn--ghost" id="sdt-repeat">Test mit derselben Person wiederholen</button>
+            <button type="button" class="sd-btn sd-btn--ghost" id="sdt-again">Neue Person erfassen</button>
           </div>
         </div>
       </div>
@@ -1073,22 +1130,22 @@
             <div>
               <h3>Gebrauchsanweisung</h3>
               <div class="sd-doclist">
-                <a class="sd-doc" href="downloads/Smell-Test_Gebrauchsanweisung_D.pdf" target="_blank" rel="noopener">
+                <a class="sd-doc" data-lightbox="pdf" data-titel="Gebrauchsanweisung (Deutsch)" href="downloads/Smell-Test_Gebrauchsanweisung_D.pdf" target="_blank" rel="noopener">
                   <span class="sd-doc__lang">DE</span>
                   <span><b>Gebrauchsanweisung</b><small>Deutsch · PDF · 4 Seiten</small></span>
                   <span class="sd-doc__pfeil">↓</span>
                 </a>
-                <a class="sd-doc" href="downloads/Smell-Test_Instruction_for_use_E.pdf" target="_blank" rel="noopener" hreflang="en">
+                <a class="sd-doc" data-lightbox="pdf" data-titel="Instructions for use (English)" href="downloads/Smell-Test_Instruction_for_use_E.pdf" target="_blank" rel="noopener" hreflang="en">
                   <span class="sd-doc__lang">EN</span>
                   <span><b>Instructions for use</b><small>English · PDF · 4 pages</small></span>
                   <span class="sd-doc__pfeil">↓</span>
                 </a>
-                <a class="sd-doc" href="downloads/Smell-Test_mode_d_emploi_F.pdf" target="_blank" rel="noopener" hreflang="fr">
+                <a class="sd-doc" data-lightbox="pdf" data-titel="Mode d’emploi (Français)" href="downloads/Smell-Test_mode_d_emploi_F.pdf" target="_blank" rel="noopener" hreflang="fr">
                   <span class="sd-doc__lang">FR</span>
                   <span><b>Mode d’emploi</b><small>Français · PDF · 4 pages</small></span>
                   <span class="sd-doc__pfeil">↓</span>
                 </a>
-                <a class="sd-doc" href="downloads/Smell-Test_Istruzioni_per_l_uso_I.pdf" target="_blank" rel="noopener" hreflang="it">
+                <a class="sd-doc" data-lightbox="pdf" data-titel="Istruzioni per l’uso (Italiano)" href="downloads/Smell-Test_Istruzioni_per_l_uso_I.pdf" target="_blank" rel="noopener" hreflang="it">
                   <span class="sd-doc__lang">IT</span>
                   <span><b>Istruzioni per l’uso</b><small>Italiano · PDF · 4 pagine</small></span>
                   <span class="sd-doc__pfeil">↓</span>
@@ -1228,6 +1285,7 @@
   var patient = null;                 // { vorname, nachname, geburt, datum, seite }
   var antworten = new Array(8).fill(null);
   var aktuell = 0;
+  var durchgang = 1;                  // wievielter Test derselben Person
 
   /* ---------- Bildschirme --------------------------------------- */
   var SCREENS = ['login', 'patient', 'quiz', 'summary', 'result'];
@@ -1425,7 +1483,11 @@
       return;
     }
     meldung('sdt-msg-patient', '');
+    if (!patient || patient.vorname !== p.vorname || patient.nachname !== p.nachname || patient.geburt !== p.geburt) {
+      durchgang = 1;
+    }
     patient = p;
+    $('sdt-durchgang').hidden = true;
     antworten = new Array(8).fill(null);
     aktuell = 0;
     zeichneFrage();
@@ -1531,12 +1593,12 @@
       ? 'Bei 7 oder 8 Punkten liegt ein normales Riechvermögen vor.'
       : 'Bei 0 bis 6 Punkten liegt sehr wahrscheinlich eine Störung des Riechsinnes vor (Hyposmie, Anosmie). Möglich ist auch eine mangelnde Kooperation der Testperson. Zur Bestimmung des Ausmasses sind weiterführende Testmethoden notwendig.';
 
-    var html = '<div><span>Diskette</span><span>Antwort</span><span>Richtige Antwort</span><span></span></div>';
+    var html = '<div><span>Diskette</span><span>Gewählte Antwort</span><span>Richtige Antwort</span><span></span></div>';
     FRAGEN.forEach(function (f, i) {
       var ok = antworten[i] === f.richtig;
       html += '<div>' +
                 '<b>Diskette ' + f.nr + '</b>' +
-                '<span>' + esc(antworten[i]) + '</span>' +
+                '<span class="sd-resans"><img src="' + bildZu(f, antworten[i]) + '" alt="" width="44" height="44"><span>' + esc(antworten[i]) + '</span></span>' +
                 '<span>' + esc(f.richtig) + '</span>' +
                 '<span class="sd-mark' + (ok ? '' : ' is-bad') + '">' + (ok ? '✓' : '✕') + '</span>' +
               '</div>';
@@ -1548,6 +1610,7 @@
       ['Geburtsdatum', datumDe(patient.geburt)],
       ['Testdatum', datumDe(patient.datum)],
       ['Getestet',  patient.seite],
+      ['Durchgang', String(durchgang)],
       ['Prüfer',    sitzung.pruefer],
       ['Klinik',    sitzung.klinik]
     ];
@@ -1561,13 +1624,29 @@
     zeige('result');
   });
 
+  // Neue Person: Patientendaten leeren
   $('sdt-again').addEventListener('click', function () {
     patient = null;
+    durchgang = 1;
     antworten = new Array(8).fill(null);
     aktuell = 0;
     $('sdt-form-patient').reset();
     setzeSeite('Beide Nasenlöcher');
     heuteSetzen();
+    $('sdt-durchgang').hidden = true;
+    zeige('patient');
+  });
+
+  // Dieselbe Person erneut testen: Patientendaten bleiben stehen,
+  // nur die Nasenseite kann bei Bedarf gewechselt werden.
+  $('sdt-repeat').addEventListener('click', function () {
+    antworten = new Array(8).fill(null);
+    aktuell = 0;
+    durchgang++;
+    var n = $('sdt-durchgang');
+    n.innerHTML = '<b>Durchgang ' + durchgang + ':</b> Die Patientendaten sind übernommen. ' +
+                  'Wählen Sie bei Bedarf eine andere Seite der Nase und beginnen Sie den Test.';
+    n.hidden = false;
     zeige('patient');
   });
 
@@ -1577,7 +1656,7 @@
     var gut = p >= 7;
     var zeilen = FRAGEN.map(function (f, i) {
       var ok = antworten[i] === f.richtig;
-      return '<tr><td>Diskette ' + f.nr + '</td><td>' + esc(antworten[i]) + '</td><td>' +
+      return '<tr><td>Diskette ' + f.nr + '</td><td><img class="w" src="' + bildZu(f, antworten[i]) + '" alt="">' + esc(antworten[i]) + '</td><td>' +
              esc(f.richtig) + '</td><td class="m' + (ok ? '' : ' bad') + '">' + (ok ? '✓' : '✕') + '</td></tr>';
     }).join('');
 
@@ -1599,6 +1678,7 @@
       'th{text-align:left;font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:#5C6E85;border-bottom:1px solid #E1EAF2;padding:6px 4px}' +
       'td{padding:6px 4px;border-bottom:1px solid #F0F4F8}' +
       'td.m{text-align:center;font-weight:bold;color:#407BA0}td.m.bad{color:#D8362C}' +
+      'td img.w{width:34px;height:34px;object-fit:contain;vertical-align:middle;margin-right:10px}' +
       '.foot{font-size:11px;color:#5C6E85;line-height:1.55;border-top:1px solid #E1EAF2;padding-top:12px}' +
       '.sig{margin-top:34px;display:flex;gap:40px}' +
       '.sig div{flex:1;border-top:1px solid #16233A;padding-top:6px;font-size:11px;color:#5C6E85}' +
@@ -1610,6 +1690,7 @@
         '<div><dt>Geburtsdatum</dt><dd>' + esc(datumDe(patient.geburt)) + '</dd></div>' +
         '<div><dt>Testdatum</dt><dd>' + esc(datumDe(patient.datum)) + '</dd></div>' +
         '<div><dt>Getestet</dt><dd>' + esc(patient.seite) + '</dd></div>' +
+        '<div><dt>Durchgang</dt><dd>' + durchgang + '</dd></div>' +
         '<div><dt>Prüfer</dt><dd>' + esc(sitzung.pruefer) + '</dd></div>' +
         '<div><dt>Klinik</dt><dd>' + esc(sitzung.klinik) + '</dd></div>' +
       '</dl>' +
@@ -1618,7 +1699,7 @@
         ? 'Normales Riechvermögen (Score 7 oder 8).'
         : 'Auffälliges Ergebnis (Score 0 bis 6): Es liegt sehr wahrscheinlich eine Störung des Riechsinnes vor (Hyposmie, Anosmie). Möglich ist auch eine mangelnde Kooperation der Testperson.') +
       '</p></div>' +
-      '<table><thead><tr><th>Diskette</th><th>Antwort</th><th>Richtige Antwort</th><th></th></tr></thead>' +
+      '<table><thead><tr><th>Diskette</th><th>Gewählte Antwort</th><th>Richtige Antwort</th><th></th></tr></thead>' +
       '<tbody>' + zeilen + '</tbody></table>' +
       '<div class="sig"><div>Datum</div><div>Unterschrift Prüferin / Prüfer</div></div>' +
       '<p class="foot" style="margin-top:26px">' +
@@ -1653,7 +1734,7 @@
     var d = rahmen.contentWindow.document;
     d.open(); d.write(doc); d.close();
     // Manche Browser lösen bei document.write kein load-Ereignis aus
-    setTimeout(drucken, 300);
+    setTimeout(drucken, 900);
   });
 
   /* ---------- Start --------------------------------------------- */
@@ -1668,6 +1749,80 @@
       }
     } catch (e) {}
   }
+})();
+</script>
+
+<script>
+/* ==================================================================
+   PDF-LIGHTBOX
+   Links mit data-lightbox="pdf" öffnen das PDF in einem Overlay.
+   Ohne eingebauten PDF-Betrachter (einige Mobilgeräte) bleibt es beim
+   normalen Link, der das Dokument in einem neuen Tab öffnet.
+   ================================================================== */
+(function () {
+  'use strict';
+  var lb = null, frame, titel, laden, neu, vorher = null;
+
+  function bauen() {
+    lb = document.createElement('div');
+    lb.className = 'sd-lb';
+    lb.hidden = true;
+    lb.setAttribute('role', 'dialog');
+    lb.setAttribute('aria-modal', 'true');
+    lb.setAttribute('aria-label', 'Dokument');
+    lb.innerHTML =
+      '<div class="sd-lb__box">' +
+        '<div class="sd-lb__bar">' +
+          '<b class="sd-lb__titel"></b>' +
+          '<a class="sd-lb__btn" download>Herunterladen</a>' +
+          '<a class="sd-lb__btn sd-lb__neu" target="_blank" rel="noopener">In neuem Tab</a>' +
+          '<button type="button" class="sd-lb__zu" aria-label="Schliessen"></button>' +
+        '</div>' +
+        '<iframe class="sd-lb__frame" title="Dokument"></iframe>' +
+      '</div>';
+    (document.querySelector('.sdx') || document.body).appendChild(lb);
+    frame = lb.querySelector('iframe');
+    titel = lb.querySelector('.sd-lb__titel');
+    laden = lb.querySelector('[download]');
+    neu   = lb.querySelector('.sd-lb__neu');
+    lb.querySelector('.sd-lb__zu').addEventListener('click', schliessen);
+    lb.addEventListener('click', function (ev) { if (ev.target === lb) schliessen(); });
+  }
+
+  function oeffnen(link) {
+    if (!lb) bauen();
+    var url = link.getAttribute('href');
+    var name = link.getAttribute('data-titel') ||
+               (link.querySelector('b') ? link.querySelector('b').textContent : link.textContent);
+    titel.textContent = name.trim();
+    laden.setAttribute('href', url);
+    neu.setAttribute('href', url);
+    frame.setAttribute('src', url + '#view=FitH');
+    vorher = document.activeElement;
+    lb.hidden = false;
+    document.documentElement.style.overflow = 'hidden';
+    lb.querySelector('.sd-lb__zu').focus();
+  }
+
+  function schliessen() {
+    if (!lb || lb.hidden) return;
+    lb.hidden = true;
+    frame.setAttribute('src', 'about:blank');
+    document.documentElement.style.overflow = '';
+    if (vorher && vorher.focus) { try { vorher.focus(); } catch (e) {} }
+  }
+
+  document.addEventListener('click', function (ev) {
+    var link = ev.target.closest ? ev.target.closest('a[data-lightbox="pdf"]') : null;
+    if (!link) return;
+    if (ev.ctrlKey || ev.metaKey || ev.shiftKey || ev.button !== 0) return;  // bewusst neuer Tab
+    if (navigator.pdfViewerEnabled === false) return;                         // kein Betrachter
+    ev.preventDefault();
+    oeffnen(link);
+  });
+  document.addEventListener('keydown', function (ev) {
+    if (ev.key === 'Escape') schliessen();
+  });
 })();
 </script>
 

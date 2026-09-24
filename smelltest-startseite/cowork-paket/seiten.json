@@ -14,7 +14,7 @@
       "datei": "bloecke/_fusszeile.html",
       "typ": "footer",
       "anzeigebedingung": "Gesamte Website",
-      "groesse_kb": 35
+      "groesse_kb": 38
     }
   },
   "seiten": [
@@ -26,7 +26,7 @@
       "im_hauptmenue": false,
       "startseite": true,
       "alte_url": "/de/",
-      "groesse_kb": 430
+      "groesse_kb": 433
     },
     {
       "datei": "bloecke/produkt.html",
@@ -36,7 +36,7 @@
       "im_hauptmenue": true,
       "startseite": false,
       "alte_url": "/de/product/",
-      "groesse_kb": 325
+      "groesse_kb": 328
     },
     {
       "datei": "bloecke/smelltest.html",
@@ -46,7 +46,7 @@
       "im_hauptmenue": true,
       "startseite": false,
       "alte_url": "/de/SmellTest/",
-      "groesse_kb": 232
+      "groesse_kb": 235
     },
     {
       "datei": "bloecke/test.html",
@@ -56,7 +56,7 @@
       "im_hauptmenue": true,
       "startseite": false,
       "alte_url": null,
-      "groesse_kb": 559,
+      "groesse_kb": 566,
       "enthaelt_javascript": true,
       "suchmaschinen": "noindex",
       "hinweis": "Interaktiver Online-Test. Der Block enthaelt ein <script>-Element; es muss unveraendert im HTML-Widget bleiben. Seite auf noindex setzen."
@@ -69,7 +69,7 @@
       "im_hauptmenue": true,
       "startseite": false,
       "alte_url": "/de/about/",
-      "groesse_kb": 245
+      "groesse_kb": 248
     },
     {
       "datei": "bloecke/faq.html",
@@ -79,7 +79,7 @@
       "im_hauptmenue": true,
       "startseite": false,
       "alte_url": null,
-      "groesse_kb": 47
+      "groesse_kb": 50
     },
     {
       "datei": "bloecke/kontakt.html",
@@ -89,7 +89,7 @@
       "im_hauptmenue": true,
       "startseite": false,
       "alte_url": "/de/contact_form/",
-      "groesse_kb": 42
+      "groesse_kb": 45
     },
     {
       "datei": "bloecke/vertriebspartner.html",
@@ -99,7 +99,7 @@
       "im_hauptmenue": false,
       "startseite": false,
       "alte_url": "/de/distributor_form/",
-      "groesse_kb": 99
+      "groesse_kb": 102
     },
     {
       "datei": "bloecke/impressum.html",
@@ -109,7 +109,7 @@
       "im_hauptmenue": false,
       "startseite": false,
       "alte_url": null,
-      "groesse_kb": 40
+      "groesse_kb": 43
     },
     {
       "datei": "bloecke/datenschutz.html",
@@ -119,7 +119,7 @@
       "im_hauptmenue": false,
       "startseite": false,
       "alte_url": null,
-      "groesse_kb": 40
+      "groesse_kb": 43
     }
   ],
   "container_einstellungen": {
@@ -156,7 +156,7 @@
     "offen": "Die Sprachumschalter EN / FR / IT (und English / Français / Italiano in der Fusszeile) haben noch kein Ziel (href=\"#\"), weil es die Sprachfassungen noch nicht gibt. Nicht selbst verlinken.",
     "regex": "href=\"(produkt|smelltest|test|ueber-uns|faq|kontakt|vertriebspartner|impressum|datenschutz|index)\\.html"
   },
-  "stand": "2026-09-23",
+  "stand": "2026-09-24",
   "schrift": {
     "font_family": "ebrima, sans-serif",
     "hinweis": "Systemschrift, wird nicht eingebettet. Auf Geraeten ohne Ebrima greift die serifenlose Systemschrift."

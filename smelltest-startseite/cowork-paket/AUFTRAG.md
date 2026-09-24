@@ -247,8 +247,8 @@ Elementors Sticky-Einstellung setzt eigene Positionierung und bricht das.
 
 ## Menü und Startseite
 
-- Menü **Hauptmenü** anlegen mit: Produkt, SMELL Test, Online-Test, Über uns, FAQ,
-  Kontakt (Reihenfolge gemäss `menue_reihenfolge` in `seiten.json`).
+- Menü **Hauptmenü** anlegen mit: Home, Produkt, SMELL Test, Online-Test, Über uns,
+  FAQ, Kontakt (Reihenfolge gemäss `menue_reihenfolge` in `seiten.json`).
 - Menü der Theme-Position zuweisen, sofern das Theme eine erwartet. Die Navigation
   steckt allerdings bereits im Kopfzeilen-Block – ein zusätzliches Theme-Menü ist
   nur nötig, wenn es an anderer Stelle ausgegeben wird.
@@ -294,6 +294,16 @@ Prüfe nach dem Import auf **jeder** Seite:
    alle vier PDFs öffnen sich, das Video spielt ab.
 10. „Bestellen" in der Kopfzeile führt auf das Kontaktformular, das Anliegen
     „Bestellung und Bezugsquellen" ist vorausgewählt.
+11. Kopf- und Fusszeile enthalten den Link **Home**.
+12. Nach etwas Scrollen erscheint unten rechts ein runder Knopf mit Pfeil; ein
+    Klick führt an den Seitenanfang. Er erscheint **genau einmal** pro Seite.
+13. Auf `/test/`: Ein Klick auf eine Gebrauchsanweisung öffnet das PDF in einer
+    **Lightbox** über der Seite, nicht in einem neuen Tab. Esc oder das Kreuz
+    schliesst sie. (Auf Mobilgeräten ohne eingebauten PDF-Betrachter öffnet das
+    PDF absichtlich normal.)
+14. Auf `/test/` nach einem Durchgang „Test mit derselben Person wiederholen":
+    Die Patientendaten bleiben stehen, das Ergebnis zeigt „Durchgang 2". Im
+    Ergebnis und auf dem Ergebnisblatt erscheinen die gewählten Bilder.
 
 ## Was nicht zu tun ist
 
@@ -318,6 +328,7 @@ Prüfe nach dem Import auf **jeder** Seite:
 | Editor wird sehr langsam | Blöcke sind 40–560 KB gross | normal; im Editor nicht scrollen, Änderungen an den Quelldateien vornehmen |
 | Online-Test reagiert nicht auf Klicks | Inline-JavaScript wurde vom Cache-Plugin verschoben oder minifiziert | Seite `/test/` von der JS-Optimierung ausnehmen |
 | Online-Test zeigt keine Bilder | Block wurde beim Einfügen abgeschnitten | vollständige Datei übernehmen, sie ist rund 560 KB gross |
+| Knopf „Zum Seitenanfang" verdeckt das Cookie-Symbol | Beide sitzen unten rechts | Im Cookie-Plugin das Symbol nach links setzen |
 | PDF-Links im Online-Test führen ins Leere | Pfade `downloads/…` nicht ersetzt | PDFs hochladen und Pfade ersetzen (Abschnitt „Gebrauchsanweisungen hochladen") |
 
 ## Rückmeldung

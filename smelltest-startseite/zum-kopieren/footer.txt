@@ -96,6 +96,23 @@
 @media (prefers-reduced-motion: reduce) {
   .sdxf * { transition: none !important; }
 }
+
+/* ---------- 5. Zurück zum Seitenanfang --------------------------- */
+.sdxf .sdf-top {
+  position: fixed; right: 24px; bottom: 24px; z-index: 9000;
+  width: 48px; height: 48px; border-radius: 50%;
+  display: grid; place-items: center;
+  background: #407BA0; color: #FFFFFF;
+  box-shadow: 0 12px 28px -10px rgba(0,16,46,.55);
+  transition: opacity .25s ease, transform .25s ease, background-color .2s ease;
+}
+.sdxf .sdf-top:hover { background: #6098BA; transform: translateY(-2px); }
+.sdxf .sdf-top:focus-visible { outline: 3px solid #BCD3E5; outline-offset: 3px; }
+.sdxf .sdf-top svg { display: block; width: 20px; height: 20px; }
+/* Mit JavaScript erst nach etwas Scrollen sichtbar, ohne JavaScript immer */
+.sdxf .sdf-top.is-ready:not(.is-on) { opacity: 0; transform: translateY(12px); pointer-events: none; }
+@media (max-width: 680px) { .sdxf .sdf-top { right: 16px; bottom: 16px; width: 44px; height: 44px; } }
+@media print { .sdxf .sdf-top { display: none; } }
 </style>
 
 <div class="sdxf">
@@ -154,10 +171,34 @@
           <a href="#">English</a>
           <a href="#">Français</a>
           <a href="#">Italiano</a>
+          <a href="index.html">Home</a>
           <a href="impressum.html">Impressum</a>
           <a href="datenschutz.html">Datenschutz</a>
         </nav>
       </div>
     </div>
   </footer>
+
+  <!-- Zurück zum Seitenanfang (erscheint auf jeder Seite unten rechts) -->
+  <a class="sdf-top" href="#" aria-label="Zurück zum Seitenanfang" title="Zum Seitenanfang"><svg viewBox="0 0 24 24" width="20" height="20" aria-hidden="true"><path d="M6 14l6-6 6 6" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+  <script>
+  /* Zurück zum Seitenanfang: erscheint nach etwas Scrollen, scrollt weich nach oben */
+  (function () {
+    var knopf = document.querySelectorAll('.sdxf .sdf-top');
+    if (!knopf.length) return;
+    function pruefen() {
+      var zeigen = (window.pageYOffset || document.documentElement.scrollTop) > 400;
+      for (var i = 0; i < knopf.length; i++) knopf[i].classList.toggle('is-on', zeigen);
+    }
+    for (var i = 0; i < knopf.length; i++) {
+      knopf[i].classList.add('is-ready');
+      knopf[i].addEventListener('click', function (ev) {
+        ev.preventDefault();
+        try { window.scrollTo({ top: 0, behavior: 'smooth' }); } catch (e) { window.scrollTo(0, 0); }
+      });
+    }
+    window.addEventListener('scroll', pruefen, { passive: true });
+    pruefen();
+  })();
+  </script>
 </div>

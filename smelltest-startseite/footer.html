@@ -71,12 +71,36 @@
           <a href="#">English</a>
           <a href="#">Français</a>
           <a href="#">Italiano</a>
+          <a href="index.html">Home</a>
           <a href="impressum.html">Impressum</a>
           <a href="datenschutz.html">Datenschutz</a>
         </nav>
       </div>
     </div>
   </footer>
+
+  <!-- Zurück zum Seitenanfang (erscheint auf jeder Seite unten rechts) -->
+  <a class="sdf-top" href="#" aria-label="Zurück zum Seitenanfang" title="Zum Seitenanfang"><svg viewBox="0 0 24 24" width="20" height="20" aria-hidden="true"><path d="M6 14l6-6 6 6" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+  <script>
+  /* Zurück zum Seitenanfang: erscheint nach etwas Scrollen, scrollt weich nach oben */
+  (function () {
+    var knopf = document.querySelectorAll('.sdxf .sdf-top');
+    if (!knopf.length) return;
+    function pruefen() {
+      var zeigen = (window.pageYOffset || document.documentElement.scrollTop) > 400;
+      for (var i = 0; i < knopf.length; i++) knopf[i].classList.toggle('is-on', zeigen);
+    }
+    for (var i = 0; i < knopf.length; i++) {
+      knopf[i].classList.add('is-ready');
+      knopf[i].addEventListener('click', function (ev) {
+        ev.preventDefault();
+        try { window.scrollTo({ top: 0, behavior: 'smooth' }); } catch (e) { window.scrollTo(0, 0); }
+      });
+    }
+    window.addEventListener('scroll', pruefen, { passive: true });
+    pruefen();
+  })();
+  </script>
 </div>
 <!-- ==== ENDE ELEMENTOR-BLOCK ==== -->
 

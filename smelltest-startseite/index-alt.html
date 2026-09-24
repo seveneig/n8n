@@ -32,6 +32,7 @@
         <img src="assets/logo/logo.webp" alt="SMELL Discettes" width="300" height="264">
       </a>
       <nav class="sd-nav">
+        <a class="is-current" href="index.html">Home</a>
         <a href="produkt.html">Produkt</a>
         <a href="smelltest.html">SMELL Test</a>
         <a href="test.html">Online-Test</a>
@@ -57,7 +58,7 @@
         <h1>Riechvermögen objektiv testen.<br><em>Direkt in der Praxis.</em></h1>
         <p class="sd-hero__lead">
           Der SMELL Discettes Olfaction Test ist ein klinisch erprobter Riech-Screening-Test mit acht
-          konzentrierten Riechstoffen. Entwickelt an der Universität Zürich, in vier
+          konzentrierten Riechstoffen. Entwickelt an der Universität Zürich, in
           Publikationen bestätigt und vollständig an MPA oder Pflege delegierbar.
         </p>
         <div class="sd-hero__cta">
@@ -92,8 +93,8 @@
           <span>Düfte mit hohem Bekanntheitsgrad<u>Kaffee, Vanille, Pfirsich, Gras …</u></span>
         </div>
         <div class="sd-stat">
-          <b>4</b>
-          <span>Publikationen zur Validierung<u>Rhinology und Clinical Otolaryngology</u></span>
+          <b>25+</b>
+          <span>Jahre klinisch erprobt<u>publiziert in Rhinology und Clinical Otolaryngology</u></span>
         </div>
       </div>
     </div>
@@ -118,7 +119,7 @@
           <h3 class="sd-h3">Validiert, publiziert, bewährt</h3>
           <p>
             Entwickelt an der Universität Zürich, Klinik für Ohren-, Nasen-, Hals- und
-            Gesichtschirurgie, und in vier Publikationen in <i>Rhinology</i> und
+            Gesichtschirurgie, und in Publikationen in <i>Rhinology</i> und
             <i>Clinical Otolaryngology</i> validiert.
           </p>
           <cite>Briner &amp; Simmen 1999 (n = 124): 99,74 % Sicherheit bei Score 7 oder 8</cite>
@@ -227,7 +228,7 @@
         <span class="sd-eyebrow">Evidenz</span>
         <h2 class="sd-h2">Publiziert und peer-reviewed</h2>
         <p class="sd-lead">
-          Der SMELL Discettes Olfaction Test wurde an der Universität Zürich entwickelt und in vier
+          Der SMELL Discettes Olfaction Test wurde an der Universität Zürich entwickelt und in
           Publikationen in <i>Rhinology</i> und <i>Clinical Otolaryngology</i> validiert.
         </p>
       </div>
@@ -250,7 +251,7 @@
           </p>
         </article>
       </div>
-      <p class="sd-evid__foot">Alle vier Publikationen finden Sie unter <a class="sd-link" href="ueber-uns.html#publikationen">Über uns</a>.</p>
+      <p class="sd-evid__foot">Die Publikationen finden Sie unter <a class="sd-link" href="ueber-uns.html#publikationen">Über uns</a>.</p>
     </div>
   </section>
 
@@ -324,12 +325,36 @@
           <a href="#">English</a>
           <a href="#">Français</a>
           <a href="#">Italiano</a>
+          <a href="index.html">Home</a>
           <a href="impressum.html">Impressum</a>
           <a href="datenschutz.html">Datenschutz</a>
         </nav>
       </div>
     </div>
   </footer>
+
+  <!-- Zurück zum Seitenanfang -->
+  <a class="sd-top" href="#" aria-label="Zurück zum Seitenanfang" title="Zum Seitenanfang"><svg viewBox="0 0 24 24" width="20" height="20" aria-hidden="true"><path d="M6 14l6-6 6 6" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+  <script>
+  /* Zurück zum Seitenanfang: erscheint nach etwas Scrollen, scrollt weich nach oben */
+  (function () {
+    var knopf = document.querySelectorAll('.sdx .sd-top');
+    if (!knopf.length) return;
+    function pruefen() {
+      var zeigen = (window.pageYOffset || document.documentElement.scrollTop) > 400;
+      for (var i = 0; i < knopf.length; i++) knopf[i].classList.toggle('is-on', zeigen);
+    }
+    for (var i = 0; i < knopf.length; i++) {
+      knopf[i].classList.add('is-ready');
+      knopf[i].addEventListener('click', function (ev) {
+        ev.preventDefault();
+        try { window.scrollTo({ top: 0, behavior: 'smooth' }); } catch (e) { window.scrollTo(0, 0); }
+      });
+    }
+    window.addEventListener('scroll', pruefen, { passive: true });
+    pruefen();
+  })();
+  </script>
 
 </div>
 <!-- ==== ENDE ELEMENTOR-BLOCK ==== -->

@@ -149,6 +149,8 @@ ${inlined}
     .replace(/\s*<!-- -+ (?:Footer|Fusszeile) -+ -->/g, '')
     .replace(/\s*<header[\s\S]*?<\/header>/g, '')
     .replace(/\s*<footer[\s\S]*?<\/footer>/g, '')
+    // Seitenanfang-Knopf der Seite entfaellt: die globale Fusszeile bringt ihn mit
+    .replace(/\s*<!-- Zurück zum Seitenanfang -->\s*<a class="sd-top"[\s\S]*?<\/a>\s*<script>[\s\S]*?<\/script>/g, '')
     .replace('<div class="sdx">', '<div class="sdx sdx--bare">');
 
   const bareOut = `<!--

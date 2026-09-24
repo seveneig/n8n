@@ -81,7 +81,7 @@ nichts „verbessern"; falls es das vorschlägt, ist das eine eigene Aufgabe.
 
 ---
 
-## Runde 2: Aktualisierung (Korrekturen, Online-Test mit Unterlagen)
+## Runde 2: Aktualisierung (gilt für jede weitere Aktualisierung)
 
 Mitgeben: dieses Paket in der neuen Fassung und denselben WordPress-Zugang.
 
@@ -110,11 +110,12 @@ Dann in dieser Reihenfolge:
    HTML-Widget nur den Inhalt austauschen, Container und IDs lassen. Mit
    `wp_slash( wp_json_encode( … ) )` speichern. Fehlt eine Seite, anlegen.
 7. **Kopfzeile global** und **Fusszeile global** genauso aktualisieren.
-8. Seite `smelltest` in **SMELL Test** umbenennen, auch im Hauptmenü.
+8. Seite `smelltest` in **SMELL Test** umbenennen, auch im Hauptmenü. Im
+   Hauptmenü **Home** als ersten Eintrag ergänzen (auf `/`).
 9. Hat die Kontaktseite ein eigenes Elementor-Formular: dem Formular-Widget die
    CSS-ID `formular` geben.
 10. `wp elementor flush-css`, dann die komplette **Abnahme** aus `AUFTRAG.md`
-    (Punkte 1–10) auf jeder Seite.
+    (Punkte 1–14) auf jeder Seite.
 
 Besonders wichtig:
 
