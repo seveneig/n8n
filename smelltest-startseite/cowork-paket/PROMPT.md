@@ -102,7 +102,7 @@ Dann in dieser Reihenfolge:
 3. **Plugin installieren.** `plugin/smell-online-test.zip` hochladen und aktivieren
    (Abschnitt „Plugin «SMELL Online-Test» installieren" in `AUFTRAG.md`). Ist es
    schon installiert: dieselbe ZIP hochladen und die vorhandene Version ersetzen –
-   danach muss Version 1.1.0 aktiv sein. Echte
+   danach muss Version 1.1.1 aktiv sein. Echte
    Seriennummern nur eintragen, wenn ich sie mitgebe – nichts erfinden.
 4. **PDFs hochladen.** Die fünf Dateien aus `downloads/` in die Mediathek laden.
 5. **Online-Test vorbereiten.** In `bloecke/test.html` die fünf Pfade

@@ -3,7 +3,8 @@
 Aufruf: python3 -I formular.py <ausgabe.html>
 
 Inhalt (Texte, Bilder, Farbcodes, Dokumentnummer) entspricht dem Formular
-«WIP Smell-QMS Olfaction_Test Formular D 261007»; nur das Layout ist neu.
+«WIP Smell-QMS Olfaction_Test Formular D 261007»; nur die Gestaltung ist neu,
+im Stil der Website (Farben und Formen aus assets/css/sd.css).
 Felder sind mit data-feld / data-wert markiert; Schritt 2 misst ihre
 Position und Schritt 3 legt dort die PDF-Formularfelder an.
 """
@@ -43,9 +44,9 @@ def sequenz(nr, optionen):
         kaestchen = ''.join(
             f'<span class="zelle"><i class="box" data-feld="Diskette{nr}_{schluessel}" data-wert="{name}"></i></span>'
             for name, _ in optionen)
-        zeilen += f'<div class="zeile {schluessel}"><span class="lbl">{text}</span>{kaestchen}</div>'
-    return (f'<section class="seq"><div class="nr">{nr}</div>'
-            f'<div class="bilder"><span></span>{bilder}</div>{zeilen}</section>')
+        zeilen += f'<div class="zeile {schluessel}"><span class="lbl"><i></i>{text}</span>{kaestchen}</div>'
+    return (f'<section class="karte"><div class="nr">{nr}</div>'
+            f'<div class="bilder"><span></span>{bilder}</div><div class="zeilen">{zeilen}</div></section>')
 
 
 def fuss(seite):
@@ -58,66 +59,82 @@ CSS = f"""
 @page {{ size: A4; margin: 0; }}
 * {{ box-sizing: border-box; margin: 0; padding: 0; }}
 html, body {{ background: #fff; }}
-body {{ font-family: 'EbrimaPDF', ebrima, sans-serif; color: #16233A; font-size: 10.5pt; line-height: 1.35;
+body {{ font-family: 'EbrimaPDF', ebrima, sans-serif; color: var(--ink); font-size: 10pt; line-height: 1.4;
         -webkit-print-color-adjust: exact; print-color-adjust: exact; }}
 
 :root {{
-  --blau: #4A7DBA; --tinte: #16233A; --grau: #808080; --gruen: #76923C; --orange: #E8975C;
-  --band-beide: #E3E3E3; --band-rechts: #DCE8C6; --band-links: #FADCC4;
+  /* Markenfarben wie auf der Website */
+  --blue: #407BA0; --blue-soft: #BCD3E5; --blue-mist: #EDF4F9; --navy: #00102E;
+  --ink: #16233A; --muted: #5C6E85; --line: #E1EAF2; --tint: #F5F9FC;
+  /* Farbcode der Nasenseiten (wie im Original-Formular) */
+  --grau: #808080; --gruen: #76923C; --orange: #E8975C;
+  --grau-hell: #F1F2F4; --gruen-hell: #EEF4E3; --orange-hell: #FDF0E6;
 }}
 
-.seite {{ width: 210mm; height: 297mm; padding: 11mm 16mm 9mm; position: relative;
+.seite {{ width: 210mm; height: 297mm; padding: 13mm 15mm 10mm; position: relative;
           display: flex; flex-direction: column; break-after: page; overflow: hidden; }}
 .seite:last-child {{ break-after: auto; }}
+/* Markenband oben */
+.seite::before {{ content: ''; position: absolute; left: 0; right: 0; top: 0; height: 3.2mm;
+                  background: linear-gradient(90deg, var(--navy), var(--blue) 70%, var(--blue-soft)); }}
 
 /* Kopf */
-.kopf {{ display: grid; grid-template-columns: 30mm 1fr 30mm; align-items: center; height: 24mm; }}
-.kopf .maskott {{ height: 19mm; width: auto; justify-self: start; }}
-.kopf .logo {{ height: 15mm; width: auto; justify-self: end; }}
-.kopf h1 {{ text-align: center; font-size: 16pt; font-weight: 700; line-height: 1.2; color: var(--tinte); }}
-.kopf--klein {{ height: 17mm; grid-template-columns: 1fr 30mm; }}
-.kopf--klein .logo {{ grid-column: 2; }}
+.kopf {{ display: flex; align-items: center; gap: 5mm; }}
+.kopf .maskott {{ height: 17mm; width: auto; }}
+.kopf .titel {{ flex: 1; }}
+.kopf .eyebrow {{ display: block; font-size: 8pt; font-weight: 700; letter-spacing: .16em; text-transform: uppercase; color: var(--blue); }}
+.kopf h1 {{ margin-top: .6mm; font-size: 19pt; font-weight: 700; line-height: 1.1; letter-spacing: -.01em; color: var(--navy); }}
+.kopf .logo {{ height: 13mm; width: auto; }}
+.kopf--klein {{ justify-content: space-between; padding-bottom: 5mm; border-bottom: .6pt solid var(--line); }}
+.kopf--klein .titel h1 {{ font-size: 11pt; margin: 0; }}
+.kopf--klein .logo {{ height: 11mm; }}
 
 /* Patientendaten */
-.pat {{ display: grid; grid-template-columns: 1fr 1fr 0.8fr; gap: 0 5mm; margin-top: 5mm; }}
-.pat label {{ display: block; font-size: 9pt; font-weight: 700; color: var(--tinte); letter-spacing: .02em; }}
-.feld {{ height: 7.6mm; margin-top: 1.2mm; border: 0.9pt solid var(--blau); border-radius: 1.6mm; background: #fff; }}
+.pat {{ display: grid; grid-template-columns: 1.15fr 1.15fr .9fr; gap: 5.5mm; margin-top: 9mm; }}
+.etikett {{ display: block; font-size: 7.5pt; font-weight: 700; letter-spacing: .14em; text-transform: uppercase; color: var(--muted); }}
+.feld {{ height: 8.6mm; margin-top: 1.6mm; border: .8pt solid var(--blue-soft); border-radius: 2.2mm; background: #fff; }}
 
-.intro {{ margin-top: 5mm; font-size: 10.5pt; line-height: 1.5; text-align: left; hyphens: manual; max-width: 168mm; }}
+.intro {{ margin-top: 7mm; padding: 4mm 5mm 4mm 5.5mm; border-radius: 3mm; background: var(--tint);
+          border-left: 1.2mm solid var(--blue); font-size: 10pt; line-height: 1.55; color: var(--ink); }}
 
-/* Sequenzen */
-.seqs {{ margin-top: 4mm; border-top: 1.1pt solid var(--blau); }}
-.seq {{ display: grid; grid-template-columns: 11mm 1fr; border-bottom: 1.1pt solid var(--blau); padding: 2.6mm 0 2.8mm; }}
-.nr {{ grid-row: 1 / span 4; align-self: center; font-size: 19pt; font-weight: 700; color: var(--blau); padding-left: 1mm; }}
-.bilder, .zeile {{ display: grid; grid-template-columns: 19mm repeat(3, 1fr); grid-column: 2; }}
+/* Sequenzen als Karten */
+.raster {{ display: grid; grid-template-columns: 1fr 1fr; gap: 7mm 5.5mm; margin-top: 9mm; }}
+.karte {{ position: relative; padding: 5.5mm 5mm 5mm; border: .7pt solid var(--line); border-radius: 3.5mm; background: #fff; }}
+.nr {{ position: absolute; left: 5mm; top: 5mm; width: 9mm; height: 9mm; border-radius: 50%;
+       display: grid; place-items: center; background: var(--navy); color: #fff; font-size: 12pt; font-weight: 700; line-height: 1; }}
+.bilder, .zeile {{ display: grid; grid-template-columns: 14mm repeat(3, 1fr); }}
 figure {{ display: grid; justify-items: center; align-content: end; }}
-.bild {{ height: 17.5mm; width: 30mm; display: flex; align-items: flex-end; justify-content: center; }}
-.bild img {{ max-height: 17.5mm; max-width: 30mm; }}
-figcaption {{ margin-top: 0.8mm; font-size: 9.5pt; font-weight: 700; line-height: 1.1; }}
-.zeile {{ height: 5.6mm; align-items: center; }}
-.zeile:nth-child(3) {{ margin-top: 1.6mm; }}
-.zeile .lbl {{ font-size: 8.8pt; font-weight: 700; padding-left: 2mm; }}
-.zeile.beide {{ background: var(--band-beide); }}
-.zeile.rechts {{ background: var(--band-rechts); }}
-.zeile.links {{ background: var(--band-links); }}
+.bild {{ height: 21mm; width: 100%; display: flex; align-items: flex-end; justify-content: center; }}
+.bild img {{ max-height: 21mm; max-width: 18mm; }}
+figcaption {{ margin-top: 2mm; font-size: 9.2pt; font-weight: 700; line-height: 1.1; color: var(--navy); }}
+.zeilen {{ margin-top: 4.5mm; display: grid; gap: 1.8mm; }}
+.zeile {{ height: 7.8mm; align-items: center; border-radius: 1.8mm; }}
+.zeile .lbl {{ display: flex; align-items: center; gap: 1.4mm; padding-left: 1.8mm; font-size: 7.8pt; font-weight: 700; color: var(--ink); }}
+.zeile .lbl i {{ width: 2mm; height: 2mm; border-radius: 50%; }}
+.zeile.beide {{ background: var(--grau-hell); }}   .zeile.beide .lbl i {{ background: var(--grau); }}
+.zeile.rechts {{ background: var(--gruen-hell); }} .zeile.rechts .lbl i {{ background: var(--gruen); }}
+.zeile.links {{ background: var(--orange-hell); }} .zeile.links .lbl i {{ background: var(--orange); }}
 .zelle {{ display: flex; justify-content: center; }}
-.box {{ display: block; width: 4.3mm; height: 4.3mm; border: 1pt solid var(--blau); background: #fff; border-radius: 0.4mm; }}
+.box {{ display: block; width: 4.8mm; height: 4.8mm; border: .9pt solid var(--blue); background: #fff; border-radius: .9mm; }}
 
 /* Auswertung */
-.ausw {{ margin-top: 7mm; display: grid; grid-template-columns: 1fr 66mm; gap: 0 12mm; }}
-.ausw h2 {{ font-size: 11.5pt; font-weight: 700; }}
-.ausw h3 {{ font-size: 9.5pt; font-weight: 700; }}
-.ausw-tab {{ display: grid; grid-template-columns: 1fr 7mm 24mm; align-items: center; gap: 2.4mm 3mm; margin-top: 2.2mm; }}
-.ausw-tab .kopfz {{ font-size: 8.5pt; font-weight: 700; color: #5C6E85; text-align: center; }}
-.ausw-tab .feld {{ margin-top: 0; height: 7mm; }}
-.ausw-tab .box {{ justify-self: center; width: 4.6mm; height: 4.6mm; }}
+.unten {{ display: grid; grid-template-columns: 1.25fr 1fr; gap: 5.5mm; margin-top: 8mm; }}
+.panel {{ padding: 5mm; border-radius: 3.5mm; }}
+.panel--tint {{ background: var(--tint); }}
+.panel--rand {{ border: .7pt solid var(--line); }}
+.panel h2 {{ font-size: 11.5pt; font-weight: 700; color: var(--navy); }}
+.ausw-tab {{ display: grid; grid-template-columns: 1fr 9mm 24mm; align-items: center; gap: 3mm 3mm; margin-top: 3mm; }}
+.ausw-tab .kopfz {{ font-size: 7pt; font-weight: 700; letter-spacing: .12em; text-transform: uppercase; color: var(--muted); text-align: center; }}
+.ausw-tab .feld {{ margin-top: 0; height: 8mm; }}
+.ausw-tab .box {{ justify-self: center; width: 4.8mm; height: 4.8mm; }}
+.ausw-tab > span {{ font-size: 9.8pt; }}
 .g {{ color: var(--grau); font-weight: 700; }} .gr {{ color: var(--gruen); font-weight: 700; }} .o {{ color: var(--orange); font-weight: 700; }}
-.pruefer label {{ display: block; margin-top: 2.6mm; font-size: 9pt; font-weight: 700; }}
-.pruefer .feld {{ height: 7mm; }}
-.maskott-unten {{ position: absolute; right: 16mm; bottom: 18mm; height: 20mm; }}
+.pruefer .etikett {{ margin-top: 3.4mm; }}
+.pruefer .feld {{ height: 8mm; }}
+.maskott-unten {{ position: absolute; right: 15mm; bottom: 17mm; height: 19mm; }}
 
-footer {{ margin-top: auto; display: flex; justify-content: space-between; font-size: 7.5pt; color: #5C6E85;
-          border-top: 0.5pt solid #C9D6E3; padding-top: 1.6mm; }}
+footer {{ margin-top: auto; display: flex; justify-content: space-between; font-size: 7pt; color: var(--muted);
+          border-top: .5pt solid var(--line); padding-top: 2mm; }}
 """
 
 
@@ -126,18 +143,18 @@ def seite1():
 <div class="seite">
   <header class="kopf">
     <img class="maskott" src="{url(ASSETS / 'icons' / 'maskottchen.webp')}" alt="">
-    <h1>SMELL Discettes Olfaction Test Formular</h1>
+    <div class="titel"><span class="eyebrow">SMELL Discettes</span><h1>Olfaction Test Formular</h1></div>
     <img class="logo" src="{url(ASSETS / 'logo' / 'logo.webp')}" alt="">
   </header>
   <div class="pat">
-    <label>Name<div class="feld" data-feld="Name"></div></label>
-    <label>Vorname<div class="feld" data-feld="Vorname"></div></label>
-    <label>Geburtsdatum<div class="feld" data-feld="Geburtsdatum"></div></label>
+    <label><span class="etikett">Name</span><div class="feld" data-feld="Name"></div></label>
+    <label><span class="etikett">Vorname</span><div class="feld" data-feld="Vorname"></div></label>
+    <label><span class="etikett">Geburtsdatum</span><div class="feld" data-feld="Geburtsdatum"></div></label>
   </div>
   <p class="intro">Kreuzen Sie bitte in jeder der 8 Sequenzen unten dasjenige Bild an, welches
   am besten mit dem Duft korrespondiert, den Sie eben gerochen haben. Der Test kann mit beiden
   Nasenöffnungen oder auch rechts und links getrennt erfolgen. Danke für Ihre Mitarbeit!</p>
-  <div class="seqs">{''.join(sequenz(i + 1, SEQUENZEN[i]) for i in range(4))}</div>
+  <div class="raster">{''.join(sequenz(i + 1, SEQUENZEN[i]) for i in range(4))}</div>
   {fuss(1)}
 </div>"""
 
@@ -152,23 +169,24 @@ def seite2():
     return f"""
 <div class="seite">
   <header class="kopf kopf--klein">
+    <div class="titel"><span class="eyebrow">SMELL Discettes</span><h1>Olfaction Test Formular</h1></div>
     <img class="logo" src="{url(ASSETS / 'logo' / 'logo.webp')}" alt="">
   </header>
-  <div class="seqs">{''.join(sequenz(i + 1, SEQUENZEN[i]) for i in range(4, 8))}</div>
-  <section class="ausw">
-    <div>
+  <div class="raster">{''.join(sequenz(i + 1, SEQUENZEN[i]) for i in range(4, 8))}</div>
+  <div class="unten">
+    <section class="panel panel--tint">
       <h2>Testauswertung:</h2>
       <div class="ausw-tab">
         <span></span><span></span><span class="kopfz">Anzahl Punkte</span>
         {zeilen}
       </div>
-    </div>
-    <div class="pruefer">
-      <h3>Prüferin / Prüfer</h3>
-      <label>Name<div class="feld" data-feld="Pruefer_Name"></div></label>
-      <label>Datum<div class="feld" data-feld="Pruefer_Datum"></div></label>
-    </div>
-  </section>
+    </section>
+    <section class="panel panel--rand pruefer">
+      <h2>Prüferin / Prüfer</h2>
+      <label><span class="etikett">Name</span><div class="feld" data-feld="Pruefer_Name"></div></label>
+      <label><span class="etikett">Datum</span><div class="feld" data-feld="Pruefer_Datum"></div></label>
+    </section>
+  </div>
   <img class="maskott-unten" src="{url(ASSETS / 'icons' / 'maskottchen.webp')}" alt="">
   {fuss(2)}
 </div>"""
