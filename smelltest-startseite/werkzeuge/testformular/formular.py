@@ -2,7 +2,7 @@
 
 Aufruf: python3 -I formular.py <ausgabe.html>
 
-Inhalt (Texte, Bilder, Farbcodes, Dokumentnummer) entspricht dem Formular
+Inhalt (Texte, Bilder, Dokumentnummer) entspricht dem Formular
 «WIP Smell-QMS Olfaction_Test Formular D 261007»; nur die Gestaltung ist neu,
 im Stil der Website (Farben und Formen aus assets/css/sd.css).
 Felder sind mit data-feld / data-wert markiert; Schritt 2 misst ihre
@@ -67,9 +67,10 @@ body {{ font-family: 'EbrimaPDF', ebrima, sans-serif; color: var(--ink); font-si
   /* Markenfarben wie auf der Website */
   --blue: #407BA0; --blue-soft: #BCD3E5; --blue-mist: #EDF4F9; --navy: #00102E;
   --ink: #16233A; --muted: #5C6E85; --line: #E1EAF2; --tint: #F5F9FC;
-  /* Farbcode der Nasenseiten (wie im Original-Formular) */
-  --grau: #808080; --gruen: #76923C; --orange: #E8975C;
-  --grau-hell: #F4F5F6; --gruen-hell: #F2F6EA; --orange-hell: #FDF3EB;
+  /* Farbcode der Nasenseiten – Konvention der HNO-Audiometrie: rechts rot, links blau;
+     beide in Navy. Alle drei aus der Markenpalette, auch bei Rot-Grün-Schwäche unterscheidbar. */
+  --beide: #00102E; --rechts: #C8423A; --links: #407BA0;
+  --beide-hell: #EFF1F5; --rechts-hell: #FBEFEE; --links-hell: #EDF4F9;
 }}
 
 .seite {{ width: 210mm; height: 297mm; padding: 14mm 16mm 10mm; position: relative;
@@ -96,8 +97,8 @@ body {{ font-family: 'EbrimaPDF', ebrima, sans-serif; color: var(--ink); font-si
 
 .pat {{ display: grid; grid-template-columns: 1.2fr 1.2fr .85fr; gap: 6mm; margin-top: 6mm; }}
 
-.intro {{ margin-top: 5.5mm; padding: 2.8mm 0 2.8mm 5mm; border-left: .9mm solid var(--blue);
-          font-size: 10pt; line-height: 1.55; color: var(--ink); }}
+.intro {{ margin-top: 5.5mm; padding: 3.4mm 5mm 3.4mm 5.5mm; border-radius: 2.5mm; background: var(--tint);
+          border-left: 1.1mm solid var(--blue); font-size: 10pt; line-height: 1.55; color: var(--ink); }}
 
 /* Sequenzen: eine Karte pro Zeile */
 .liste {{ display: grid; gap: 4.5mm; margin-top: 6mm; }}
@@ -116,9 +117,9 @@ figcaption {{ margin-top: 1.6mm; font-size: 9.5pt; font-weight: 700; line-height
 .zeile .lbl {{ align-self: stretch; display: flex; align-items: center; gap: 1.8mm; padding-left: 2.4mm;
                font-size: 8pt; font-weight: 700; color: var(--ink); border-left: .9mm solid; border-radius: 1.2mm 0 0 1.2mm; }}
 .zeile .lbl i {{ display: none; }}
-.zeile.beide {{ background: var(--grau-hell); }}   .zeile.beide .lbl {{ border-color: var(--grau); }}
-.zeile.rechts {{ background: var(--gruen-hell); }} .zeile.rechts .lbl {{ border-color: var(--gruen); }}
-.zeile.links {{ background: var(--orange-hell); }} .zeile.links .lbl {{ border-color: var(--orange); }}
+.zeile.beide {{ background: var(--beide-hell); }}   .zeile.beide .lbl {{ border-color: var(--beide); color: var(--beide); }}
+.zeile.rechts {{ background: var(--rechts-hell); }} .zeile.rechts .lbl {{ border-color: var(--rechts); color: var(--rechts); }}
+.zeile.links {{ background: var(--links-hell); }}   .zeile.links .lbl {{ border-color: var(--links); color: var(--links); }}
 .zelle {{ display: flex; justify-content: center; }}
 .box {{ display: block; width: 4.6mm; height: 4.6mm; border: .9pt solid var(--blue); background: #fff; }}
 
@@ -132,7 +133,7 @@ figcaption {{ margin-top: 1.6mm; font-size: 9.5pt; font-weight: 700; line-height
 .ausw-tab .feld {{ margin-top: 0; height: 8mm; background: #fff; }}
 .ausw-tab .box {{ justify-self: center; width: 4.8mm; height: 4.8mm; }}
 .ausw-tab > span {{ font-size: 10pt; }}
-.g {{ color: var(--grau); font-weight: 700; }} .gr {{ color: var(--gruen); font-weight: 700; }} .o {{ color: var(--orange); font-weight: 700; }}
+.g {{ color: var(--beide); font-weight: 700; }} .gr {{ color: var(--rechts); font-weight: 700; }} .o {{ color: var(--links); font-weight: 700; }}
 .pruefer .etikett {{ margin-top: 3.6mm; }}
 .pruefer .feld {{ height: 8mm; }}
 .maskott-unten {{ position: absolute; right: 16mm; bottom: 18mm; height: 20mm; }}
