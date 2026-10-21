@@ -46,11 +46,12 @@ def sequenz(nr, optionen):
             for name, _ in optionen)
         zeilen += f'<div class="zeile {schluessel}"><span class="lbl"><i></i>{text}</span>{kaestchen}</div>'
     return (f'<section class="karte"><div class="nr">{nr}</div>'
-            f'<div class="bilder"><span></span>{bilder}</div><div class="zeilen">{zeilen}</div></section>')
+            f'<div class="inhalt"><div class="bilder"><span></span>{bilder}</div>'
+            f'<div class="zeilen">{zeilen}</div></div></section>')
 
 
 def fuss(seite):
-    return f'<footer><span>{DOKNR}</span><span>{seite}(2)</span></footer>'
+    return f'<footer><span>{DOKNR}</span><span>{seite}({SEITENZAHL})</span></footer>'
 
 
 CSS = f"""
@@ -68,74 +69,91 @@ body {{ font-family: 'EbrimaPDF', ebrima, sans-serif; color: var(--ink); font-si
   --ink: #16233A; --muted: #5C6E85; --line: #E1EAF2; --tint: #F5F9FC;
   /* Farbcode der Nasenseiten (wie im Original-Formular) */
   --grau: #808080; --gruen: #76923C; --orange: #E8975C;
-  --grau-hell: #F1F2F4; --gruen-hell: #EEF4E3; --orange-hell: #FDF0E6;
+  --grau-hell: #F4F5F6; --gruen-hell: #F2F6EA; --orange-hell: #FDF3EB;
 }}
 
-.seite {{ width: 210mm; height: 297mm; padding: 13mm 15mm 10mm; position: relative;
+.seite {{ width: 210mm; height: 297mm; padding: 14mm 16mm 10mm; position: relative;
           display: flex; flex-direction: column; break-after: page; overflow: hidden; }}
 .seite:last-child {{ break-after: auto; }}
 /* Markenband oben */
-.seite::before {{ content: ''; position: absolute; left: 0; right: 0; top: 0; height: 3.2mm;
+.seite::before {{ content: ''; position: absolute; left: 0; right: 0; top: 0; height: 2.6mm;
                   background: linear-gradient(90deg, var(--navy), var(--blue) 70%, var(--blue-soft)); }}
 
 /* Kopf */
 .kopf {{ display: flex; align-items: center; gap: 5mm; }}
-.kopf .maskott {{ height: 17mm; width: auto; }}
+.kopf .maskott {{ height: 16mm; width: auto; }}
 .kopf .titel {{ flex: 1; }}
-.kopf .eyebrow {{ display: block; font-size: 8pt; font-weight: 700; letter-spacing: .16em; text-transform: uppercase; color: var(--blue); }}
-.kopf h1 {{ margin-top: .6mm; font-size: 19pt; font-weight: 700; line-height: 1.1; letter-spacing: -.01em; color: var(--navy); }}
-.kopf .logo {{ height: 13mm; width: auto; }}
-.kopf--klein {{ justify-content: space-between; padding-bottom: 5mm; border-bottom: .6pt solid var(--line); }}
-.kopf--klein .titel h1 {{ font-size: 11pt; margin: 0; }}
-.kopf--klein .logo {{ height: 11mm; }}
+.eyebrow {{ display: block; font-size: 7.5pt; font-weight: 700; letter-spacing: .18em; text-transform: uppercase; color: var(--blue); }}
+.kopf h1 {{ margin-top: .8mm; font-size: 20pt; font-weight: 700; line-height: 1.05; letter-spacing: -.015em; color: var(--navy); }}
+.kopf .logo {{ height: 12.5mm; width: auto; }}
+.kopf--klein {{ justify-content: space-between; padding-bottom: 4.5mm; border-bottom: .5pt solid var(--line); }}
+.kopf--klein h1 {{ font-size: 11pt; margin-top: .4mm; }}
+.kopf--klein .logo {{ height: 10mm; }}
 
-/* Patientendaten */
-.pat {{ display: grid; grid-template-columns: 1.15fr 1.15fr .9fr; gap: 5.5mm; margin-top: 9mm; }}
-.etikett {{ display: block; font-size: 7.5pt; font-weight: 700; letter-spacing: .14em; text-transform: uppercase; color: var(--muted); }}
-.feld {{ height: 8.6mm; margin-top: 1.6mm; border: .8pt solid var(--blue-soft); border-radius: 2.2mm; background: #fff; }}
+/* Beschriftung und Eingabefelder: eckig, damit Rahmen und Feld des PDF-Betrachters deckungsgleich sind */
+.etikett {{ display: block; font-size: 7pt; font-weight: 700; letter-spacing: .16em; text-transform: uppercase; color: var(--muted); }}
+.feld {{ height: 8.4mm; margin-top: 1.5mm; background: var(--tint); border: .6pt solid var(--blue-soft); border-bottom: 1.2pt solid var(--blue); }}
 
-.intro {{ margin-top: 7mm; padding: 4mm 5mm 4mm 5.5mm; border-radius: 3mm; background: var(--tint);
-          border-left: 1.2mm solid var(--blue); font-size: 10pt; line-height: 1.55; color: var(--ink); }}
+.pat {{ display: grid; grid-template-columns: 1.2fr 1.2fr .85fr; gap: 6mm; margin-top: 6mm; }}
 
-/* Sequenzen als Karten */
-.raster {{ display: grid; grid-template-columns: 1fr 1fr; gap: 7mm 5.5mm; margin-top: 9mm; }}
-.karte {{ position: relative; padding: 5.5mm 5mm 5mm; border: .7pt solid var(--line); border-radius: 3.5mm; background: #fff; }}
-.nr {{ position: absolute; left: 5mm; top: 5mm; width: 9mm; height: 9mm; border-radius: 50%;
-       display: grid; place-items: center; background: var(--navy); color: #fff; font-size: 12pt; font-weight: 700; line-height: 1; }}
-.bilder, .zeile {{ display: grid; grid-template-columns: 14mm repeat(3, 1fr); }}
+.intro {{ margin-top: 5.5mm; padding: 2.8mm 0 2.8mm 5mm; border-left: .9mm solid var(--blue);
+          font-size: 10pt; line-height: 1.55; color: var(--ink); }}
+
+/* Sequenzen: eine Karte pro Zeile */
+.liste {{ display: grid; gap: 4.5mm; margin-top: 6mm; }}
+.karte {{ display: grid; grid-template-columns: 15mm 1fr; padding: 4.2mm 5mm 4.6mm 4mm;
+          border: .6pt solid var(--line); border-radius: 2.5mm; background: #fff; }}
+.nr {{ align-self: start; margin-top: 6mm; width: 9mm; height: 9mm; border-radius: 50%;
+       display: grid; place-items: center; background: var(--navy); color: #fff; font-size: 12.5pt; font-weight: 700; line-height: 1; }}
+.inhalt {{ min-width: 0; }}
+.bilder, .zeile {{ display: grid; grid-template-columns: 21mm repeat(3, 1fr); }}
 figure {{ display: grid; justify-items: center; align-content: end; }}
-.bild {{ height: 21mm; width: 100%; display: flex; align-items: flex-end; justify-content: center; }}
-.bild img {{ max-height: 21mm; max-width: 18mm; }}
-figcaption {{ margin-top: 2mm; font-size: 9.2pt; font-weight: 700; line-height: 1.1; color: var(--navy); }}
-.zeilen {{ margin-top: 4.5mm; display: grid; gap: 1.8mm; }}
-.zeile {{ height: 7.8mm; align-items: center; border-radius: 1.8mm; }}
-.zeile .lbl {{ display: flex; align-items: center; gap: 1.4mm; padding-left: 1.8mm; font-size: 7.8pt; font-weight: 700; color: var(--ink); }}
-.zeile .lbl i {{ width: 2mm; height: 2mm; border-radius: 50%; }}
-.zeile.beide {{ background: var(--grau-hell); }}   .zeile.beide .lbl i {{ background: var(--grau); }}
-.zeile.rechts {{ background: var(--gruen-hell); }} .zeile.rechts .lbl i {{ background: var(--gruen); }}
-.zeile.links {{ background: var(--orange-hell); }} .zeile.links .lbl i {{ background: var(--orange); }}
+.bild {{ height: 20mm; width: 100%; display: flex; align-items: flex-end; justify-content: center; }}
+.bild img {{ max-height: 20mm; max-width: 31mm; }}
+figcaption {{ margin-top: 1.6mm; font-size: 9.5pt; font-weight: 700; line-height: 1.1; color: var(--navy); }}
+.zeilen {{ margin-top: 3.6mm; display: grid; gap: 1.2mm; }}
+.zeile {{ height: 7mm; align-items: center; border-radius: 1.2mm; }}
+.zeile .lbl {{ align-self: stretch; display: flex; align-items: center; gap: 1.8mm; padding-left: 2.4mm;
+               font-size: 8pt; font-weight: 700; color: var(--ink); border-left: .9mm solid; border-radius: 1.2mm 0 0 1.2mm; }}
+.zeile .lbl i {{ display: none; }}
+.zeile.beide {{ background: var(--grau-hell); }}   .zeile.beide .lbl {{ border-color: var(--grau); }}
+.zeile.rechts {{ background: var(--gruen-hell); }} .zeile.rechts .lbl {{ border-color: var(--gruen); }}
+.zeile.links {{ background: var(--orange-hell); }} .zeile.links .lbl {{ border-color: var(--orange); }}
 .zelle {{ display: flex; justify-content: center; }}
-.box {{ display: block; width: 4.8mm; height: 4.8mm; border: .9pt solid var(--blue); background: #fff; border-radius: .9mm; }}
+.box {{ display: block; width: 4.6mm; height: 4.6mm; border: .9pt solid var(--blue); background: #fff; }}
 
 /* Auswertung */
-.unten {{ display: grid; grid-template-columns: 1.25fr 1fr; gap: 5.5mm; margin-top: 8mm; }}
-.panel {{ padding: 5mm; border-radius: 3.5mm; }}
-.panel--tint {{ background: var(--tint); }}
-.panel--rand {{ border: .7pt solid var(--line); }}
+.unten {{ display: grid; grid-template-columns: 1.3fr 1fr; gap: 5mm; margin-top: 7mm; }}
+.panel {{ padding: 5mm 5.5mm; border-radius: 2.5mm; border: .6pt solid var(--line); }}
+.panel--tint {{ background: var(--tint); border-color: var(--tint); }}
 .panel h2 {{ font-size: 11.5pt; font-weight: 700; color: var(--navy); }}
-.ausw-tab {{ display: grid; grid-template-columns: 1fr 9mm 24mm; align-items: center; gap: 3mm 3mm; margin-top: 3mm; }}
-.ausw-tab .kopfz {{ font-size: 7pt; font-weight: 700; letter-spacing: .12em; text-transform: uppercase; color: var(--muted); text-align: center; }}
-.ausw-tab .feld {{ margin-top: 0; height: 8mm; }}
+.ausw-tab {{ display: grid; grid-template-columns: 1fr 9mm 26mm; align-items: center; gap: 3mm; margin-top: 3mm; }}
+.ausw-tab .kopfz {{ font-size: 6.8pt; font-weight: 700; letter-spacing: .14em; text-transform: uppercase; color: var(--muted); text-align: center; }}
+.ausw-tab .feld {{ margin-top: 0; height: 8mm; background: #fff; }}
 .ausw-tab .box {{ justify-self: center; width: 4.8mm; height: 4.8mm; }}
-.ausw-tab > span {{ font-size: 9.8pt; }}
+.ausw-tab > span {{ font-size: 10pt; }}
 .g {{ color: var(--grau); font-weight: 700; }} .gr {{ color: var(--gruen); font-weight: 700; }} .o {{ color: var(--orange); font-weight: 700; }}
-.pruefer .etikett {{ margin-top: 3.4mm; }}
+.pruefer .etikett {{ margin-top: 3.6mm; }}
 .pruefer .feld {{ height: 8mm; }}
-.maskott-unten {{ position: absolute; right: 15mm; bottom: 17mm; height: 19mm; }}
+.maskott-unten {{ position: absolute; right: 16mm; bottom: 18mm; height: 20mm; }}
 
 footer {{ margin-top: auto; display: flex; justify-content: space-between; font-size: 7pt; color: var(--muted);
           border-top: .5pt solid var(--line); padding-top: 2mm; }}
 """
+
+SEITENZAHL = 3
+
+
+def kopf_klein():
+    return f"""
+  <header class="kopf kopf--klein">
+    <div class="titel"><span class="eyebrow">SMELL Discettes</span><h1>Olfaction Test Formular</h1></div>
+    <img class="logo" src="{url(ASSETS / 'logo' / 'logo.webp')}" alt="">
+  </header>"""
+
+
+def liste(von, bis):
+    return f'<div class="liste">{"".join(sequenz(i + 1, SEQUENZEN[i]) for i in range(von, bis))}</div>'
 
 
 def seite1():
@@ -154,12 +172,21 @@ def seite1():
   <p class="intro">Kreuzen Sie bitte in jeder der 8 Sequenzen unten dasjenige Bild an, welches
   am besten mit dem Duft korrespondiert, den Sie eben gerochen haben. Der Test kann mit beiden
   Nasenöffnungen oder auch rechts und links getrennt erfolgen. Danke für Ihre Mitarbeit!</p>
-  <div class="raster">{''.join(sequenz(i + 1, SEQUENZEN[i]) for i in range(4))}</div>
+  {liste(0, 3)}
   {fuss(1)}
 </div>"""
 
 
 def seite2():
+    return f"""
+<div class="seite">
+  {kopf_klein()}
+  {liste(3, 6)}
+  {fuss(2)}
+</div>"""
+
+
+def seite3():
     zeilen = ''.join(
         f'<span>{label}</span><i class="box" data-feld="Getestet_{k}" data-wert="Ja"></i>'
         f'<div class="feld" data-feld="Punkte_{k}"></div>'
@@ -168,11 +195,8 @@ def seite2():
                          ('links', '<span class="o">linke</span> Nasenöffnung')))
     return f"""
 <div class="seite">
-  <header class="kopf kopf--klein">
-    <div class="titel"><span class="eyebrow">SMELL Discettes</span><h1>Olfaction Test Formular</h1></div>
-    <img class="logo" src="{url(ASSETS / 'logo' / 'logo.webp')}" alt="">
-  </header>
-  <div class="raster">{''.join(sequenz(i + 1, SEQUENZEN[i]) for i in range(4, 8))}</div>
+  {kopf_klein()}
+  {liste(6, 8)}
   <div class="unten">
     <section class="panel panel--tint">
       <h2>Testauswertung:</h2>
@@ -181,19 +205,19 @@ def seite2():
         {zeilen}
       </div>
     </section>
-    <section class="panel panel--rand pruefer">
+    <section class="panel pruefer">
       <h2>Prüferin / Prüfer</h2>
       <label><span class="etikett">Name</span><div class="feld" data-feld="Pruefer_Name"></div></label>
       <label><span class="etikett">Datum</span><div class="feld" data-feld="Pruefer_Datum"></div></label>
     </section>
   </div>
   <img class="maskott-unten" src="{url(ASSETS / 'icons' / 'maskottchen.webp')}" alt="">
-  {fuss(2)}
+  {fuss(3)}
 </div>"""
 
 
 html = f"""<!doctype html><html lang="de"><head><meta charset="utf-8">
 <title>SMELL Discettes Olfaction Test Formular</title><style>{CSS}</style></head>
-<body>{seite1()}{seite2()}</body></html>"""
+<body>{seite1()}{seite2()}{seite3()}</body></html>"""
 Path(sys.argv[1]).write_text(html, encoding='utf-8')
 print('HTML geschrieben:', sys.argv[1])

@@ -108,9 +108,9 @@ def textfeld(m, groesse=11, pruef_js=None, rechnen_js=None, mittig=False):
         aa += f'/V << /S /JavaScript /JS {pdf_text(pruef_js)} >> '
     if rechnen_js:
         aa += f'/C << /S /JavaScript /JS {pdf_text(rechnen_js)} >> '
-    # Innenabstand, damit Text und Fokusrahmen nicht auf der gezeichneten Linie liegen
+    # Feld deckungsgleich mit dem gezeichneten (eckigen) Rahmen; der Betrachter rückt den Text selbst ein
     x = neu(f'<< /Type /Annot /Subtype /Widget /FT /Tx /T {pdf_text(m["feld"])} /V () '
-            f'/P {seiten_xref[seite]} 0 R /Rect {rect_pdf(seite, m["rect"], pad=2.2)} /F 4 '
+            f'/P {seiten_xref[seite]} 0 R /Rect {rect_pdf(seite, m["rect"])} /F 4 '
             f'/DA (/Helv {groesse} Tf {BLAU_DUNKEL} rg) /MK << >> '
             + ('/Q 1 ' if mittig else '')
             + (f'/AA << {aa}>> ' if aa else '') + '>>')
