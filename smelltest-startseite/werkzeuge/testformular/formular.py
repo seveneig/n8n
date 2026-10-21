@@ -35,6 +35,37 @@ SEITEN = [('beide', 'beide'), ('rechts', 'rechts'), ('links', 'links')]
 KENNBUCHSTABE = {'beide': 'B', 'rechts': 'R', 'links': 'L'}
 VARIANTE = sys.argv[2] if len(sys.argv) > 2 else 'farbig'
 assert VARIANTE in ('farbig', 'klinisch'), VARIANTE
+# Kreisfüllung der Kennbuchstaben: die Farbtöne der Zeilen aus dem Original-Formular
+KREIS_FARBE = {'beide': '#E3E3E3', 'rechts': '#DCE8C6', 'links': '#FADCC4'}
+
+
+def kennzeichen(seite):
+    """Kennbuchstabe im Kreis als SVG. Der Buchstabe ist als Umriss aus Ebrima Bold
+    gezeichnet und nach seiner tatsächlichen Form mittig gesetzt – unabhängig von
+    Schriftmetriken, die sonst kleine Versätze erzeugen."""
+    from fontTools.ttLib import TTFont
+    from fontTools.pens.svgPathPen import SVGPathPen
+    from fontTools.pens.boundsPen import BoundsPen
+    from fontTools.pens.transformPen import TransformPen
+    global _SCHRIFT
+    try:
+        _SCHRIFT
+    except NameError:
+        _SCHRIFT = TTFont(str(SCHRIFT / 'ebrima-bold.ttf'))
+    gs = _SCHRIFT.getGlyphSet()
+    glyph = gs[_SCHRIFT.getBestCmap()[ord(KENNBUCHSTABE[seite])]]
+    bp = BoundsPen(gs); glyph.draw(bp)
+    x0, y0, x1, y1 = bp.bounds
+    hoehe = 42.0                                   # Versalhöhe in Einheiten des 100er-Kreises
+    k = hoehe / (y1 - y0)
+    # Schrift-Koordinaten (y nach oben) -> SVG (y nach unten), Umriss-Mitte auf 50/50
+    dx = 50 - (x0 + x1) / 2 * k
+    dy = 50 + (y0 + y1) / 2 * k
+    sp = SVGPathPen(gs)
+    glyph.draw(TransformPen(sp, (k, 0, 0, -k, dx, dy)))
+    return (f'<svg class="kz-svg" viewBox="0 0 100 100" aria-hidden="true">'
+            f'<circle cx="50" cy="50" r="46" fill="{KREIS_FARBE[seite]}" stroke="#00102E" stroke-width="6"/>'
+            f'<path d="{sp.getCommands()}" fill="#00102E"/></svg>')
 
 
 def url(p):
@@ -51,7 +82,7 @@ def sequenz(nr, optionen):
         kaestchen = ''.join(
             f'<span class="zelle"><i class="box" data-feld="Diskette{nr}_{schluessel}" data-wert="{name}"></i></span>'
             for name, _ in optionen)
-        zeilen += f'<div class="zeile {schluessel}"><span class="lbl"><i>{KENNBUCHSTABE[schluessel]}</i>{text}</span>{kaestchen}</div>'
+        zeilen += f'<div class="zeile {schluessel}"><span class="lbl">{kennzeichen(schluessel) if VARIANTE == "klinisch" else ""}{text}</span>{kaestchen}</div>'
     return (f'<section class="karte"><div class="nr">{nr}</div>'
             f'<div class="inhalt"><div class="bilder"><span></span>{bilder}</div>'
             f'<div class="zeilen">{zeilen}</div></div></section>')
@@ -194,13 +225,22 @@ def seite2():
 </div>"""
 
 
+AUSWERTUNG = {
+    'farbig': (('beide', '<span class="g">beide</span> Nasenöffnungen'),
+               ('rechts', '<span class="gr">rechte</span> Nasenöffnung'),
+               ('links', '<span class="o">linke</span> Nasenöffnung')),
+    'klinisch': tuple((k, f'<span class="kz">{kennzeichen(k)}<span class="{c}">{w}</span> {r}</span>')
+                      for k, c, w, r in (('beide', 'g', 'Beide', 'Nasenöffnungen'),
+                                         ('rechts', 'gr', 'Rechte', 'Nasenöffnung'),
+                                         ('links', 'o', 'Linke', 'Nasenöffnung'))),
+}
+
+
 def seite3():
     zeilen = ''.join(
         f'<span>{label}</span><i class="box" data-feld="Getestet_{k}" data-wert="Ja"></i>'
         f'<div class="feld" data-feld="Punkte_{k}"></div>'
-        for k, label in (('beide', '<i class="kz">B</i><span class="g">beide</span> Nasenöffnungen'),
-                         ('rechts', '<i class="kz">R</i><span class="gr">rechte</span> Nasenöffnung'),
-                         ('links', '<i class="kz">L</i><span class="o">linke</span> Nasenöffnung')))
+        for k, label in AUSWERTUNG[VARIANTE])
     return f"""
 <div class="seite">
   {kopf_klein()}
@@ -230,9 +270,8 @@ KLINISCH = """
 .zeile, .zeile.beide, .zeile.rechts, .zeile.links { background: none; border-radius: 0; border-bottom: .5pt solid var(--line); }
 .zeile.rechts { background: var(--tint); }
 .zeile .lbl, .zeile.beide .lbl, .zeile.rechts .lbl, .zeile.links .lbl { border-left: 0; padding-left: 1mm; gap: 2mm; color: var(--ink); font-weight: 400; font-size: 8.4pt; }
-.zeile .lbl i, .kz { display: inline-grid; place-items: center; width: 4.4mm; height: 4.4mm; border-radius: 50%;
-                     border: .8pt solid var(--navy); color: var(--navy); font-style: normal; font-size: 6.8pt; font-weight: 700; line-height: 1; }
-.kz { margin-right: 2mm; vertical-align: middle; }
+.kz-svg { display: block; width: 4.6mm; height: 4.6mm; flex: none; }
+.kz { display: inline-flex; align-items: center; gap: 2mm; }
 .g, .gr, .o { color: var(--ink); }
 """
 
