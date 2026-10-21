@@ -2,7 +2,7 @@
 /**
  * Plugin Name:       SMELL Online-Test
  * Description:       Prüft die Seriennummer (SN) des SMELL Test-Sets beim Login zum Online-Test, speichert auf Wunsch die Anmeldedaten und zählt die durchgeführten Tests je Test-Set.
- * Version:           1.1.4
+ * Version:           1.1.5
  * Requires at least: 6.0
  * Requires PHP:      7.4
  * Author:            SMELL Discettes GmbH
@@ -23,7 +23,7 @@ defined( 'ABSPATH' ) || exit;
 
 final class Smell_Online_Test {
 
-	const VERSION     = '1.1.4';
+	const VERSION     = '1.1.5';
 	const OPTION      = 'smell_ot_einstellungen';
 	const DB_VERSION  = 'smell_ot_db_version';
 	const NS          = 'smell/v1';

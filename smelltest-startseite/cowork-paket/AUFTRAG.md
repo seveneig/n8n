@@ -222,7 +222,7 @@ Bildantworten, Score und Ergebnisblatt zum Drucken. Für diese Seite gilt zusät
 **Aktualisieren:** Ist das Plugin schon installiert (Version 1.0.0), die neue ZIP
 genauso hochladen und **„Vorhandenes durch hochgeladene Version ersetzen"** wählen.
 Seriennummern, Zähler und gespeicherte Anmeldungen bleiben erhalten. Danach muss
-unter *Plugins* Version **1.1.4** stehen.
+unter *Plugins* Version **1.1.5** stehen.
 
 ### Gebrauchsanweisungen und Testformular hochladen
 
@@ -376,7 +376,7 @@ Prüfe nach dem Import auf **jeder** Seite:
 | Login meldet „Server nicht erreichbar" | Plugin inaktiv oder Route von einem Sicherheits-Plugin gesperrt | Plugin aktivieren, `/wp-json/smell/v1/` freigeben |
 | Login lehnt eine echte SN ab | SN nicht im Plugin eingetragen oder abweichend geschrieben | im Menü **SMELL Online-Test** zeichengenau eintragen |
 | PDF-Links im Online-Test führen ins Leere | Pfade `downloads/…` nicht ersetzt | PDFs hochladen und Pfade ersetzen (Abschnitt „Gebrauchsanweisungen und Testformular hochladen") |
-| „PDF konnte nicht erstellt werden" | Plugin noch Version 1.0.0, oder `…/smell-online-test/assets/` gesperrt bzw. von einem Optimierungs-Plugin verändert | Plugin 1.1.4 installieren, den Ordner freigeben und von der Optimierung ausnehmen |
+| „PDF konnte nicht erstellt werden" | Plugin noch Version 1.0.0, oder `…/smell-online-test/assets/` gesperrt bzw. von einem Optimierungs-Plugin verändert | Plugin 1.1.5 installieren, den Ordner freigeben und von der Optimierung ausnehmen |
 
 ## Rückmeldung
 

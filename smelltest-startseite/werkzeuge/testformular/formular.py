@@ -31,7 +31,7 @@ SEQUENZEN = [
     [('Zwiebel', '07-1-zwiebel'), ('Kokosnuss', '07-2-Kokosnuss'), ('Schokolade', '07-3-Schokolade')],
     [('Fisch', '08-1-fisch'), ('Tabak', '08-2-Tabak'), ('Essig', '08-3-Essig')],
 ]
-SEITEN = [('beide', 'beide'), ('rechts', 'rechts'), ('links', 'links')]
+SEITEN = [('beide', 'Beide'), ('rechts', 'Rechts'), ('links', 'Links')]  # Beschriftungen gross, im Fliesstext klein
 KENNBUCHSTABE = {'beide': 'B', 'rechts': 'R', 'links': 'L'}
 VARIANTE = sys.argv[2] if len(sys.argv) > 2 else 'farbig'
 assert VARIANTE in ('farbig', 'klinisch'), VARIANTE
@@ -226,9 +226,9 @@ def seite2():
 
 
 AUSWERTUNG = {
-    'farbig': (('beide', '<span class="g">beide</span> Nasenöffnungen'),
-               ('rechts', '<span class="gr">rechte</span> Nasenöffnung'),
-               ('links', '<span class="o">linke</span> Nasenöffnung')),
+    'farbig': (('beide', '<span class="g">Beide</span> Nasenöffnungen'),
+               ('rechts', '<span class="gr">Rechte</span> Nasenöffnung'),
+               ('links', '<span class="o">Linke</span> Nasenöffnung')),
     'klinisch': tuple((k, f'<span class="kz">{kennzeichen(k)}<span class="{c}">{w}</span> {r}</span>')
                       for k, c, w, r in (('beide', 'g', 'Beide', 'Nasenöffnungen'),
                                          ('rechts', 'gr', 'Rechte', 'Nasenöffnung'),
