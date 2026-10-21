@@ -174,9 +174,11 @@ Die Sprachumschalter EN/FR/IT bleiben `#`, bis es die Sprachfassungen gibt.
   und werden **nicht** an die Claim-Regeln angepasst.
 - `test.html` ist der interaktive Online-Test (Anmeldung, acht Sequenzen mit
   Bildantworten, Score, Ergebnisblatt). Die 24 Auswahlbilder liegen als WebP unter
-  `assets/bilder/test/`, die Originale als SVG unter `assets/test-svg/`. Die Seite
-  ist die einzige mit JavaScript; sie läuft ohne Serverkomponente, die
-  Produktcode-Prüfung ist reine Formatprüfung und kein Zugangsschutz.
+  `assets/bilder/test/`, die Originale als SVG unter `assets/test-svg/`. Die Seriennummer prüft das WordPress-Plugin `plugin/smell-online-test/`
+  (REST `/wp-json/smell/v1/anmelden` und `/test`); Patientendaten bleiben im Browser.
+  Ablauf: Login (mit Instruktionsfilm) → Patienten-Anmeldung → 8 Sequenzen ohne
+  Zurück → Zusammenfassung mit Korrektur → Tripel-Testformular (bis zu drei
+  Durchgänge je Person); 10 Minuten ohne Eingabe löschen Login- und Patientendaten.
 - Danach `node build-elementor.mjs` ausführen – erzeugt alle Elementor-Fassungen neu.
   Neue Seiten in der Liste `PAGES` im Build-Script eintragen. Das Script bettet
   Bilder aus `src="assets/…"` **und** aus einfach gequoteten Zeichenketten

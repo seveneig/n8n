@@ -26,7 +26,7 @@
       "im_hauptmenue": false,
       "startseite": true,
       "alte_url": "/de/",
-      "groesse_kb": 433
+      "groesse_kb": 434
     },
     {
       "datei": "bloecke/produkt.html",
@@ -36,7 +36,7 @@
       "im_hauptmenue": true,
       "startseite": false,
       "alte_url": "/de/product/",
-      "groesse_kb": 328
+      "groesse_kb": 329
     },
     {
       "datei": "bloecke/smelltest.html",
@@ -56,7 +56,7 @@
       "im_hauptmenue": true,
       "startseite": false,
       "alte_url": null,
-      "groesse_kb": 566,
+      "groesse_kb": 580,
       "enthaelt_javascript": true,
       "suchmaschinen": "noindex",
       "hinweis": "Interaktiver Online-Test. Der Block enthaelt ein <script>-Element; es muss unveraendert im HTML-Widget bleiben. Seite auf noindex setzen."
@@ -69,7 +69,7 @@
       "im_hauptmenue": true,
       "startseite": false,
       "alte_url": "/de/about/",
-      "groesse_kb": 248
+      "groesse_kb": 249
     },
     {
       "datei": "bloecke/faq.html",
@@ -89,7 +89,7 @@
       "im_hauptmenue": true,
       "startseite": false,
       "alte_url": "/de/contact_form/",
-      "groesse_kb": 45
+      "groesse_kb": 46
     },
     {
       "datei": "bloecke/vertriebspartner.html",
@@ -109,7 +109,7 @@
       "im_hauptmenue": false,
       "startseite": false,
       "alte_url": null,
-      "groesse_kb": 43
+      "groesse_kb": 44
     },
     {
       "datei": "bloecke/datenschutz.html",
@@ -140,7 +140,7 @@
   },
   "seitenvorlage": "elementor_header_footer",
   "interne_links": {
-    "hinweis": "Relative Pfade wie produkt.html vor dem Speichern durch die WordPress-Adressen ersetzen. Nur am Anfang eines href-Werts ersetzen (href=\"test.html darf nicht in href=\"smelltest.html greifen). Anhaenge bleiben erhalten: kontakt.html?anliegen=bestellung#formular -> /kontakt/?anliegen=bestellung#formular.",
+    "hinweis": "Relative Pfade wie produkt.html vor dem Speichern durch die WordPress-Adressen ersetzen – nur direkt nach href=\" oder einem einfachen Anfuehrungszeichen. Anhaenge bleiben erhalten: kontakt.html?anliegen=bestellung#formular -> /kontakt/?anliegen=bestellung#formular.",
     "ersetzungen": {
       "index.html": "/",
       "produkt.html": "/produkt/",
@@ -154,9 +154,9 @@
       "test.html": "/test/"
     },
     "offen": "Die Sprachumschalter EN / FR / IT (und English / Français / Italiano in der Fusszeile) haben noch kein Ziel (href=\"#\"), weil es die Sprachfassungen noch nicht gibt. Nicht selbst verlinken.",
-    "regex": "href=\"(produkt|smelltest|test|ueber-uns|faq|kontakt|vertriebspartner|impressum|datenschutz|index)\\.html"
+    "regex": "(href=\"|')(produkt|smelltest|test|ueber-uns|faq|kontakt|vertriebspartner|impressum|datenschutz|index)\\.html"
   },
-  "stand": "2026-09-24",
+  "stand": "2026-10-21",
   "schrift": {
     "font_family": "ebrima, sans-serif",
     "hinweis": "Systemschrift, wird nicht eingebettet. Auf Geraeten ohne Ebrima greift die serifenlose Systemschrift."
@@ -191,9 +191,13 @@
     ]
   },
   "online_test": {
+    "plugin": "plugin/smell-online-test.zip",
+    "schnittstelle": "/wp-json/smell/v1 (Ausweichweg /?rest_route=/smell/v1)",
+    "vorfuehr_sn": "SMELL-2026-HANS (legt das Plugin beim Aktivieren an)",
+    "seriennummern": "Im Menue SMELL Online-Test eintragen; Liste liefert die SMELL Discettes GmbH",
+    "tests_je_set": 500,
+    "zeitlimit_minuten": 10,
     "video_platzhalter": "VIDEO-URL-DER-STARTSEITE",
-    "video_hinweis": "Im Skript von bloecke/test.html durch die Adresse des Startseiten-Videos ersetzen (YouTube, Vimeo oder MP4).",
-    "vorfuehrcode": "SMELL-2026-HANS",
-    "hinweis_neues_set_ab_anmeldungen": 10
+    "video_hinweis": "Im Skript von bloecke/test.html durch die Adresse des Startseiten-Videos ersetzen (Instruktionsfilm auf der Login-Seite)."
   }
 }

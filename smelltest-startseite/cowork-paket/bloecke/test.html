@@ -688,6 +688,15 @@
 @media print { .sdx .sd-top { display: none; } }
 
 /* ================================================================
+   21. Hinweis unter den drei Schritten
+   ================================================================ */
+.sdx .sd-wdh {
+  display: table; margin: 30px auto 0; padding: 12px 26px; border-radius: 999px;
+  background: var(--white); box-shadow: inset 0 0 0 1.5px var(--blue-soft);
+  font-size: 16px; font-weight: 700; color: var(--navy); text-align: center;
+}
+
+/* ================================================================
    ONLINE-TEST – nur auf dieser Seite verwendete Bausteine.
    Alles bleibt im Wrapper .sdx gekapselt.
    ================================================================ */
@@ -782,35 +791,81 @@
 .sdx .sd-sumitem b { font-size: 11.5px; font-weight: 700; letter-spacing: .12em; text-transform: uppercase; color: var(--muted); }
 .sdx .sd-sumitem span { font-size: 14.5px; font-weight: 700; color: var(--navy); }
 
-/* ---------- Ergebnis ---------- */
-.sdx .sd-res { display: grid; grid-template-columns: auto 1fr; gap: 30px; align-items: center; }
-.sdx .sd-res__score {
-  display: grid; justify-items: center; align-content: center; gap: 2px;
-  width: 148px; height: 148px; border-radius: 50%;
-  background: var(--blue-mist); box-shadow: inset 0 0 0 2px var(--blue-soft);
-}
-.sdx .sd-res__score b { font-size: 52px; font-weight: 900; line-height: 1; color: var(--navy); }
-.sdx .sd-res__score span { font-size: 12px; font-weight: 700; letter-spacing: .14em; text-transform: uppercase; color: var(--muted); }
-.sdx .sd-res--low .sd-res__score { background: #FBECEA; box-shadow: inset 0 0 0 2px #F0C3BE; }
-.sdx .sd-res__txt h2 { font-size: clamp(22px, 2.4vw, 30px); font-weight: 900; line-height: 1.22; letter-spacing: -.018em; color: var(--navy); }
-.sdx .sd-res__txt p { margin-top: 12px; color: var(--muted); line-height: 1.7; }
-
-.sdx .sd-reslist { margin-top: 34px; border-top: 1px solid var(--line); }
-.sdx .sd-reslist > div {
-  display: grid; grid-template-columns: 92px 1fr 1fr 30px; gap: 16px;
-  align-items: center; padding: 12px 0; border-bottom: 1px solid var(--line); font-size: 15.5px;
-}
-.sdx .sd-reslist > div:first-child { font-size: 11.5px; font-weight: 700; letter-spacing: .12em; text-transform: uppercase; color: var(--muted); }
-.sdx .sd-reslist b { font-weight: 700; color: var(--navy); }
-.sdx .sd-resans { display: flex; align-items: center; gap: 12px; }
-.sdx .sd-resans img { width: 44px; height: 44px; object-fit: contain; flex: none; }
-.sdx .sd-reslist .sd-mark { font-weight: 900; text-align: center; color: var(--blue); }
-.sdx .sd-reslist .sd-mark.is-bad { color: var(--red); }
-
-.sdx .sd-meta { display: grid; grid-template-columns: repeat(2, 1fr); gap: 12px 30px; margin-top: 30px; padding-top: 24px; border-top: 1px solid var(--line); }
+/* ---------- Kopfdaten (Testformular) ---------- */
+.sdx .sd-meta { display: grid; grid-template-columns: repeat(2, 1fr); gap: 10px 30px; margin-top: 22px; padding: 20px 0; border-top: 1px solid var(--line); border-bottom: 1px solid var(--line); }
 .sdx .sd-meta > div { display: flex; gap: 10px; font-size: 15px; }
 .sdx .sd-meta dt { flex: none; width: 120px; font-size: 12.5px; font-weight: 700; letter-spacing: .08em; text-transform: uppercase; color: var(--muted); padding-top: 3px; }
 .sdx .sd-meta dd { font-weight: 700; color: var(--navy); }
+
+/* ---------- Login mit Instruktionsfilm ---------- */
+.sdx .sd-login { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; align-items: start; }
+.sdx .sd-check { display: grid; grid-template-columns: 22px 1fr; gap: 12px; align-items: start; cursor: pointer; font-size: 14px; line-height: 1.55; color: var(--muted); }
+.sdx .sd-check input { width: 18px; height: 18px; margin-top: 2px; accent-color: var(--blue); -webkit-appearance: checkbox; appearance: auto; }
+
+/* ---------- Kopfleiste: Zeitlimit ---------- */
+.sdx .sd-appbar__zeit { font-size: 13px; color: var(--muted); }
+.sdx .sd-appbar__zeit.is-knapp { color: var(--red); font-weight: 700; }
+
+/* ---------- Testzähler ---------- */
+.sdx .sd-zaehler {
+  display: grid; grid-template-columns: auto 1fr; gap: 8px 28px; align-items: center;
+  margin-bottom: 18px; padding: 18px 24px; border-radius: var(--r-md);
+  background: var(--white); box-shadow: inset 0 0 0 1px var(--line);
+}
+.sdx .sd-zaehler > div { display: flex; align-items: baseline; gap: 14px; }
+.sdx .sd-zaehler > div span { font-size: 12.5px; font-weight: 700; letter-spacing: .1em; text-transform: uppercase; color: var(--muted); }
+.sdx .sd-zaehler b { font-size: 28px; font-weight: 900; color: var(--navy); }
+.sdx .sd-zaehler p { font-size: 14px; line-height: 1.55; color: var(--muted); }
+.sdx .sd-zaehler.is-voll { box-shadow: inset 0 0 0 2px #F0C3BE; background: #FBECEA; }
+
+/* ---------- Nasenseite bereits getestet ---------- */
+.sdx .sd-side label.is-done { cursor: not-allowed; }
+.sdx .sd-side label.is-done span { color: #9AA8B8; background: var(--tint); box-shadow: inset 0 0 0 1px var(--line); text-decoration: line-through; }
+
+/* ---------- Sequenz: nach der Auswahl kurz gesperrt ---------- */
+.sdx .sd-choices.is-gesperrt { pointer-events: none; }
+
+/* ---------- Dokumente ---------- */
+.sdx .sd-docrow {
+  display: grid; grid-template-columns: 46px 1fr; gap: 8px 14px; align-items: center;
+  padding: 12px 14px; border-radius: var(--r-md); background: var(--white); box-shadow: inset 0 0 0 1px var(--line);
+}
+.sdx .sd-docrow b { display: block; font-size: 15px; font-weight: 700; color: var(--navy); line-height: 1.35; }
+.sdx .sd-docrow small { display: block; margin-top: 2px; font-size: 13px; color: var(--muted); }
+.sdx .sd-docrow.is-leer { opacity: .6; }
+.sdx .sd-docrow__aktion { grid-column: 2; display: flex; gap: 6px; flex-wrap: wrap; }
+.sdx .sd-docrow__aktion:empty { display: none; }
+.sdx .sd-docrow__aktion a {
+  font-size: 13px; font-weight: 700; color: var(--blue-deep); padding: 7px 12px; border-radius: 999px;
+  box-shadow: inset 0 0 0 1px var(--line); transition: background-color .2s ease;
+}
+.sdx .sd-docrow__aktion a:hover { background: var(--blue-mist); }
+
+/* ---------- Tripel-Testformular ---------- */
+.sdx .sd-tripel-wrap { margin-top: 24px; overflow-x: auto; }
+.sdx .sd-tripel { width: 100%; border-collapse: collapse; min-width: 640px; }
+.sdx .sd-tripel th, .sdx .sd-tripel td { padding: 10px 12px; border-bottom: 1px solid var(--line); text-align: left; vertical-align: middle; }
+.sdx .sd-tripel thead th { font-size: 11.5px; font-weight: 700; letter-spacing: .1em; text-transform: uppercase; color: var(--blue); border-bottom: 2px solid var(--blue-soft); }
+.sdx .sd-tripel tbody th { font-size: 15px; font-weight: 700; color: var(--navy); white-space: nowrap; }
+.sdx .sd-tripel tbody th small { display: block; font-size: 12px; font-weight: 400; color: var(--muted); }
+.sdx .sd-tripel__antw { display: flex; align-items: center; gap: 10px; font-size: 15px; }
+.sdx .sd-tripel__antw img { width: 40px; height: 40px; object-fit: contain; flex: none; }
+.sdx .sd-tripel__antw i { font-style: normal; font-weight: 900; margin-left: auto; color: var(--blue); }
+.sdx .sd-tripel__antw i.is-bad { color: var(--red); }
+.sdx .sd-tripel td.is-leer { color: #9AA8B8; font-size: 14px; }
+.sdx .sd-tripel tfoot th, .sdx .sd-tripel tfoot td { border-bottom: 0; border-top: 2px solid var(--blue-soft); padding-top: 14px; }
+.sdx .sd-tripel tfoot th { font-size: 12.5px; font-weight: 700; letter-spacing: .1em; text-transform: uppercase; color: var(--muted); }
+.sdx .sd-tripel__score { display: block; font-size: 24px; font-weight: 900; color: var(--navy); }
+.sdx .sd-tripel__score.is-low { color: var(--red); }
+.sdx .sd-tripel tfoot span { font-size: 13px; color: var(--muted); }
+
+/* ---------- Weiter nach dem Testformular ---------- */
+.sdx .sd-weiter { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 30px; padding-top: 26px; border-top: 1px solid var(--line); }
+
+/* ---------- Hinweisfenster: Aufzählung ---------- */
+.sdx .sd-modal__box ul.sd-modal__liste { margin-top: 12px; display: grid; gap: 6px; }
+.sdx .sd-modal__box ul.sd-modal__liste li { position: relative; padding-left: 18px; font-size: 15.5px; line-height: 1.55; color: var(--ink); }
+.sdx .sd-modal__box ul.sd-modal__liste li::before { content: ""; position: absolute; left: 2px; top: 9px; width: 6px; height: 6px; border-radius: 50%; background: var(--blue); }
 
 /* ---------- Meldung ---------- */
 .sdx .sd-msg {
@@ -889,10 +944,10 @@
 /* ---------- Responsiv ---------- */
 @media (max-width: 820px) {
   .sdx .sd-docs__grid { grid-template-columns: 1fr; }
+  .sdx .sd-login { grid-template-columns: 1fr; }
+  .sdx .sd-zaehler { grid-template-columns: 1fr; }
   .sdx .sd-sum { grid-template-columns: repeat(2, 1fr); }
   .sdx .sd-meta { grid-template-columns: 1fr; }
-  .sdx .sd-res { grid-template-columns: 1fr; justify-items: start; gap: 22px; }
-  .sdx .sd-reslist > div { grid-template-columns: 74px 1fr 1fr 26px; gap: 10px; font-size: 14.5px; }
 }
 @media (max-width: 620px) {
   .sdx .sd-app__wrap { padding: 0 20px; }
@@ -934,97 +989,114 @@
       <p class="sd-lead" style="max-width:720px">
         Der geführte Ablauf für die Praxis: Fachperson anmelden, Patientendaten erfassen,
         die acht Disketten der Reihe nach riechen lassen und je eine von drei Bildantworten
-        wählen. Am Schluss steht der Score von 0 bis 8 samt Einordnung.
+        wählen. Bis zu drei Durchgänge – beide Nasenlöcher, rechts und links – werden
+        auf einem Testformular zusammengefasst.
       </p>
     </div>
   </section>
 
   <!-- ==================================================================
        ANWENDUNG
+       Ablauf: Login → Patienten-Anmeldung → 8 Sequenzen → Zusammenfassung
+       → Tripel-Testformular (bis zu drei Durchgänge je Person)
        ================================================================== -->
   <section class="sd-app">
     <div class="sd-app__wrap">
 
       <!-- ---------- Kopfleiste, sichtbar sobald angemeldet ---------- -->
       <div class="sd-appbar" id="sdt-bar" hidden>
-        <span class="sd-appbar__id">Angemeldet: <b id="sdt-bar-pruefer"></b> · <b id="sdt-bar-klinik"></b></span>
-        <button type="button" class="sd-appbar__out" id="sdt-logout">Abmelden</button>
+        <span class="sd-appbar__id">Angemeldet: <b id="sdt-bar-pruefer"></b> · <b id="sdt-bar-klinik"></b> · SN <b id="sdt-bar-sn"></b></span>
+        <span class="sd-appbar__zeit" id="sdt-zeit" title="Ohne Eingabe wird nach 10 Minuten automatisch abgemeldet"></span>
+        <button type="button" class="sd-appbar__out" id="sdt-logout">Test verlassen</button>
       </div>
 
-      <!-- ============ 1. Anmeldung ============ -->
+      <!-- ============ 1. Login ============ -->
       <div class="sd-screen is-on" id="sdt-s-login">
-        <div class="sd-panel sd-panel--narrow">
-          <h2>Anmeldung</h2>
-          <p>
-            Der Online-Test richtet sich an Fachpersonen. Melden Sie sich mit Ihrem Namen,
-            Ihrer Klinik oder Praxis und dem Produktcode Ihrer TestBox an.
-          </p>
-
-          <form class="sd-form" id="sdt-form-login" novalidate>
-            <div class="sd-field">
-              <label for="sdt-pruefer">Prüferin oder Prüfer</label>
-              <input type="text" id="sdt-pruefer" name="pruefer" autocomplete="name" placeholder="Vorname und Name" required>
-            </div>
-            <div class="sd-field">
-              <label for="sdt-klinik">Klinik oder Praxis</label>
-              <input type="text" id="sdt-klinik" name="klinik" autocomplete="organization" placeholder="Ort der Testdurchführung" required>
-            </div>
-            <div class="sd-field">
-              <label for="sdt-code">Produktcode</label>
-              <input type="text" id="sdt-code" name="code" autocomplete="off" spellcheck="false" placeholder="Seriennummer der TestBox" required>
-            </div>
-            <p class="sd-form__note">
-              Den Produktcode finden Sie auf dem Etikett der TestBox-Rückseite, neben dem
-              Schweizerkreuz: die 8-stellige Seriennummer (SN), beginnend mit «21».
+        <div class="sd-login">
+          <div class="sd-panel">
+            <h2>Login</h2>
+            <p>
+              Der Online-Test richtet sich an Fachpersonen. Melden Sie sich mit Ihrem Namen,
+              Ihrer Klinik oder Praxis und der Seriennummer Ihres SMELL Test-Sets an.
             </p>
-            <div class="sd-msg" id="sdt-msg-login" hidden></div>
-            <div class="sd-actions" style="margin-top:8px">
-              <button type="submit" class="sd-btn sd-btn--primary">Anmelden <span class="sd-btn__arrow">→</span></button>
-            </div>
-          </form>
+
+            <form class="sd-form" id="sdt-form-login" novalidate>
+              <div class="sd-field">
+                <label for="sdt-pruefer">Prüferin oder Prüfer</label>
+                <input type="text" id="sdt-pruefer" name="pruefer" autocomplete="name" placeholder="Vorname und Name">
+              </div>
+              <div class="sd-field">
+                <label for="sdt-klinik">Klinik oder Praxis</label>
+                <input type="text" id="sdt-klinik" name="klinik" autocomplete="organization" placeholder="Ort der Testdurchführung">
+              </div>
+              <div class="sd-field">
+                <label for="sdt-code">Seriennummer (SN) des SMELL Test-Sets</label>
+                <input type="text" id="sdt-code" name="code" autocomplete="off" spellcheck="false" autocapitalize="off" placeholder="z. B. 21…">
+              </div>
+              <p class="sd-form__note">
+                Die Seriennummer steht auf dem Etikett der TestBox-Rückseite, neben dem
+                Schweizerkreuz, beginnend mit «21». Bitte genau so eingeben, wie sie dort steht.
+              </p>
+              <label class="sd-check">
+                <input type="checkbox" id="sdt-speichern" checked>
+                <span>Ich bin einverstanden, dass Name, Klinik und Seriennummer dieser Anmeldung
+                gespeichert werden. Patientendaten werden nie übertragen.</span>
+              </label>
+              <div class="sd-actions" style="margin-top:8px">
+                <button type="submit" class="sd-btn sd-btn--primary" id="sdt-login-go">Weiter zur Patienten-Anmeldung <span class="sd-btn__arrow">→</span></button>
+              </div>
+            </form>
+          </div>
+
+          <div class="sd-panel">
+            <h2>Instruktionsfilm</h2>
+            <p>Der Film zeigt den Ablauf des Tests – vom Öffnen der Diskette bis zum Ergebnis.</p>
+            <div class="sd-video" id="sdt-video" style="margin-top:22px"></div>
+            <p class="sd-video__hint">Das Video wird erst beim Abspielen geladen.</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- ============ 2. Patienten-Anmeldung ============ -->
+      <div class="sd-screen" id="sdt-s-patient">
+        <div class="sd-zaehler" id="sdt-zaehler-box">
+          <div><span>Mit diesem SMELL Test-Set durchgeführte Tests</span><b id="sdt-zaehler">0</b></div>
+          <p id="sdt-zaehler-text">Das SMELL Test-Set ist für bis zu 500 Tests mit Patienten vorgesehen. Danach ist eine Ersatzbeschaffung empfohlen.</p>
         </div>
 
-        <p class="sd-form__note" style="max-width:560px;margin:22px auto 0;text-align:center">
-          Alle Eingaben bleiben in diesem Browser. Es werden keine Patientendaten an einen
-          Server übertragen oder dort gespeichert.
-        </p>
-      </div>
-
-      <!-- ============ 2. Patient anmelden ============ -->
-      <div class="sd-screen" id="sdt-s-patient">
         <div class="sd-panel">
-          <h2>Patient anmelden</h2>
-          <p>Die Angaben erscheinen auf dem Ergebnisblatt und bleiben ausschliesslich in diesem Browser.</p>
+          <h2>Patienten-Anmeldung</h2>
+          <p>Die Angaben erscheinen auf dem Testformular und bleiben ausschliesslich in diesem Browser.</p>
           <div class="sd-note" id="sdt-durchgang" hidden></div>
 
           <form class="sd-form" id="sdt-form-patient" novalidate>
             <div class="sd-form__row">
               <div class="sd-field">
                 <label for="sdt-vorname">Vorname</label>
-                <input type="text" id="sdt-vorname" name="vorname" placeholder="Vorname" required>
+                <input type="text" id="sdt-vorname" name="vorname" placeholder="Vorname">
               </div>
               <div class="sd-field">
                 <label for="sdt-nachname">Nachname</label>
-                <input type="text" id="sdt-nachname" name="nachname" placeholder="Nachname" required>
+                <input type="text" id="sdt-nachname" name="nachname" placeholder="Nachname">
               </div>
             </div>
             <div class="sd-form__row">
               <div class="sd-field">
                 <label for="sdt-geburt">Geburtsdatum</label>
-                <input type="date" id="sdt-geburt" name="geburt" required>
+                <input type="date" id="sdt-geburt" name="geburt">
               </div>
               <div class="sd-field">
                 <label for="sdt-datum">Testdatum</label>
-                <input type="date" id="sdt-datum" name="datum" required>
+                <input type="date" id="sdt-datum" name="datum">
               </div>
             </div>
 
             <div class="sd-field" style="gap:4px">
               <label id="sdt-side-label">Welche Seite der Nase (Regio olfactoria) wird getestet?</label>
               <div class="sd-side" role="radiogroup" aria-labelledby="sdt-side-label">
-                <label class="is-on"><input type="radio" name="sdt-seite" value="Beide Nasenlöcher" checked><span>Beide Nasenlöcher</span></label>
-                <label><input type="radio" name="sdt-seite" value="Rechtes Nasenloch"><span>Rechtes Nasenloch</span></label>
-                <label><input type="radio" name="sdt-seite" value="Linkes Nasenloch"><span>Linkes Nasenloch</span></label>
+                <label><input type="radio" name="sdt-seite" value="beide"><span>Beide Nasenlöcher</span></label>
+                <label><input type="radio" name="sdt-seite" value="rechts"><span>Rechtes Nasenloch</span></label>
+                <label><input type="radio" name="sdt-seite" value="links"><span>Linkes Nasenloch</span></label>
               </div>
             </div>
 
@@ -1035,16 +1107,24 @@
               andere Nasenloch mit dem Finger.
             </div>
 
-            <div class="sd-msg" id="sdt-msg-patient" hidden></div>
-
             <div class="sd-actions">
               <button type="submit" class="sd-btn sd-btn--primary">Test beginnen <span class="sd-btn__arrow">→</span></button>
             </div>
           </form>
         </div>
+
+        <!-- Testformulare und Gebrauchsanweisungen -->
+        <div class="sd-panel sd-docs">
+          <h2>Testformulare und Gebrauchsanweisungen</h2>
+          <p>In vier Sprachen zum Ansehen und Herunterladen.</p>
+          <div class="sd-docs__grid">
+            <div><h3>Testformular</h3><div class="sd-doclist" id="sdt-doc-formulare"></div></div>
+            <div><h3>Gebrauchsanweisung</h3><div class="sd-doclist" id="sdt-doc-anleitungen"></div></div>
+          </div>
+        </div>
       </div>
 
-      <!-- ============ 3. Test ============ -->
+      <!-- ============ 3. Test: acht Sequenzen ============ -->
       <div class="sd-screen" id="sdt-s-quiz">
         <div class="sd-panel">
           <div class="sd-prog">
@@ -1056,7 +1136,7 @@
           </div>
 
           <h2 id="sdt-q-title">Der Patient riecht jetzt an Diskette&nbsp;1.</h2>
-          <p>Wählen Sie das Bild, das dem eben gerochenen Duft am nächsten kommt.</p>
+          <p id="sdt-q-hint">Wählen Sie das Bild, das dem eben gerochenen Duft am nächsten kommt.</p>
 
           <div class="sd-choices" id="sdt-choices" role="radiogroup" aria-labelledby="sdt-q-title"></div>
 
@@ -1064,11 +1144,6 @@
             Wird nichts gerochen, markieren Sie die wahrscheinlichste Antwort. Danach die
             Diskette wieder gut verschliessen und in die TestBox zurücklegen.
           </p>
-
-          <div class="sd-actions">
-            <button type="button" class="sd-btn sd-btn--ghost" id="sdt-back">Zurück</button>
-            <button type="button" class="sd-btn sd-btn--primary sd-actions__right" id="sdt-next" disabled>Weiter <span class="sd-btn__arrow">→</span></button>
-          </div>
         </div>
       </div>
 
@@ -1076,82 +1151,47 @@
       <div class="sd-screen" id="sdt-s-summary">
         <div class="sd-panel">
           <h2>Zusammenfassung</h2>
-          <p>Prüfen Sie die acht Antworten. Ein Klick auf eine Diskette öffnet sie noch einmal.</p>
+          <p id="sdt-sum-intro">Prüfen Sie die acht Antworten. Ein Klick auf eine Diskette öffnet sie noch einmal zur Korrektur.</p>
 
           <div class="sd-sum" id="sdt-sum"></div>
 
           <div class="sd-actions">
-            <button type="button" class="sd-btn sd-btn--ghost" id="sdt-sum-back">Zurück zu Diskette 8</button>
             <button type="button" class="sd-btn sd-btn--primary sd-actions__right" id="sdt-finish">Test abschliessen <span class="sd-btn__arrow">→</span></button>
           </div>
         </div>
       </div>
 
-      <!-- ============ 5. Ergebnis ============ -->
+      <!-- ============ 5. Tripel-Testformular ============ -->
       <div class="sd-screen" id="sdt-s-result">
         <div class="sd-panel">
-          <div class="sd-res" id="sdt-res">
-            <div class="sd-res__score"><b id="sdt-score">0</b><span>von 8</span></div>
-            <div class="sd-res__txt">
-              <h2 id="sdt-res-title"></h2>
-              <p id="sdt-res-text"></p>
-            </div>
-          </div>
-
-          <div class="sd-reslist" id="sdt-reslist"></div>
+          <span class="sd-eyebrow">Testformular</span>
+          <h2 style="margin-top:12px">SMELL Discettes Olfaction Test</h2>
 
           <dl class="sd-meta" id="sdt-meta"></dl>
 
-          <p class="sd-source" style="margin-top:26px">
-            Bei einem Score von 7 oder 8 beträgt die statistische Sicherheit einer normalen
-            Olfaktion 99,74 %. Briner &amp; Simmen, <i>Rhinology</i> 1999; 37: 145–148 (n&nbsp;=&nbsp;124).
+          <div class="sd-tripel-wrap">
+            <table class="sd-tripel" id="sdt-tripel"></table>
+          </div>
+
+          <p class="sd-source" style="margin-top:22px">
+            Score 7–8: normales Riechvermögen. Score 0–6: Es liegt sehr wahrscheinlich eine
+            Störung des Riechsinnes vor (Hyposmie, Anosmie); möglich ist auch eine mangelnde
+            Kooperation der Testperson. Bei einem Score von 7 oder 8 beträgt die statistische
+            Sicherheit einer normalen Olfaktion 99,74 %. Briner &amp; Simmen, <i>Rhinology</i>
+            1999; 37: 145–148 (n&nbsp;=&nbsp;124).
           </p>
 
           <div class="sd-actions">
-            <button type="button" class="sd-btn sd-btn--primary" id="sdt-print">Ergebnis drucken oder als PDF sichern</button>
-            <button type="button" class="sd-btn sd-btn--ghost" id="sdt-repeat">Test mit derselben Person wiederholen</button>
-            <button type="button" class="sd-btn sd-btn--ghost" id="sdt-again">Neue Person erfassen</button>
+            <button type="button" class="sd-btn sd-btn--primary" id="sdt-print">Testformular als PDF speichern oder drucken</button>
           </div>
-        </div>
-      </div>
+          <p class="sd-form__note" style="margin-top:10px">
+            Zum Herunterladen wählen Sie im Druckfenster «Als PDF speichern».
+          </p>
 
-      <!-- ============ Anleitung und Unterlagen – nur nach der Anmeldung ============ -->
-      <div class="sd-docs" id="sdt-docs" hidden>
-        <div class="sd-panel">
-          <h2>Anleitung und Unterlagen</h2>
-          <p>Das Erklärvideo zeigt den Ablauf des Tests. Die Gebrauchsanweisung steht in vier Sprachen bereit.</p>
-
-          <div class="sd-docs__grid">
-            <div>
-              <h3>Erklärvideo</h3>
-              <div class="sd-video" id="sdt-video"></div>
-              <p class="sd-video__hint">Das Video wird erst beim Abspielen geladen.</p>
-            </div>
-            <div>
-              <h3>Gebrauchsanweisung</h3>
-              <div class="sd-doclist">
-                <a class="sd-doc" data-lightbox="pdf" data-titel="Gebrauchsanweisung (Deutsch)" href="downloads/Smell-Test_Gebrauchsanweisung_D.pdf" target="_blank" rel="noopener">
-                  <span class="sd-doc__lang">DE</span>
-                  <span><b>Gebrauchsanweisung</b><small>Deutsch · PDF · 4 Seiten</small></span>
-                  <span class="sd-doc__pfeil">↓</span>
-                </a>
-                <a class="sd-doc" data-lightbox="pdf" data-titel="Instructions for use (English)" href="downloads/Smell-Test_Instruction_for_use_E.pdf" target="_blank" rel="noopener" hreflang="en">
-                  <span class="sd-doc__lang">EN</span>
-                  <span><b>Instructions for use</b><small>English · PDF · 4 pages</small></span>
-                  <span class="sd-doc__pfeil">↓</span>
-                </a>
-                <a class="sd-doc" data-lightbox="pdf" data-titel="Mode d’emploi (Français)" href="downloads/Smell-Test_mode_d_emploi_F.pdf" target="_blank" rel="noopener" hreflang="fr">
-                  <span class="sd-doc__lang">FR</span>
-                  <span><b>Mode d’emploi</b><small>Français · PDF · 4 pages</small></span>
-                  <span class="sd-doc__pfeil">↓</span>
-                </a>
-                <a class="sd-doc" data-lightbox="pdf" data-titel="Istruzioni per l’uso (Italiano)" href="downloads/Smell-Test_Istruzioni_per_l_uso_I.pdf" target="_blank" rel="noopener" hreflang="it">
-                  <span class="sd-doc__lang">IT</span>
-                  <span><b>Istruzioni per l’uso</b><small>Italiano · PDF · 4 pagine</small></span>
-                  <span class="sd-doc__pfeil">↓</span>
-                </a>
-              </div>
-            </div>
+          <div class="sd-weiter">
+            <button type="button" class="sd-btn sd-btn--ghost" id="sdt-repeat">Test mit anderer Nasenöffnung desselben Patienten fortfahren</button>
+            <button type="button" class="sd-btn sd-btn--ghost" id="sdt-again">Test mit neuem Patienten</button>
+            <button type="button" class="sd-btn sd-btn--ghost" id="sdt-exit">Test verlassen</button>
           </div>
         </div>
       </div>
@@ -1159,20 +1199,13 @@
     </div>
   </section>
 
-  <!-- ============ Hinweisfenster: neues SMELL Test-Set bestellen ============ -->
+  <!-- ============ Hinweis- und Rückfragefenster ============ -->
   <div class="sd-modal" id="sdt-modal" role="dialog" aria-modal="true" aria-labelledby="sdt-modal-titel" hidden>
     <div class="sd-modal__box">
-      <span class="sd-eyebrow">Hinweis</span>
-      <h2 id="sdt-modal-titel">Zeit für ein neues <span class="sd-nw">SMELL Test-Set</span></h2>
-      <p id="sdt-modal-text"></p>
-      <p>
-        Es wird empfohlen, rechtzeitig ein neues <span class="sd-nw">SMELL Test-Set</span> zu bestellen, damit
-        ununterbrochenes Testen gewährleistet ist.
-      </p>
-      <div class="sd-actions">
-        <a class="sd-btn sd-btn--primary" href="kontakt.html?anliegen=bestellung#formular" target="_blank" rel="noopener"><span class="sd-nw">SMELL Test-Set</span> bestellen <span class="sd-btn__arrow">→</span></a>
-        <button type="button" class="sd-btn sd-btn--ghost" id="sdt-modal-zu">Weiter zum Test</button>
-      </div>
+      <span class="sd-eyebrow" id="sdt-modal-eyebrow">Hinweis</span>
+      <h2 id="sdt-modal-titel"></h2>
+      <div id="sdt-modal-text"></div>
+      <div class="sd-actions" id="sdt-modal-knoepfe"></div>
     </div>
   </div>
 
@@ -1190,48 +1223,51 @@
 <script>
 /* ==================================================================
    SMELL DISCETTES – ONLINE-TEST
-   Läuft vollständig im Browser. Es werden keine Daten versendet.
+   Login → Patienten-Anmeldung → 8 Sequenzen → Zusammenfassung →
+   Tripel-Testformular (bis zu drei Durchgänge je Person).
+
+   Die Seriennummer wird über das WordPress-Plugin «SMELL Online-Test»
+   geprüft (REST: /wp-json/smell/v1). Patientendaten verlassen den
+   Browser nie; sie liegen nur im sessionStorage dieses Tabs.
    ================================================================== */
 (function () {
   'use strict';
 
   /* ----------------------------------------------------------------
-     ZUGANG
-     Der Produktcode wird hier nur auf seine Form geprüft. Eine echte
-     Prüfung gegen die ausgelieferten Seriennummern braucht eine
-     Serverkomponente – solange die fehlt, ist diese Abfrage eine
-     Zugangshürde und kein Schutz.
-
-     freigeschaltet:     Codes, die immer funktionieren (Team, Vorführung).
-     nurFreigeschaltete: true  = ausschliesslich die Codes oben zulassen
-                         false = zusätzlich jede Seriennummer im richtigen Format
-     muster:             Format einer Seriennummer von der TestBox
-     hinweisAb:          Ab so vielen Anmeldungen mit demselben Produktcode
-                         erscheint der Hinweis, ein neues SMELL Test-Set zu
-                         bestellen. Gezählt wird in diesem Browser.
+     EINSTELLUNGEN
      ---------------------------------------------------------------- */
-  var ZUGANG = {
-    freigeschaltet: ['SMELL-2026-HANS'],
-    nurFreigeschaltete: false,
-    muster: /^[A-Za-z0-9][A-Za-z0-9\- ]{6,}$/,
-    hinweisAb: 10
+  var API = '/wp-json/smell/v1';           // Schnittstelle des Plugins
+  var ZEITLIMIT_MIN = 10;                  // Minuten ohne Eingabe bis zur Abmeldung
+
+  // Adresse des Instruktionsfilms (YouTube, Vimeo oder MP4). Vorläufig das
+  // Video der Startseite. Solange der Platzhalter steht, erscheint ein Hinweis.
+  var VIDEO_URL = 'VIDEO-URL-DER-STARTSEITE';
+
+  // Dokumente auf der Patienten-Anmeldung. Leere Adresse = «folgt».
+  var DOKUMENTE = {
+    formulare: [
+      { sprache: 'DE', titel: 'Testformular',          zusatz: 'Deutsch',  url: '' },
+      { sprache: 'EN', titel: 'Test form',             zusatz: 'English',  url: '' },
+      { sprache: 'FR', titel: 'Formulaire de test',    zusatz: 'Français', url: '' },
+      { sprache: 'IT', titel: 'Modulo di test',        zusatz: 'Italiano', url: '' }
+    ],
+    anleitungen: [
+      { sprache: 'DE', titel: 'Gebrauchsanweisung',    zusatz: 'Deutsch',  url: 'downloads/Smell-Test_Gebrauchsanweisung_D.pdf' },
+      { sprache: 'EN', titel: 'Instructions for use',  zusatz: 'English',  url: 'downloads/Smell-Test_Instruction_for_use_E.pdf' },
+      { sprache: 'FR', titel: 'Mode d’emploi',         zusatz: 'Français', url: 'downloads/Smell-Test_mode_d_emploi_F.pdf' },
+      { sprache: 'IT', titel: 'Istruzioni per l’uso',  zusatz: 'Italiano', url: 'downloads/Smell-Test_Istruzioni_per_l_uso_I.pdf' }
+    ]
   };
 
-  /* ----------------------------------------------------------------
-     ERKLÄRVIDEO
-     Adresse des Videos, das nach der Anmeldung angezeigt wird.
-     Vorläufig dasselbe Video wie auf der Startseite. Erlaubt sind
-     YouTube-, Vimeo- oder direkte MP4-/WebM-Adressen. Solange hier der
-     Platzhalter steht, erscheint anstelle des Videos ein Hinweis.
-     ---------------------------------------------------------------- */
-  var VIDEO_URL = 'VIDEO-URL-DER-STARTSEITE';
+  // Drei mögliche Durchgänge je Person, in der Reihenfolge des Testformulars
+  var SEITEN = ['beide', 'rechts', 'links'];
+  var SEITE_TEXT = { beide: 'Beide Nasenlöcher', rechts: 'Rechtes Nasenloch', links: 'Linkes Nasenloch' };
 
   /* ----------------------------------------------------------------
      DIE ACHT SEQUENZEN
-     Reihenfolge und Bildauswahl entsprechen dem Testformular in der
-     TestBox. Die Bildpfade werden beim Erzeugen des Elementor-Blocks
-     durch eingebettete Daten ersetzt – deshalb hier vollständig
-     ausgeschrieben und nicht zusammengesetzt.
+     Reihenfolge und Bildauswahl wie im Testformular der TestBox. Die
+     Bildpfade werden beim Erzeugen des Elementor-Blocks eingebettet –
+     deshalb vollständig ausgeschrieben.
      ---------------------------------------------------------------- */
   var FRAGEN = [
     { nr: 1, richtig: 'Kaffee', auswahl: [
@@ -1270,6 +1306,7 @@
 
   /* ---------- Kurzformen ---------------------------------------- */
   var $ = function (id) { return document.getElementById(id); };
+  var alle = function (sel, wurzel) { return Array.prototype.slice.call((wurzel || document).querySelectorAll(sel)); };
   var esc = function (t) {
     return String(t == null ? '' : t)
       .replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;')
@@ -1281,127 +1318,641 @@
   })();
 
   /* ---------- Zustand ------------------------------------------- */
-  var sitzung = null;                 // { pruefer, klinik, code }
-  var patient = null;                 // { vorname, nachname, geburt, datum, seite }
-  var antworten = new Array(8).fill(null);
-  var aktuell = 0;
-  var durchgang = 1;                  // wievielter Test derselben Person
+  var Z = leererZustand();
+  function leererZustand() {
+    return {
+      sitzung: null,        // { pruefer, klinik, sn, token, tests, grenze }
+      patient: null,        // { vorname, nachname, geburt, datum }
+      durchgaenge: {},      // { beide: [8 Antworten], rechts: …, links: … }
+      seite: null,          // Nasenseite des laufenden Durchgangs
+      antworten: new Array(8).fill(null),
+      aktuell: 0,
+      korrektur: false,     // Sequenz aus der Zusammenfassung heraus geöffnet
+      bildschirm: 'login'
+    };
+  }
+  var letzteAktivitaet = Date.now();
+
+  function sichern() {
+    if (!speicher) return;
+    try {
+      speicher.setItem('sd-test', JSON.stringify({ z: Z, zeit: letzteAktivitaet }));
+    } catch (e) {}
+  }
+  function allesLoeschen() {
+    Z = leererZustand();
+    if (speicher) { try { speicher.removeItem('sd-test'); } catch (e) {} }
+    $('sdt-form-login').reset();
+    $('sdt-speichern').checked = true;
+    patientMaskeLeeren();
+  }
+
+  /* ---------- Hilfen: Datum ------------------------------------- */
+  function heute() {
+    var d = new Date();
+    return d.getFullYear() + '-' + String(d.getMonth() + 1).padStart(2, '0') + '-' + String(d.getDate()).padStart(2, '0');
+  }
+  function datumDe(iso) {
+    if (!iso) return '–';
+    var t = iso.split('-');
+    return t.length === 3 ? t[2] + '.' + t[1] + '.' + t[0] : iso;
+  }
+  function alterAm(geburt, stichtag) {
+    var g = geburt.split('-').map(Number), s = stichtag.split('-').map(Number);
+    var a = s[0] - g[0];
+    if (s[1] < g[1] || (s[1] === g[1] && s[2] < g[2])) a--;
+    return a;
+  }
 
   /* ---------- Bildschirme --------------------------------------- */
   var SCREENS = ['login', 'patient', 'quiz', 'summary', 'result'];
   function zeige(name) {
-    SCREENS.forEach(function (s) {
-      var el = $('sdt-s-' + s);
-      if (el) el.classList.toggle('is-on', s === name);
-    });
+    Z.bildschirm = name;
+    SCREENS.forEach(function (s) { $('sdt-s-' + s).classList.toggle('is-on', s === name); });
     $('sdt-bar').hidden = (name === 'login');
-    // Anleitung und Unterlagen nur angemeldet und nicht während der Testdurchführung
-    var docs = (name === 'patient' || name === 'summary' || name === 'result');
-    if (!docs) videoZuruecksetzen();
-    $('sdt-docs').hidden = !docs;
-    // Nur nach oben holen, wenn der Anwendungsbereich aus dem Bild gelaufen ist
+    if (name !== 'login') videoZuruecksetzen();
+    zeitAnzeigen();
+    sichern();
     var app = document.querySelector('.sdx .sd-app');
     if (app && app.getBoundingClientRect().top < 0) app.scrollIntoView({ block: 'start' });
   }
 
-  function meldung(id, text) {
-    var el = $(id);
-    if (!el) return;
-    if (text) { el.textContent = text; el.hidden = false; }
-    else { el.textContent = ''; el.hidden = true; }
+  /* ---------- Hinweis- und Rückfragefenster ---------------------- */
+  // knoepfe: [{ text, wert, primaer }]; Rückgabe über Promise
+  var dialogOffen = null, vorherFokus = null;
+  function dialog(eyebrow, titel, html, knoepfe) {
+    knoepfe = knoepfe || [{ text: 'Verstanden', wert: true, primaer: true }];
+    return new Promise(function (fertig) {
+      $('sdt-modal-eyebrow').textContent = eyebrow;
+      $('sdt-modal-titel').textContent = titel;
+      $('sdt-modal-text').innerHTML = html;
+      var leiste = $('sdt-modal-knoepfe');
+      leiste.innerHTML = '';
+      knoepfe.forEach(function (k) {
+        var b = document.createElement(k.href ? 'a' : 'button');
+        if (k.href) { b.href = k.href; b.target = '_blank'; b.rel = 'noopener'; } else { b.type = 'button'; }
+        b.className = 'sd-btn ' + (k.primaer ? 'sd-btn--primary' : 'sd-btn--ghost');
+        b.textContent = k.text;
+        b.addEventListener('click', function () { schliessen(k.wert); });
+        leiste.appendChild(b);
+      });
+      vorherFokus = document.activeElement;
+      $('sdt-modal').hidden = false;
+      dialogOffen = function (wert) { fertig(wert); };
+      var erster = leiste.querySelector('button, a');
+      if (erster) erster.focus();
+    });
+  }
+  function schliessen(wert) {
+    $('sdt-modal').hidden = true;
+    var f = dialogOffen; dialogOffen = null;
+    if (vorherFokus && vorherFokus.focus) { try { vorherFokus.focus(); } catch (e) {} }
+    if (f) f(wert);
+  }
+  document.addEventListener('keydown', function (ev) {
+    if (ev.key === 'Escape' && dialogOffen) schliessen(false);
+  });
+  function liste(punkte) {
+    return '<ul class="sd-modal__liste">' + punkte.map(function (p) { return '<li>' + p + '</li>'; }).join('') + '</ul>';
   }
 
-  /* ---------- Anmeldung ----------------------------------------- */
-  function anmelden(daten) {
-    sitzung = daten;
-    $('sdt-bar-pruefer').textContent = daten.pruefer;
-    $('sdt-bar-klinik').textContent = daten.klinik;
-    if (speicher) { try { speicher.setItem('sd-test-sitzung', JSON.stringify(daten)); } catch (e) {} }
+  /* ---------- Zeitlimit ----------------------------------------- */
+  // Jede Eingabe setzt die Uhr zurück. Nach 10 Minuten ohne Eingabe wird
+  // auf Login, Anmeldung, in den Sequenzen und in der Zusammenfassung alles
+  // gelöscht. Das fertige Testformular bleibt stehen, damit es gesichert
+  // werden kann.
+  ['pointerdown', 'keydown', 'input', 'wheel', 'touchstart'].forEach(function (art) {
+    document.addEventListener(art, function () { letzteAktivitaet = Date.now(); }, { passive: true });
+  });
+
+  function zeitAnzeigen() {
+    var feld = $('sdt-zeit');
+    if (!feld) return;
+    if (Z.bildschirm === 'login' || Z.bildschirm === 'result') { feld.textContent = ''; return; }
+    var rest = ZEITLIMIT_MIN * 60000 - (Date.now() - letzteAktivitaet);
+    var min = Math.max(0, Math.ceil(rest / 60000));
+    feld.textContent = 'Automatische Abmeldung ohne Eingabe in ' + min + ' Min.';
+    feld.classList.toggle('is-knapp', min <= 2);
   }
 
-  function abmelden() {
-    sitzung = null; patient = null;
-    antworten = new Array(8).fill(null);
-    aktuell = 0;
-    if (speicher) { try { speicher.removeItem('sd-test-sitzung'); } catch (e) {} }
-    $('sdt-form-login').reset();
-    $('sdt-form-patient').reset();
-    setzeSeite('Beide Nasenlöcher');
-    heuteSetzen();
-    meldung('sdt-msg-login', '');
-    meldung('sdt-msg-patient', '');
+  function zeitPruefen() {
+    var abgelaufen = Date.now() - letzteAktivitaet >= ZEITLIMIT_MIN * 60000;
+    if (!abgelaufen) { zeitAnzeigen(); return; }
+    if (Z.bildschirm === 'login') {
+      var etwas = ['sdt-pruefer', 'sdt-klinik', 'sdt-code'].some(function (id) { return $(id).value !== ''; });
+      if (etwas) { $('sdt-form-login').reset(); $('sdt-speichern').checked = true; }
+      letzteAktivitaet = Date.now();
+      return;
+    }
+    if (Z.bildschirm === 'result') return;
+    allesLoeschen();
     zeige('login');
+    letzteAktivitaet = Date.now();
+    dialog('Zeitüberschreitung', 'Sie wurden abgemeldet',
+      '<p>Während ' + ZEITLIMIT_MIN + ' Minuten erfolgte keine Eingabe. Aus Datenschutzgründen wurden ' +
+      'die Anmeldung und die Patientendaten gelöscht. Bitte melden Sie sich erneut an.</p>');
+  }
+  setInterval(zeitPruefen, 10000);
+  document.addEventListener('visibilitychange', function () { if (!document.hidden) zeitPruefen(); });
+
+  /* ---------- Schnittstelle zum Plugin --------------------------- */
+  function api(pfad, daten) {
+    function senden(url) {
+      return fetch(url, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        credentials: 'same-origin',
+        body: JSON.stringify(daten)
+      }).then(function (r) {
+        return r.json().then(function (j) { return { status: r.status, json: j }; },
+                             function () { return { status: r.status, json: null }; });
+      });
+    }
+    return senden(API + pfad).then(function (a) {
+      // Ohne «schöne» Permalinks gibt es /wp-json/ nicht – dann über ?rest_route=
+      if (a.status === 404 && (!a.json || a.json.code === 'rest_no_route' || !a.json.code)) {
+        return senden('/?rest_route=' + encodeURIComponent('/smell/v1' + pfad));
+      }
+      return a;
+    }).catch(function () { return { status: 0, json: null }; });
   }
 
+  /* ================================================================
+     1. LOGIN
+     ================================================================ */
   $('sdt-form-login').addEventListener('submit', function (ev) {
     ev.preventDefault();
     var pruefer = $('sdt-pruefer').value.trim();
     var klinik  = $('sdt-klinik').value.trim();
-    var code    = $('sdt-code').value.trim();
+    var sn      = $('sdt-code').value.trim();
 
-    if (!pruefer || !klinik || !code) {
-      meldung('sdt-msg-login', 'Bitte füllen Sie alle drei Felder aus.');
+    var fehlt = [];
+    if (!pruefer) fehlt.push('Prüferin oder Prüfer');
+    if (!klinik)  fehlt.push('Klinik oder Praxis');
+    if (!sn)      fehlt.push('Seriennummer (SN) des SMELL Test-Sets');
+    if (fehlt.length) {
+      dialog('Login', 'Bitte alle Felder ausfüllen', '<p>Folgende Angaben fehlen:</p>' + liste(fehlt));
       return;
     }
-    var schluessel = codeNorm(code);
-    var frei = ZUGANG.freigeschaltet.some(function (c) { return codeNorm(c) === schluessel; });
-    if (!frei && ZUGANG.nurFreigeschaltete) {
-      meldung('sdt-msg-login', 'Dieser Produktcode ist nicht freigeschaltet. Bitte prüfen Sie die Eingabe oder wenden Sie sich an info@smelldiscettes.com.');
+
+    var knopf = $('sdt-login-go');
+    knopf.disabled = true;
+    var knopfText = knopf.innerHTML;
+    knopf.textContent = 'Seriennummer wird geprüft …';
+
+    api('/anmelden', { pruefer: pruefer, klinik: klinik, sn: sn, speichern: $('sdt-speichern').checked })
+      .then(function (a) {
+        knopf.disabled = false;
+        knopf.innerHTML = knopfText;
+        if (a.status === 200 && a.json && a.json.ok) {
+          Z.sitzung = { pruefer: pruefer, klinik: klinik, sn: sn, token: a.json.token,
+                        tests: a.json.tests, grenze: a.json.grenze };
+          $('sdt-bar-pruefer').textContent = pruefer;
+          $('sdt-bar-klinik').textContent = klinik;
+          $('sdt-bar-sn').textContent = sn;
+          patientMaskeLeeren();
+          patientAnzeigen();
+          zeige('patient');
+          if (a.json.tests >= a.json.grenze) ersatzHinweis();
+          return;
+        }
+        var grund;
+        if (a.status === 0) {
+          grund = '<p>Der Server ist nicht erreichbar. Bitte prüfen Sie die Internetverbindung und versuchen Sie es erneut.</p>';
+        } else if (a.json && a.json.code === 'sn_unbekannt') {
+          grund = '<p>Die Seriennummer <b>' + esc(sn) + '</b> ist nicht freigeschaltet.</p>' +
+                  '<p>Bitte vergleichen Sie die Eingabe Zeichen für Zeichen mit dem Etikett auf der ' +
+                  'TestBox-Rückseite – auch Gross- und Kleinschreibung. Bei Fragen: info@smelldiscettes.com.</p>';
+        } else if (a.json && a.json.meldung) {
+          grund = '<p>' + esc(a.json.meldung) + '</p>';
+        } else {
+          grund = '<p>Die Anmeldung ist im Moment nicht möglich. Bitte versuchen Sie es später erneut.</p>';
+        }
+        dialog('Login', 'Anmeldung nicht möglich', grund);
+      });
+  });
+
+  function ersatzHinweis() {
+    dialog('Hinweis', 'Zeit für ein neues SMELL Test-Set',
+      '<p>Mit diesem SMELL Test-Set wurden bereits ' + Z.sitzung.tests + ' Tests durchgeführt. ' +
+      'Es ist für bis zu ' + Z.sitzung.grenze + ' Tests mit Patienten vorgesehen.</p>' +
+      '<p>Es wird empfohlen, rechtzeitig ein neues SMELL Test-Set zu bestellen, damit ununterbrochenes Testen gewährleistet ist.</p>',
+      [{ text: 'SMELL Test-Set bestellen', href: 'kontakt.html?anliegen=bestellung#formular', wert: true, primaer: true },
+       { text: 'Weiter', wert: false }]);
+  }
+
+  /* ================================================================
+     2. PATIENTEN-ANMELDUNG
+     ================================================================ */
+  function patientMaskeLeeren() {
+    $('sdt-form-patient').reset();
+    $('sdt-datum').value = heute();
+    alle('#sdt-form-patient input').forEach(function (i) { i.readOnly = false; i.disabled = false; });
+    alle('.sdx .sd-side label').forEach(function (l) { l.classList.remove('is-on', 'is-done'); });
+    $('sdt-durchgang').hidden = true;
+  }
+
+  function erledigteSeiten() {
+    return SEITEN.filter(function (s) { return !!Z.durchgaenge[s]; });
+  }
+
+  function patientAnzeigen() {
+    // Zähler
+    if (Z.sitzung) {
+      $('sdt-zaehler').textContent = Z.sitzung.tests;
+      $('sdt-zaehler-text').textContent = 'Das SMELL Test-Set ist für bis zu ' + Z.sitzung.grenze +
+        ' Tests mit Patienten vorgesehen. Danach ist eine Ersatzbeschaffung empfohlen.';
+      $('sdt-zaehler-box').classList.toggle('is-voll', Z.sitzung.tests >= Z.sitzung.grenze);
+    }
+    // Person aus einem früheren Durchgang: Angaben stehen fest
+    var fest = !!Z.patient;
+    if (fest) {
+      $('sdt-vorname').value = Z.patient.vorname;
+      $('sdt-nachname').value = Z.patient.nachname;
+      $('sdt-geburt').value = Z.patient.geburt;
+      $('sdt-datum').value = Z.patient.datum;
+    }
+    ['sdt-vorname', 'sdt-nachname', 'sdt-geburt', 'sdt-datum'].forEach(function (id) { $(id).readOnly = fest; });
+
+    // Nasenseiten: erledigte sperren, keine vorauswählen
+    var erledigt = erledigteSeiten();
+    alle('.sdx .sd-side label').forEach(function (l) {
+      var i = l.querySelector('input');
+      var done = erledigt.indexOf(i.value) >= 0;
+      i.checked = false;
+      i.disabled = done;
+      l.classList.remove('is-on');
+      l.classList.toggle('is-done', done);
+      l.querySelector('span').textContent = SEITE_TEXT[i.value] + (done ? ' – getestet' : '');
+    });
+
+    var hinweis = $('sdt-durchgang');
+    if (fest && erledigt.length) {
+      hinweis.innerHTML = '<b>Durchgang ' + (erledigt.length + 1) + ' von 3:</b> Die Patientendaten sind übernommen. ' +
+        'Wählen Sie eine Seite der Nase, die noch nicht getestet wurde.';
+      hinweis.hidden = false;
+    } else {
+      hinweis.hidden = true;
+    }
+  }
+
+  alle('.sdx .sd-side input').forEach(function (i) {
+    i.addEventListener('change', function () {
+      alle('.sdx .sd-side label').forEach(function (l) { l.classList.toggle('is-on', l.querySelector('input').checked); });
+    });
+  });
+
+  $('sdt-form-patient').addEventListener('submit', function (ev) {
+    ev.preventDefault();
+    var p = {
+      vorname:  $('sdt-vorname').value.trim(),
+      nachname: $('sdt-nachname').value.trim(),
+      geburt:   $('sdt-geburt').value,
+      datum:    $('sdt-datum').value
+    };
+    var gewaehlt = alle('.sdx .sd-side input').filter(function (i) { return i.checked; });
+
+    var probleme = [];
+    if (!p.vorname)  probleme.push('Vorname fehlt.');
+    if (!p.nachname) probleme.push('Nachname fehlt.');
+    if (!p.geburt)   probleme.push('Geburtsdatum fehlt.');
+    if (!p.datum)    probleme.push('Testdatum fehlt.');
+    if (p.geburt && p.geburt > heute()) probleme.push('Das Geburtsdatum liegt in der Zukunft.');
+    if (p.datum && p.datum > heute())   probleme.push('Das Testdatum liegt in der Zukunft.');
+    if (p.geburt && p.datum && p.geburt <= p.datum && p.geburt <= heute() && alterAm(p.geburt, p.datum) < 6) {
+      probleme.push('Der Test ist ab 6 Jahren einsetzbar.');
+    }
+    if (p.geburt && p.datum && p.geburt > p.datum) probleme.push('Das Geburtsdatum liegt nach dem Testdatum.');
+    if (gewaehlt.length !== 1) {
+      probleme.push('Bitte genau eine Seite der Nase wählen.');
+    } else if (Z.durchgaenge[gewaehlt[0].value]) {
+      probleme.push('Diese Seite der Nase wurde bei dieser Person bereits getestet.');
+    }
+    if (probleme.length) {
+      dialog('Patienten-Anmeldung', 'Der Test kann noch nicht beginnen', liste(probleme));
       return;
     }
-    if (!frei && !ZUGANG.muster.test(code)) {
-      meldung('sdt-msg-login', 'Der Produktcode sieht nicht wie eine Seriennummer aus. Bitte den Code vom Etikett der TestBox-Rückseite eingeben.');
+
+    if (!Z.patient) Z.patient = p;
+    Z.seite = gewaehlt[0].value;
+    Z.antworten = new Array(8).fill(null);
+    Z.aktuell = 0;
+    Z.korrektur = false;
+    zeichneFrage();
+    zeige('quiz');
+  });
+
+  /* ---------- Dokumente ----------------------------------------- */
+  function dokumenteZeichnen() {
+    function zeile(d) {
+      var name = d.titel + ' (' + d.zusatz + ')';
+      if (!d.url) {
+        return '<div class="sd-docrow is-leer"><span class="sd-doc__lang">' + esc(d.sprache) + '</span>' +
+               '<span><b>' + esc(d.titel) + '</b><small>' + esc(d.zusatz) + ' · folgt</small></span><span class="sd-docrow__aktion"></span></div>';
+      }
+      return '<div class="sd-docrow"><span class="sd-doc__lang">' + esc(d.sprache) + '</span>' +
+             '<span><b>' + esc(d.titel) + '</b><small>' + esc(d.zusatz) + ' · PDF</small></span>' +
+             '<span class="sd-docrow__aktion">' +
+               '<a href="' + esc(d.url) + '" data-lightbox="pdf" data-titel="' + esc(name) + '" target="_blank" rel="noopener">Ansehen</a>' +
+               '<a href="' + esc(d.url) + '" download>Herunterladen</a>' +
+             '</span></div>';
+    }
+    $('sdt-doc-formulare').innerHTML = DOKUMENTE.formulare.map(zeile).join('');
+    $('sdt-doc-anleitungen').innerHTML = DOKUMENTE.anleitungen.map(zeile).join('');
+  }
+
+  /* ================================================================
+     3. SEQUENZEN
+     ================================================================ */
+  function bildZu(f, name) {
+    for (var i = 0; i < f.auswahl.length; i++) if (f.auswahl[i].name === name) return f.auswahl[i].bild;
+    return '';
+  }
+
+  function zeichneFrage() {
+    var f = FRAGEN[Z.aktuell];
+    $('sdt-prog-txt').textContent = 'Diskette ' + f.nr + ' von 8';
+    $('sdt-prog-pat').textContent = Z.patient ? Z.patient.vorname + ' ' + Z.patient.nachname + ' · ' + SEITE_TEXT[Z.seite] : '';
+    $('sdt-prog-fill').style.width = ((Z.aktuell + 1) / 8 * 100) + '%';
+    $('sdt-q-title').innerHTML = (Z.korrektur ? 'Korrektur: Diskette&nbsp;' : 'Der Patient riecht jetzt an Diskette&nbsp;') + f.nr + '.';
+    $('sdt-q-hint').textContent = Z.korrektur
+      ? 'Wählen Sie das zutreffende Bild. Danach geht es zurück zur Zusammenfassung.'
+      : 'Wählen Sie das Bild, das dem eben gerochenen Duft am nächsten kommt.';
+
+    var html = '';
+    f.auswahl.forEach(function (a) {
+      var an = Z.antworten[Z.aktuell] === a.name;
+      html += '<label class="sd-choice' + (an ? ' is-on' : '') + '">' +
+                '<input type="radio" name="sdt-frage" value="' + esc(a.name) + '"' + (an ? ' checked' : '') + '>' +
+                '<span class="sd-choice__box">' +
+                  '<img src="' + a.bild + '" alt="' + esc(a.name) + '" width="220" height="220">' +
+                  '<span class="sd-choice__name">' + esc(a.name) + '</span>' +
+                '</span>' +
+              '</label>';
+    });
+    var box = $('sdt-choices');
+    box.innerHTML = html;
+    box.classList.remove('is-gesperrt');
+
+    alle('input', box).forEach(function (inp) {
+      inp.addEventListener('change', function () {
+        if (box.classList.contains('is-gesperrt')) return;
+        box.classList.add('is-gesperrt');      // Doppelklicks abfangen
+        Z.antworten[Z.aktuell] = inp.value;
+        alle('.sd-choice', box).forEach(function (l) { l.classList.toggle('is-on', l.querySelector('input').checked); });
+        sichern();
+        // kurz die Auswahl zeigen, dann weiter
+        setTimeout(weiter, 350);
+      });
+    });
+  }
+
+  function weiter() {
+    if (Z.korrektur || Z.aktuell === 7) {
+      Z.korrektur = false;
+      zeichneZusammenfassung();
+      zeige('summary');
       return;
     }
-    meldung('sdt-msg-login', '');
-    anmelden({ pruefer: pruefer, klinik: klinik, code: code });
-    var anzahl = anmeldungZaehlen(schluessel);
+    Z.aktuell++;
+    zeichneFrage();
+    sichern();
+  }
+
+  /* ================================================================
+     4. ZUSAMMENFASSUNG
+     ================================================================ */
+  function zeichneZusammenfassung() {
+    var html = '';
+    FRAGEN.forEach(function (f, i) {
+      var a = Z.antworten[i];
+      html += '<button type="button" class="sd-sumitem" data-i="' + i + '">' +
+                '<img src="' + bildZu(f, a) + '" alt="" width="74" height="74">' +
+                '<b>Diskette ' + f.nr + '</b>' +
+                '<span>' + esc(a) + '</span>' +
+              '</button>';
+    });
+    $('sdt-sum').innerHTML = html;
+    $('sdt-sum-intro').textContent = SEITE_TEXT[Z.seite] + ' – prüfen Sie die acht Antworten. ' +
+      'Ein Klick auf eine Diskette öffnet sie noch einmal zur Korrektur.';
+    alle('.sd-sumitem', $('sdt-sum')).forEach(function (b) {
+      b.addEventListener('click', function () {
+        Z.aktuell = parseInt(b.getAttribute('data-i'), 10);
+        Z.korrektur = true;
+        zeichneFrage();
+        zeige('quiz');
+      });
+    });
+  }
+
+  $('sdt-finish').addEventListener('click', function () {
+    if (Z.antworten.some(function (a) { return !a; })) return;
+    Z.durchgaenge[Z.seite] = Z.antworten.slice();
+    var knopf = $('sdt-finish');
+    knopf.disabled = true;
+    // Test beim Plugin zählen; das Ergebnis wird auch ohne Antwort angezeigt
+    api('/test', { token: Z.sitzung ? Z.sitzung.token : '' }).then(function (a) {
+      knopf.disabled = false;
+      if (a.status === 200 && a.json && a.json.ok && Z.sitzung) {
+        Z.sitzung.tests = a.json.tests;
+        Z.sitzung.grenze = a.json.grenze;
+      }
+      zeichneErgebnis();
+      zeige('result');
+    });
+  });
+
+  /* ================================================================
+     5. TRIPEL-TESTFORMULAR
+     ================================================================ */
+  function punkte(antw) {
+    var p = 0;
+    FRAGEN.forEach(function (f, i) { if (antw[i] === f.richtig) p++; });
+    return p;
+  }
+
+  function metaDaten() {
+    return [
+      ['Patient',       Z.patient.vorname + ' ' + Z.patient.nachname],
+      ['Geburtsdatum',  datumDe(Z.patient.geburt)],
+      ['Testdatum',     datumDe(Z.patient.datum)],
+      ['Prüfer',        Z.sitzung ? Z.sitzung.pruefer : ''],
+      ['Klinik',        Z.sitzung ? Z.sitzung.klinik : ''],
+      ['Seriennummer',  Z.sitzung ? Z.sitzung.sn : '']
+    ];
+  }
+
+  function zeichneErgebnis() {
+    $('sdt-meta').innerHTML = metaDaten().map(function (m) {
+      return '<div><dt>' + esc(m[0]) + '</dt><dd>' + esc(m[1]) + '</dd></div>';
+    }).join('');
+
+    var kopf = '<thead><tr><th>Diskette</th>' + SEITEN.map(function (s) {
+      return '<th>' + SEITE_TEXT[s] + '</th>';
+    }).join('') + '</tr></thead>';
+
+    var rumpf = '<tbody>' + FRAGEN.map(function (f, i) {
+      return '<tr><th scope="row">Diskette ' + f.nr + '<small>' + esc(f.richtig) + '</small></th>' +
+        SEITEN.map(function (s) {
+          var d = Z.durchgaenge[s];
+          if (!d) return '<td class="is-leer">–</td>';
+          var ok = d[i] === f.richtig;
+          return '<td><span class="sd-tripel__antw"><img src="' + bildZu(f, d[i]) + '" alt="" width="40" height="40">' +
+                 '<span>' + esc(d[i]) + '</span><i class="' + (ok ? 'is-ok' : 'is-bad') + '">' + (ok ? '✓' : '✕') + '</i></span></td>';
+        }).join('') + '</tr>';
+    }).join('') + '</tbody>';
+
+    var fuss = '<tfoot><tr><th scope="row">Punkte</th>' + SEITEN.map(function (s) {
+      var d = Z.durchgaenge[s];
+      if (!d) return '<td class="is-leer">nicht getestet</td>';
+      var p = punkte(d);
+      return '<td><b class="sd-tripel__score' + (p >= 7 ? '' : ' is-low') + '">' + p + ' / 8</b>' +
+             '<span>' + (p >= 7 ? 'Normales Riechvermögen' : 'Auffälliges Ergebnis') + '</span></td>';
+    }).join('') + '</tr></tfoot>';
+
+    $('sdt-tripel').innerHTML = kopf + rumpf + fuss;
+    $('sdt-repeat').hidden = erledigteSeiten().length >= 3;
+  }
+
+  /* ---------- Weiter nach dem Testformular ----------------------- */
+  var SICHERN_TEXT =
+    '<p>Haben Sie das Testformular als PDF gespeichert oder ausgedruckt? ' +
+    'Danach werden die Testdaten dieser Person gelöscht und lassen sich nicht wiederherstellen.</p>';
+
+  $('sdt-repeat').addEventListener('click', function () {
+    if (erledigteSeiten().length >= 3) return;
+    patientAnzeigen();
     zeige('patient');
-    if (anzahl >= ZUGANG.hinweisAb) hinweisZeigen(anzahl);
   });
 
-  /* ---------- Anmeldungen je Produktcode zählen ----------------- */
-  // Schlüssel ist der Produktcode ohne Leerzeichen und Bindestriche, in
-  // Grossbuchstaben. Gespeichert wird dauerhaft in diesem Browser.
-  function codeNorm(c) { return String(c).replace(/[\s-]/g, '').toUpperCase(); }
-
-  var dauerspeicher = (function () {
-    try { var s = window.localStorage; s.setItem('sdt', '1'); s.removeItem('sdt'); return s; }
-    catch (e) { return null; }
-  })();
-
-  function anmeldungZaehlen(schluessel) {
-    var liste = {};
-    if (dauerspeicher) {
-      try { liste = JSON.parse(dauerspeicher.getItem('sd-test-anmeldungen') || '{}') || {}; } catch (e) { liste = {}; }
-    }
-    liste[schluessel] = (parseInt(liste[schluessel], 10) || 0) + 1;
-    if (dauerspeicher) {
-      try { dauerspeicher.setItem('sd-test-anmeldungen', JSON.stringify(liste)); } catch (e) {}
-    }
-    return liste[schluessel];
-  }
-
-  /* ---------- Hinweisfenster ------------------------------------ */
-  var vorherFokus = null;
-  function hinweisZeigen(anzahl) {
-    $('sdt-modal-text').textContent =
-      'Mit diesem Produktcode sind in diesem Browser bereits ' + anzahl + ' Anmeldungen erfasst.';
-    vorherFokus = document.activeElement;
-    $('sdt-modal').hidden = false;
-    $('sdt-modal-zu').focus();
-  }
-  function hinweisSchliessen() {
-    $('sdt-modal').hidden = true;
-    if (vorherFokus && vorherFokus.focus) { try { vorherFokus.focus(); } catch (e) {} }
-  }
-  $('sdt-modal-zu').addEventListener('click', hinweisSchliessen);
-  $('sdt-modal').addEventListener('click', function (ev) { if (ev.target === $('sdt-modal')) hinweisSchliessen(); });
-  document.addEventListener('keydown', function (ev) {
-    if (ev.key === 'Escape' && !$('sdt-modal').hidden) hinweisSchliessen();
+  $('sdt-again').addEventListener('click', function () {
+    dialog('Test mit neuem Patienten', 'Testformular gesichert?', SICHERN_TEXT, [
+      { text: 'Testformular sichern', wert: 'sichern', primaer: true },
+      { text: 'Ja, Daten löschen und weiter', wert: 'ja' },
+      { text: 'Abbrechen', wert: false }
+    ]).then(function (w) {
+      if (w === 'sichern') { drucken(); return; }
+      if (w !== 'ja') return;
+      Z.patient = null; Z.durchgaenge = {}; Z.seite = null;
+      Z.antworten = new Array(8).fill(null); Z.aktuell = 0;
+      patientMaskeLeeren();
+      patientAnzeigen();
+      zeige('patient');
+    });
   });
 
-  /* ---------- Erklärvideo --------------------------------------- */
+  function verlassen() {
+    var hatDaten = erledigteSeiten().length > 0;
+    var text = hatDaten ? SICHERN_TEXT + '<p>Auch die Anmeldung wird beendet.</p>'
+                        : '<p>Die Anmeldung und alle eingegebenen Daten werden gelöscht.</p>';
+    var knoepfe = hatDaten
+      ? [{ text: 'Testformular sichern', wert: 'sichern', primaer: true },
+         { text: 'Ja, Test verlassen', wert: 'ja' },
+         { text: 'Abbrechen', wert: false }]
+      : [{ text: 'Ja, Test verlassen', wert: 'ja', primaer: true },
+         { text: 'Abbrechen', wert: false }];
+    dialog('Test verlassen', hatDaten ? 'Testformular gesichert?' : 'Test verlassen?', text, knoepfe).then(function (w) {
+      if (w === 'sichern') { drucken(); return; }
+      if (w !== 'ja') return;
+      allesLoeschen();
+      zeige('login');
+    });
+  }
+  $('sdt-exit').addEventListener('click', verlassen);
+  $('sdt-logout').addEventListener('click', verlassen);
+
+  /* ---------- Ausdruck / PDF ------------------------------------ */
+  function druckDokument() {
+    var titel = 'SMELL-Test_' + (Z.patient.nachname + '_' + Z.patient.vorname).replace(/[^\wÀ-ž-]+/g, '-') + '_' + Z.patient.datum;
+    var meta = metaDaten().map(function (m) {
+      return '<div><dt>' + esc(m[0]) + '</dt><dd>' + esc(m[1]) + '</dd></div>';
+    }).join('');
+    var kopf = '<tr><th>Diskette</th>' + SEITEN.map(function (s) { return '<th>' + SEITE_TEXT[s] + '</th>'; }).join('') + '</tr>';
+    var zeilen = FRAGEN.map(function (f, i) {
+      return '<tr><td><b>Diskette ' + f.nr + '</b><br><small>richtig: ' + esc(f.richtig) + '</small></td>' +
+        SEITEN.map(function (s) {
+          var d = Z.durchgaenge[s];
+          if (!d) return '<td class="leer">–</td>';
+          var ok = d[i] === f.richtig;
+          return '<td><img src="' + bildZu(f, d[i]) + '" alt="">' + esc(d[i]) + ' <span class="m' + (ok ? '' : ' bad') + '">' + (ok ? '✓' : '✕') + '</span></td>';
+        }).join('') + '</tr>';
+    }).join('');
+    var summe = '<tr class="summe"><td><b>Punkte</b></td>' + SEITEN.map(function (s) {
+      var d = Z.durchgaenge[s];
+      if (!d) return '<td class="leer">nicht getestet</td>';
+      var p = punkte(d);
+      return '<td><b>' + p + ' / 8</b><br><small>' + (p >= 7 ? 'Normales Riechvermögen' : 'Auffälliges Ergebnis') + '</small></td>';
+    }).join('') + '</tr>';
+
+    return '<!DOCTYPE html><html lang="de"><head><meta charset="utf-8">' +
+      '<title>' + esc(titel) + '</title><style>' +
+      '@page{size:A4;margin:16mm 14mm}' +
+      '*{box-sizing:border-box}' +
+      'body{margin:0;font:400 12px/1.5 ebrima,sans-serif;color:#16233A}' +
+      'h1{font-size:19px;margin:0 0 2px;color:#00102E}' +
+      '.sub{font-size:11.5px;color:#5C6E85;margin:0}' +
+      '.head{border-bottom:2px solid #407BA0;padding-bottom:10px;margin-bottom:16px}' +
+      'dl{display:grid;grid-template-columns:1fr 1fr;gap:4px 30px;margin:0 0 16px}' +
+      'dl>div{display:flex;gap:10px}dt{width:96px;flex:none;color:#5C6E85}dd{margin:0;font-weight:bold;color:#00102E}' +
+      'table{width:100%;border-collapse:collapse;margin-bottom:14px;table-layout:fixed}' +
+      'th{text-align:left;font-size:10px;letter-spacing:.08em;text-transform:uppercase;color:#5C6E85;border-bottom:1.5px solid #407BA0;padding:6px 6px}' +
+      'th:first-child{width:22%}' +
+      'td{padding:5px 6px;border-bottom:1px solid #E1EAF2;vertical-align:middle}' +
+      'td img{width:30px;height:30px;object-fit:contain;vertical-align:middle;margin-right:6px}' +
+      'td small{color:#5C6E85}td.leer{color:#9AA8B8}' +
+      '.m{font-weight:bold;color:#407BA0}.m.bad{color:#D8362C}' +
+      'tr.summe td{border-top:1.5px solid #407BA0;border-bottom:0;padding-top:8px;font-size:13px}' +
+      '.legende{font-size:10.5px;color:#16233A;background:#EDF4F9;padding:8px 10px;margin:0 0 14px}' +
+      '.sig{margin-top:26px;display:flex;gap:40px}' +
+      '.sig div{flex:1;border-top:1px solid #16233A;padding-top:5px;font-size:10.5px;color:#5C6E85}' +
+      '.foot{font-size:10px;color:#5C6E85;line-height:1.5;border-top:1px solid #E1EAF2;padding-top:10px;margin-top:22px}' +
+      '</style></head><body>' +
+      '<div class="head"><h1>SMELL Discettes Olfaction Test</h1><p class="sub">Testformular – Riech-Screening</p></div>' +
+      '<dl>' + meta + '</dl>' +
+      '<table><thead>' + kopf + '</thead><tbody>' + zeilen + summe + '</tbody></table>' +
+      '<p class="legende"><b>Interpretation:</b> 7–8 Punkte: normales Riechvermögen. 0–6 Punkte: Es liegt sehr ' +
+      'wahrscheinlich eine Störung des Riechsinnes vor (Hyposmie, Anosmie). Möglich ist auch eine mangelnde ' +
+      'Kooperation der Testperson.</p>' +
+      '<div class="sig"><div>Datum</div><div>Unterschrift Prüferin / Prüfer</div></div>' +
+      '<p class="foot">Screening, keine Diagnose. Zur Bestimmung von Grad und Art einer festgestellten Störung ' +
+      'sind weiterführende Testmethoden notwendig, etwa die Bestimmung der Riechschwelle mit n-Butanol. Bei einem ' +
+      'Score von 7 oder 8 beträgt die statistische Sicherheit einer normalen Olfaktion 99,74 % (Briner &amp; Simmen, ' +
+      'Rhinology 1999; 37: 145–148, n = 124).<br>' +
+      'SMELL Discettes GmbH · Schartenrainstrasse 22 · CH-5430 Wettingen · info@smelldiscettes.com</p>' +
+      '</body></html>';
+  }
+
+  function drucken() {
+    if (!Z.patient || !erledigteSeiten().length) return;
+    var doc = druckDokument();
+    var rahmen = document.createElement('iframe');
+    rahmen.setAttribute('aria-hidden', 'true');
+    rahmen.style.cssText = 'position:fixed;right:0;bottom:0;width:0;height:0;border:0;opacity:0';
+    document.body.appendChild(rahmen);
+    var erledigt = false;
+    function los() {
+      if (erledigt) return;
+      erledigt = true;
+      // Der Dokumenttitel wird beim Speichern als PDF zum Dateinamen
+      var alterTitel = document.title;
+      try {
+        document.title = rahmen.contentWindow.document.title;
+        rahmen.contentWindow.focus();
+        rahmen.contentWindow.print();
+      } catch (e) {
+        var w = window.open('', '_blank');
+        if (w) { w.document.write(doc); w.document.close(); w.focus(); w.print(); }
+      }
+      setTimeout(function () { document.title = alterTitel; rahmen.remove(); }, 2000);
+    }
+    rahmen.onload = los;
+    var d = rahmen.contentWindow.document;
+    d.open(); d.write(doc); d.close();
+    setTimeout(los, 900);
+  }
+  $('sdt-print').addEventListener('click', drucken);
+
+  /* ---------- Instruktionsfilm ---------------------------------- */
   // Wird erst beim Klick geladen: keine Verbindung zu YouTube oder Vimeo,
   // solange niemand das Video abspielt.
   function videoQuelle(url) {
@@ -1415,337 +1966,46 @@
     }
     return { art: 'video', src: url };
   }
-
   function videoZuruecksetzen() {
     var box = $('sdt-video');
     if (!box) return;
     var q = videoQuelle(VIDEO_URL);
-    if (!q) {
-      box.innerHTML = '<div class="sd-video__leer">Das Erklärvideo wird hier eingebunden.</div>';
-      return;
-    }
+    if (!q) { box.innerHTML = '<div class="sd-video__leer">Der Instruktionsfilm wird hier eingebunden.</div>'; return; }
     if (box.querySelector('.sd-video__start')) return;
-    box.innerHTML = '<button type="button" class="sd-video__start" aria-label="Erklärvideo abspielen"><i></i><span>Video abspielen</span></button>';
+    box.innerHTML = '<button type="button" class="sd-video__start" aria-label="Instruktionsfilm abspielen"><i></i><span>Film abspielen</span></button>';
     box.querySelector('.sd-video__start').addEventListener('click', function () {
-      if (q.art === 'iframe') {
-        box.innerHTML = '<iframe src="' + esc(q.src) + '" title="Erklärvideo zum SMELL Discettes Olfaction Test" allow="autoplay; fullscreen; picture-in-picture" allowfullscreen></iframe>';
-      } else {
-        box.innerHTML = '<video src="' + esc(q.src) + '" controls autoplay playsinline></video>';
-      }
+      box.innerHTML = q.art === 'iframe'
+        ? '<iframe src="' + esc(q.src) + '" title="Instruktionsfilm zum SMELL Discettes Olfaction Test" allow="autoplay; fullscreen; picture-in-picture" allowfullscreen></iframe>'
+        : '<video src="' + esc(q.src) + '" controls autoplay playsinline></video>';
     });
   }
-
-  $('sdt-logout').addEventListener('click', abmelden);
-
-  /* ---------- Nasenseite ---------------------------------------- */
-  function setzeSeite(wert) {
-    Array.prototype.forEach.call(document.querySelectorAll('.sdx .sd-side label'), function (l) {
-      var i = l.querySelector('input');
-      i.checked = (i.value === wert);
-      l.classList.toggle('is-on', i.checked);
-    });
-  }
-  Array.prototype.forEach.call(document.querySelectorAll('.sdx .sd-side input'), function (i) {
-    i.addEventListener('change', function () { setzeSeite(i.value); });
-  });
-
-  function gewaehlteSeite() {
-    var i = document.querySelector('.sdx .sd-side input:checked');
-    return i ? i.value : 'Beide Nasenlöcher';
-  }
-
-  /* ---------- Datum --------------------------------------------- */
-  function heuteSetzen() {
-    var d = new Date();
-    var iso = d.getFullYear() + '-' +
-      String(d.getMonth() + 1).padStart(2, '0') + '-' +
-      String(d.getDate()).padStart(2, '0');
-    $('sdt-datum').value = iso;
-  }
-  function datumDe(iso) {
-    if (!iso) return '–';
-    var t = iso.split('-');
-    return t.length === 3 ? t[2] + '.' + t[1] + '.' + t[0] : iso;
-  }
-
-  /* ---------- Patient ------------------------------------------- */
-  $('sdt-form-patient').addEventListener('submit', function (ev) {
-    ev.preventDefault();
-    var p = {
-      vorname:  $('sdt-vorname').value.trim(),
-      nachname: $('sdt-nachname').value.trim(),
-      geburt:   $('sdt-geburt').value,
-      datum:    $('sdt-datum').value,
-      seite:    gewaehlteSeite()
-    };
-    if (!p.vorname || !p.nachname || !p.geburt || !p.datum) {
-      meldung('sdt-msg-patient', 'Bitte füllen Sie Vorname, Nachname, Geburtsdatum und Testdatum aus.');
-      return;
-    }
-    meldung('sdt-msg-patient', '');
-    if (!patient || patient.vorname !== p.vorname || patient.nachname !== p.nachname || patient.geburt !== p.geburt) {
-      durchgang = 1;
-    }
-    patient = p;
-    $('sdt-durchgang').hidden = true;
-    antworten = new Array(8).fill(null);
-    aktuell = 0;
-    zeichneFrage();
-    zeige('quiz');
-  });
-
-  /* ---------- Test ---------------------------------------------- */
-  function zeichneFrage() {
-    var f = FRAGEN[aktuell];
-    $('sdt-prog-txt').textContent = 'Diskette ' + f.nr + ' von 8';
-    $('sdt-prog-pat').textContent = patient ? patient.vorname + ' ' + patient.nachname + ' · ' + patient.seite : '';
-    $('sdt-prog-fill').style.width = ((aktuell + 1) / 8 * 100) + '%';
-    $('sdt-q-title').innerHTML = 'Der Patient riecht jetzt an Diskette&nbsp;' + f.nr + '.';
-
-    var html = '';
-    f.auswahl.forEach(function (a, i) {
-      var an = antworten[aktuell] === a.name;
-      html += '<label class="sd-choice' + (an ? ' is-on' : '') + '">' +
-                '<input type="radio" name="sdt-frage' + f.nr + '" value="' + esc(a.name) + '"' + (an ? ' checked' : '') + '>' +
-                '<span class="sd-choice__box">' +
-                  '<img src="' + a.bild + '" alt="' + esc(a.name) + '" width="220" height="220" loading="lazy">' +
-                  '<span class="sd-choice__name">' + esc(a.name) + '</span>' +
-                '</span>' +
-              '</label>';
-    });
-    $('sdt-choices').innerHTML = html;
-
-    Array.prototype.forEach.call($('sdt-choices').querySelectorAll('input'), function (inp) {
-      inp.addEventListener('change', function () {
-        antworten[aktuell] = inp.value;
-        Array.prototype.forEach.call($('sdt-choices').querySelectorAll('.sd-choice'), function (l) {
-          l.classList.toggle('is-on', l.querySelector('input').checked);
-        });
-        $('sdt-next').disabled = false;
-      });
-    });
-
-    $('sdt-next').disabled = !antworten[aktuell];
-    $('sdt-back').textContent = aktuell === 0 ? 'Patientendaten' : 'Zurück';
-    $('sdt-next').innerHTML = (aktuell === 7 ? 'Zur Zusammenfassung' : 'Weiter') + ' <span class="sd-btn__arrow">→</span>';
-  }
-
-  $('sdt-back').addEventListener('click', function () {
-    if (aktuell === 0) { zeige('patient'); return; }
-    aktuell--; zeichneFrage();
-  });
-
-  $('sdt-next').addEventListener('click', function () {
-    if (!antworten[aktuell]) return;
-    if (aktuell === 7) { zeichneZusammenfassung(); zeige('summary'); return; }
-    aktuell++; zeichneFrage();
-  });
-
-  /* ---------- Zusammenfassung ----------------------------------- */
-  function bildZu(f, name) {
-    for (var i = 0; i < f.auswahl.length; i++) {
-      if (f.auswahl[i].name === name) return f.auswahl[i].bild;
-    }
-    return '';
-  }
-
-  function zeichneZusammenfassung() {
-    var html = '';
-    FRAGEN.forEach(function (f, i) {
-      var a = antworten[i];
-      html += '<button type="button" class="sd-sumitem" data-i="' + i + '">' +
-                '<img src="' + bildZu(f, a) + '" alt="" width="74" height="74">' +
-                '<b>Diskette ' + f.nr + '</b>' +
-                '<span>' + esc(a) + '</span>' +
-              '</button>';
-    });
-    $('sdt-sum').innerHTML = html;
-    Array.prototype.forEach.call($('sdt-sum').querySelectorAll('.sd-sumitem'), function (b) {
-      b.addEventListener('click', function () {
-        aktuell = parseInt(b.getAttribute('data-i'), 10);
-        zeichneFrage();
-        zeige('quiz');
-      });
-    });
-  }
-
-  $('sdt-sum-back').addEventListener('click', function () {
-    aktuell = 7; zeichneFrage(); zeige('quiz');
-  });
-
-  /* ---------- Ergebnis ------------------------------------------ */
-  function punkte() {
-    var p = 0;
-    FRAGEN.forEach(function (f, i) { if (antworten[i] === f.richtig) p++; });
-    return p;
-  }
-
-  function zeichneErgebnis() {
-    var p = punkte();
-    var gut = p >= 7;
-
-    $('sdt-score').textContent = p;
-    $('sdt-res').classList.toggle('sd-res--low', !gut);
-    $('sdt-res-title').textContent = gut
-      ? 'Normales Riechvermögen'
-      : 'Auffälliges Ergebnis';
-    $('sdt-res-text').textContent = gut
-      ? 'Bei 7 oder 8 Punkten liegt ein normales Riechvermögen vor.'
-      : 'Bei 0 bis 6 Punkten liegt sehr wahrscheinlich eine Störung des Riechsinnes vor (Hyposmie, Anosmie). Möglich ist auch eine mangelnde Kooperation der Testperson. Zur Bestimmung des Ausmasses sind weiterführende Testmethoden notwendig.';
-
-    var html = '<div><span>Diskette</span><span>Gewählte Antwort</span><span>Richtige Antwort</span><span></span></div>';
-    FRAGEN.forEach(function (f, i) {
-      var ok = antworten[i] === f.richtig;
-      html += '<div>' +
-                '<b>Diskette ' + f.nr + '</b>' +
-                '<span class="sd-resans"><img src="' + bildZu(f, antworten[i]) + '" alt="" width="44" height="44"><span>' + esc(antworten[i]) + '</span></span>' +
-                '<span>' + esc(f.richtig) + '</span>' +
-                '<span class="sd-mark' + (ok ? '' : ' is-bad') + '">' + (ok ? '✓' : '✕') + '</span>' +
-              '</div>';
-    });
-    $('sdt-reslist').innerHTML = html;
-
-    var meta = [
-      ['Patient',   patient.vorname + ' ' + patient.nachname],
-      ['Geburtsdatum', datumDe(patient.geburt)],
-      ['Testdatum', datumDe(patient.datum)],
-      ['Getestet',  patient.seite],
-      ['Durchgang', String(durchgang)],
-      ['Prüfer',    sitzung.pruefer],
-      ['Klinik',    sitzung.klinik]
-    ];
-    $('sdt-meta').innerHTML = meta.map(function (m) {
-      return '<div><dt>' + esc(m[0]) + '</dt><dd>' + esc(m[1]) + '</dd></div>';
-    }).join('');
-  }
-
-  $('sdt-finish').addEventListener('click', function () {
-    zeichneErgebnis();
-    zeige('result');
-  });
-
-  // Neue Person: Patientendaten leeren
-  $('sdt-again').addEventListener('click', function () {
-    patient = null;
-    durchgang = 1;
-    antworten = new Array(8).fill(null);
-    aktuell = 0;
-    $('sdt-form-patient').reset();
-    setzeSeite('Beide Nasenlöcher');
-    heuteSetzen();
-    $('sdt-durchgang').hidden = true;
-    zeige('patient');
-  });
-
-  // Dieselbe Person erneut testen: Patientendaten bleiben stehen,
-  // nur die Nasenseite kann bei Bedarf gewechselt werden.
-  $('sdt-repeat').addEventListener('click', function () {
-    antworten = new Array(8).fill(null);
-    aktuell = 0;
-    durchgang++;
-    var n = $('sdt-durchgang');
-    n.innerHTML = '<b>Durchgang ' + durchgang + ':</b> Die Patientendaten sind übernommen. ' +
-                  'Wählen Sie bei Bedarf eine andere Seite der Nase und beginnen Sie den Test.';
-    n.hidden = false;
-    zeige('patient');
-  });
-
-  /* ---------- Ausdruck / PDF ------------------------------------ */
-  function druckDokument() {
-    var p = punkte();
-    var gut = p >= 7;
-    var zeilen = FRAGEN.map(function (f, i) {
-      var ok = antworten[i] === f.richtig;
-      return '<tr><td>Diskette ' + f.nr + '</td><td><img class="w" src="' + bildZu(f, antworten[i]) + '" alt="">' + esc(antworten[i]) + '</td><td>' +
-             esc(f.richtig) + '</td><td class="m' + (ok ? '' : ' bad') + '">' + (ok ? '✓' : '✕') + '</td></tr>';
-    }).join('');
-
-    return '<!DOCTYPE html><html lang="de"><head><meta charset="utf-8">' +
-      '<title>SMELL Discettes Olfaction Test – Ergebnis</title><style>' +
-      '@page{size:A4;margin:18mm 16mm}' +
-      '*{box-sizing:border-box}' +
-      'body{margin:0;font:400 13px/1.6 ebrima,sans-serif;color:#16233A}' +
-      'h1{font-size:20px;margin:0 0 2px;color:#00102E}' +
-      '.sub{font-size:12px;color:#5C6E85;margin:0 0 22px}' +
-      '.head{border-bottom:2px solid #407BA0;padding-bottom:12px;margin-bottom:20px}' +
-      'dl{display:grid;grid-template-columns:1fr 1fr;gap:6px 30px;margin:0 0 22px}' +
-      'dl>div{display:flex;gap:10px}' +
-      'dt{width:110px;flex:none;color:#5C6E85}dd{margin:0;font-weight:bold;color:#00102E}' +
-      '.score{border:1px solid #E1EAF2;background:#EDF4F9;padding:14px 18px;margin:0 0 22px}' +
-      '.score b{font-size:26px;color:#00102E}' +
-      '.score p{margin:6px 0 0;font-size:12.5px;color:#16233A}' +
-      'table{width:100%;border-collapse:collapse;margin-bottom:18px}' +
-      'th{text-align:left;font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:#5C6E85;border-bottom:1px solid #E1EAF2;padding:6px 4px}' +
-      'td{padding:6px 4px;border-bottom:1px solid #F0F4F8}' +
-      'td.m{text-align:center;font-weight:bold;color:#407BA0}td.m.bad{color:#D8362C}' +
-      'td img.w{width:34px;height:34px;object-fit:contain;vertical-align:middle;margin-right:10px}' +
-      '.foot{font-size:11px;color:#5C6E85;line-height:1.55;border-top:1px solid #E1EAF2;padding-top:12px}' +
-      '.sig{margin-top:34px;display:flex;gap:40px}' +
-      '.sig div{flex:1;border-top:1px solid #16233A;padding-top:6px;font-size:11px;color:#5C6E85}' +
-      '</style></head><body>' +
-      '<div class="head"><h1>SMELL Discettes Olfaction Test</h1>' +
-      '<p class="sub">Riech-Screening – Ergebnisblatt</p></div>' +
-      '<dl>' +
-        '<div><dt>Patient</dt><dd>' + esc(patient.vorname + ' ' + patient.nachname) + '</dd></div>' +
-        '<div><dt>Geburtsdatum</dt><dd>' + esc(datumDe(patient.geburt)) + '</dd></div>' +
-        '<div><dt>Testdatum</dt><dd>' + esc(datumDe(patient.datum)) + '</dd></div>' +
-        '<div><dt>Getestet</dt><dd>' + esc(patient.seite) + '</dd></div>' +
-        '<div><dt>Durchgang</dt><dd>' + durchgang + '</dd></div>' +
-        '<div><dt>Prüfer</dt><dd>' + esc(sitzung.pruefer) + '</dd></div>' +
-        '<div><dt>Klinik</dt><dd>' + esc(sitzung.klinik) + '</dd></div>' +
-      '</dl>' +
-      '<div class="score"><b>' + p + ' von 8 Punkten</b>' +
-      '<p>' + (gut
-        ? 'Normales Riechvermögen (Score 7 oder 8).'
-        : 'Auffälliges Ergebnis (Score 0 bis 6): Es liegt sehr wahrscheinlich eine Störung des Riechsinnes vor (Hyposmie, Anosmie). Möglich ist auch eine mangelnde Kooperation der Testperson.') +
-      '</p></div>' +
-      '<table><thead><tr><th>Diskette</th><th>Gewählte Antwort</th><th>Richtige Antwort</th><th></th></tr></thead>' +
-      '<tbody>' + zeilen + '</tbody></table>' +
-      '<div class="sig"><div>Datum</div><div>Unterschrift Prüferin / Prüfer</div></div>' +
-      '<p class="foot" style="margin-top:26px">' +
-      'Screening, keine Diagnose. Zur Bestimmung von Grad und Art einer festgestellten ' +
-      'Störung sind weiterführende Testmethoden notwendig, etwa die Bestimmung der ' +
-      'Riechschwelle mit n-Butanol. Bei einem Score von 7 oder 8 beträgt die statistische ' +
-      'Sicherheit einer normalen Olfaktion 99,74 % (Briner &amp; Simmen, Rhinology 1999; 37: 145–148, n = 124).<br>' +
-      'SMELL Discettes GmbH · Schartenrainstrasse 22 · CH-5430 Wettingen · info@smelldiscettes.com' +
-      '</p></body></html>';
-  }
-
-  $('sdt-print').addEventListener('click', function () {
-    var doc = druckDokument();
-    var rahmen = document.createElement('iframe');
-    rahmen.setAttribute('aria-hidden', 'true');
-    rahmen.style.cssText = 'position:fixed;right:0;bottom:0;width:0;height:0;border:0;opacity:0';
-    document.body.appendChild(rahmen);
-    var erledigt = false;
-    function drucken() {
-      if (erledigt) return;
-      erledigt = true;
-      try {
-        rahmen.contentWindow.focus();
-        rahmen.contentWindow.print();
-      } catch (e) {
-        var w = window.open('', '_blank');
-        if (w) { w.document.write(doc); w.document.close(); w.focus(); w.print(); }
-      }
-      setTimeout(function () { rahmen.remove(); }, 2000);
-    }
-    rahmen.onload = drucken;
-    var d = rahmen.contentWindow.document;
-    d.open(); d.write(doc); d.close();
-    // Manche Browser lösen bei document.write kein load-Ereignis aus
-    setTimeout(drucken, 900);
-  });
 
   /* ---------- Start --------------------------------------------- */
-  heuteSetzen();
+  dokumenteZeichnen();
   videoZuruecksetzen();
+  patientMaskeLeeren();
+
+  // Nach einem Neuladen im selben Tab weitermachen, sofern das Zeitlimit nicht abgelaufen ist
   if (speicher) {
     try {
-      var gespeichert = JSON.parse(speicher.getItem('sd-test-sitzung') || 'null');
-      if (gespeichert && gespeichert.pruefer && gespeichert.klinik) {
-        anmelden(gespeichert);
-        zeige('patient');
+      var g = JSON.parse(speicher.getItem('sd-test') || 'null');
+      if (g && g.z && g.z.sitzung && Date.now() - g.zeit < ZEITLIMIT_MIN * 60000) {
+        Z = g.z;
+        letzteAktivitaet = g.zeit;
+        $('sdt-bar-pruefer').textContent = Z.sitzung.pruefer;
+        $('sdt-bar-klinik').textContent = Z.sitzung.klinik;
+        $('sdt-bar-sn').textContent = Z.sitzung.sn;
+        if (Z.bildschirm === 'result' && erledigteSeiten().length) {
+          zeichneErgebnis(); zeige('result');
+        } else if (Z.bildschirm === 'summary' && Z.antworten.every(Boolean)) {
+          zeichneZusammenfassung(); zeige('summary');
+        } else if (Z.bildschirm === 'quiz' && Z.seite) {
+          Z.korrektur = false; zeichneFrage(); zeige('quiz');
+        } else {
+          patientAnzeigen(); zeige('patient');
+        }
+      } else if (g) {
+        speicher.removeItem('sd-test');
       }
     } catch (e) {}
   }

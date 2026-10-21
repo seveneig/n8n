@@ -82,15 +82,16 @@ In den Blöcken stehen relative Pfade wie `produkt.html`. Diese **vor dem Speich
 durch die echten Adressen ersetzen – die Zuordnung steht in `seiten.json` unter
 `interne_links.ersetzungen`.
 
-**Nur am Anfang eines `href`-Werts ersetzen**, nie als freie Textersetzung:
-`href="test.html` darf nicht in `href="smelltest.html` greifen. Sicher ist ein
-regulärer Ausdruck wie
+**Nur am Anfang eines `href`-Werts oder einer Zeichenkette ersetzen**, nie als
+freie Textersetzung: `href="test.html` darf nicht in `href="smelltest.html`
+greifen. Im Online-Test steht ein Link auch im Skript (`'kontakt.html?…'`). Sicher
+ist dieser reguläre Ausdruck:
 
 ```
-href="(produkt|smelltest|test|ueber-uns|faq|kontakt|vertriebspartner|impressum|datenschutz|index)\.html
+(href="|')(produkt|smelltest|test|ueber-uns|faq|kontakt|vertriebspartner|impressum|datenschutz|index)\.html
 ```
 
-der nur den Dateinamen austauscht. Anhänge bleiben stehen:
+Er tauscht nur den Dateinamen aus und lässt das Anführungszeichen davor stehen. Anhänge bleiben stehen:
 `href="kontakt.html?anliegen=bestellung#formular"` →
 `href="/kontakt/?anliegen=bestellung#formular"`,
 `href="index.html#praeoperativ"` → `href="/#praeoperativ"`.
@@ -186,12 +187,30 @@ Bildantworten, Score und Ergebnisblatt zum Drucken. Für diese Seite gilt zusät
 - Der Test läuft vollständig im Browser. Es werden **keine Patientendaten** an
   einen Server gesendet oder gespeichert – das ist so gewollt und darf nicht
   „ergänzt" werden.
-- Die Prüfung des Produktcodes ist eine reine Formatprüfung im Browser und
-  **kein Zugangsschutz**. Wer echte Codes prüfen will, braucht eine
-  Serverkomponente; bis dahin nichts anderes behaupten.
-- Der Vorführcode **`SMELL-2026-HANS`** funktioniert immer. Ab der zehnten
-  Anmeldung mit demselben Produktcode erscheint ein Hinweis, ein neues SMELL
-  Test-Set zu bestellen. Gezählt wird im Browser (`localStorage`).
+- Der Login prüft die **Seriennummer (SN)** über das Plugin **SMELL Online-Test**
+  gegen die Datenbank. Ohne aktives Plugin ist keine Anmeldung möglich – der Test
+  meldet dann „Server nicht erreichbar".
+- Patientendaten bleiben im Browser (sessionStorage des Tabs). An den Server gehen
+  nur Prüferin/Prüfer, Klinik und SN beim Login sowie „Test abgeschlossen" zum Zählen.
+
+### Plugin „SMELL Online-Test" installieren
+
+1. `plugin/smell-online-test.zip` unter *Plugins → Installieren → Plugin hochladen*
+   installieren und **aktivieren**. Beim Aktivieren legt es zwei Tabellen an
+   (`wp_smell_sets`, `wp_smell_anmeldungen`) und die Vorführ-SN
+   **`SMELL-2026-HANS`**.
+2. Im Menü **SMELL Online-Test** die echten Seriennummern eintragen – eine pro Zeile,
+   zeichengenau wie auf dem Etikett. Die Liste liefert die SMELL Discettes GmbH;
+   **keine Seriennummern erfinden**. Ohne Liste funktioniert nur die Vorführ-SN.
+3. Einstellungen prüfen: vorgesehene Tests je Test-Set (500), Speichern der
+   Anmeldedaten erlaubt, Aufbewahrung (365 Tage).
+4. Die Schnittstelle prüfen:
+   `curl -X POST https://<domain>/wp-json/smell/v1/anmelden -H 'Content-Type: application/json' -d '{"pruefer":"Test","klinik":"Test","sn":"SMELL-2026-HANS","speichern":false}'`
+   muss `"ok":true` liefern. Liefert `/wp-json/` einen Fehler (keine „schönen"
+   Permalinks), nimmt der Test automatisch `/?rest_route=` – trotzdem melden.
+5. Sicherheits- oder Firewall-Plugins (Wordfence, iThemes, All-In-One Security)
+   dürfen die Route `/wp-json/smell/v1/` für nicht angemeldete Besucher **nicht
+   sperren**. Gegebenenfalls freigeben.
 
 ### Gebrauchsanweisungen hochladen
 
@@ -202,7 +221,7 @@ der hochgeladenen Datei ersetzen, zum Beispiel
 `/wp-content/uploads/2026/09/Smell-Test_Gebrauchsanweisung_D.pdf`.
 Die vier Pfade stehen auch in `seiten.json` unter `downloads`.
 
-### Erklärvideo eintragen
+### Instruktionsfilm eintragen
 
 Im Skript von `bloecke/test.html` steht:
 
@@ -286,12 +305,13 @@ Prüfe nach dem Import auf **jeder** Seite:
 6. Auf dem Handy (390 px): Burger-Menü öffnet und schliesst, kein horizontales
    Scrollen.
 7. Alle Links in Navigation und Fusszeile führen auf existierende Seiten.
-8. Auf `/test/`: einmal komplett durchspielen. Anmelden, Patient erfassen, alle acht
-   Disketten beantworten, abschliessen. Der Score muss erscheinen, „Ergebnis drucken"
-   muss den Druckdialog mit dem Ergebnisblatt öffnen. Die Browser-Konsole bleibt
-   dabei fehlerfrei.
-9. Auf `/test/` nach der Anmeldung: Bereich **Anleitung und Unterlagen** sichtbar,
-   alle vier PDFs öffnen sich, das Video spielt ab.
+8. Auf `/test/` – Login: Der Instruktionsfilm spielt ab. Leere Felder oder eine
+   falsche SN (auch nur falsche Gross-/Kleinschreibung) ergeben ein Hinweisfenster.
+   Mit `SMELL-2026-HANS` öffnet sich die Patienten-Anmeldung.
+9. Patienten-Anmeldung: Zähler der durchgeführten Tests und der Satz zu den 500
+   Tests sichtbar; alle vier Gebrauchsanweisungen lassen sich ansehen und
+   herunterladen. Ohne Angaben oder ohne gewählte Nasenseite erscheint ein
+   Hinweisfenster.
 10. „Bestellen" in der Kopfzeile führt auf das Kontaktformular, das Anliegen
     „Bestellung und Bezugsquellen" ist vorausgewählt.
 11. Kopf- und Fusszeile enthalten den Link **Home**.
@@ -301,9 +321,18 @@ Prüfe nach dem Import auf **jeder** Seite:
     **Lightbox** über der Seite, nicht in einem neuen Tab. Esc oder das Kreuz
     schliesst sie. (Auf Mobilgeräten ohne eingebauten PDF-Betrachter öffnet das
     PDF absichtlich normal.)
-14. Auf `/test/` nach einem Durchgang „Test mit derselben Person wiederholen":
-    Die Patientendaten bleiben stehen, das Ergebnis zeigt „Durchgang 2". Im
-    Ergebnis und auf dem Ergebnisblatt erscheinen die gewählten Bilder.
+14. Einen Test komplett durchspielen: Jede Bildwahl springt zur nächsten Sequenz,
+    es gibt keinen „Zurück"-Knopf. In der Zusammenfassung eine Diskette anklicken,
+    anders wählen – es geht zurück zur Zusammenfassung. „Test abschliessen" zeigt
+    das Testformular mit den gewählten Bildern; im Plugin steigt der Zähler der SN
+    um 1.
+15. „Test mit anderer Nasenöffnung desselben Patienten fortfahren": Die
+    Patientendaten stehen schon da, die getestete Seite ist gesperrt. Nach drei
+    Durchgängen verschwindet der Knopf. Das Testformular zeigt alle drei Spalten.
+16. „Test mit neuem Patienten" und „Test verlassen" fragen zuerst nach, ob das
+    Testformular gesichert ist.
+17. Im Menü **SMELL Online-Test** erscheint die Anmeldung unter „Gespeicherte
+    Anmeldungen", wenn beim Login das Häkchen gesetzt war.
 
 ## Was nicht zu tun ist
 
@@ -329,6 +358,8 @@ Prüfe nach dem Import auf **jeder** Seite:
 | Online-Test reagiert nicht auf Klicks | Inline-JavaScript wurde vom Cache-Plugin verschoben oder minifiziert | Seite `/test/` von der JS-Optimierung ausnehmen |
 | Online-Test zeigt keine Bilder | Block wurde beim Einfügen abgeschnitten | vollständige Datei übernehmen, sie ist rund 560 KB gross |
 | Knopf „Zum Seitenanfang" verdeckt das Cookie-Symbol | Beide sitzen unten rechts | Im Cookie-Plugin das Symbol nach links setzen |
+| Login meldet „Server nicht erreichbar" | Plugin inaktiv oder Route von einem Sicherheits-Plugin gesperrt | Plugin aktivieren, `/wp-json/smell/v1/` freigeben |
+| Login lehnt eine echte SN ab | SN nicht im Plugin eingetragen oder abweichend geschrieben | im Menü **SMELL Online-Test** zeichengenau eintragen |
 | PDF-Links im Online-Test führen ins Leere | Pfade `downloads/…` nicht ersetzt | PDFs hochladen und Pfade ersetzen (Abschnitt „Gebrauchsanweisungen hochladen") |
 
 ## Rückmeldung
