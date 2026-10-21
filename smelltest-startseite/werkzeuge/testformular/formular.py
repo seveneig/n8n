@@ -1,6 +1,10 @@
 """Erzeugt das HTML des Testformulars (Layout) – Schritt 1 von 3.
 
-Aufruf: python3 -I formular.py <ausgabe.html>
+Aufruf: python3 -I formular.py <ausgabe.html> [farbig|klinisch]
+
+  farbig    Farbcode der Nasenseiten wie im Original-Formular (grau / grün / orange)
+  klinisch  Variante ohne Farbcode: Kennbuchstaben B / R / L, neutrale Zeilen,
+            auch in Schwarz-Weiss eindeutig
 
 Inhalt (Texte, Bilder, Dokumentnummer) entspricht dem Formular
 «WIP Smell-QMS Olfaction_Test Formular D 261007»; nur die Gestaltung ist neu,
@@ -28,6 +32,9 @@ SEQUENZEN = [
     [('Fisch', '08-1-fisch'), ('Tabak', '08-2-Tabak'), ('Essig', '08-3-Essig')],
 ]
 SEITEN = [('beide', 'beide'), ('rechts', 'rechts'), ('links', 'links')]
+KENNBUCHSTABE = {'beide': 'B', 'rechts': 'R', 'links': 'L'}
+VARIANTE = sys.argv[2] if len(sys.argv) > 2 else 'farbig'
+assert VARIANTE in ('farbig', 'klinisch'), VARIANTE
 
 
 def url(p):
@@ -44,7 +51,7 @@ def sequenz(nr, optionen):
         kaestchen = ''.join(
             f'<span class="zelle"><i class="box" data-feld="Diskette{nr}_{schluessel}" data-wert="{name}"></i></span>'
             for name, _ in optionen)
-        zeilen += f'<div class="zeile {schluessel}"><span class="lbl"><i></i>{text}</span>{kaestchen}</div>'
+        zeilen += f'<div class="zeile {schluessel}"><span class="lbl"><i>{KENNBUCHSTABE[schluessel]}</i>{text}</span>{kaestchen}</div>'
     return (f'<section class="karte"><div class="nr">{nr}</div>'
             f'<div class="inhalt"><div class="bilder"><span></span>{bilder}</div>'
             f'<div class="zeilen">{zeilen}</div></div></section>')
@@ -67,10 +74,9 @@ body {{ font-family: 'EbrimaPDF', ebrima, sans-serif; color: var(--ink); font-si
   /* Markenfarben wie auf der Website */
   --blue: #407BA0; --blue-soft: #BCD3E5; --blue-mist: #EDF4F9; --navy: #00102E;
   --ink: #16233A; --muted: #5C6E85; --line: #E1EAF2; --tint: #F5F9FC;
-  /* Farbcode der Nasenseiten – Konvention der HNO-Audiometrie: rechts rot, links blau;
-     beide in Navy. Alle drei aus der Markenpalette, auch bei Rot-Grün-Schwäche unterscheidbar. */
-  --beide: #00102E; --rechts: #C8423A; --links: #407BA0;
-  --beide-hell: #EFF1F5; --rechts-hell: #FBEFEE; --links-hell: #EDF4F9;
+  /* Farbcode der Nasenseiten wie im Original-Formular */
+  --beide: #808080; --rechts: #76923C; --links: #E8975C;
+  --beide-hell: #F4F5F6; --rechts-hell: #F2F6EA; --links-hell: #FDF3EB;
 }}
 
 .seite {{ width: 210mm; height: 297mm; padding: 14mm 16mm 10mm; position: relative;
@@ -117,9 +123,10 @@ figcaption {{ margin-top: 1.6mm; font-size: 9.5pt; font-weight: 700; line-height
 .zeile .lbl {{ align-self: stretch; display: flex; align-items: center; gap: 1.8mm; padding-left: 2.4mm;
                font-size: 8pt; font-weight: 700; color: var(--ink); border-left: .9mm solid; border-radius: 1.2mm 0 0 1.2mm; }}
 .zeile .lbl i {{ display: none; }}
-.zeile.beide {{ background: var(--beide-hell); }}   .zeile.beide .lbl {{ border-color: var(--beide); color: var(--beide); }}
-.zeile.rechts {{ background: var(--rechts-hell); }} .zeile.rechts .lbl {{ border-color: var(--rechts); color: var(--rechts); }}
-.zeile.links {{ background: var(--links-hell); }}   .zeile.links .lbl {{ border-color: var(--links); color: var(--links); }}
+.zeile.beide {{ background: var(--beide-hell); }}   .zeile.beide .lbl {{ border-color: var(--beide); }}
+.zeile.rechts {{ background: var(--rechts-hell); }} .zeile.rechts .lbl {{ border-color: var(--rechts); }}
+.zeile.links {{ background: var(--links-hell); }}   .zeile.links .lbl {{ border-color: var(--links); }}
+.kz {{ display: none; }}
 .zelle {{ display: flex; justify-content: center; }}
 .box {{ display: block; width: 4.6mm; height: 4.6mm; border: .9pt solid var(--blue); background: #fff; }}
 
@@ -191,9 +198,9 @@ def seite3():
     zeilen = ''.join(
         f'<span>{label}</span><i class="box" data-feld="Getestet_{k}" data-wert="Ja"></i>'
         f'<div class="feld" data-feld="Punkte_{k}"></div>'
-        for k, label in (('beide', '<span class="g">beide</span> Nasenöffnungen'),
-                         ('rechts', '<span class="gr">rechte</span> Nasenöffnung'),
-                         ('links', '<span class="o">linke</span> Nasenöffnung')))
+        for k, label in (('beide', '<i class="kz">B</i><span class="g">beide</span> Nasenöffnungen'),
+                         ('rechts', '<i class="kz">R</i><span class="gr">rechte</span> Nasenöffnung'),
+                         ('links', '<i class="kz">L</i><span class="o">linke</span> Nasenöffnung')))
     return f"""
 <div class="seite">
   {kopf_klein()}
@@ -217,8 +224,20 @@ def seite3():
 </div>"""
 
 
+KLINISCH = """
+/* Variante «klinisch»: Seite über Kennbuchstaben statt Farbe, neutrale Zeilen mit Haarlinien */
+.zeilen { gap: 0; border-top: .5pt solid var(--line); }
+.zeile, .zeile.beide, .zeile.rechts, .zeile.links { background: none; border-radius: 0; border-bottom: .5pt solid var(--line); }
+.zeile.rechts { background: var(--tint); }
+.zeile .lbl, .zeile.beide .lbl, .zeile.rechts .lbl, .zeile.links .lbl { border-left: 0; padding-left: 1mm; gap: 2mm; color: var(--ink); font-weight: 400; font-size: 8.4pt; }
+.zeile .lbl i, .kz { display: inline-grid; place-items: center; width: 4.4mm; height: 4.4mm; border-radius: 50%;
+                     border: .8pt solid var(--navy); color: var(--navy); font-style: normal; font-size: 6.8pt; font-weight: 700; line-height: 1; }
+.kz { margin-right: 2mm; vertical-align: middle; }
+.g, .gr, .o { color: var(--ink); }
+"""
+
 html = f"""<!doctype html><html lang="de"><head><meta charset="utf-8">
-<title>SMELL Discettes Olfaction Test Formular</title><style>{CSS}</style></head>
+<title>SMELL Discettes Olfaction Test Formular</title><style>{CSS}{KLINISCH if VARIANTE == 'klinisch' else ''}</style></head>
 <body>{seite1()}{seite2()}{seite3()}</body></html>"""
 Path(sys.argv[1]).write_text(html, encoding='utf-8')
 print('HTML geschrieben:', sys.argv[1])
