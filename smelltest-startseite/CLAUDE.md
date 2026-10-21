@@ -176,6 +176,10 @@ Die Sprachumschalter EN/FR/IT bleiben `#`, bis es die Sprachfassungen gibt.
   Bildantworten, Score, Ergebnisblatt). Die 24 Auswahlbilder liegen als WebP unter
   `assets/bilder/test/`, die Originale als SVG unter `assets/test-svg/`. Die Seriennummer prüft das WordPress-Plugin `plugin/smell-online-test/`
   (REST `/wp-json/smell/v1/anmelden` und `/test`); Patientendaten bleiben im Browser.
+  Am Ende lädt der Test das ausfüllbare Testformular (vom Plugin mitgeliefert, Quelle
+  `werkzeuge/testformular/`) und füllt es im Browser mit pdf-lib aus. Nach jeder
+  Änderung am Formular die neue PDF nach `downloads/` **und**
+  `plugin/smell-online-test/assets/` kopieren; Feldnamen nicht ändern.
   Ablauf: Login (mit Instruktionsfilm) → Patienten-Anmeldung → 8 Sequenzen ohne
   Zurück → Zusammenfassung mit Korrektur → Tripel-Testformular (bis zu drei
   Durchgänge je Person); 10 Minuten ohne Eingabe löschen Login- und Patientendaten.

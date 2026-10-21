@@ -165,6 +165,12 @@
     "hinweis": "In die Mediathek hochladen, danach im Block bloecke/test.html den Pfad links durch die Mediathek-Adresse ersetzen.",
     "dateien": [
       {
+        "pfad_im_block": "downloads/SMELL_Olfaction_Test_Formular_D_ausfuellbar.pdf",
+        "sprache": "de",
+        "titel": "Testformular (leer, ausfüllbar)",
+        "groesse_kb": 991
+      },
+      {
         "pfad_im_block": "downloads/Smell-Test_Gebrauchsanweisung_D.pdf",
         "sprache": "de",
         "titel": "Gebrauchsanweisung",

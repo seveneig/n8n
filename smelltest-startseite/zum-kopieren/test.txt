@@ -1186,10 +1186,11 @@
           </p>
 
           <div class="sd-actions">
-            <button type="button" class="sd-btn sd-btn--primary" id="sdt-print">Testformular als PDF speichern oder drucken</button>
+            <button type="button" class="sd-btn sd-btn--primary" id="sdt-print">Testformular herunterladen (PDF)</button>
           </div>
-          <p class="sd-form__note" style="margin-top:10px">
-            Zum Herunterladen wählen Sie im Druckfenster «Als PDF speichern».
+          <p class="sd-form__note" id="sdt-print-note" style="margin-top:10px">
+            Das Testformular der TestBox, ausgefüllt mit allen Durchgängen dieses Tests.
+            Es lässt sich ausdrucken und bleibt bearbeitbar.
           </p>
 
           <div class="sd-weiter">
@@ -1325,10 +1326,16 @@
   // Video der Startseite. Solange der Platzhalter steht, erscheint ein Hinweis.
   var VIDEO_URL = 'VIDEO-URL-DER-STARTSEITE';
 
+  // Ausfüllbares Testformular und pdf-lib liefert das Plugin mit; die genauen
+  // Adressen kommen mit der Anmeldung. Diese Pfade gelten nur ersatzweise.
+  var PLUGIN_DATEIEN = '/wp-content/plugins/smell-online-test/assets/';
+  var FORMULAR_PDF = PLUGIN_DATEIEN + 'SMELL_Olfaction_Test_Formular_D_ausfuellbar.pdf';
+  var PDFLIB_JS = PLUGIN_DATEIEN + 'pdf-lib.min.js';
+
   // Dokumente auf der Patienten-Anmeldung. Leere Adresse = «folgt».
   var DOKUMENTE = {
     formulare: [
-      { sprache: 'DE', titel: 'Testformular',          zusatz: 'Deutsch',  url: '' },
+      { sprache: 'DE', titel: 'Testformular',          zusatz: 'Deutsch',  url: 'downloads/SMELL_Olfaction_Test_Formular_D_ausfuellbar.pdf' },
       { sprache: 'EN', titel: 'Test form',             zusatz: 'English',  url: '' },
       { sprache: 'FR', titel: 'Formulaire de test',    zusatz: 'Français', url: '' },
       { sprache: 'IT', titel: 'Modulo di test',        zusatz: 'Italiano', url: '' }
@@ -1588,7 +1595,8 @@
         knopf.innerHTML = knopfText;
         if (a.status === 200 && a.json && a.json.ok) {
           Z.sitzung = { pruefer: pruefer, klinik: klinik, sn: sn, token: a.json.token,
-                        tests: a.json.tests, grenze: a.json.grenze };
+                        tests: a.json.tests, grenze: a.json.grenze,
+                        formular: a.json.formular || FORMULAR_PDF, pdflib: a.json.pdflib || PDFLIB_JS };
           $('sdt-bar-pruefer').textContent = pruefer;
           $('sdt-bar-klinik').textContent = klinik;
           $('sdt-bar-sn').textContent = sn;
@@ -1898,7 +1906,7 @@
 
   /* ---------- Weiter nach dem Testformular ----------------------- */
   var SICHERN_TEXT =
-    '<p>Haben Sie das Testformular als PDF gespeichert oder ausgedruckt? ' +
+    '<p>Haben Sie das Testformular (PDF) heruntergeladen? ' +
     'Danach werden die Testdaten dieser Person gelöscht und lassen sich nicht wiederherstellen.</p>';
 
   $('sdt-repeat').addEventListener('click', function () {
@@ -1913,7 +1921,7 @@
       { text: 'Ja, Daten löschen und weiter', wert: 'ja' },
       { text: 'Abbrechen', wert: false }
     ]).then(function (w) {
-      if (w === 'sichern') { drucken(); return; }
+      if (w === 'sichern') { pdfHerunterladen(); return; }
       if (w !== 'ja') return;
       Z.patient = null; Z.durchgaenge = {}; Z.seite = null;
       Z.antworten = new Array(8).fill(null); Z.aktuell = 0;
@@ -1934,7 +1942,7 @@
       : [{ text: 'Ja, Test verlassen', wert: 'ja', primaer: true },
          { text: 'Abbrechen', wert: false }];
     dialog('Test verlassen', hatDaten ? 'Testformular gesichert?' : 'Test verlassen?', text, knoepfe).then(function (w) {
-      if (w === 'sichern') { drucken(); return; }
+      if (w === 'sichern') { pdfHerunterladen(); return; }
       if (w !== 'ja') return;
       allesLoeschen();
       zeige('login');
@@ -1943,96 +1951,118 @@
   $('sdt-exit').addEventListener('click', verlassen);
   $('sdt-logout').addEventListener('click', verlassen);
 
-  /* ---------- Ausdruck / PDF ------------------------------------ */
-  function druckDokument() {
-    var titel = 'SMELL-Test_' + (Z.patient.nachname + '_' + Z.patient.vorname).replace(/[^\wÀ-ž-]+/g, '-') + '_' + Z.patient.datum;
-    var meta = metaDaten().map(function (m) {
-      return '<div><dt>' + esc(m[0]) + '</dt><dd>' + esc(m[1]) + '</dd></div>';
-    }).join('');
-    var kopf = '<tr><th>Diskette</th>' + SEITEN.map(function (s) { return '<th>' + SEITE_TEXT[s] + '</th>'; }).join('') + '</tr>';
-    var zeilen = FRAGEN.map(function (f, i) {
-      return '<tr><td><b>Diskette ' + f.nr + '</b><br><small>richtig: ' + esc(f.richtig) + '</small></td>' +
-        SEITEN.map(function (s) {
-          var d = Z.durchgaenge[s];
-          if (!d) return '<td class="leer">–</td>';
-          var ok = d[i] === f.richtig;
-          return '<td><img src="' + bildZu(f, d[i]) + '" alt="">' + esc(d[i]) + ' <span class="m' + (ok ? '' : ' bad') + '">' + (ok ? '✓' : '✕') + '</span></td>';
-        }).join('') + '</tr>';
-    }).join('');
-    var summe = '<tr class="summe"><td><b>Punkte</b></td>' + SEITEN.map(function (s) {
-      var d = Z.durchgaenge[s];
-      if (!d) return '<td class="leer">nicht getestet</td>';
-      var p = punkte(d);
-      return '<td><b>' + p + ' / 8</b><br><small>' + (p >= 7 ? 'Normales Riechvermögen' : 'Auffälliges Ergebnis') + '</small></td>';
-    }).join('') + '</tr>';
+  /* ---------- Testformular (PDF) -------------------------------- */
+  // Füllt das ausfüllbare Testformular der TestBox mit den Daten dieses Tests.
+  // Alles geschieht im Browser – die Patientendaten verlassen das Gerät nicht.
+  var PDF_WERT = { Wassermelone: 'Melone' };   // Bildname im Online-Test -> Exportwert im Formular
 
-    return '<!DOCTYPE html><html lang="de"><head><meta charset="utf-8">' +
-      '<title>' + esc(titel) + '</title><style>' +
-      '@page{size:A4;margin:16mm 14mm}' +
-      '*{box-sizing:border-box}' +
-      'body{margin:0;font:400 12px/1.5 ebrima,sans-serif;color:#16233A}' +
-      'h1{font-size:19px;margin:0 0 2px;color:#00102E}' +
-      '.sub{font-size:11.5px;color:#5C6E85;margin:0}' +
-      '.head{border-bottom:2px solid #407BA0;padding-bottom:10px;margin-bottom:16px}' +
-      'dl{display:grid;grid-template-columns:1fr 1fr;gap:4px 30px;margin:0 0 16px}' +
-      'dl>div{display:flex;gap:10px}dt{width:96px;flex:none;color:#5C6E85}dd{margin:0;font-weight:bold;color:#00102E}' +
-      'table{width:100%;border-collapse:collapse;margin-bottom:14px;table-layout:fixed}' +
-      'th{text-align:left;font-size:10px;letter-spacing:.08em;text-transform:uppercase;color:#5C6E85;border-bottom:1.5px solid #407BA0;padding:6px 6px}' +
-      'th:first-child{width:22%}' +
-      'td{padding:5px 6px;border-bottom:1px solid #E1EAF2;vertical-align:middle}' +
-      'td img{width:30px;height:30px;object-fit:contain;vertical-align:middle;margin-right:6px}' +
-      'td small{color:#5C6E85}td.leer{color:#9AA8B8}' +
-      '.m{font-weight:bold;color:#407BA0}.m.bad{color:#D8362C}' +
-      'tr.summe td{border-top:1.5px solid #407BA0;border-bottom:0;padding-top:8px;font-size:13px}' +
-      '.legende{font-size:10.5px;color:#16233A;background:#EDF4F9;padding:8px 10px;margin:0 0 14px}' +
-      '.sig{margin-top:26px;display:flex;gap:40px}' +
-      '.sig div{flex:1;border-top:1px solid #16233A;padding-top:5px;font-size:10.5px;color:#5C6E85}' +
-      '.foot{font-size:10px;color:#5C6E85;line-height:1.5;border-top:1px solid #E1EAF2;padding-top:10px;margin-top:22px}' +
-      '</style></head><body>' +
-      '<div class="head"><h1>SMELL Discettes Olfaction Test</h1><p class="sub">Testformular – Riech-Screening</p></div>' +
-      '<dl>' + meta + '</dl>' +
-      '<table><thead>' + kopf + '</thead><tbody>' + zeilen + summe + '</tbody></table>' +
-      '<p class="legende"><b>Interpretation:</b> 7–8 Punkte: normales Riechvermögen. 0–6 Punkte: Es liegt sehr ' +
-      'wahrscheinlich eine Störung des Riechsinnes vor (Hyposmie, Anosmie). Möglich ist auch eine mangelnde ' +
-      'Kooperation der Testperson.</p>' +
-      '<div class="sig"><div>Datum</div><div>Unterschrift Prüferin / Prüfer</div></div>' +
-      '<p class="foot">Screening, keine Diagnose. Zur Bestimmung von Grad und Art einer festgestellten Störung ' +
-      'sind weiterführende Testmethoden notwendig, etwa die Bestimmung der Riechschwelle mit n-Butanol. Bei einem ' +
-      'Score von 7 oder 8 beträgt die statistische Sicherheit einer normalen Olfaktion 99,74 % (Briner &amp; Simmen, ' +
-      'Rhinology 1999; 37: 145–148, n = 124).<br>' +
-      'SMELL Discettes GmbH · Schartenrainstrasse 22 · CH-5430 Wettingen · info@smelldiscettes.com</p>' +
-      '</body></html>';
-  }
-
-  function drucken() {
-    if (!Z.patient || !erledigteSeiten().length) return;
-    var doc = druckDokument();
-    var rahmen = document.createElement('iframe');
-    rahmen.setAttribute('aria-hidden', 'true');
-    rahmen.style.cssText = 'position:fixed;right:0;bottom:0;width:0;height:0;border:0;opacity:0';
-    document.body.appendChild(rahmen);
-    var erledigt = false;
-    function los() {
-      if (erledigt) return;
-      erledigt = true;
-      // Der Dokumenttitel wird beim Speichern als PDF zum Dateinamen
-      var alterTitel = document.title;
-      try {
-        document.title = rahmen.contentWindow.document.title;
-        rahmen.contentWindow.focus();
-        rahmen.contentWindow.print();
-      } catch (e) {
-        var w = window.open('', '_blank');
-        if (w) { w.document.write(doc); w.document.close(); w.focus(); w.print(); }
-      }
-      setTimeout(function () { document.title = alterTitel; rahmen.remove(); }, 2000);
+  var pdfLibLaden = null;
+  function pdfLib() {
+    if (window.PDFLib) return Promise.resolve(window.PDFLib);
+    if (!pdfLibLaden) {
+      pdfLibLaden = new Promise(function (ok, fehler) {
+        var s = document.createElement('script');
+        s.src = (Z.sitzung && Z.sitzung.pdflib) || PDFLIB_JS;
+        s.onload = function () { window.PDFLib ? ok(window.PDFLib) : fehler(new Error('pdf-lib fehlt')); };
+        s.onerror = function () { pdfLibLaden = null; fehler(new Error('pdf-lib nicht ladbar')); };
+        document.head.appendChild(s);
+      });
     }
-    rahmen.onload = los;
-    var d = rahmen.contentWindow.document;
-    d.open(); d.write(doc); d.close();
-    setTimeout(los, 900);
+    return pdfLibLaden;
   }
-  $('sdt-print').addEventListener('click', drucken);
+
+  // Dateiname nur aus ASCII-Zeichen – Umlaute und Akzente im Dateinamen verwerfen manche Browser
+  function dateiName() {
+    var n = (Z.patient.nachname + '_' + Z.patient.vorname)
+      .replace(/ä/g, 'ae').replace(/ö/g, 'oe').replace(/ü/g, 'ue')
+      .replace(/Ä/g, 'Ae').replace(/Ö/g, 'Oe').replace(/Ü/g, 'Ue').replace(/ß/g, 'ss')
+      .normalize('NFD').replace(/[̀-ͯ]/g, '')
+      .replace(/[^A-Za-z0-9_-]+/g, '-');
+    return 'SMELL-Test_' + n + '_' + Z.patient.datum + '.pdf';
+  }
+
+  function formularFuellen(L, bytes) {
+    return L.PDFDocument.load(bytes).then(function (doc) {
+      return doc.embedFont(L.StandardFonts.Helvetica).then(function (helv) {
+        var form = doc.getForm();
+        // Zeichen ausserhalb der Standardschrift (z. B. č, ł) ohne Akzent schreiben, statt abzubrechen
+        function schreibbar(text) {
+          return Array.prototype.map.call(String(text || ''), function (z) {
+            try { helv.encodeText(z); return z; }
+            catch (e) {
+              var basis = z.normalize('NFD').replace(/[̀-ͯ]/g, '');
+              try { helv.encodeText(basis); return basis; } catch (e2) { return '?'; }
+            }
+          }).join('');
+        }
+        function text(name, wert) {
+          var f = form.getTextField(name);
+          f.setText(schreibbar(wert));
+          f.updateAppearances(helv);
+        }
+        text('Name', Z.patient.nachname);
+        text('Vorname', Z.patient.vorname);
+        text('Geburtsdatum', datumDe(Z.patient.geburt));
+        text('Pruefer_Name', Z.sitzung ? Z.sitzung.pruefer : '');
+        text('Pruefer_Datum', datumDe(Z.patient.datum));
+        SEITEN.forEach(function (s) {
+          var d = Z.durchgaenge[s];
+          if (!d) return;                      // nicht getestete Nasenseite bleibt leer
+          FRAGEN.forEach(function (f, i) {
+            form.getRadioGroup('Diskette' + f.nr + '_' + s).select(PDF_WERT[d[i]] || d[i]);
+          });
+          form.getCheckBox('Getestet_' + s).check();
+          text('Punkte_' + s, String(punkte(d)));
+        });
+        doc.setTitle('SMELL Discettes Olfaction Test Formular – ' + Z.patient.vorname + ' ' + Z.patient.nachname);
+        doc.setSubject('Testdatum ' + datumDe(Z.patient.datum) +
+                       (Z.sitzung ? ' · ' + Z.sitzung.klinik + ' · SN ' + Z.sitzung.sn : ''));
+        // Die Kreuze bringt das Formular selbst mit; nur die Textfelder werden neu gezeichnet
+        return doc.save({ updateFieldAppearances: false });
+      });
+    });
+  }
+
+  function speichernUnter(bytes, name) {
+    var blob = new Blob([bytes], { type: 'application/pdf' });
+    if (window.navigator && window.navigator.msSaveOrOpenBlob) { window.navigator.msSaveOrOpenBlob(blob, name); return; }
+    var url = URL.createObjectURL(blob);
+    var a = document.createElement('a');
+    a.href = url; a.download = name; a.style.display = 'none';
+    document.body.appendChild(a);
+    a.click();
+    setTimeout(function () { URL.revokeObjectURL(url); a.remove(); }, 4000);
+  }
+
+  function pdfHerunterladen() {
+    if (!Z.patient || !erledigteSeiten().length) return;
+    var knopf = $('sdt-print');
+    if (knopf.disabled) return;
+    var knopfText = knopf.innerHTML;
+    knopf.disabled = true;
+    knopf.textContent = 'Testformular wird erstellt …';
+    var quelle = (Z.sitzung && Z.sitzung.formular) || FORMULAR_PDF;
+    Promise.all([
+      pdfLib(),
+      fetch(quelle, { credentials: 'same-origin' }).then(function (r) {
+        if (!r.ok) throw new Error('Formular ' + r.status);
+        return r.arrayBuffer();
+      })
+    ]).then(function (t) {
+      return formularFuellen(t[0], t[1]);
+    }).then(function (bytes) {
+      speichernUnter(bytes, dateiName());
+    }).catch(function (e) {
+      if (window.console) console.error('Testformular:', e);
+      dialog('Testformular', 'PDF konnte nicht erstellt werden',
+        '<p>Das Testformular liess sich im Moment nicht erstellen. Bitte versuchen Sie es erneut. ' +
+        'Die Testdaten bleiben erhalten.</p>');
+    }).then(function () {
+      knopf.disabled = false;
+      knopf.innerHTML = knopfText;
+    });
+  }
+  $('sdt-print').addEventListener('click', pdfHerunterladen);
 
   /* ---------- Instruktionsfilm ---------------------------------- */
   // Wird erst beim Klick geladen: keine Verbindung zu YouTube oder Vimeo,

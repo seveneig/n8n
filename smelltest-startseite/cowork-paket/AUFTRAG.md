@@ -47,8 +47,9 @@ Dazu zwei Theme-Builder-Vorlagen: `bloecke/_kopfzeile.html` als **Header**,
 `bloecke/_fusszeile.html` als **Footer**, Anzeigebedingung jeweils
 **Gesamte Website**.
 
-Ausserdem vier PDF-Dateien in `downloads/` – die Gebrauchsanweisungen, die im
-Online-Test nach der Anmeldung angeboten werden (siehe „Sonderfall Online-Test").
+Ausserdem fünf PDF-Dateien in `downloads/` – die vier Gebrauchsanweisungen und das
+leere Testformular (Deutsch), die im Online-Test nach der Anmeldung angeboten werden
+(siehe „Sonderfall Online-Test").
 
 ## Aktualisierung einer bestehenden Installation
 
@@ -211,15 +212,26 @@ Bildantworten, Score und Ergebnisblatt zum Drucken. Für diese Seite gilt zusät
 5. Sicherheits- oder Firewall-Plugins (Wordfence, iThemes, All-In-One Security)
    dürfen die Route `/wp-json/smell/v1/` für nicht angemeldete Besucher **nicht
    sperren**. Gegebenenfalls freigeben.
+6. Das Plugin bringt das ausfüllbare Testformular und die Bibliothek `pdf-lib` mit
+   (`wp-content/plugins/smell-online-test/assets/`). Daraus erstellt der Online-Test
+   am Ende das **ausgefüllte Testformular als PDF** – im Browser, ohne dass
+   Patientendaten den Rechner verlassen. Die Antwort von `/anmelden` muss deshalb
+   auch `"formular"` und `"pdflib"` enthalten, und beide Adressen müssen im
+   Browser abrufbar sein (nicht von einem Sicherheits-Plugin gesperrt).
 
-### Gebrauchsanweisungen hochladen
+**Aktualisieren:** Ist das Plugin schon installiert (Version 1.0.0), die neue ZIP
+genauso hochladen und **„Vorhandenes durch hochgeladene Version ersetzen"** wählen.
+Seriennummern, Zähler und gespeicherte Anmeldungen bleiben erhalten. Danach muss
+unter *Plugins* Version **1.1.0** stehen.
 
-Die vier PDFs aus `downloads/` in die **Mediathek** hochladen. Danach im Block
+### Gebrauchsanweisungen und Testformular hochladen
+
+Die fünf PDFs aus `downloads/` in die **Mediathek** hochladen. Danach im Block
 `bloecke/test.html` jeden Pfad `downloads/<Dateiname>.pdf` durch die Adresse
 der hochgeladenen Datei ersetzen, zum Beispiel
 `downloads/Smell-Test_Gebrauchsanweisung_D.pdf` →
 `/wp-content/uploads/2026/09/Smell-Test_Gebrauchsanweisung_D.pdf`.
-Die vier Pfade stehen auch in `seiten.json` unter `downloads`.
+Die fünf Pfade stehen auch in `seiten.json` unter `downloads`.
 
 ### Instruktionsfilm eintragen
 
@@ -325,7 +337,10 @@ Prüfe nach dem Import auf **jeder** Seite:
     es gibt keinen „Zurück"-Knopf. In der Zusammenfassung eine Diskette anklicken,
     anders wählen – es geht zurück zur Zusammenfassung. „Test abschliessen" zeigt
     das Testformular mit den gewählten Bildern; im Plugin steigt der Zähler der SN
-    um 1.
+    um 1. **„Testformular herunterladen (PDF)"** lädt das Testformular der TestBox
+    herunter, ausgefüllt mit Name, Vorname, Geburtsdatum, den Kreuzen aller
+    Durchgänge, Testauswertung (Kästchen und Punkte), Prüferin/Prüfer und Datum.
+    Dateiname `SMELL-Test_<Nachname>_<Vorname>_<Testdatum>.pdf`.
 15. „Test mit anderer Nasenöffnung desselben Patienten fortfahren": Die
     Patientendaten stehen schon da, die getestete Seite ist gesperrt. Nach drei
     Durchgängen verschwindet der Knopf. Das Testformular zeigt alle drei Spalten.
@@ -360,14 +375,15 @@ Prüfe nach dem Import auf **jeder** Seite:
 | Knopf „Zum Seitenanfang" verdeckt das Cookie-Symbol | Beide sitzen unten rechts | Im Cookie-Plugin das Symbol nach links setzen |
 | Login meldet „Server nicht erreichbar" | Plugin inaktiv oder Route von einem Sicherheits-Plugin gesperrt | Plugin aktivieren, `/wp-json/smell/v1/` freigeben |
 | Login lehnt eine echte SN ab | SN nicht im Plugin eingetragen oder abweichend geschrieben | im Menü **SMELL Online-Test** zeichengenau eintragen |
-| PDF-Links im Online-Test führen ins Leere | Pfade `downloads/…` nicht ersetzt | PDFs hochladen und Pfade ersetzen (Abschnitt „Gebrauchsanweisungen hochladen") |
+| PDF-Links im Online-Test führen ins Leere | Pfade `downloads/…` nicht ersetzt | PDFs hochladen und Pfade ersetzen (Abschnitt „Gebrauchsanweisungen und Testformular hochladen") |
+| „PDF konnte nicht erstellt werden" | Plugin noch Version 1.0.0, oder `…/smell-online-test/assets/` gesperrt bzw. von einem Optimierungs-Plugin verändert | Plugin 1.1.0 installieren, den Ordner freigeben und von der Optimierung ausnehmen |
 
 ## Rückmeldung
 
 Melde nach Abschluss zurück:
 - Liste der angelegten bzw. aktualisierten Seiten mit ihren IDs und URLs
 - die Adresse des Startseiten-Videos, die im Online-Test eingetragen wurde
-- die Mediathek-Adressen der vier PDFs
+- die Mediathek-Adressen der fünf PDFs
 - Elementor-Version und ob Elementor Pro vorhanden war
 - welche Abnahmepunkte geprüft wurden und mit welchem Ergebnis
 - alles, was nicht wie beschrieben funktioniert hat

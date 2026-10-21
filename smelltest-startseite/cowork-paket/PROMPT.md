@@ -100,10 +100,12 @@ Dann in dieser Reihenfolge:
    läuft. Notieren, ob die Kontaktseite ein eigenes Elementor-Formular hat.
    Nichts löschen, was nicht aus dem Paket stammt.
 3. **Plugin installieren.** `plugin/smell-online-test.zip` hochladen und aktivieren
-   (Abschnitt „Plugin «SMELL Online-Test» installieren" in `AUFTRAG.md`). Echte
+   (Abschnitt „Plugin «SMELL Online-Test» installieren" in `AUFTRAG.md`). Ist es
+   schon installiert: dieselbe ZIP hochladen und die vorhandene Version ersetzen –
+   danach muss Version 1.1.0 aktiv sein. Echte
    Seriennummern nur eintragen, wenn ich sie mitgebe – nichts erfinden.
-4. **PDFs hochladen.** Die vier Dateien aus `downloads/` in die Mediathek laden.
-5. **Online-Test vorbereiten.** In `bloecke/test.html` die vier Pfade
+4. **PDFs hochladen.** Die fünf Dateien aus `downloads/` in die Mediathek laden.
+5. **Online-Test vorbereiten.** In `bloecke/test.html` die fünf Pfade
    `downloads/…pdf` durch die Mediathek-Adressen ersetzen und
    `VIDEO-URL-DER-STARTSEITE` durch die Adresse des Startseiten-Videos
    (Instruktionsfilm auf der Login-Seite).
@@ -136,7 +138,7 @@ Besonders wichtig:
 
 Melde zurück: ob das Plugin aktiv ist und die Test-Anfrage `"ok":true` liefert,
 die aktualisierten Seiten mit IDs und URLs, die eingetragene
-Video-Adresse, die vier PDF-Adressen, das Ergebnis jedes Abnahmepunkts und alles,
+Video-Adresse, die fünf PDF-Adressen, das Ergebnis jedes Abnahmepunkts und alles,
 was nicht wie beschrieben funktioniert hat.
 
 ---

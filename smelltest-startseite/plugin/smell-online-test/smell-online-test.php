@@ -2,7 +2,7 @@
 /**
  * Plugin Name:       SMELL Online-Test
  * Description:       Prüft die Seriennummer (SN) des SMELL Test-Sets beim Login zum Online-Test, speichert auf Wunsch die Anmeldedaten und zählt die durchgeführten Tests je Test-Set.
- * Version:           1.0.0
+ * Version:           1.1.0
  * Requires at least: 6.0
  * Requires PHP:      7.4
  * Author:            SMELL Discettes GmbH
@@ -12,6 +12,10 @@
  *   POST /wp-json/smell/v1/anmelden   { pruefer, klinik, sn, speichern }
  *   POST /wp-json/smell/v1/test       { token }
  *
+ * Mitgeliefert (assets/): das ausfüllbare Testformular und pdf-lib (MIT-Lizenz),
+ * mit dem der Online-Test das Formular im Browser ausfüllt. Die Adressen
+ * stehen in der Antwort von /anmelden.
+ *
  * Patientendaten werden nie an den Server übertragen.
  */
 
@@ -19,7 +23,7 @@ defined( 'ABSPATH' ) || exit;
 
 final class Smell_Online_Test {
 
-	const VERSION     = '1.0.0';
+	const VERSION     = '1.1.0';
 	const OPTION      = 'smell_ot_einstellungen';
 	const DB_VERSION  = 'smell_ot_db_version';
 	const NS          = 'smell/v1';
@@ -233,7 +237,13 @@ final class Smell_Online_Test {
 			'tests'       => (int) $set->tests,
 			'grenze'      => (int) $e['grenze'],
 			'gespeichert' => $gespeichert,
+			'formular'    => self::datei( 'SMELL_Olfaction_Test_Formular_D_ausfuellbar.pdf' ),
+			'pdflib'      => self::datei( 'pdf-lib.min.js' ),
 		), 200 );
+	}
+
+	private static function datei( $name ) {
+		return add_query_arg( 'ver', self::VERSION, plugins_url( 'assets/' . $name, __FILE__ ) );
 	}
 
 	public static function rest_test( WP_REST_Request $r ) {
